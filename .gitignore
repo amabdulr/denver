@@ -1,0 +1,56 @@
+# Environment variables
+.env
+.env.local
+
+# Authentication tokens and credentials
+auth_token_cache.json
+*.token
+*.key
+*.pem
+credentials.json
+
+# Virtual Environment
+myenv/
+venv/
+env/
+ENV/
+.venv
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Data files (may contain sensitive info)
+data/
+
+# Knowledge docs (387MB of PDFs - too large for Git)
+knowledge_docs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Streamlit
+.streamlit/secrets.toml
+.streamlit/config.toml
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# Logs
+*.log
+
+# OS
+Thumbs.db
