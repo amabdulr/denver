@@ -88,13 +88,14 @@ def get_azure_auth_token() -> Optional[str]:
 
 
 def get_llm(
-    model_name: str = "gpt-4o-mini", temperature=0
+    model_name: str = "gpt-4o", temperature=0
 ) -> ChatOpenAI | AzureChatOpenAI:
     """Initialize the LLM based on the configured API type."""
     load_dotenv()
 
     # Get the API type from environment variable, default to cxai if not set
     api_type = os.environ.get("CISCO_API_TYPE", "").lower()
+    
     if api_type not in ["cxai", "bridgeit"]:
         raise ConfigurationError(
             "CISCO_API_TYPE must be either 'cxai' or 'bridgeit'. Please see the README.md for more information."
