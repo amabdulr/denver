@@ -24,6 +24,7 @@ This module handles:
 """
 
 from typing import List
+import time
 from langchain.agents import (
     AgentExecutor,
     OpenAIFunctionsAgent,
@@ -39,14 +40,32 @@ from langchain.retrievers.self_query.base import SelfQueryRetriever
 from utils import get_llm
 import streamlit as st
 
+# Rate limiting: Track last call time to avoid API throttling
+_last_tool_call_time = 0
+_min_call_interval = 4.5  # Minimum 4.5 seconds between calls (15 calls per 60 seconds = ~4s each)
+
 
 @tool
-def get_product_info(product: str, query: str) -> List[Document]:
-    """given a Cisco product name and a query, return the product context
+def get_product_info(product: str, query: str) -> str:
+    """given a Cisco product name and a query, return the product context with metadata
     Args:
-        product: Cisco product name. Valid products are: "firepower", "sdwan", "pickle_fish", "9800"
+        product: Cisco product name. Valid products are: "sdwan", "cisco_generic", "9800", "ASR9000", "Cisco8000"
         query: user query about the product
+    Returns:
+        Formatted string with content and metadata (page, section) for each chunk
     """
+    global _last_tool_call_time
+    
+    # Rate limiting: Ensure minimum interval between calls
+    current_time = time.time()
+    time_since_last_call = current_time - _last_tool_call_time
+    if time_since_last_call < _min_call_interval:
+        sleep_time = _min_call_interval - time_since_last_call
+        print(f"⏱️ Rate limiting: Waiting {sleep_time:.1f}s before next API call...")
+        time.sleep(sleep_time)
+    
+    _last_tool_call_time = time.time()
+    
     metadata_field_info = [
         AttributeInfo(
             name="source",
@@ -55,21 +74,25 @@ def get_product_info(product: str, query: str) -> List[Document]:
         ),
         AttributeInfo(
             name="product",
-            description='Cisco product name. Valid products are: "firepower", "sdwan", "pickle_fish", "9800"',
+            description='Cisco product name. Valid products are: "sdwan", "cisco_generic", "9800", "ASR9000", "Cisco8000"',
             type="string",
         ),
     ]
     document_content_description = "Cisco Product information"
     llm = get_llm()
-    embeddings = HuggingFaceEmbeddings(
-        model_name="sentence-transformers/all-MiniLM-L6-v2"
-    )
-
-    vectorstore = Chroma(
-        collection_name="cisco_products_custom_loader",
-        persist_directory="data/cisco_products_custom_loader",
-        embedding_function=embeddings,
-    )
+    
+    # IMPORTANT: Using shared in-memory ChromaDB due to SQLite 3.26.0 constraint
+    # Vector store is initialized at app startup via vector_store_manager
+    from vector_store_manager import get_vector_store
+    
+    try:
+        vectorstore = get_vector_store()
+    except RuntimeError as e:
+        # Fallback: Initialize if not already done (shouldn't happen in production)
+        st.warning("⚠️ Vector store not initialized. Initializing now...")
+        from vector_store_manager import initialize_vector_store
+        vectorstore = initialize_vector_store()
+    
     retriever = SelfQueryRetriever.from_llm(
         llm,
         vectorstore,
@@ -80,8 +103,60 @@ def get_product_info(product: str, query: str) -> List[Document]:
     )
 
     result = retriever.invoke(f"Product: {product}\nQuery: {query}")
+    
+    # Filter out unwanted content (e.g., Cisco Bug Search Tool references)
+    excluded_keywords = [
+        "cisco bug search tool",
+        "bug search tool",
+        "bst",
+        "cisco bug tracker"
+    ]
+    
+    filtered_result = []
+    for doc in result:
+        content_lower = doc.page_content.lower()
+        section_lower = doc.metadata.get('section', '').lower()
+        
+        # Skip if any excluded keyword is found in content or section
+        if any(keyword in content_lower or keyword in section_lower for keyword in excluded_keywords):
+            continue
+        
+        filtered_result.append(doc)
+    
+    # Use filtered results
+    result = filtered_result
+    
+    # Check if we got any results
+    if not result or len(result) == 0:
+        return f"""
+❌ NO DOCUMENTS FOUND ❌
 
-    return result
+The search for "{query}" in product "{product}" returned ZERO results.
+
+POSSIBLE REASONS:
+1. The product name might be incorrect. Available products: "sdwan", "cisco_generic", "9800", "ASR9000", "Cisco8000"
+2. The search query might be too specific or use terms not in the documentation
+3. The relevant documentation might not be loaded into the database
+
+⚠️ CRITICAL INSTRUCTION: Do NOT invent or fabricate any documents, sections, page numbers, or quotes.
+You MUST tell the user that no documents were found and cannot provide recommendations without actual source material.
+"""
+    
+    # Format the result to include metadata explicitly
+    formatted_chunks = []
+    for i, doc in enumerate(result, 1):
+        chunk_info = f"\n--- CHUNK {i} ---"
+        chunk_info += f"\nSource: {doc.metadata.get('source', 'Unknown')}"
+        
+        # Prefer page_label (printed page number) over page (file index)
+        page_num = doc.metadata.get('page_label') or doc.metadata.get('page')
+        chunk_info += f"\nPage: {page_num if page_num is not None else 'Not available'}"
+        
+        chunk_info += f"\nSection: {doc.metadata.get('section', 'Not available')}"
+        chunk_info += f"\n\nCONTENT:\n{doc.page_content}\n"
+        formatted_chunks.append(chunk_info)
+    
+    return "\n".join(formatted_chunks)
 
 
 def run_agent(product_name: str, question: str, rca_content: str):
@@ -93,8 +168,24 @@ def run_agent(product_name: str, question: str, rca_content: str):
     product_version_prompt_template = """
     given a Cisco product name and a question from a user, return the answer.
     Use your tools to fetch context to answer the question to provide a more accurate answer.
+    
     Cisco product: {product_name}
     question: {question}
+    
+    ⚠️ CRITICAL ANTI-HALLUCINATION RULES:
+    1. ONLY use information that the get_product_info tool actually returned
+    2. If the tool returns "❌ NO DOCUMENTS FOUND ❌", you MUST tell the user no documentation was found
+    3. DO NOT invent document names, page numbers, sections, or quotes
+    4. DO NOT make up plausible-sounding information
+    5. When referencing content, quote EXACT text from the retrieved chunks
+    6. When stating page numbers or sections, copy EXACTLY from the chunk metadata
+    7. If metadata is "Not available", say so - don't guess or invent
+    
+    ⚠️ IMPORTANT: Be efficient with tool calls to avoid rate limiting (max 15 calls per minute)
+    - Call get_product_info only when you need NEW information
+    - Don't repeat searches with similar queries
+    - Use the information from previous tool calls when possible
+    
     answer:
     """
 

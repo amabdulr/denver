@@ -1,6 +1,17 @@
-# Cisco Documentation Assistant
+# Bug/RCA/FirstDraft Assistant
 
 A Streamlit-based application that analyzes Cisco bug reports and suggests documentation updates using LangChain and RAG (Retrieval-Augmented Generation).
+
+## ✨ Automatic SQLite Detection
+
+**The app automatically detects your SQLite version and adapts:**
+
+- **SQLite 3.35+** → Uses persistent ChromaDB (data saved to disk)
+- **SQLite 3.26.0** → Uses in-memory ChromaDB (data in RAM only)
+
+No manual configuration needed! Works on both local systems and enterprise servers.
+
+📖 **See [AUTO_DETECT.md](AUTO_DETECT.md) for details** | [QUICKSTART.md](QUICKSTART.md) for usage
 
 ## Features
 
@@ -56,8 +67,7 @@ knowledge_docs/
 ├── 9800/              # Cisco Catalyst 9800 documentation
 ├── ASR9000/           # ASR 9000 Series documentation
 ├── Cisco8000/         # Cisco 8000 Series documentation
-├── firepower/         # Firepower documentation
-├── pickle_fish/       # Additional documentation
+├── cisco_generic/     # Cisco Generic Product documentation
 └── sdwan/             # SD-WAN documentation
 ```
 

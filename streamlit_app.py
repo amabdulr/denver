@@ -5,9 +5,11 @@ Main application file for analyzing bug reports and suggesting documentation upd
 
 import streamlit as st
 from dotenv import load_dotenv
-from bug2 import create_auth, get_bug_summary, get_file_content, get_note_content, get_all_notes
+from bug2 import create_auth, get_bug_summary, get_file_content, get_note_content, get_all_notes, create_note
 import xml.etree.ElementTree as ET
 import requests
+import json
+import os
 
 # Import helper functions
 from app_functions import run_agent, format_output, apply_prompt_file
@@ -17,6 +19,38 @@ from hal_check_tab import render_hal_check_tab, handle_hallucination_check
 
 # Load the .env file
 load_dotenv()
+
+# Config file for persistent settings
+CONFIG_FILE = "app_config.json"
+
+def load_config():
+    """Load application configuration from file"""
+    if os.path.exists(CONFIG_FILE):
+        try:
+            with open(CONFIG_FILE, 'r') as f:
+                return json.load(f)
+        except:
+            return {}
+    return {}
+
+def save_config(config):
+    """Save application configuration to file"""
+    try:
+        with open(CONFIG_FILE, 'w') as f:
+            json.dump(config, f, indent=2)
+    except:
+        pass
+
+def get_saved_product():
+    """Get the saved product name from config"""
+    config = load_config()
+    return config.get('product_name', 'Cisco 9800')
+
+def save_product_preference(product_name):
+    """Save the product name preference"""
+    config = load_config()
+    config['product_name'] = product_name
+    save_config(config)
 
 # Streamlit UI
 st.set_page_config(page_title="Cisco Documentation Assistant", page_icon="📚", layout="wide")
@@ -53,6 +87,28 @@ st.markdown("""
 st.title("🔧 Writer Workflow")
 st.markdown("*Analyze bugs and suggest documentation updates using AI-powered RAG*")
 
+# Initialize vector store on first load (auto-detects SQLite version for persistence)
+if 'vector_store_initialized' not in st.session_state:
+    with st.spinner("🔄 Loading knowledge base..."):
+        try:
+            from vector_store_manager import initialize_vector_store, is_initialized, get_persistence_mode
+            if not is_initialized():
+                initialize_vector_store()
+            
+            mode = get_persistence_mode()
+            st.session_state.vector_store_initialized = True
+            st.session_state.persistence_mode = mode
+            
+            if mode == 'persistent':
+                st.success("✅ Knowledge base loaded (persistent mode)", icon="✅")
+            else:
+                st.success("✅ Knowledge base loaded (in-memory mode)", icon="✅")
+                st.info("ℹ️ Running in-memory mode due to SQLite version. Data will not persist between restarts.")
+        except Exception as e:
+            st.error(f"❌ Error loading knowledge base: {e}")
+            st.info("💡 Make sure knowledge_docs/ directory exists and contains files")
+            st.session_state.vector_store_initialized = False
+
 # Create tabs at the top for different workflows
 tab1, tab2, tab3 = st.tabs(["🔍 Analysis & Summary", "✍️ First Draft", "🔍 Hal-Check"])
 
@@ -67,6 +123,97 @@ if 'current_rca_content' not in st.session_state:
     st.session_state.current_rca_content = ""
 if 'uploaded_file_content' not in st.session_state:
     st.session_state.uploaded_file_content = ""
+if 'context_window_size' not in st.session_state:
+    st.session_state.context_window_size = 3  # Default: last 3 exchanges
+
+def estimate_tokens(text):
+    """Rough token estimation: ~4 chars per token"""
+    return len(text) // 4
+
+def get_relevant_context(conversation_history, window_size=3, max_tokens=4000):
+    """
+    Get relevant context from conversation history with token limits
+    
+    Args:
+        conversation_history: List of Q&A exchanges
+        window_size: Number of recent exchanges to include
+        max_tokens: Maximum tokens for context
+    
+    Returns:
+        Formatted context string
+    """
+    if not conversation_history:
+        return ""
+    
+    # Get last N exchanges
+    recent_exchanges = conversation_history[-window_size:] if len(conversation_history) > window_size else conversation_history
+    
+    # Build context with token awareness
+    context_parts = []
+    total_tokens = 0
+    
+    for idx, exchange in enumerate(reversed(recent_exchanges), 1):
+        # Format exchange
+        exchange_text = f"Previous Q{len(recent_exchanges)-idx+1}: {exchange['question']}\nPrevious A{len(recent_exchanges)-idx+1}: {exchange['answer'][:1000]}...\n"  # Limit answer preview
+        
+        tokens = estimate_tokens(exchange_text)
+        if total_tokens + tokens > max_tokens:
+            break
+        
+        context_parts.insert(0, exchange_text)
+        total_tokens += tokens
+    
+    if context_parts:
+        return "RECENT CONVERSATION CONTEXT:\n" + "\n".join(context_parts)
+    return ""
+
+def build_followup_prompt(followup_question, context, use_rag):
+    """
+    Build a well-structured follow-up prompt
+    
+    Args:
+        followup_question: The user's follow-up question
+        context: Previous conversation context
+        use_rag: Whether RAG search is enabled
+    
+    Returns:
+        Formatted prompt string
+    """
+    if use_rag:
+        # For RAG: Focus on new search with context awareness
+        prompt = f"""You are answering a follow-up question in an ongoing conversation about Cisco documentation.
+
+{context}
+
+CURRENT FOLLOW-UP QUESTION: {followup_question}
+
+INSTRUCTIONS:
+- You have context from previous exchanges above
+- Search the documentation database for information relevant to this follow-up
+- Reference previous answers if relevant (e.g., "As mentioned earlier...")
+- If this question asks for clarification/expansion of a previous answer, identify what to expand
+- Provide a direct, focused answer to the follow-up question
+- Do not repeat information already provided unless specifically asked
+
+Your answer:"""
+    else:
+        # For direct LLM: Pure conversational follow-up
+        prompt = f"""You are continuing a conversation about Cisco documentation and bug analysis.
+
+{context}
+
+USER FOLLOW-UP: {followup_question}
+
+INSTRUCTIONS:
+- Answer based on the conversation context above and your general knowledge
+- Reference previous exchanges when relevant
+- If asking for clarification, expand on the specific point mentioned
+- Keep answers concise and focused on what was asked
+- Use natural conversational language
+
+Your answer:"""
+    
+    return prompt
 
 # Shared inputs (outside tabs) - These will be rendered inside each tab
 def render_shared_inputs(tab_prefix="", show_header=True):
@@ -79,9 +226,9 @@ def render_shared_inputs(tab_prefix="", show_header=True):
     
     # Add checkbox for extracting all notes
     extract_all_notes = st.checkbox(
-        "📋 Extract all notes (default: only Behavior-changed note)",
+        "📋 Extract all notes (default: Behavior-changed + Release-note)",
         value=False,
-        help="Check this to extract all notes from the bug. By default, only the 'Behavior-changed' note is extracted along with the bug summary.",
+        help="Check this to extract all notes from the bug. By default, only 'Behavior-changed' and 'Release-note' notes are extracted along with the bug summary.",
         key=f"{tab_prefix}_extract_all_notes"
     )
     
@@ -160,17 +307,19 @@ def render_shared_inputs(tab_prefix="", show_header=True):
                         except Exception as e:
                             bug_content += f"*Error fetching notes list: {str(e)}*\n\n"
                     else:
-                        # Extract only Behavior-changed note
-                        note_title = "Behavior-changed"
-                        note_titles = [note_title]  # For summary
-                        try:
-                            note_response = get_note_content(bug_number, note_title, auth)
-                            bug_content += f"### {note_title}\n\n"
-                            bug_content += f"**Content:**\n{note_response.text}\n\n"
-                        except Exception as e:
-                            # If Behavior-changed doesn't exist, skip silently
-                            bug_content += f"*Note '{note_title}' not found*\n\n"
-                            note_titles = []  # Clear since note doesn't exist
+                        # Extract Behavior-changed and Release-note by default
+                        default_notes = ["Behavior-changed", "Release-note"]
+                        note_titles = []
+                        
+                        for note_title in default_notes:
+                            try:
+                                note_response = get_note_content(bug_number, note_title, auth)
+                                bug_content += f"### {note_title}\n\n"
+                                bug_content += f"**Content:**\n{note_response.text}\n\n"
+                                note_titles.append(note_title)
+                            except Exception as e:
+                                # If note doesn't exist, skip silently
+                                bug_content += f"*Note '{note_title}' not found*\n\n"
                     
                     # Store note titles for this bug
                     all_notes_summary[bug_number] = note_titles
@@ -193,13 +342,23 @@ def render_shared_inputs(tab_prefix="", show_header=True):
     
     st.markdown("---")
     
-    # Product name input
+    # Product name input with persistence
+    product_options = ["Cisco SD-WAN", "Cisco 9800", "ASR 9000", "Cisco 8000", "cisco_generic"]
+    saved_product = get_saved_product()
+    
+    # Find index of saved product, default to 1 if not found
+    try:
+        default_index = product_options.index(saved_product)
+    except ValueError:
+        default_index = 1
+    
     product_name = st.selectbox(
         "Product Name",
-        options=["Cisco SD-WAN", "Cisco 9800", "firepower", "pickle_fish"],
-        index=1,
-        help="Select the Cisco product",
-        key=f"{tab_prefix}_product_name"
+        options=product_options,
+        index=default_index,
+        help="Select the Cisco product (selection is remembered)",
+        key=f"{tab_prefix}_product_name",
+        on_change=lambda: save_product_preference(st.session_state.get(f"{tab_prefix}_product_name"))
     )
     
     return product_name
@@ -211,25 +370,17 @@ with tab1:
     with col1:
         product_name = render_shared_inputs("tab1")
         
+        # Load default prompt from BugAnalyze.md
+        try:
+            with open("BugAnalyze.md", "r") as f:
+                default_prompt = f.read()
+        except FileNotFoundError:
+            default_prompt = "Analyze the Bug/RCA content"
+        
         # Question input for Analysis (only in Tab 1)
         question = st.text_area(
             "Question/Task",
-            value="""Analyze the Bug/RCA content and follow these steps:
-
-1. IDENTIFY KEY ELEMENTS: Extract the specific technology, feature, component, or functionality mentioned in the bug/RCA (e.g., BGP, VLAN, authentication, routing protocol, interface configuration, etc.)
-
-2. SEARCH STRATEGICALLY: Search the documentation database for chapters/sections that are specifically about the identified technology or feature.
-
-3. MATCH CONTEXT: Find sections where the bug's context (configuration, troubleshooting, feature behavior) aligns with the document's purpose.
-
-4. PROVIDE RECOMMENDATIONS: For each relevant document found:
-   - Document name
-   - Exact chapter/section title where this content belongs
-   - Why this section is appropriate (explain the relevance)
-  
- 5. Finally, write a detailed content based on the Bug/RCA that can be directly added to the identified sections. Use a language suitable to a user guide.   
-
-Focus do not include any of this prompt or analytical information into the output. Just stick to what was asked for.""",
+            value=default_prompt,
             key="analysis_question",
             height=200
         )
@@ -260,6 +411,10 @@ Focus do not include any of this prompt or analytical information into the outpu
     
     with col2:
         st.subheader("📊 Output")
+        
+        # Add "Post Analysis to Bug" button above output
+        post_analysis_button = st.button("📤 Post Analysis to Bug", type="secondary", use_container_width=True, key="post_analysis_to_bug")
+        
         output_container = st.container()
         
         # Display follow-up answer if available
@@ -383,13 +538,23 @@ with tab2:
         
         st.markdown("---")
         
-        # Product name input only (no fetch bug functionality in Tab 2)
+        # Product name input only (no fetch bug functionality in Tab 2) with persistence
+        product_options = ["Cisco SD-WAN", "Cisco 9800", "ASR 9000", "Cisco 8000", "cisco_generic"]
+        saved_product = get_saved_product()
+        
+        # Find index of saved product, default to 1 if not found
+        try:
+            default_index = product_options.index(saved_product)
+        except ValueError:
+            default_index = 1
+        
         product_name_draft = st.selectbox(
             "Product Name",
-            options=["Cisco SD-WAN", "Cisco 9800", "firepower", "pickle_fish"],
-            index=1,
-            help="Select the Cisco product",
-            key="tab2_product_name"
+            options=product_options,
+            index=default_index,
+            help="Select the Cisco product (selection is remembered)",
+            key="tab2_product_name",
+            on_change=lambda: save_product_preference(st.session_state.get("tab2_product_name"))
         )
         
         st.markdown("---")
@@ -467,6 +632,41 @@ if analyze_button:
                 with st.expander("🐛 Error Details"):
                     st.exception(e)
 
+if post_analysis_button:
+    # Get the first bug number from the input
+    bug_number_input = st.session_state.get('tab1_bug_number', '')
+    
+    if not bug_number_input:
+        st.error("⚠️ Please enter a bug number first.")
+    else:
+        # Get the first bug number (in case multiple were entered)
+        first_bug = bug_number_input.split(',')[0].strip()
+        
+        # Get the output content from conversation history
+        if not st.session_state.conversation_history:
+            st.error("⚠️ No analysis output found. Please run an analysis first.")
+        else:
+            # Get the last answer as the note body
+            last_answer = st.session_state.conversation_history[-1]['answer']
+            
+            with st.spinner(f"📤 Posting analysis to bug {first_bug}..."):
+                try:
+                    auth = create_auth()
+                    response = create_note(
+                        bug_number=first_bug,
+                        note_title="AI-Analysis",
+                        note_content=last_answer,
+                        note_type="Other",
+                        auth=auth
+                    )
+                    st.success(f"✅ Successfully posted analysis to bug {first_bug}!")
+                    st.info(f"Response status: {response.status_code}")
+                    
+                except Exception as e:
+                    st.error(f"❌ Error posting analysis to bug: {str(e)}")
+                    with st.expander("🐛 Error Details"):
+                        st.exception(e)
+
 if summarize_button:
     if not rca_content.strip():
         st.error("⚠️ Please provide RCA content to summarize.")
@@ -540,8 +740,25 @@ if st.session_state.initial_analysis_done and st.session_state.conversation_hist
     st.divider()
     st.subheader("💬 Follow-up Questions")
     
+    # Settings for context window
+    with st.expander("⚙️ Follow-up Settings", expanded=False):
+        context_window = st.slider(
+            "Context Window (number of recent exchanges to include)",
+            min_value=1,
+            max_value=10,
+            value=st.session_state.context_window_size,
+            help="Controls how many recent Q&A exchanges are included in follow-up context. Lower = faster, higher = more context."
+        )
+        st.session_state.context_window_size = context_window
+        
+        # Show token estimate
+        if st.session_state.conversation_history:
+            recent_context = get_relevant_context(st.session_state.conversation_history, context_window)
+            est_tokens = estimate_tokens(recent_context)
+            st.info(f"📊 Current context: ~{est_tokens} tokens from last {min(context_window, len(st.session_state.conversation_history))} exchanges")
+    
     # Display conversation history
-    with st.expander("📜 View Conversation History", expanded=False):
+    with st.expander(f"📜 View Conversation History ({len(st.session_state.conversation_history)} exchanges)", expanded=False):
         for idx, exchange in enumerate(st.session_state.conversation_history, 1):
             st.markdown(f"**Q{idx}:** {exchange['question']}")
             st.markdown(f"**A{idx}:** {exchange['answer']}")
@@ -576,20 +793,22 @@ if st.session_state.initial_analysis_done and st.session_state.conversation_hist
         else:
             with st.spinner("🔍 Processing your follow-up question..."):
                 try:
-                    # Build context from conversation history
-                    context = "\n\nPrevious conversation:\n"
-                    for idx, exchange in enumerate(st.session_state.conversation_history, 1):
-                        context += f"Q{idx}: {exchange['question']}\nA{idx}: {exchange['answer']}\n\n"
+                    # Get relevant context with token management
+                    context = get_relevant_context(
+                        st.session_state.conversation_history, 
+                        st.session_state.context_window_size,
+                        max_tokens=4000
+                    )
                     
-                    # Add follow-up question with context
-                    full_followup = context + f"\nFollow-up question: {followup_question}"
+                    # Build structured prompt
+                    full_followup = build_followup_prompt(followup_question, context, use_rag_search)
                     
                     # Determine which content to use based on which tab is active
                     content_to_use = st.session_state.get('current_extracted_text') or st.session_state.get('current_rca_content', '')
                     
                     # Choose between RAG search or direct LLM based on checkbox
                     if use_rag_search:
-                        # Use RAG search (run_agent)
+                        # Use RAG search with improved prompt
                         result = run_agent(
                             st.session_state.product_name, 
                             full_followup, 
@@ -597,11 +816,13 @@ if st.session_state.initial_analysis_done and st.session_state.conversation_hist
                         )
                         followup_answer = result['output'] if 'output' in result else str(result)
                     else:
-                        # Direct LLM call without RAG
+                        # Direct LLM call with structured prompt (no RAG)
                         from utils import get_llm
                         llm = get_llm()
-                        combined_prompt = full_followup + "\n\n" + content_to_use
-                        result = llm.invoke(combined_prompt)
+                        # Add original content if needed
+                        if content_to_use:
+                            full_followup += f"\n\nORIGINAL BUG/RCA CONTENT (for reference):\n{content_to_use[:2000]}..."
+                        result = llm.invoke(full_followup)
                         followup_answer = result.content if hasattr(result, 'content') else str(result)
                     
                     # Add to conversation history
