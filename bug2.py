@@ -3,7 +3,7 @@ from requests_oauthlib import OAuth1
 import xml.etree.ElementTree as ET
 
 # Configuration
-BUG_NUMBER = "CSCwp05354"
+BUG_NUMBER = "CSCwr82677"
 
 def create_auth():
     """
@@ -114,11 +114,58 @@ def get_all_notes(bug_number, auth):
                 break
     return notes
 
+def create_note(bug_number, note_title, note_content, note_type="Other", auth=None):
+    """
+    Create a note for a CDETS bug
+    
+    Args:
+        bug_number: The bug ID (e.g., 'CSCvu26357')
+        note_title: The title for the note
+        note_content: The content/body of the note
+        note_type: The type of note (default: "Other")
+        auth: OAuth1 authentication object
+    
+    Returns:
+        Response object from the API
+    """
+    url = f"https://cdetsng.cisco.com/wsapi/latest/api/bug/{bug_number}/note"
+    headers = {
+        "Content-Type": "application/xml",
+        "Accept": "application/xml"
+    }
+    
+    # Construct XML request body with correct format
+    xml_body = f"""<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Note xmlns="cdetsng" xmlns:ns1="http://www.w3.org/1999/xlink">
+    <Field name="Note">{note_content}</Field>
+    <Field name="Title">{note_title}</Field>
+    <Field name="Type">{note_type}</Field>
+</Note>"""
+    
+    response = requests.post(url, auth=auth, headers=headers, data=xml_body)
+    response.raise_for_status()
+    return response
+
 if __name__ == "__main__":
     url = f"https://cdetsng.cisco.com/wsapi/latest/api/bug/{BUG_NUMBER}/files"
 
     auth = create_auth()
 
+    # Create a note called "AI-Analysis"
+    try:
+        print("Creating AI-Analysis note...")
+        response = create_note(BUG_NUMBER, "AI-Analysis", "this is the body", auth=auth)
+        print(f"✓ Note created successfully: {response.status_code}")
+        print(f"Response: {response.text}")
+    except requests.exceptions.HTTPError as e:
+        print(f"✗ Error creating note: {e}")
+        if hasattr(e.response, 'text'):
+            print(f"Server response: {e.response.text}")
+    except Exception as e:
+        print(f"✗ Error creating note: {e}")
+
+    # Comment out file retrieval for now - testing note creation only
+    """
     headers = {
         "Accept": "application/xml"
     }
@@ -259,3 +306,4 @@ if __name__ == "__main__":
         
     else:
         print("No files found in the response.")
+    """
