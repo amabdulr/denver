@@ -83,15 +83,21 @@ def get_product_info(product: str, query: str) -> str:
     
     # IMPORTANT: Using shared in-memory ChromaDB due to SQLite 3.26.0 constraint
     # Vector store is initialized at app startup via vector_store_manager
-    from vector_store_manager import get_vector_store
+    from vector_store_manager import get_vector_store, initialize_vector_store
     
     try:
         vectorstore = get_vector_store()
-    except RuntimeError as e:
-        # Fallback: Initialize if not already done (shouldn't happen in production)
-        st.warning("⚠️ Vector store not initialized. Initializing now...")
-        from vector_store_manager import initialize_vector_store
-        vectorstore = initialize_vector_store()
+    except RuntimeError:
+        # Fallback: Initialize if not already done
+        # This shouldn't happen if startup initialization worked
+        import streamlit as st
+        if st.session_state.get('vector_store_init_attempted', False):
+            # Don't show warning again if we already tried at startup
+            vectorstore = initialize_vector_store()
+        else:
+            st.warning("⚠️ Vector store not initialized. Initializing now...")
+            vectorstore = initialize_vector_store()
+            st.session_state.vector_store_init_attempted = True
     
     retriever = SelfQueryRetriever.from_llm(
         llm,
@@ -263,3 +269,95 @@ def apply_prompt_file(prompt_file_path: str, rca_content: str, product_name: str
     result = llm.invoke(full_prompt)
     
     return result.content if hasattr(result, 'content') else str(result)
+
+
+def run_agent_with_prompt_file(prompt_file_path: str, rca_content: str, product_name: str) -> str:
+    """
+    Run the agent with a custom prompt file and RAG capabilities
+    
+    This function is similar to run_agent() but allows using custom prompt files
+    like ChapterFinder.md and ContentWriter.md while maintaining RAG functionality.
+    
+    Args:
+        prompt_file_path: Path to the prompt.md file (e.g., "ChapterFinder.md")
+        rca_content: The RCA/bug content to analyze
+        product_name: Cisco product name for context
+    
+    Returns:
+        Agent's response as string
+    """
+    # Read the prompt file
+    with open(prompt_file_path, 'r', encoding='utf-8') as f:
+        prompt_template = f.read()
+    
+    # Build the full question with RCA content
+    full_question = f"""
+{prompt_template}
+
+---
+
+### BUG/RCA CONTENT TO ANALYZE:
+
+{rca_content}
+
+---
+
+Cisco Product: {product_name}
+"""
+    
+    # Create the agent prompt template
+    agent_prompt_template = """
+    Given a Cisco product name and analysis instructions, provide the requested analysis.
+    Use your tools to fetch context from documentation to provide accurate recommendations.
+    
+    Cisco product: {product_name}
+    
+    Analysis request and content:
+    {question}
+    
+    ⚠️ CRITICAL ANTI-HALLUCINATION RULES:
+    1. ONLY use information that the get_product_info tool actually returned
+    2. If the tool returns "❌ NO DOCUMENTS FOUND ❌", you MUST tell the user no documentation was found
+    3. DO NOT invent document names, page numbers, sections, or quotes
+    4. DO NOT make up plausible-sounding information
+    5. When referencing content, quote EXACT text from the retrieved chunks
+    6. When stating page numbers or sections, copy EXACTLY from the chunk metadata
+    7. If metadata is "Not available", say so - don't guess or invent
+    
+    ⚠️ IMPORTANT: Be efficient with tool calls to avoid rate limiting (max 15 calls per minute)
+    - Call get_product_info only when you need NEW information
+    - Don't repeat searches with similar queries
+    - Use the information from previous tool calls when possible
+    
+    analysis:
+    """
+    
+    product_prompt_template = PromptTemplate(
+        input_variables=["product_name", "question"],
+        template=agent_prompt_template,
+    )
+    
+    llm = get_llm()
+    
+    prompt = OpenAIFunctionsAgent.create_prompt()
+    agent = create_openai_functions_agent(
+        llm=llm, tools=[get_product_info], prompt=prompt
+    )
+    
+    agent_executor = AgentExecutor(
+        agent=agent, tools=[get_product_info], verbose=False, stream_runnable=False
+    )
+    
+    res = agent_executor.invoke(
+        input={
+            "input": product_prompt_template.format_prompt(
+                product_name=product_name,
+                question=full_question,
+            )
+        }
+    )
+    
+    # Extract the output
+    if isinstance(res, dict) and 'output' in res:
+        return res['output']
+    return str(res)

@@ -1,6 +1,7 @@
 import requests
 from requests_oauthlib import OAuth1
 import xml.etree.ElementTree as ET
+from xml.sax.saxutils import escape as xml_escape
 
 # Configuration
 BUG_NUMBER = "CSCwr82677"
@@ -134,17 +135,67 @@ def create_note(bug_number, note_title, note_content, note_type="Other", auth=No
         "Accept": "application/xml"
     }
     
+    # Properly escape XML special characters to prevent malformed XML
+    escaped_content = xml_escape(note_content)
+    escaped_title = xml_escape(note_title)
+    escaped_type = xml_escape(note_type)
+    
     # Construct XML request body with correct format
     xml_body = f"""<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Note xmlns="cdetsng" xmlns:ns1="http://www.w3.org/1999/xlink">
-    <Field name="Note">{note_content}</Field>
-    <Field name="Title">{note_title}</Field>
-    <Field name="Type">{note_type}</Field>
+    <Field name="Note">{escaped_content}</Field>
+    <Field name="Title">{escaped_title}</Field>
+    <Field name="Type">{escaped_type}</Field>
 </Note>"""
     
     response = requests.post(url, auth=auth, headers=headers, data=xml_body)
     response.raise_for_status()
     return response
+
+def get_bug_field_values(bug_number, fields, auth):
+    """
+    Retrieve specific field values from a CDETS bug
+    
+    Args:
+        bug_number: The bug ID (e.g., 'CSCvu26357')
+        fields: Field name or comma-separated list of field names to retrieve (can be string or list)
+        auth: OAuth1 authentication object
+    
+    Returns:
+        Dictionary with field names as keys and their values
+    """
+    # Get full bug summary which contains all fields
+    url = f"https://cdetsng.cisco.com/wsapi/latest/api/bug/{bug_number}"
+    headers = {"Accept": "application/xml"}
+    response = requests.get(url, auth=auth, headers=headers)
+    response.raise_for_status()
+    
+    # Parse XML response
+    root = ET.fromstring(response.content)
+    ns = {'cdets': 'cdetsng'}
+    
+    # Convert fields to list if it's a string
+    if isinstance(fields, str):
+        fields_list = [f.strip() for f in fields.split(',')]
+    else:
+        fields_list = fields
+    
+    # Extract requested field values
+    field_values = {}
+    defect = root.find('.//cdets:Defect', ns)
+    if defect:
+        for field_elem in defect.findall('.//cdets:Field', ns):
+            field_name = field_elem.get('name')
+            if field_name in fields_list:
+                field_value = field_elem.text if field_elem.text else ''
+                field_values[field_name] = field_value
+    
+    # Add any missing fields as empty strings
+    for field_name in fields_list:
+        if field_name not in field_values:
+            field_values[field_name] = ''
+    
+    return field_values
 
 if __name__ == "__main__":
     url = f"https://cdetsng.cisco.com/wsapi/latest/api/bug/{BUG_NUMBER}/files"

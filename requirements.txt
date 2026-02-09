@@ -17,3 +17,6 @@ black
 python-dotenv
 python-docx
 streamlit
+# Excel processing
+pandas
+openpyxl

@@ -122,7 +122,13 @@ def initialize_vector_store() -> Chroma:
             return _vector_store
         except Exception as e:
             print(f"   ⚠️  Could not load existing store: {e}")
-            print(f"   Creating new vector store...")
+            print(f"   🗑️  Removing corrupted store and creating new one...")
+            # Remove corrupted directory
+            import shutil
+            try:
+                shutil.rmtree(PERSIST_DIRECTORY)
+            except:
+                pass
     
     # Load documents and create new vector store
     from ingestion import load_documents

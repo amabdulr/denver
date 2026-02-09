@@ -5,17 +5,66 @@ Main application file for analyzing bug reports and suggesting documentation upd
 
 import streamlit as st
 from dotenv import load_dotenv
-from bug2 import create_auth, get_bug_summary, get_file_content, get_note_content, get_all_notes, create_note
+from bug2 import create_auth, get_bug_summary, get_file_content, get_note_content, get_all_notes, create_note, get_bug_field_values
 import xml.etree.ElementTree as ET
 import requests
 import json
 import os
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 # Import helper functions
 from app_functions import run_agent, format_output, apply_prompt_file
 from first_draft_tab import render_first_draft_tab, handle_first_draft_button, handle_find_internal_button, handle_explain_sfs_button
 from Convert import render_convert_tab, convert_to_xml
 from hal_check_tab import render_hal_check_tab, handle_hallucination_check
+from bulk_analysis_tab import render_bulk_analysis_tab
+
+def send_resolution_email(recipient_username, bug_number, email_body_content, engineer_name=""):
+    """
+    Send bug resolution email to submitter
+    
+    Args:
+        recipient_username: Username without @cisco.com (e.g., 'amabdulr')
+        bug_number: The bug number
+        email_body_content: The complete email body content (already formatted)
+        engineer_name: Name of the engineer resolving the bug
+    
+    Returns:
+        tuple: (success: bool, message: str)
+    """
+    try:
+        # Construct email addresses
+        recipient_email = f"{recipient_username}@cisco.com"
+        sender_email = f"{engineer_name.replace(' ', '.').lower()}@cisco.com" if engineer_name else recipient_email
+        
+        # Create message
+        msg = MIMEMultipart()
+        msg['From'] = sender_email
+        msg['To'] = recipient_email
+        msg['Subject'] = f"Doc Bug {bug_number} Resolution"
+        
+        # Use the email body content as-is (already formatted with greeting, resolution, and signature)
+        msg.attach(MIMEText(email_body_content, 'plain'))
+        
+        # Try common Cisco SMTP servers
+        smtp_servers = ['outbound.cisco.com', 'smtp.cisco.com', 'localhost']
+        
+        for smtp_server in smtp_servers:
+            try:
+                server = smtplib.SMTP(smtp_server, timeout=5)
+                text = msg.as_string()
+                server.sendmail(sender_email, recipient_email, text)
+                server.quit()
+                return (True, f"Email sent successfully to {recipient_email} via {smtp_server}")
+            except Exception as server_error:
+                continue
+        
+        return (False, "Could not send email - all SMTP servers failed. Please check network connectivity.")
+        
+    except Exception as e:
+        return (False, f"Error sending email: {str(e)}")
 
 # Load the .env file
 load_dotenv()
@@ -110,7 +159,7 @@ if 'vector_store_initialized' not in st.session_state:
             st.session_state.vector_store_initialized = False
 
 # Create tabs at the top for different workflows
-tab1, tab2, tab3 = st.tabs(["🔍 Analysis & Summary", "✍️ First Draft", "🔍 Hal-Check"])
+tab1, tab2, tab3, tab4 = st.tabs(["🔍 Analysis & Summary", "✍️ First Draft", "📊 Bulk Analysis", "🔧 Resolve Bug"])
 
 st.divider()
 
@@ -843,11 +892,7 @@ if st.session_state.initial_analysis_done and st.session_state.conversation_hist
                     with st.expander("🐛 Error Details"):
                         st.exception(e)
 
-# Tab 3 - Hallucination Check
-with tab3:
-    render_hal_check_tab()
-
-# Tab 4 - Convert (Hidden temporarily)
+# Tab 3 - Bulk Analysis
 # with tab3:
 #     st.markdown("### 🔄 Convert Content to XML Format")
 #     st.markdown("Convert your raw content to various XML information types.")
@@ -896,5 +941,392 @@ with tab3:
 #             st.session_state.pending_conversion_type = conversion_type
 #             st.session_state.convert_triggered = True
 #             st.rerun()
+
+# Tab 3 - Bulk Analysis
+with tab3:
+    st.markdown('<p class="big-title">📊 Bulk Analysis</p>', unsafe_allow_html=True)
+    st.markdown("Process multiple RCAs at once through ChapterFinder and ContentWriter workflows")
+    
+    st.markdown("---")
+    
+    # Product name selection for bulk analysis
+    product_options = ["Cisco SD-WAN", "Cisco 9800", "ASR 9000", "Cisco 8000", "cisco_generic"]
+    saved_product = get_saved_product()
+    
+    # Find index of saved product, default to 1 if not found
+    try:
+        default_index = product_options.index(saved_product) if saved_product in product_options else 1
+    except ValueError:
+        default_index = 1
+    
+    bulk_product_name = st.selectbox(
+        "Select Product (will be saved for future use)",
+        options=product_options,
+        index=default_index,
+        key='bulk_product_selector'
+    )
+    save_product_preference(bulk_product_name)
+    
+    # Call bulk analysis tab function
+    render_bulk_analysis_tab(bulk_product_name)
+
+# Tab 4 - Resolve Bug
+with tab4:
+    st.markdown('<p class="big-title">🔧 Resolve Bug</p>', unsafe_allow_html=True)
+    st.markdown("Create resolution comments for CDETS bugs")
+    
+    st.markdown("---")
+    
+    col1_resolve, col2_resolve = st.columns([1, 1])
+    
+    with col1_resolve:
+        st.subheader("📝 Bug Information")
+        
+        # Bug number input
+        resolve_bug_number = st.text_input(
+            "Bug Number",
+            placeholder="e.g., CSCwp05354",
+            help="Enter a CDETS bug number",
+            key="resolve_bug_number"
+        )
+        
+        # Fetch Metadata button
+        fetch_metadata_button = st.button(
+            "📥 Fetch Bug Metadata",
+            type="primary",
+            use_container_width=True,
+            help="Fetch bug information and populate fields"
+        )
+    
+    # Handle Fetch Metadata button
+    if fetch_metadata_button:
+        if not resolve_bug_number.strip():
+            st.error("⚠️ Please enter a bug number")
+        else:
+            with st.spinner("Fetching bug info..."):
+                try:
+                    auth = create_auth()
+                    bug_summary = get_bug_summary(resolve_bug_number, auth)
+                    st.session_state.resolve_bug_summary = bug_summary
+                    
+                    # Fetch key fields including Submitter and Engineer
+                    fields = ["Component", "Product", "Version", "Status", "Submitter", "Engineer"]
+                    field_values = get_bug_field_values(resolve_bug_number, fields, auth)
+                    st.session_state.resolve_field_values = field_values
+                    
+                    # Auto-populate from bug fields
+                    if 'Product' in field_values:
+                        st.session_state.product_value = field_values['Product']
+                    if 'Version' in field_values:
+                        st.session_state.version_value = field_values['Version']
+                    if 'Component' in field_values:
+                        st.session_state.component_value = field_values['Component']
+                    if 'Submitter' in field_values:
+                        st.session_state.submitter_value = field_values['Submitter']
+                    if 'Engineer' in field_values:
+                        st.session_state.engineer_value = field_values['Engineer']
+                    
+                    st.success("✅ Bug info fetched and fields populated!")
+                    st.session_state.resolve_data_fetched = True
+                    st.rerun()
+                except Exception as e:
+                    st.error(f"❌ Error: {str(e)}")
+                    with st.expander("🐛 Error Details"):
+                        st.exception(e)
+    
+    # Show fields only after data has been fetched
+    if st.session_state.get('resolve_data_fetched', False):
+        st.markdown("---")
+        
+        # Platform (editable, pre-populated from bug metadata)
+        product_value = st.text_input(
+            "Platform",
+            value=st.session_state.get('product_value', ''),
+            placeholder="e.g., ewlc, sdwan",
+            key="product_input_resolve"
+        )
+        
+        # Version (editable, pre-populated from bug metadata)
+        version_value = st.text_input(
+            "Version(s)",
+            value=st.session_state.get('version_value', ''),
+            placeholder="e.g., 17.9.5",
+            key="version_input_resolve"
+        )
+        
+        # Technology (editable, pre-populated from bug metadata)
+        component_value = st.text_input(
+            "Technology",
+            value=st.session_state.get('component_value', ''),
+            placeholder="e.g., ewlc-docs, sdwan-routing",
+            key="component_input_resolve"
+        )
+        
+        # Submitter (editable, pre-populated from bug metadata)
+        submitter_value = st.text_input(
+            "Submitter",
+            value=st.session_state.get('submitter_value', ''),
+            placeholder="Bug submitter",
+            key="submitter_input_resolve"
+        )
+        
+        # Engineer (editable, pre-populated from bug metadata)
+        engineer_value = st.text_input(
+            "Engineer",
+            value=st.session_state.get('engineer_value', ''),
+            placeholder="Assigned engineer",
+            key="engineer_input_resolve"
+        )
+        
+        st.markdown("---")
+        
+        # RCA Type dropdown
+        rca_type_options = [
+            "Eng.Escape_Restrictions",
+            "Eng.Escape_Unnotified-Behavior-Change",
+            "Eng.Escape_InaccurateReview",
+            "Doc.Escape_GeneralErrors",
+            "Doc.Escape_Content_Issue",
+            "Doc.Escape_Profiling",
+            "Doc.Enhancement-Future_Release",
+            "Doc.WalkMe_UI_Errors",
+            "Eng.Escape_WalkMe-UI-jQuery-Change",
+            "WalkMe.Escape_Known-Limitations",
+            "WalkMe.Escape_Issues",
+            "Third-party.Escape",
+            "Eng.Escape_InaccurateContent",
+            "Eng.Escape_Unnotified-Feature",
+            "Eng.Process-Escape"
+        ]
+        
+        rca_type = st.selectbox(
+            "RCA Type",
+            options=rca_type_options,
+            help="Select the RCA type",
+            key="rca_type"
+        )
+        
+        st.markdown("---")
+        
+        # Change Description
+        change_description = st.text_area(
+            "Change Description",
+            value="",
+            height=100,
+            placeholder="Describe the documentation changes made...",
+            help="Enter a description of the changes made",
+            key="change_description"
+        )
+        
+        st.markdown("---")
+        
+        # Number of Books/Chapters section
+        st.subheader("📚 Documentation Locations")
+        
+        num_locations = st.number_input(
+            "Number of Books/Chapters",
+            min_value=1,
+            max_value=10,
+            value=1,
+            step=1,
+            help="Number of documentation locations impacted by this bug",
+            key="num_locations"
+        )
+        
+        # Create dynamic fields for each location
+        for i in range(int(num_locations)):
+            st.markdown(f"**Location {i+1}**")
+            
+            col_book, col_chapter = st.columns(2)
+            with col_book:
+                book = st.text_input(
+                    "Book",
+                    value="",
+                    placeholder="Enter book name",
+                    key=f"book_{i}",
+                    label_visibility="visible"
+                )
+            
+            with col_chapter:
+                chapter = st.text_input(
+                    "Chapter",
+                    value="",
+                    placeholder="Enter chapter",
+                    key=f"chapter_{i}",
+                    label_visibility="visible"
+                )
+            
+            topic = st.text_input(
+                "Topic",
+                value="",
+                placeholder="Enter topic",
+                key=f"topic_{i}",
+                label_visibility="visible"
+            )
+            
+            details = st.text_area(
+                "Details",
+                value="",
+                height=100,
+                placeholder="Enter details of the change...",
+                key=f"details_{i}",
+                label_visibility="visible"
+            )
+            
+            url = st.text_input(
+                "URL",
+                value="",
+                placeholder="Enter URL",
+                key=f"url_{i}",
+                label_visibility="visible"
+            )
+            
+            if i < int(num_locations) - 1:
+                st.markdown("---")
+        
+        st.markdown("---")
+        
+        # Create Resolution Comment button
+        col_create, col_post = st.columns(2)
+        
+        with col_create:
+            create_resolution_button = st.button(
+                "📝 Create Resolution Comment",
+                type="secondary",
+                use_container_width=True,
+                help="Generate formatted resolution comment"
+            )
+        
+        # Handle Create Resolution Comment
+        if create_resolution_button:
+            # Build resolution comment
+            resolution_lines = []
+            resolution_lines.append(f"RCA: {rca_type}")
+            resolution_lines.append(f"Platform: {product_value}")
+            resolution_lines.append(f"Version(s): {version_value}")
+            resolution_lines.append(f"Technology: {component_value}")
+            resolution_lines.append("")
+            resolution_lines.append(f"Change Description: {change_description}")
+            resolution_lines.append("")
+            
+            # Add each location
+            for i in range(int(num_locations)):
+                book_val = st.session_state.get(f'book_{i}', '')
+                chapter_val = st.session_state.get(f'chapter_{i}', '')
+                topic_val = st.session_state.get(f'topic_{i}', '')
+                details_val = st.session_state.get(f'details_{i}', '')
+                url_val = st.session_state.get(f'url_{i}', '')
+                
+                resolution_lines.append(f"Book: {book_val}")
+                resolution_lines.append(f"Chapter: {chapter_val}")
+                resolution_lines.append(f"Topic: {topic_val}")
+                resolution_lines.append(f"Details: {details_val}")
+                resolution_lines.append(f"URL: {url_val}")
+                if i < int(num_locations) - 1:
+                    resolution_lines.append("")
+            
+            resolution_comment = "\n".join(resolution_lines)
+            st.session_state.resolution_comment = resolution_comment
+            
+            # Create email body
+            engineer_name = st.session_state.get('engineer_value', '')
+            email_body = f"""Hello,
+
+Please find the resolution of the bug {resolve_bug_number}.
+
+{resolution_comment}
+
+Thanks and Regards,
+{engineer_name}"""
+            st.session_state.email_body = email_body
+            
+            st.success("✅ Resolution comment created!")
+        
+        # Show preview if comment has been created
+        if 'resolution_comment' in st.session_state and st.session_state.resolution_comment:
+            with st.expander("📝 Preview Resolution Comment", expanded=True):
+                st.text(st.session_state.resolution_comment)
+            
+            # Editable email preview
+            st.markdown("---")
+            st.subheader("📧 Email Preview (Editable)")
+            email_content = st.text_area(
+                "Email Content",
+                value=st.session_state.get('email_body', ''),
+                height=300,
+                help="Edit the email content before sending",
+                key="email_content_edit"
+            )
+        
+        # Email option checkbox
+        send_email = st.checkbox(
+            "📧 Send email to submitter",
+            value=False,
+            help="Send resolution email to bug submitter with engineer as sender"
+        )
+        
+        # Post Resolution Comment button (only show after creating)
+        with col_post:
+            post_resolution_button = st.button(
+                "📤 Post Resolution Comment",
+                type="primary",
+                use_container_width=True,
+                help="Post the resolution comment to the bug"
+            )
+        
+        # Handle Post Resolution Comment
+        if post_resolution_button:
+            if not resolve_bug_number.strip():
+                st.error("⚠️ Please enter a bug number")
+            else:
+                with st.spinner(f"📤 Posting resolution comment to {resolve_bug_number}..."):
+                    try:
+                        auth = create_auth()
+                        response = create_note(
+                            bug_number=resolve_bug_number,
+                            note_title="R-comments",
+                            note_content=st.session_state.resolution_comment,
+                            note_type="R-comments",
+                            auth=auth
+                        )
+                        st.success(f"✅ Resolution comment posted successfully!")
+                        st.info(f"Response status: {response.status_code}")
+                        
+                        # Display bug link
+                        bug_url = f"https://cdetsng.cisco.com/webui/#view={resolve_bug_number}"
+                        st.markdown(f"🔗 **View Bug:** [{resolve_bug_number}]({bug_url})")
+                        
+                        # Send email if checkbox is selected
+                        if send_email:
+                            # Hardcoded for testing - always send to amabdulr@cisco.com
+                            test_recipient = "amabdulr"
+                            engineer_name = st.session_state.get('engineer_value', '')
+                            
+                            # Use edited email content if available
+                            email_content_to_send = st.session_state.get('email_content_edit', st.session_state.get('email_body', ''))
+                            
+                            with st.spinner("📧 Sending email to amabdulr@cisco.com (test mode)..."):
+                                success, message = send_resolution_email(
+                                    test_recipient,
+                                    resolve_bug_number,
+                                    email_content_to_send,
+                                    engineer_name
+                                )
+                                if success:
+                                    st.success(f"📧 {message}")
+                                else:
+                                    st.warning(f"⚠️ {message}")
+                        
+                        # Clear the created comment after posting
+                        del st.session_state.resolution_comment
+                    except Exception as e:
+                        st.error(f"❌ Error posting comment: {str(e)}")
+                        with st.expander("🐛 Error Details"):
+                            st.exception(e)
+    else:
+        # Show message when no data has been fetched yet
+        with col2_resolve:
+            st.info("👈 Enter a bug number and click 'Fetch Bug Metadata' to get started")
+
 
 

@@ -8,6 +8,97 @@ from langchain_chroma import Chroma
 from langchain_community.document_loaders import TextLoader, PyPDFLoader
 from langchain_core.documents import Document
 
+def build_pdf_section_map(pdf_path: str) -> Dict[int, str]:
+    """
+    Pre-process a PDF to build a page-to-section mapping.
+    Scans the entire PDF to find section headers and maps them to page ranges.
+    
+    Args:
+        pdf_path: Path to the PDF file
+        
+    Returns:
+        Dictionary mapping page numbers to section hierarchies
+    """
+    print(f"   Building section map for PDF...")
+    loader = PyPDFLoader(pdf_path)
+    pages = loader.load()
+    
+    page_to_section = {}
+    current_sections = {"part": "", "chapter": "", "section": ""}
+    
+    for page_doc in pages:
+        page_num = page_doc.metadata.get("page", 0)
+        content = page_doc.page_content
+        lines = content.split('\n')
+        
+        # Look for section headers in the first portion of the page
+        for i, line in enumerate(lines[:30]):  # Check first 30 lines of each page
+            line = line.strip()
+            
+            if len(line) < 3:
+                continue
+            
+            # Part detection (highest level)
+            part_match = re.match(r'^(Part\s+[IVX\d]+)[:\s\-]?\s*(.+)?$', line, re.IGNORECASE)
+            if part_match:
+                part_text = part_match.group(1)
+                if part_match.group(2):
+                    part_text += " " + part_match.group(2)
+                current_sections["part"] = part_text.strip()
+                current_sections["chapter"] = ""
+                current_sections["section"] = ""
+                continue
+            
+            # Chapter detection with lookahead for title on next line
+            chapter_match = re.match(r'^(Chapter\s+\d+)[:\s\-]?\s*(.+)?$', line, re.IGNORECASE)
+            if chapter_match:
+                chapter_text = chapter_match.group(1)
+                if chapter_match.group(2):
+                    chapter_text += " " + chapter_match.group(2)
+                else:
+                    # Look at next line for title
+                    if i + 1 < len(lines):
+                        next_line = lines[i + 1].strip()
+                        # If next line looks like a title (starts with capital, reasonable length)
+                        if next_line and 3 < len(next_line) < 100 and next_line[0].isupper():
+                            chapter_text += " " + next_line
+                current_sections["chapter"] = chapter_text.strip()
+                current_sections["section"] = ""
+                continue
+            
+            # Section/subsection detection with lookahead
+            section_patterns = [
+                (r'^(Section\s+[\d\.]+)[:\s\-]?\s*(.+)?$', re.IGNORECASE),
+                (r'^(\d+\.\d+\.?\d*)\s+([A-Z][^\n]{5,60})$', 0),  # Numbered headings
+                (r'^([A-Z][A-Z\s]{8,60})\s*$', 0),  # ALL CAPS HEADINGS
+            ]
+            
+            for pattern, flags in section_patterns:
+                match = re.match(pattern, line, flags)
+                if match:
+                    section_text = ' '.join(g.strip() for g in match.groups() if g)
+                    # If section text is just a number/identifier, try next line for title
+                    if not any(c.isalpha() and c.islower() for c in section_text) and i + 1 < len(lines):
+                        next_line = lines[i + 1].strip()
+                        if next_line and 3 < len(next_line) < 100 and next_line[0].isupper():
+                            section_text += " " + next_line
+                    current_sections["section"] = section_text
+                    break
+        
+        # Build hierarchical section string for this page
+        hierarchy = []
+        if current_sections["part"]:
+            hierarchy.append(current_sections["part"])
+        if current_sections["chapter"]:
+            hierarchy.append(current_sections["chapter"])
+        if current_sections["section"]:
+            hierarchy.append(current_sections["section"])
+        
+        page_to_section[page_num] = " > ".join(hierarchy) if hierarchy else ""
+    
+    print(f"   Mapped {len([v for v in page_to_section.values() if v])} pages with section info")
+    return page_to_section
+
 def extract_sections_from_content(content: str) -> str:
     """
     Extract section/chapter information from the actual chunk content
@@ -93,8 +184,10 @@ def load_documents(base_directory: str = "knowledge_docs") -> List[Document]:
                         # Process all files (no persistence in in-memory mode)
                         print(f"Reading file: {full_path}")
                         
-                        # Use appropriate loader based on file type
+                        # For PDFs, build section map first
+                        pdf_section_map = None
                         if file.endswith(".pdf"):
+                            pdf_section_map = build_pdf_section_map(full_path)
                             loader = PyPDFLoader(full_path)
                         else:
                             loader = TextLoader(full_path)
@@ -114,8 +207,15 @@ def load_documents(base_directory: str = "knowledge_docs") -> List[Document]:
                             doc.metadata["source"] = full_path
                             # Page number is automatically added by PyPDFLoader for PDFs
                             
-                            # Add section/part information by analyzing chunk content
-                            section = extract_sections_from_content(doc.page_content)
+                            # Add section/part information
+                            if pdf_section_map is not None and "page" in doc.metadata:
+                                # For PDFs, use the pre-built section map
+                                page_num = doc.metadata["page"]
+                                section = pdf_section_map.get(page_num, "")
+                            else:
+                                # For markdown or if page mapping fails, analyze chunk content
+                                section = extract_sections_from_content(doc.page_content)
+                            
                             doc.metadata["section"] = section if section else "Section information not available"
 
                         total_docs += len(texts)  # Changed from 'docs' to 'texts'
