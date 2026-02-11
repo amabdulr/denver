@@ -210,6 +210,10 @@ def save_test_results_to_excel(page_name, feature, tester_name, bug_number, outp
 def render_analysis_summary_page():
     """Render the Analysis & Summary page with full functionality"""
     st.header("🔍 Analysis & Summary")
+    
+    # Add model recommendation note
+    st.info("💡 **Recommended Models:** This page works best with **gpt-4.1** or **gpt-4o** for intelligent query parsing. Other models use a simpler search method but work reliably.")
+    
     st.markdown("---")
     
     # Step-by-step instructions
@@ -852,6 +856,8 @@ def main():
         st.session_state.initial_analysis_done = False
     if 'context_window_size' not in st.session_state:
         st.session_state.context_window_size = 3  # Default: last 3 exchanges
+    if 'selected_model' not in st.session_state:
+        st.session_state.selected_model = 'gpt-4o'  # Default to gpt-4o
     
     # Initialize vector store in session state (only once)
     if 'vector_store_initialized' not in st.session_state:
@@ -908,6 +914,56 @@ def main():
             ✓ Bug resolution workflow
             ✓ Hallucination detection
             """)
+        
+        st.markdown("---")
+        
+        # Model selector - All available models
+        st.markdown("### 🤖 Model Selection")
+        
+        all_models = [
+            "gpt-4.1",
+            "gpt-4o",
+            "gpt-5",
+            "gpt-5-2", 
+            "gpt-5-chat",
+            "gpt-5-mini",
+            "gpt-4o-mini",
+            "gpt-5-nano",
+            "claude-sonnet-4",
+            "gemini-2.5-pro",
+            "gemini-2.5-flash"
+        ]
+        
+        model_descriptions = {
+            "gpt-4.1": "GPT-4.1 (Reliable, Full Features) ✅",
+            "gpt-4o": "GPT-4o (Balanced, Full Features) ✅",
+            "gpt-5": "GPT-5 (Latest) ⚠️",
+            "gpt-5-2": "GPT-5-2 (Newest) ⚠️",
+            "gpt-5-chat": "GPT-5 Chat ⚠️",
+            "gpt-5-mini": "GPT-5 Mini (Fast) ⚠️",
+            "gpt-4o-mini": "GPT-4o Mini (Very Fast) ⚠️",
+            "gpt-5-nano": "GPT-5 Nano (Cheapest) ⚠️",
+            "claude-sonnet-4": "Claude Sonnet 4 (Anthropic) ⚠️",
+            "gemini-2.5-pro": "Gemini 2.5 Pro (Google) ⚠️",
+            "gemini-2.5-flash": "Gemini 2.5 Flash (Google) ⚠️"
+        }
+        
+        selected_model = st.selectbox(
+            "Choose Model",
+            options=all_models,
+            format_func=lambda x: model_descriptions.get(x, x),
+            index=all_models.index(st.session_state.selected_model) if st.session_state.selected_model in all_models else 0,
+            key="model_selector",
+            help="✅ = Full smart search support\n⚠️ = Uses fallback search (works but less intelligent query parsing)"
+        )
+        
+        st.session_state.selected_model = selected_model
+        
+        # Show info about the selected model's capabilities
+        if selected_model in ['gpt-4.1', 'gpt-4o']:
+            st.caption("✅ Smart query parsing enabled")
+        else:
+            st.caption("⚠️ Using fallback search mode")
         
         st.markdown("---")
         st.caption("💡 Powered by Azure OpenAI")

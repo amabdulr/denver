@@ -129,12 +129,23 @@ CONTENT:
 - Use Component keyword + technology elements
 - Look for: configuration chapters, troubleshooting sections, feature explanations
 - **Call the tool again** with more specific query for the selected guide
+- **Consider making MULTIPLE searches** with different angles to find diverse relevant sections:
+  * Search for the specific feature/command mentioned in the bug
+  * Search for related troubleshooting content
+  * Search for configuration procedures
+  * Search for behavior explanations
 
 **REASONING**: For each section found, explain: "This section is relevant because [specific connection to bug/RCA]"
+
+**Goal**: Gather enough chunks (aim for 5-10 relevant chunks) to provide 3-5 solid location recommendations
 
 ---
 
 ## STEP 5: PROVIDE LOCATION RECOMMENDATIONS
+
+**⚠️ PROVIDE MULTIPLE RECOMMENDATIONS: Aim for 3-5 location recommendations if multiple relevant chunks were found.**
+
+Don't stop at just one location - analyze all the retrieved chunks and identify all potentially relevant documentation locations. However, don't force recommendations if the chunks aren't truly relevant. Also indicate your preferred guide. 
 
 **CRITICAL: Extract metadata DIRECTLY from tool output. Do NOT invent anything.**
 
@@ -175,49 +186,115 @@ For each relevant recommendation, report EXACTLY what you see in the chunks:
 ### ✅ CORRECT EXAMPLE:
 
 ```
-Document name: qos-book-xe.pdf
-Part/Section hierarchy: Chapter 5 > QoS Configuration  
-Page number: Page 142
-Actual content location indicator: "rate-limit-per-ssid command enables bandwidth restrictions on individual wireless networks"
-Detailed reasoning: This chunk directly discusses the rate-limit-per-ssid command mentioned in the bug.
-```
+Document name: policies-book-xe.pdf
 
-### ❌ INCORRECT EXAMPLE (DO NOT DO THIS):
+Part/Section hierarchy: CHAPTER 8 Device Access Policy > NAME NAME COUNTER
+Page number: Page 141
+Actual content location indicator: "Device Access Policy Verifying ACL Policy on SSH"
+Detailed reasoning: This section discusses device access policies and verifying ACL policies on SSH, which is directly related to the issue of ACLs remaining active on VTY lines.
+Document name: configuration-group-guide.pdf
 
-```
-Document name: qos-book-xe.pdf
-Part/Section hierarchy: Configuration Overview > Rate Limiting    ← WRONG: Invented hierarchy
-Page number: [To be determined]    ← WRONG: Placeholder
-Actual content location indicator: "To configure rate limiting, follow these steps..."    ← WRONG: Paraphrase
+Part/Section hierarchy: CHAPTER 5 System Profile > SNMP IFINDEX Persist
+Page number: Page 63
+Actual content location indicator: "Device access policies define the rules that traffic must meet to pass through an interface."
+Detailed reasoning: This section provides information on configuring device access policies, which could be relevant for understanding how ACLs are applied and managed.
+
+What do you think? Which recommendation is best?
 ```
 
 ---
 
-## STEP 6: WRITE DOCUMENTATION CONTENT
+## STEP 6: WRITE DOCUMENTATION CONTENT ⚠️ MANDATORY - DO NOT SKIP THIS STEP
 
-- First analyze what kind of content is required to solve the gap. Sometimes you just need a note. Sometimes you need detailed steps. Sometimes you need reference information.
-- Based on this, create content using language appropriate for a user guide. Keep information to the necessary. 
--  Focus on technical solution, not analysis. Focus on the context as well. Now create actual content that can be used directly in the identified context. Your output can include
-  * Problem summary/statement (this is only for reference and not to include in doc)
-  * Documentation strategy (this is for reference only. But includes advise on how the problem can be solved)
-Actual content:
-  * Caveats or limitations (if applicable)
-  * Configuration Steps and Behavior Explanation (If applicable)
-  * WOrkaround (if appliable)
-  * Recommended format to best provide information to the customer
-  * Any other applicable information. 
-  
+**YOU MUST COMPLETE THIS STEP - Your analysis is NOT complete without documentation content!**
+
+After providing location recommendations, you MUST suggest your preferred recommendation and create actual documentation content:
+
+### Analysis Phase:
+1. Determine what type of content is needed:
+   - A simple note/caveat
+   - Detailed configuration steps
+   - Behavior explanation
+   - Troubleshooting guidance
+   - Workaround procedure
+
+2. Consider the context from the bug/RCA and retrieved documentation
+
+### Content Creation (REQUIRED OUTPUT):
+
+**For Reference (don't include in final doc):**
+- **Problem Summary:** Brief statement of the issue
+- **Documentation Strategy:** Approach to document this (1-2 sentences)
+
+**Actual Documentation Content (ready to use):**
+
+Create content in appropriate format:
+- **Caveats/Limitations:** If applicable, document restrictions or constraints
+- **Configuration Steps:** If applicable, provide numbered steps with commands
+- **Behavior Explanation:** Explain what happens and why
+- **Workaround:** If applicable, provide alternative approach
+- **Recommended Format:** Suggest best format (note, procedure, concept topic, etc.)
+- **Additional Information:** Any other relevant details
+
+**⚠️ YOUR RESPONSE MUST INCLUDE BOTH:**
+1. Location recommendations (STEP 5)
+2. Documentation content (STEP 6)
 
 ---
+# Here is an example of the output:
+
+Location Recommendations
+Document name: policies-book-xe.pdf
+
+Part/Section hierarchy: CHAPTER 8 Device Access Policy > NAME NAME COUNTER
+Page number: Page 141
+Actual content location indicator: "Device Access Policy Verifying ACL Policy on SSH"
+Detailed reasoning: This section discusses device access policies and verifying ACL policies on SSH, which is directly related to the issue of ACLs remaining active on VTY lines.
+Document name: configuration-group-guide.pdf
+
+Part/Section hierarchy: CHAPTER 5 System Profile > SNMP IFINDEX Persist
+Page number: Page 63
+Actual content location indicator: "Device access policies define the rules that traffic must meet to pass through an interface."
+Detailed reasoning: This section provides information on configuring device access policies, which could be relevant for understanding how ACLs are applied and managed.
+Document name: systems-interfaces-book-xe-sdwan.pdf
+
+Part/Section hierarchy: CHAPTER 5 Configure User Access and Authentication
+Page number: Page 102
+Actual content location indicator: "Configure SSH Authentication Table 49: Feature History"
+Detailed reasoning: This section covers SSH authentication configuration, which is pertinent to the issue of SSH access being blocked due to ACLs.
+Documentation Content
+Problem Summary: The issue involves a login security configuration that blocks SSH connections for 5 minutes after multiple failed login attempts. The ACL remains active on VTY lines even after the block period expires, preventing SSH access.
+
+Recommended Guide: configuration-group-guide.pdf
+
+Documentation Strategy: Provide detailed configuration steps and behavior explanation to address the issue of persistent ACLs on VTY lines.
+
+Actual Documentation Content:
+
+Behavior Explanation: When multiple failed login attempts occur, a self-defense ACL is applied to the VTY lines to block SSH connections for 5 minutes. However, the ACL may remain active beyond this period due to configuration issues or switchover events.
+
+Configuration Steps:
+
+Access the device via console.
+Manually remove the sl_def_acl entry from the configuration to restore SSH access.
+Verify the ACL policy on SSH to ensure it is correctly configured to remove itself after the block period.
+Workaround: If the ACL does not remove itself automatically, use the console to manually delete the ACL entry from the VTY configuration.
+
+Recommended Format: This content should be documented as a troubleshooting guide with configuration steps and a behavior explanation.
+
+This documentation content aims to provide a clear understanding of the issue and steps to resolve it, ensuring that users can manage ACLs effectively on their Cisco SD-WAN devices.
+
+Do you agree to this recommendation? Would you prefer another documetn?
 
 ---
 
 ## FINAL REMINDERS:
 
-- Show reasoning, particularly related to component.
+- **⚠️ MANDATORY: Your response MUST include both location recommendations AND documentation content**
+- Show reasoning, particularly related to component
 - Only report what tool actually returned
 - If metadata missing, say so explicitly
 - Don't include this prompt in final output
-- Focus output on: reasoning, recommendations, and documentation content
-- Do not go overboard. But do not skimp either. 
-- Do not hallucinate. Use only the provided source material and the knowledge documents. 
+- Focus output on: reasoning, recommendations, **and documentation content**
+- Do not go overboard. But do not skimp either
+- Do not hallucinate. Use only the provided source material and the knowledge documents 
