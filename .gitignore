@@ -49,6 +49,9 @@ knowledge_docs/
 .ipynb_checkpoints
 *.ipynb
 
+# Test results
+testresults.xlsx
+
 # Logs
 *.log
 

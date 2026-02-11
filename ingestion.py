@@ -228,6 +228,91 @@ def load_documents(base_directory: str = "knowledge_docs") -> List[Document]:
     return documents
 
 
+def get_all_document_paths(base_directory: str = "knowledge_docs") -> Set[str]:
+    """
+    Get all document file paths without loading them
+    
+    Args:
+        base_directory: Base directory containing knowledge documents
+        
+    Returns:
+        Set of absolute file paths
+    """
+    file_paths = set()
+    
+    for root, dirs, files in os.walk(base_directory):
+        for file in files:
+            if file.endswith(('.pdf', '.txt', '.md')):
+                full_path = os.path.abspath(os.path.join(root, file))
+                file_paths.add(full_path)
+    
+    return file_paths
+
+
+def load_documents_from_path(file_path: str) -> List[Document]:
+    """
+    Load and process documents from a single file path
+    
+    Args:
+        file_path: Path to a single document file
+        
+    Returns:
+        List of processed Document objects with metadata
+    """
+    documents = []
+    
+    # Determine product from path
+    path_parts = file_path.split(os.sep)
+    product = "unknown"
+    for part in path_parts:
+        if part in ["sdwan", "9800", "ASR9000", "Cisco8000", "cisco_generic"]:
+            product = part
+            break
+    
+    filename = os.path.basename(file_path)
+    print(f"   Loading: {filename}")
+    
+    try:
+        # Load based on file type
+        if file_path.endswith('.pdf'):
+            # Build section map first
+            pdf_section_map = build_pdf_section_map(file_path)
+            loader = PyPDFLoader(file_path)
+            docs = loader.load()
+        else:
+            # Text or markdown file
+            loader = TextLoader(file_path)
+            docs = loader.load()
+            pdf_section_map = None
+        
+        # Split into chunks
+        text_splitter = CharacterTextSplitter(
+            chunk_size=2000, chunk_overlap=200
+        )
+        texts = text_splitter.split_documents(docs)
+        
+        # Add metadata
+        for doc in texts:
+            doc.metadata["product"] = product
+            doc.metadata["source"] = os.path.relpath(file_path)
+            
+            # Add section information
+            if pdf_section_map is not None and "page" in doc.metadata:
+                page_num = doc.metadata["page"]
+                section = pdf_section_map.get(page_num, "")
+            else:
+                section = extract_sections_from_content(doc.page_content)
+            
+            doc.metadata["section"] = section if section else "Section information not available"
+        
+        documents.extend(texts)
+        
+    except Exception as e:
+        print(f"      ❌ Error loading {filename}: {e}")
+    
+    return documents
+
+
 if __name__ == "__main__":
     print("="*70)
     print("🔄 ChromaDB In-Memory Ingestion")
@@ -253,12 +338,36 @@ if __name__ == "__main__":
     print("\n📊 Embedding documents...")
     print("   Creating IN-MEMORY vector store...")
     
-    # Create in-memory vector store (no persist_directory)
-    vector_store = Chroma.from_documents(
-        collection_name="cisco_products_custom_loader",
-        embedding=embeddings,
-        documents=documents,
-    )
+    # Create vector store in batches to avoid ChromaDB limit (max ~5461)
+    BATCH_SIZE = 5000
+    
+    if len(documents) > BATCH_SIZE:
+        print(f"   Processing {len(documents)} documents in batches of {BATCH_SIZE}...")
+        
+        # Create with first batch
+        first_batch = documents[:BATCH_SIZE]
+        vector_store = Chroma.from_documents(
+            collection_name="cisco_products_custom_loader",
+            embedding=embeddings,
+            documents=first_batch,
+        )
+        print(f"   ✅ Created vector store with {len(first_batch)} chunks")
+        
+        # Add remaining batches
+        remaining = documents[BATCH_SIZE:]
+        num_batches = (len(remaining) + BATCH_SIZE - 1) // BATCH_SIZE
+        for i in range(0, len(remaining), BATCH_SIZE):
+            batch = remaining[i:i + BATCH_SIZE]
+            batch_num = i // BATCH_SIZE + 2
+            vector_store.add_documents(batch)
+            print(f"   ✅ Batch {batch_num}/{num_batches + 1}: Added {len(batch)} chunks")
+    else:
+        # Small dataset, no batching needed
+        vector_store = Chroma.from_documents(
+            collection_name="cisco_products_custom_loader",
+            embedding=embeddings,
+            documents=documents,
+        )
     
     print(f"\n✅ Vector store created successfully!")
     print(f"   Total documents: {len(documents)}")

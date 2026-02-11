@@ -10,6 +10,8 @@ Your goal is to identify provide ready-to-use content.
 - Based on this, create content using language appropriate for a user guide. Keep information to the necessary. 
 -  Focus on technical solution, not analysis. Focus on the context as well. Now create actual content that can be used directly in the identified context. Your output can include
   * Problem summary/statement (this is only for reference and not to include in doc)
+  * Documentation strategy (this is for reference only. But includes advise on how the problem can be solved)
+Actual content:
   * Caveats or limitations (if applicable)
   * Configuration Steps and Behavior Explanation (If applicable)
   * WOrkaround (if appliable)

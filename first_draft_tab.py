@@ -5,6 +5,7 @@ Handles the First Draft workflow including file upload and content generation
 
 import streamlit as st
 import io
+import time
 from app_functions import apply_prompt_file, format_output
 
 
@@ -149,6 +150,9 @@ def handle_first_draft_button(extracted_text: str, product_name: str, output_con
                     context += "When generating the customer-facing first draft, you MUST exclude or rewrite any content that relates to the internal information listed above. "
                     context += "Focus on creating documentation suitable for external customers, removing implementation details, internal architecture, debug information, and any proprietary technical details.\n\n"
                 
+                # Add delay to prevent rate limiting
+                time.sleep(5)
+                
                 # Use the apply_prompt_file function with FirstDraftCTWG.md
                 first_draft = apply_prompt_file("FirstDraftCTWG.md", context, product_name)
                 
@@ -193,6 +197,9 @@ def handle_find_internal_button(extracted_text: str, product_name: str, output_c
                 st.session_state.product_name = product_name
                 st.session_state.current_extracted_text = extracted_text
                 st.session_state.initial_analysis_done = True
+                
+                # Add delay to prevent rate limiting
+                time.sleep(5)
                 
                 # Use the apply_prompt_file function with InternalAnalysis.md
                 internal_info = apply_prompt_file("InternalAnalysis.md", extracted_text, product_name)

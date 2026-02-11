@@ -134,22 +134,61 @@ def initialize_vector_store() -> Chroma:
     from ingestion import load_documents
     documents = load_documents()
     
-    # Create vector store with or without persistence
-    if use_persistence:
-        _vector_store = Chroma.from_documents(
-            collection_name="cisco_products_custom_loader",
-            persist_directory=PERSIST_DIRECTORY,
-            embedding=embeddings,
-            documents=documents,
-        )
-        print(f"✅ Created persistent vector store at {PERSIST_DIRECTORY}")
+    # Create vector store in batches to avoid ChromaDB limit (max ~5461)
+    BATCH_SIZE = 5000
+    
+    if len(documents) > BATCH_SIZE:
+        print(f"   Processing {len(documents)} documents in batches of {BATCH_SIZE}...")
+        
+        # Create with first batch
+        first_batch = documents[:BATCH_SIZE]
+        
+        if use_persistence:
+            _vector_store = Chroma.from_documents(
+                collection_name="cisco_products_custom_loader",
+                persist_directory=PERSIST_DIRECTORY,
+                embedding=embeddings,
+                documents=first_batch,
+            )
+        else:
+            _vector_store = Chroma.from_documents(
+                collection_name="cisco_products_custom_loader",
+                embedding=embeddings,
+                documents=first_batch,
+            )
+        
+        print(f"   ✅ Created vector store with {len(first_batch)} chunks")
+        
+        # Add remaining batches
+        remaining = documents[BATCH_SIZE:]
+        num_batches = (len(remaining) + BATCH_SIZE - 1) // BATCH_SIZE
+        for i in range(0, len(remaining), BATCH_SIZE):
+            batch = remaining[i:i + BATCH_SIZE]
+            batch_num = i // BATCH_SIZE + 2
+            _vector_store.add_documents(batch)
+            print(f"   ✅ Batch {batch_num}/{num_batches + 1}: Added {len(batch)} chunks")
+        
+        if use_persistence:
+            print(f"✅ Created persistent vector store at {PERSIST_DIRECTORY}")
+        else:
+            print(f"✅ Created in-memory vector store")
     else:
-        _vector_store = Chroma.from_documents(
-            collection_name="cisco_products_custom_loader",
-            embedding=embeddings,
-            documents=documents,
-        )
-        print(f"✅ Created in-memory vector store")
+        # Small dataset, no batching needed
+        if use_persistence:
+            _vector_store = Chroma.from_documents(
+                collection_name="cisco_products_custom_loader",
+                persist_directory=PERSIST_DIRECTORY,
+                embedding=embeddings,
+                documents=documents,
+            )
+            print(f"✅ Created persistent vector store at {PERSIST_DIRECTORY}")
+        else:
+            _vector_store = Chroma.from_documents(
+                collection_name="cisco_products_custom_loader",
+                embedding=embeddings,
+                documents=documents,
+            )
+            print(f"✅ Created in-memory vector store")
     
     print(f"   Total documents: {len(documents)}")
     return _vector_store

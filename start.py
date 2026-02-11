@@ -55,7 +55,7 @@ def main():
     sys.argv = [
         "streamlit",
         "run",
-        "streamlit_app.py",
+        "sidebar_app.py",
         "--server.headless=true",
         "--browser.gatherUsageStats=false",
     ]

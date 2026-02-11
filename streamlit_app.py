@@ -711,6 +711,10 @@ if post_analysis_button:
                     st.success(f"✅ Successfully posted analysis to bug {first_bug}!")
                     st.info(f"Response status: {response.status_code}")
                     
+                    # Display bug link
+                    bug_url = f"https://cdetsng.cisco.com/webui/#view={first_bug}"
+                    st.markdown(f"🔗 **View Bug:** [{first_bug}]({bug_url})")
+                    
                 except Exception as e:
                     st.error(f"❌ Error posting analysis to bug: {str(e)}")
                     with st.expander("🐛 Error Details"):

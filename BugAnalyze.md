@@ -32,13 +32,39 @@ CONTENT:
 
 ## STEP 1: EXTRACT SEARCH KEYWORDS
 
+### ⚠️ CHECK FOR CISCO DOCUMENTATION LINKS FIRST (HIGHEST PRIORITY):
+
+**MANDATORY: Scan the ENTIRE bug/RCA content for Cisco documentation URLs BEFORE doing anything else.**
+
+**Look for URLs matching these patterns:**
+- `https://www.cisco.com/c/en/us/td/docs/...`
+- `https://www.cisco.com/c/en/us/support/docs/...`
+
+**How to extract document name:**
+1. **Find the book identifier** in the URL - it's usually the segment before the final HTML file
+   - Example URL: `https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-xe-gs-book/install-upgrade-17-2-later.html`
+   - Book identifier: `sdwan-xe-gs-book` (the part ending in `-book`)
+2. **Add `.pdf` extension** → `sdwan-xe-gs-book.pdf`
+3. **This is your PRIMARY TARGET DOCUMENT**
+
+**If documentation link found:**
+- ✅ **MANDATORY ACTION**: Use ONLY this document name for searching
+- ✅ **DO NOT search other documents unless this one returns NO results**
+- ✅ **REASONING**: State: "Bug explicitly references: [URL]. Extracted document: [document name]. This is the PRIMARY and ONLY target for search."
+- ✅ **SKIP STEP 2 and 3**: Go directly to searching within this document
+
+**If NO documentation link found:**
+- Proceed with Component and technology keyword extraction below
+
+---
+
 ### For Bugs (has Component field):
 - **Find the Component field** in Bug Summary (format: `**Component**: <value>`)
 - **Extract technical keyword** from Component:
   * "cnbng_nal" → "Cloud native BNG" or "BNG NAL"
   * "ewlc-rrm" → "RRM" 
   * "asr9k-routing" → "routing"
-- **IGNORE** generic words: "documentation", "docs", "config", "system", "asr9000-doc", "ewlc-docs"
+- **IGNORE** generic words: "documentation", "docs", "config", "system", "asr9000-doc", "ewlc-docs", "sdwan-docs"
 - **REASONING**: State: "The Component field is [value], which indicates [keyword] as primary search term"
 
 ### For All Content (bugs and RCAs):
@@ -53,12 +79,27 @@ CONTENT:
 
 ## STEP 2: SEARCH DOCUMENT TITLES
 
-**Search strategy:**
+**⚠️ CRITICAL: IF STEP 1 FOUND A DOCUMENTATION LINK - FOLLOW THIS PATH:**
+
+**IF documentation link was extracted in STEP 1:**
+1. **Use ONLY the extracted document name** from the URL
+2. **First search attempt:** `get_product_info(product, query="source contains [document-name]")`
+   - Example: If extracted "sdwan-xe-gs-book.pdf", search for: `source contains sdwan-xe-gs-book`
+3. **REASONING:** State: "Bug explicitly references [document URL]. Searching ONLY within: [document name]"
+4. **IF results found:** 
+   - ✅ Proceed directly to STEP 4 (SKIP STEP 3)
+   - Use ONLY these results
+5. **IF NO results found:**
+   - ❌ State: "Referenced document '[document name]' not found in vector store. Falling back to generic search."
+   - Proceed with fallback strategy below
+
+---
+
+**FALLBACK (or if NO documentation link in STEP 1):**
 1. Use Component keyword (if available) to search document TITLES
 2. Use technology elements to search document TITLES
 3. Focus on guide names, not content yet
-
-**Call the tool:** `get_product_info(product, query="[keyword] in title")`
+4. **Call the tool:** `get_product_info(product, query="[keyword] in title")`
 
 **REASONING**: State which documents were found, e.g., "Found these guides with '[keyword]' in title: [list]"
 
