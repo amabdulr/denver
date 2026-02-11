@@ -448,11 +448,20 @@ def render_analysis_summary_page():
         # ===== FOLLOW-UP SECTION - Placed after output display =====
         if st.session_state.initial_analysis_done and st.session_state.conversation_history:
             st.markdown("---")
-            st.markdown("### 💬 Have a question about the output above?")
-            st.caption("Ask follow-up questions to clarify, expand, or get more details")
+            st.markdown("### 💬 Conversation Thread")
+            st.caption("View your questions and answers, then ask follow-ups below")
+            
+            # Show conversation thread visibly (not in expander)
+            if len(st.session_state.conversation_history) > 1:
+                with st.container():
+                    st.markdown("**Recent exchanges:**")
+                    # Show last 3 exchanges in compact format
+                    for idx, exchange in enumerate(st.session_state.conversation_history[-3:], len(st.session_state.conversation_history)-2):
+                        if idx > 0:
+                            st.markdown(f"**Q{idx}:** {exchange['question'][:150]}..." if len(exchange['question']) > 150 else f"**Q{idx}:** {exchange['question']}")
             
             # Compact settings
-            with st.expander("⚙️ Follow-up Settings", expanded=False):
+            with st.expander("⚙️ Follow-up Settings & Full History", expanded=False):
                 context_window = st.slider(
                     "Context Window (number of recent exchanges to include)",
                     min_value=1,
@@ -487,17 +496,12 @@ def render_analysis_summary_page():
                 key="analysis_followup_input"
             )
             
-            col_followup1, col_followup2 = st.columns([3, 1])
-            with col_followup1:
-                ask_followup_button = st.button(
-                    "💬 Ask Follow-up", 
-                    type="primary", 
-                    use_container_width=True, 
-                    key="analysis_ask_followup"
-                )
-            with col_followup2:
-                if st.button("📜 History", use_container_width=True, key="toggle_history_analysis"):
-                    st.session_state.show_history_analysis = not st.session_state.get('show_history_analysis', False)
+            ask_followup_button = st.button(
+                "💬 Ask Follow-up", 
+                type="primary", 
+                use_container_width=True, 
+                key="analysis_ask_followup"
+            )
             
             # Handle follow-up button
             if ask_followup_button and followup_question.strip():

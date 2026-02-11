@@ -166,122 +166,9 @@ def render_first_draft_page():
                 if 'last_followup_raw' in st.session_state:
                     with st.expander("🔍 View Raw Response"):
                         st.json(st.session_state.last_followup_raw)
-        
-        # ===== FOLLOW-UP SECTION - Moved here for better visibility =====
-        if st.session_state.initial_analysis_done and st.session_state.conversation_history:
-            st.markdown("---")
-            st.markdown("### 💬 Have a question about the output above?")
-            st.caption("Ask follow-up questions to clarify, expand, or get more details")
-            
-            # Compact settings
-            with st.expander("⚙️ Follow-up Settings", expanded=False):
-                context_window = st.slider(
-                    "Context Window (number of recent exchanges to include)",
-                    min_value=1,
-                    max_value=10,
-                    value=st.session_state.context_window_size,
-                    help="Controls how many recent Q&A exchanges are included in follow-up context. Lower = faster, higher = more context.",
-                    key="sidebar_draft_context_window"
-                )
-                st.session_state.context_window_size = context_window
-                
-                use_rag_followup = st.checkbox(
-                    "🔍 Use RAG Search for Follow-ups",
-                    value=True,
-                    help="When enabled, follow-up questions will search the documentation database. When disabled, uses only conversation context.",
-                    key="sidebar_draft_use_rag"
-                )
-                
-                # Display conversation history
-                st.markdown("**📜 Conversation History**")
-                for idx, exchange in enumerate(st.session_state.conversation_history, 1):
-                    st.markdown(f"**Q{idx}:** {exchange['question'][:100]}...")
-                    st.markdown(f"**A{idx}:** {exchange['answer'][:200]}...")
-                    if idx < len(st.session_state.conversation_history):
-                        st.markdown("---")
-            
-            # Follow-up question input - more prominent
-            followup_question = st.text_area(
-                "Your follow-up question",
-                placeholder="e.g., Can you explain the first point in more detail? Can you provide more examples?",
-                height=100,
-                key="sidebar_draft_followup_input"
-            )
-            
-            col_followup1, col_followup2 = st.columns([3, 1])
-            with col_followup1:
-                ask_followup_button = st.button(
-                    "💬 Ask Follow-up", 
-                    type="primary", 
-                    use_container_width=True, 
-                    key="sidebar_draft_ask_followup"
-                )
-            with col_followup2:
-                if st.button("📜 History", use_container_width=True, key="toggle_history_draft"):
-                    st.session_state.show_history_draft = not st.session_state.get('show_history_draft', False)
-            
-            # Handle follow-up button
-            if ask_followup_button and followup_question.strip():
-                from sidebar_app import get_relevant_context, build_followup_prompt
-                from app_functions import run_agent
-                
-                with st.spinner("💭 Thinking..."):
-                    try:
-                        # Get conversation context
-                        context = get_relevant_context(
-                            st.session_state.conversation_history,
-                            window_size=context_window
-                        )
-                        
-                        # Build the follow-up prompt
-                        full_prompt = build_followup_prompt(
-                            followup_question,
-                            context,
-                            use_rag_followup
-                        )
-                        
-                        # Get product name and extracted text from session state
-                        product_name_state = st.session_state.get('product_name', product_name_draft)
-                        extracted_text_state = st.session_state.get('current_extracted_text', extracted_text)
-                        
-                        # Run the agent with the follow-up prompt
-                        if use_rag_followup:
-                            result = run_agent(product_name_state, full_prompt, extracted_text_state)
-                        else:
-                            # For non-RAG, just use the LLM directly
-                            from openai import OpenAI
-                            client = OpenAI()
-                            response = client.chat.completions.create(
-                                model="gpt-4",
-                                messages=[
-                                    {"role": "system", "content": "You are a helpful Cisco documentation assistant."},
-                                    {"role": "user", "content": full_prompt}
-                                ]
-                            )
-                            result = {
-                                'output': response.choices[0].message.content,
-                                'raw': response
-                            }
-                        
-                        # Extract answer
-                        answer = result.get('output', str(result))
-                        
-                        # Add to conversation history
-                        st.session_state.conversation_history.append({
-                            "question": followup_question,
-                            "answer": answer
-                        })
-                        
-                        # Store for display
-                        st.session_state.last_followup_answer = answer
-                        st.session_state.last_followup_raw = result
-                        
-                        st.rerun()
-                        
-                    except Exception as e:
-                        st.error(f"❌ Error processing follow-up: {str(e)}")
-                        with st.expander("🐛 Error Details"):
-                            st.exception(e)
+    
+    # Note: Follow-up section will be rendered AFTER button handlers execute
+    # This ensures outputs appear before the follow-up interface
     
     st.divider()
     
@@ -441,27 +328,41 @@ def render_first_draft_page():
                     st.session_state.current_extracted_text = extracted_text
                     st.session_state.initial_analysis_done = True
                     
-                    # Build comprehensive context with internal information guidance
+                    # Check if there's an unanswered follow-up question/instruction in the text box
+                    pending_instruction = st.session_state.get("sidebar_draft_followup_input", "").strip()
+                    
+                    # Build comprehensive context with internal information guidance AND all follow-up clarifications
                     context = f"Original Content:\n{extracted_text}\n\n"
                     
-                    # Extract and include the internal information analysis
-                    internal_info_analysis = None
-                    if st.session_state.conversation_history:
-                        for exchange in st.session_state.conversation_history:
-                            if exchange.get('question') == 'Find Internal Information':
-                                internal_info_analysis = exchange.get('answer')
-                                break
-                    
-                    # Add clear instructions about internal information
-                    if internal_info_analysis:
+                    # Include the ENTIRE conversation history (internal info analysis + any follow-up clarifications)
+                    if st.session_state.conversation_history or pending_instruction:
                         context += "=" * 80 + "\n"
-                        context += "INTERNAL INFORMATION IDENTIFIED (DO NOT INCLUDE IN CUSTOMER-FACING DRAFT):\n"
+                        context += "CONVERSATION HISTORY - Internal Information Analysis and Clarifications:\n"
                         context += "=" * 80 + "\n"
-                        context += internal_info_analysis + "\n"
+                        context += "(This includes the initial internal information identification and any follow-up clarifications)\n\n"
+                        
+                        # Add all exchanges in the conversation
+                        for idx, exchange in enumerate(st.session_state.conversation_history, 1):
+                            context += f"--- Exchange {idx} ---\n"
+                            context += f"Question: {exchange['question']}\n\n"
+                            context += f"Answer: {exchange['answer']}\n\n"
+                        
+                        # Add pending instruction/question from text box if it exists
+                        if pending_instruction:
+                            next_idx = len(st.session_state.conversation_history) + 1
+                            context += f"--- Additional User Instruction ---\n"
+                            context += f"User Directive: {pending_instruction}\n\n"
+                            context += f"Note: This is an additional instruction from the user. Apply it directly when generating the first draft.\n\n"
+                        
                         context += "=" * 80 + "\n\n"
-                        context += "INSTRUCTIONS: The above section identifies internal/confidential information found in the original content. "
-                        context += "When generating the customer-facing first draft, you MUST exclude or rewrite any content that relates to the internal information listed above. "
-                        context += "Focus on creating documentation suitable for external customers, removing implementation details, internal architecture, debug information, and any proprietary technical details.\n\n"
+                        context += "INSTRUCTIONS: The above conversation identifies internal/confidential information found in the original content, "
+                        context += "along with any clarifications made during follow-up questions. "
+                        context += "When generating the customer-facing first draft, you MUST:\n"
+                        context += "1. Exclude or rewrite any content that relates to the internal information identified above\n"
+                        context += "2. Consider ALL clarifications and follow-up discussions in the conversation\n"
+                        context += "3. If there's an additional user instruction (like 'Do not include TLV'), apply it directly and strictly\n"
+                        context += "4. Focus on creating documentation suitable for external customers\n"
+                        context += "5. Remove implementation details, internal architecture, debug information, and any proprietary technical details\n\n"
                     
                     # Use the apply_prompt_file function with FirstDraftCTWG.md
                     first_draft = apply_prompt_file("FirstDraftCTWG.md", context, product_name_draft)
@@ -616,3 +517,126 @@ def render_first_draft_page():
                 st.error(f"❌ Error saving to Excel: {str(e)}")
                 with st.expander("🐛 Error Details"):
                     st.exception(e)
+    
+    # ===== FOLLOW-UP SECTION - Rendered after all button handlers =====
+    # This ensures outputs appear before the follow-up interface
+    with col2_draft:
+        if st.session_state.initial_analysis_done and st.session_state.conversation_history:
+            st.markdown("---")
+            st.markdown("### 💬 Conversation Thread")
+            st.caption("View your questions and answers, then ask follow-ups below")
+            
+            # Show conversation thread visibly (not in expander)
+            if len(st.session_state.conversation_history) > 1:
+                with st.container():
+                    st.markdown("**Recent exchanges:**")
+                    # Show last 3 exchanges in compact format
+                    for idx, exchange in enumerate(st.session_state.conversation_history[-3:], len(st.session_state.conversation_history)-2):
+                        if idx > 0:
+                            st.markdown(f"**Q{idx}:** {exchange['question'][:150]}..." if len(exchange['question']) > 150 else f"**Q{idx}:** {exchange['question']}")
+            
+            # Compact settings
+            with st.expander("⚙️ Follow-up Settings & Full History", expanded=False):
+                context_window = st.slider(
+                    "Context Window (number of recent exchanges to include)",
+                    min_value=1,
+                    max_value=10,
+                    value=st.session_state.context_window_size,
+                    help="Controls how many recent Q&A exchanges are included in follow-up context. Lower = faster, higher = more context.",
+                    key="sidebar_draft_context_window"
+                )
+                st.session_state.context_window_size = context_window
+                
+                use_rag_followup = st.checkbox(
+                    "🔍 Use RAG Search for Follow-ups",
+                    value=True,
+                    help="When enabled, follow-up questions will search the documentation database. When disabled, uses only conversation context.",
+                    key="sidebar_draft_use_rag"
+                )
+                
+                # Display conversation history
+                st.markdown("**📜 Conversation History**")
+                for idx, exchange in enumerate(st.session_state.conversation_history, 1):
+                    with st.expander(f"Exchange {idx}: {exchange['question'][:80]}...", expanded=False):
+                        st.markdown(f"**Question:**")
+                        st.markdown(exchange['question'])
+                        st.markdown(f"**Answer:**")
+                        st.markdown(exchange['answer'])
+            
+            # Follow-up question input - more prominent
+            followup_question = st.text_area(
+                "Your follow-up question",
+                placeholder="e.g., Can you explain the first point in more detail? Can you provide more examples?",
+                height=100,
+                key="sidebar_draft_followup_input"
+            )
+            
+            ask_followup_button = st.button(
+                "💬 Ask Follow-up", 
+                type="primary", 
+                use_container_width=True, 
+                key="sidebar_draft_ask_followup"
+            )
+            
+            # Handle follow-up button
+            if ask_followup_button and followup_question.strip():
+                from sidebar_app import get_relevant_context, build_followup_prompt
+                from app_functions import run_agent
+                
+                with st.spinner("💭 Thinking..."):
+                    try:
+                        # Get conversation context
+                        context = get_relevant_context(
+                            st.session_state.conversation_history,
+                            window_size=context_window
+                        )
+                        
+                        # Build the follow-up prompt
+                        full_prompt = build_followup_prompt(
+                            followup_question,
+                            context,
+                            use_rag_followup
+                        )
+                        
+                        # Get product name and extracted text from session state
+                        product_name_state = st.session_state.get('product_name', product_name_draft)
+                        extracted_text_state = st.session_state.get('current_extracted_text', extracted_text)
+                        
+                        # Run the agent with the follow-up prompt
+                        if use_rag_followup:
+                            result = run_agent(product_name_state, full_prompt, extracted_text_state)
+                        else:
+                            # For non-RAG, just use the LLM directly
+                            from openai import OpenAI
+                            client = OpenAI()
+                            response = client.chat.completions.create(
+                                model="gpt-4",
+                                messages=[
+                                    {"role": "system", "content": "You are a helpful Cisco documentation assistant."},
+                                    {"role": "user", "content": full_prompt}
+                                ]
+                            )
+                            result = {
+                                'output': response.choices[0].message.content,
+                                'raw': response
+                            }
+                        
+                        # Extract answer
+                        answer = result.get('output', str(result))
+                        
+                        # Add to conversation history
+                        st.session_state.conversation_history.append({
+                            "question": followup_question,
+                            "answer": answer
+                        })
+                        
+                        # Store for display
+                        st.session_state.last_followup_answer = answer
+                        st.session_state.last_followup_raw = result
+                        
+                        st.rerun()
+                        
+                    except Exception as e:
+                        st.error(f"❌ Error processing follow-up: {str(e)}")
+                        with st.expander("🐛 Error Details"):
+                            st.exception(e)
