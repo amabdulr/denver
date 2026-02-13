@@ -65,6 +65,92 @@ def render_bulk_analysis_page():
     )
     save_product_preference(bulk_product_name)
     
+    # ===== GUIDE SELECTION SECTION =====
+    from sidebar_app import get_available_guides
+    
+    st.markdown("### 📚 Select Guides")
+    st.caption("Limit the search scope to specific guides (optional)")
+    
+    # Get available guides for the selected product
+    available_guides = get_available_guides(bulk_product_name)
+    
+    if available_guides:
+        # Define default guides for Cisco SD-WAN (curated subset)
+        sdwan_default_guides = [
+            "systems-interfaces-book-xe-sdwan.pdf",
+            "security-book-xe.pdf",
+            "sdwan-xe-gs-book.pdf",
+            "policies-book-xe.pdf",
+            "appqoe-book-xe.pdf",
+            "cloud-onramp-book-xe.pdf",
+            "monitor-maintain-book.pdf",
+            "compatibility-and-server-recommendations.pdf"
+        ]
+        
+        # Initialize session state for selected guides if not exists
+        # Default: all guides selected (except for SD-WAN which uses curated subset)
+        if 'bulk_selected_guides' not in st.session_state:
+            if bulk_product_name == "Cisco SD-WAN":
+                # For SD-WAN, only select the curated guides that exist in available_guides
+                st.session_state.bulk_selected_guides = [g for g in sdwan_default_guides if g in available_guides]
+            else:
+                st.session_state.bulk_selected_guides = available_guides.copy()
+        
+        # Also reset guides when product changes
+        if 'bulk_last_product' not in st.session_state or st.session_state.bulk_last_product != bulk_product_name:
+            if bulk_product_name == "Cisco SD-WAN":
+                # For SD-WAN, only select the curated guides that exist in available_guides
+                st.session_state.bulk_selected_guides = [g for g in sdwan_default_guides if g in available_guides]
+            else:
+                st.session_state.bulk_selected_guides = available_guides.copy()
+            st.session_state.bulk_last_product = bulk_product_name
+        
+        # Add "Select All" / "Deselect All" buttons
+        col_guide1, col_guide2 = st.columns(2)
+        with col_guide1:
+            if st.button("✅ Select All", use_container_width=True, key="bulk_select_all_guides"):
+                st.session_state.bulk_selected_guides = available_guides.copy()
+                # Clear all checkbox widget states to force refresh
+                for guide in available_guides:
+                    key = f"bulk_guide_{guide}"
+                    if key in st.session_state:
+                        st.session_state[key] = True
+                st.rerun()
+        with col_guide2:
+            if st.button("❌ Deselect All", use_container_width=True, key="bulk_deselect_all_guides"):
+                st.session_state.bulk_selected_guides = []
+                # Clear all checkbox widget states to force refresh
+                for guide in available_guides:
+                    key = f"bulk_guide_{guide}"
+                    if key in st.session_state:
+                        st.session_state[key] = False
+                st.rerun()
+        
+        # Display guides as checkboxes in an expander
+        with st.expander(f"📖 Available Guides ({len(available_guides)})", expanded=True):
+            st.caption(f"Found {len(available_guides)} guide(s) for {bulk_product_name}")
+            
+            # Create checkboxes for each guide
+            for guide in available_guides:
+                # Initialize checkbox state if not exists
+                checkbox_key = f"bulk_guide_{guide}"
+                if checkbox_key not in st.session_state:
+                    st.session_state[checkbox_key] = guide in st.session_state.bulk_selected_guides
+                
+                st.checkbox(guide, key=checkbox_key)
+            
+            # Collect selected guides from checkboxes
+            selected_guides = [guide for guide in available_guides if st.session_state.get(f"bulk_guide_{guide}", False)]
+            st.session_state.bulk_selected_guides = selected_guides
+            
+            # Show selection summary
+            if selected_guides:
+                st.success(f"✅ {len(selected_guides)} guide(s) selected")
+            else:
+                st.info("ℹ️ No guides selected - will search all guides")
+    else:
+        st.warning(f"⚠️ No guides found for {bulk_product_name}")
+    
     # Call bulk analysis content function
     render_bulk_analysis_content(bulk_product_name)
 

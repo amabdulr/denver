@@ -65,11 +65,26 @@ def save_product_preference(product_name):
     config['product_name'] = product_name
     save_config(config)
 
+def get_saved_tester_name():
+    """Get the saved tester name from config"""
+    config = load_config()
+    return config.get('tester_name', '')
+
+def save_tester_name(tester_name):
+    """Save the tester name preference"""
+    config = load_config()
+    config['tester_name'] = tester_name
+    save_config(config)
+
 def get_available_guides(product_name):
     """Get list of available PDF guides for a product from the vector store"""
     try:
-        from vector_store_manager import get_vector_store
-        vectorstore = get_vector_store()
+        # Check if vector store is initialized in session state
+        if 'vector_store' not in st.session_state or st.session_state.vector_store is None:
+            # Vector store not initialized yet, return empty list
+            return []
+        
+        vectorstore = st.session_state.vector_store
         
         # Map UI product names to internal product codes
         product_mapping = {
@@ -253,38 +268,16 @@ def render_analysis_summary_page():
     
     st.markdown("---")
     
-    # Step-by-step instructions
-    with st.expander("📖 How to Use This Page", expanded=False):
-        st.markdown("""
-        #### Fetch Bug from CDETS  
-        1. **Select Note Extraction**: Check the box to extract all notes, or leave unchecked for default (Behavior-changed + Release-note)
-        2. **Enter Bug Number(s)**: Type bug numbers (If you have a related bug, enter with comma separation CSCwp05354, CSCwp12345)
-        3. **Choose Product Name**: Select the Cisco product (e.g., Cisco 9800)            
-        3. **Fetch Bug**: Click "🔍 Fetch Bug(s)"
-        The notes from CDETS are populated in the Bug Report / RCA Content field. 
-        
-        #### Input RCA content.
-        1.. **Paste Content**: Enter Root Cause Analysis (RCA) of a doc SR from Case Insights. 
-
-        #### Bottom Section: Analysis & Summary Tools
-        2. **Choose Analysis Tool**: Click one of the available analysis buttons:
-           - **Summarize**: Condense bug content into a concise summary
-           - **BugAnalyze**: Determine where the bug should be documented
-        3. **Review Results**: Analysis results appear on the output area on the righ.
-        4. **Ask Follow-ups** (optional): Use the "Ask a follow-up question" field to get clarifications
-        5. **Clear button**: Clears conversation history and input fields for a fresh start
-        
-        """)
-    
     col1, col2 = st.columns(2)
     
     with col1:
         # ===== FETCH BUG FROM CDETS SECTION =====
-        st.subheader("Step 1: Enter Bug Number. Click Fetch Bug(s)")
+        st.subheader("Step 1: Enter Bug Number. Click Fetch Bug")
         
-        # Add checkbox for extracting all notes
+        # Add checkbox for extracting all notes with better visibility
+        st.markdown("#### 📋 Note Extraction Options")
         extract_all_notes = st.checkbox(
-            "📋 Extract all notes (default: Behavior-changed + Release-note)",
+            "**Extract all notes** (default: Behavior-changed + Release-note only)",
             value=False,
             help="Check this to extract all notes from the bug. By default, only 'Behavior-changed' and 'Release-note' notes are extracted along with the bug summary and Documentation-link field.",
             key="analysis_extract_all_notes"
@@ -300,7 +293,7 @@ def render_analysis_summary_page():
             )
         with bug_col2:
             st.write("")  # Spacer
-            fetch_bug_button = st.button("🔍 Fetch Bug(s)", use_container_width=True, key="analysis_fetch_bug")
+            fetch_bug_button = st.button("🔍 Fetch Bug", use_container_width=True, key="analysis_fetch_bug")
         
         # Show success message after fetch
         if 'bug_fetched' in st.session_state and st.session_state.bug_fetched:
@@ -412,7 +405,8 @@ def render_analysis_summary_page():
         st.markdown("---")
         
         # Step 1: (OR) Paste SR RCA
-        st.subheader("Step 1: (OR) Paste your SR RCA")
+        st.subheader("(OR)")
+        st.subheader("Step 1: Paste your SR RCA")
         
         # RCA content input
         rca_content = st.text_area(
@@ -455,14 +449,34 @@ def render_analysis_summary_page():
         available_guides = get_available_guides(product_name)
         
         if available_guides:
-            # Initialize session state for selected guides if not exists
-            # Default: all guides selected
-            if 'selected_guides' not in st.session_state:
-                st.session_state.selected_guides = available_guides.copy()
+            # Define default guides for Cisco SD-WAN (curated subset)
+            sdwan_default_guides = [
+                "systems-interfaces-book-xe-sdwan.pdf",
+                "security-book-xe.pdf",
+                "sdwan-xe-gs-book.pdf",
+                "policies-book-xe.pdf",
+                "appqoe-book-xe.pdf",
+                "cloud-onramp-book-xe.pdf",
+                "monitor-maintain-book.pdf",
+                "compatibility-and-server-recommendations.pdf"
+            ]
             
-            # Also reset to all guides when product changes
+            # Initialize session state for selected guides if not exists
+            # Default: all guides selected (except for SD-WAN which uses curated subset)
+            if 'selected_guides' not in st.session_state:
+                if product_name == "Cisco SD-WAN":
+                    # For SD-WAN, only select the curated guides that exist in available_guides
+                    st.session_state.selected_guides = [g for g in sdwan_default_guides if g in available_guides]
+                else:
+                    st.session_state.selected_guides = available_guides.copy()
+            
+            # Also reset guides when product changes
             if 'last_product' not in st.session_state or st.session_state.last_product != product_name:
-                st.session_state.selected_guides = available_guides.copy()
+                if product_name == "Cisco SD-WAN":
+                    # For SD-WAN, only select the curated guides that exist in available_guides
+                    st.session_state.selected_guides = [g for g in sdwan_default_guides if g in available_guides]
+                else:
+                    st.session_state.selected_guides = available_guides.copy()
                 st.session_state.last_product = product_name
             
             # Add "Select All" / "Deselect All" buttons
@@ -491,14 +505,16 @@ def render_analysis_summary_page():
                 st.caption(f"Found {len(available_guides)} guide(s) for {product_name}")
                 
                 # Create checkboxes for each guide
-                selected_guides = []
                 for guide in available_guides:
-                    # Check if guide was previously selected
-                    is_selected = guide in st.session_state.selected_guides
-                    if st.checkbox(guide, value=is_selected, key=f"guide_{guide}"):
-                        selected_guides.append(guide)
+                    # Initialize checkbox state if not exists
+                    checkbox_key = f"guide_{guide}"
+                    if checkbox_key not in st.session_state:
+                        st.session_state[checkbox_key] = guide in st.session_state.selected_guides
+                    
+                    st.checkbox(guide, key=checkbox_key)
                 
-                # Update session state
+                # Collect selected guides from checkboxes
+                selected_guides = [guide for guide in available_guides if st.session_state.get(f"guide_{guide}", False)]
                 st.session_state.selected_guides = selected_guides
                 
                 # Show selection summary
@@ -518,12 +534,9 @@ def render_analysis_summary_page():
         
         st.markdown("---")
         
-        # Step 3: Click Analyze or Summarize
-        st.subheader("Step 3: Click Analyze or Summarize")
-        
         # Question input for Analysis
         question = st.text_area(
-            "Question/Task",
+            "Task/Prompt",
             value=default_prompt,
             key="analysis_question",
             height=200
@@ -545,13 +558,29 @@ def render_analysis_summary_page():
                         st.markdown("---")
     
     with col2:
+        # Step 3: Click Analyze or Summarize
+        st.subheader("Step 3: Click Analyze or Summarize")
+        
+        st.markdown("### 🔍 Analysis & Summary Tools")
+        
+        # Analysis and Summary buttons
+        col_btn1, col_btn2, col_btn3 = st.columns(3)
+
+        with col_btn1:
+            analyze_button = st.button("🚀 Analyze", type="primary", use_container_width=True, key="analysis_analyze")
+
+        with col_btn2:
+            summarize_button = st.button("📝 Summarize", use_container_width=True, key="analysis_summarize")
+
+        with col_btn3:
+            clear_button = st.button("🗑️ Clear", use_container_width=True, key="analysis_clear")
+        
+        # Status message placeholder (appears below buttons)
+        status_placeholder = st.empty()
+        
+        st.markdown("---")
+        
         st.subheader("📊 Output")
-        
-        # Step 6: Clear Output and start again
-        st.subheader("Step 6: Clear Output and start again")
-        
-        # Add "Post Analysis to Bug" button above output
-        post_analysis_button = st.button("📤 Post Analysis to Bug", type="secondary", use_container_width=True, key="analysis_post_to_bug")
         
         output_container = st.container()
         
@@ -573,6 +602,141 @@ def render_analysis_summary_page():
                 if 'last_followup_raw' in st.session_state:
                     with st.expander("🔍 View Raw Response"):
                         st.json(st.session_state.last_followup_raw)
+        
+        # Test Section
+        st.markdown("---")
+        st.subheader("Step 4: Post your test results (Optional)")
+        
+        with st.expander("📝 Test Results", expanded=False):
+            st.markdown("Capture test results for this analysis")
+            
+            # Feature being tested
+            test_feature = st.text_input(
+                "Feature to be tested",
+                placeholder="e.g., bug analysis, bug summarize, bulk RCA, bulk bugs, First draft, resolve bug",
+                help="Enter the specific feature or functionality being tested",
+                key="test_feature"
+            )
+            
+            # Name of tester
+            saved_tester_name = get_saved_tester_name()
+            tester_name = st.text_input(
+                "Name of tester",
+                value=saved_tester_name,
+                placeholder="Enter your name",
+                help="Name of the person performing the test (saved for future sessions)",
+                key="tester_name",
+                on_change=lambda: save_tester_name(st.session_state.get("tester_name", ""))
+            )
+            
+            # Sliders for accuracy ratings
+            location_accuracy = st.slider(
+                "Location Accuracy",
+                min_value=1,
+                max_value=10,
+                value=10,
+                help="Rate the accuracy of the location/chapter recommendations (1=Poor, 10=Excellent)",
+                key="test_location_accuracy"
+            )
+            
+            content_accuracy = st.slider(
+                "Content Accuracy",
+                min_value=1,
+                max_value=10,
+                value=10,
+                help="Rate the accuracy of the content generated (1=Poor, 10=Excellent)",
+                key="test_content_accuracy"
+            )
+            
+            # Comments text area
+            test_comments = st.text_area(
+                "Comments",
+                placeholder="Enter any additional comments or observations...",
+                height=100,
+                key="test_comments"
+            )
+            
+            # Wishlist text area
+            test_wishlist = st.text_area(
+                "Wishlist",
+                placeholder="Enter feature requests, improvements, or wishlist items...",
+                height=100,
+                key="test_wishlist"
+            )
+            
+            # Usefulness Rating
+            st.markdown("---")
+            test_usefulness = st.radio(
+                "How useful is this feature?",
+                options=[
+                    "⛔ I'd rather do this without AI",
+                    "🤔 Neutral - No strong preference",
+                    "👍 Yes, this is useful",
+                    "⭐ I'd prefer CIRCUIT over manual work"
+                ],
+                index=2,
+                help="Rate how useful you find this AI-assisted feature",
+                key="test_usefulness_rating"
+            )
+            
+            # Add to Excel button
+            add_to_excel_button = st.button(
+                "📊 Add to Test Excel",
+                type="primary",
+                use_container_width=True,
+                key="add_to_test_excel"
+            )
+            
+            if add_to_excel_button:
+                # Get bug number
+                bug_number = st.session_state.get('analysis_bug_number', '')
+                if not bug_number:
+                    st.error("⚠️ Please enter a bug number first.")
+                elif not st.session_state.conversation_history:
+                    st.error("⚠️ No output found. Please run an analysis first.")
+                else:
+                    # Get the output content (last answer from conversation history)
+                    output_content = st.session_state.conversation_history[-1]['answer']
+                    
+                    # Save to Excel
+                    try:
+                        save_test_results_to_excel(
+                            page_name="Analysis & Summary",
+                            feature=test_feature,
+                            tester_name=tester_name,
+                            bug_number=bug_number,
+                            output_content=output_content,
+                            location_accuracy=location_accuracy,
+                            content_accuracy=content_accuracy,
+                            comments=test_comments,
+                            wishlist=test_wishlist,
+                            usefulness=test_usefulness
+                        )
+                        st.success("✅ Test results saved to testresults.xlsx!")
+                        
+                        # Provide download link
+                        try:
+                            with open("testresults.xlsx", "rb") as file:
+                                st.download_button(
+                                    label="📥 Download testresults.xlsx",
+                                    data=file,
+                                    file_name="testresults.xlsx",
+                                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                                )
+                        except:
+                            pass
+                    except Exception as e:
+                        st.error(f"❌ Error saving to Excel: {str(e)}")
+                        with st.expander("🐛 Error Details"):
+                            st.exception(e)
+        
+        st.markdown("---")
+        
+        # Step 5: Post Analysis to CDETS
+        st.subheader("Step 5: Post Analysis to CDETS")
+        
+        # Add "Post Analysis to Bug" button above output
+        post_analysis_button = st.button("📤 Post Analysis to Bug", type="secondary", use_container_width=True, key="analysis_post_to_bug")
         
         # ===== FOLLOW-UP SECTION - Placed after output display =====
         if st.session_state.initial_analysis_done and st.session_state.conversation_history:
@@ -693,188 +857,50 @@ def render_analysis_summary_page():
                         with st.expander("🐛 Error Details"):
                             st.exception(e)
     
-    # Test Section
-    st.markdown("---")
-    st.subheader("Step 4: Post your test results (Optional)")
-    
-    with st.expander("📝 Test Results", expanded=False):
-        st.markdown("Capture test results for this analysis")
-        
-        # Feature being tested
-        test_feature = st.text_input(
-            "Feature to be tested",
-            placeholder="e.g., bug analysis, bug summarize, bulk RCA, bulk bugs, First draft, resolve bug",
-            help="Enter the specific feature or functionality being tested",
-            key="test_feature"
-        )
-        
-        # Name of tester
-        tester_name = st.text_input(
-            "Name of tester",
-            placeholder="Enter your name",
-            help="Name of the person performing the test",
-            key="tester_name"
-        )
-        
-        # Sliders for accuracy ratings
-        location_accuracy = st.slider(
-            "Location Accuracy",
-            min_value=1,
-            max_value=10,
-            value=10,
-            help="Rate the accuracy of the location/chapter recommendations (1=Poor, 10=Excellent)",
-            key="test_location_accuracy"
-        )
-        
-        content_accuracy = st.slider(
-            "Content Accuracy",
-            min_value=1,
-            max_value=10,
-            value=10,
-            help="Rate the accuracy of the content generated (1=Poor, 10=Excellent)",
-            key="test_content_accuracy"
-        )
-        
-        # Comments text area
-        test_comments = st.text_area(
-            "Comments",
-            placeholder="Enter any additional comments or observations...",
-            height=100,
-            key="test_comments"
-        )
-        
-        # Wishlist text area
-        test_wishlist = st.text_area(
-            "Wishlist",
-            placeholder="Enter feature requests, improvements, or wishlist items...",
-            height=100,
-            key="test_wishlist"
-        )
-        
-        # Usefulness Rating
-        st.markdown("---")
-        test_usefulness = st.radio(
-            "How useful is this feature?",
-            options=[
-                "⛔ I'd rather do this without AI",
-                "🤔 Neutral - No strong preference",
-                "👍 Yes, this is useful",
-                "⭐ I'd prefer CIRCUIT over manual work"
-            ],
-            index=2,
-            help="Rate how useful you find this AI-assisted feature",
-            key="test_usefulness_rating"
-        )
-        
-        # Add to Excel button
-        add_to_excel_button = st.button(
-            "📊 Add to Test Excel",
-            type="primary",
-            use_container_width=True,
-            key="add_to_test_excel"
-        )
-        
-        if add_to_excel_button:
-            # Get bug number
-            bug_number = st.session_state.get('analysis_bug_number', '')
-            if not bug_number:
-                st.error("⚠️ Please enter a bug number first.")
-            elif not st.session_state.conversation_history:
-                st.error("⚠️ No output found. Please run an analysis first.")
-            else:
-                # Get the output content (last answer from conversation history)
-                output_content = st.session_state.conversation_history[-1]['answer']
-                
-                # Save to Excel
-                try:
-                    save_test_results_to_excel(
-                        page_name="Analysis & Summary",
-                        feature=test_feature,
-                        tester_name=tester_name,
-                        bug_number=bug_number,
-                        output_content=output_content,
-                        location_accuracy=location_accuracy,
-                        content_accuracy=content_accuracy,
-                        comments=test_comments,
-                        wishlist=test_wishlist,
-                        usefulness=test_usefulness
-                    )
-                    st.success("✅ Test results saved to testresults.xlsx!")
-                    
-                    # Provide download link
-                    try:
-                        with open("testresults.xlsx", "rb") as file:
-                            st.download_button(
-                                label="📥 Download testresults.xlsx",
-                                data=file,
-                                file_name="testresults.xlsx",
-                                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                            )
-                    except:
-                        pass
-                except Exception as e:
-                    st.error(f"❌ Error saving to Excel: {str(e)}")
-                    with st.expander("🐛 Error Details"):
-                        st.exception(e)
-    
-    st.divider()
-    st.markdown("### 🔍 Analysis & Summary Tools")
-    
-    # Analysis and Summary buttons
-    col_btn1, col_btn2, col_btn3 = st.columns([1, 1, 4])
-
-    with col_btn1:
-        summarize_button = st.button("📝 Summarize", type="primary", use_container_width=True, key="analysis_summarize")
-
-    with col_btn2:
-        analyze_button = st.button("🚀 Analyze", use_container_width=True, key="analysis_analyze")
-
-    with col_btn3:
-        clear_button = st.button("🗑️ Clear", use_container_width=True, key="analysis_clear")
-    
     # ===== HANDLE BUTTON CLICKS =====
     
     # Handle Analyze button
     if analyze_button:
         if not rca_content.strip():
-            st.error("⚠️ Please provide RCA content to analyze.")
+            status_placeholder.error("⚠️ Please provide RCA content to analyze.")
         elif not product_name.strip():
-            st.error("⚠️ Please provide a product name.")
+            status_placeholder.error("⚠️ Please provide a product name.")
         elif not question.strip():
-            st.error("⚠️ Please provide a question or task description.")
+            status_placeholder.error("⚠️ Please provide a question or task description.")
         else:
-            with st.spinner("🔍 Analyzing documentation and generating recommendations..."):
-                try:
-                    # Store in session state
-                    st.session_state.product_name = product_name
-                    st.session_state.current_rca_content = rca_content
-                    st.session_state.initial_analysis_done = True
-                    
-                    # Get selected guides from session state
-                    selected_guides = st.session_state.get('selected_guides', [])
-                    
-                    # Run the agent with selected guides
-                    result = run_agent(product_name, question, rca_content, selected_guides)
-                    
-                    # Add to conversation history
-                    st.session_state.conversation_history.append({
-                        "question": question,
-                        "answer": result['output'] if 'output' in result else str(result)
-                    })
-                    
-                    # Clear follow-up answer when new analysis is done
-                    if 'last_followup_answer' in st.session_state:
-                        del st.session_state.last_followup_answer
-                    if 'last_followup_raw' in st.session_state:
-                        del st.session_state.last_followup_raw
-                    
-                    st.success("✅ Analysis complete!")
-                    st.rerun()
-                    
-                except Exception as e:
-                    st.error(f"❌ Error during analysis: {str(e)}")
-                    with st.expander("🐛 Error Details"):
-                        st.exception(e)
+            with status_placeholder:
+                with st.spinner("🔍 Analyzing documentation and generating recommendations..."):
+                    try:
+                        # Store in session state
+                        st.session_state.product_name = product_name
+                        st.session_state.current_rca_content = rca_content
+                        st.session_state.initial_analysis_done = True
+                        
+                        # Get selected guides from session state
+                        selected_guides = st.session_state.get('selected_guides', [])
+                        
+                        # Run the agent with selected guides
+                        result = run_agent(product_name, question, rca_content, selected_guides)
+                        
+                        # Add to conversation history
+                        st.session_state.conversation_history.append({
+                            "question": question,
+                            "answer": result['output'] if 'output' in result else str(result)
+                        })
+                        
+                        # Clear follow-up answer when new analysis is done
+                        if 'last_followup_answer' in st.session_state:
+                            del st.session_state.last_followup_answer
+                        if 'last_followup_raw' in st.session_state:
+                            del st.session_state.last_followup_raw
+                        
+                        st.success("✅ Analysis complete!")
+                        st.rerun()
+                        
+                    except Exception as e:
+                        st.error(f"❌ Error during analysis: {str(e)}")
+                        with st.expander("🐛 Error Details"):
+                            st.exception(e)
     
     # Handle Post Analysis to Bug button
     if post_analysis_button:
@@ -973,6 +999,63 @@ def render_placeholder_page(title, icon):
     st.markdown("---")
     st.info(f"🚧 The {title} page is coming soon! This will be implemented next.")
 
+def render_settings_page():
+    """Render the Settings page"""
+    st.header("⚙️ Settings")
+    st.markdown("---")
+    
+    st.markdown("### 👤 User Preferences")
+    
+    # Tester Name Setting
+    st.markdown("#### Test Results Configuration")
+    saved_tester_name = get_saved_tester_name()
+    
+    tester_name_input = st.text_input(
+        "Default Tester Name",
+        value=saved_tester_name,
+        placeholder="Enter your name",
+        help="This name will be used by default when submitting test results",
+        key="settings_tester_name"
+    )
+    
+    if st.button("💾 Save Tester Name", type="primary"):
+        save_tester_name(tester_name_input)
+        st.success(f"✅ Tester name saved: {tester_name_input}")
+    
+    st.markdown("---")
+    
+    # Product Preference Setting
+    st.markdown("#### Default Product Selection")
+    saved_product = get_saved_product()
+    
+    product_options = ["Cisco SD-WAN", "Cisco 9800", "ASR 9000", "Cisco 8000", "cisco_generic"]
+    try:
+        default_index = product_options.index(saved_product)
+    except ValueError:
+        default_index = 1
+    
+    product_selection = st.selectbox(
+        "Default Product",
+        options=product_options,
+        index=default_index,
+        help="This product will be selected by default on the Analysis & Summary page",
+        key="settings_product"
+    )
+    
+    if st.button("💾 Save Product Preference", type="primary"):
+        save_product_preference(product_selection)
+        st.success(f"✅ Default product saved: {product_selection}")
+    
+    st.markdown("---")
+    
+    # Configuration File Info
+    st.markdown("### 📁 Configuration")
+    st.caption(f"Settings are saved to: `{CONFIG_FILE}`")
+    
+    if st.button("🔍 View Current Configuration"):
+        config = load_config()
+        st.json(config)
+
 # ==================== MAIN APP ====================
 
 def main():
@@ -1009,6 +1092,37 @@ def main():
     with st.sidebar:
         st.title("🩺 Bug Doctor")
         st.markdown("*AI-Powered fixes for your bugs and RCA*")
+        
+        # Add a random funny quote about bug fixing and documentation
+        import random
+        quotes = [
+            "💡 *\"The best documentation is the code itself... said no one ever.\"*",
+            "🐛 *\"It's not a bug, it's an undocumented feature!\"*",
+            "📝 *\"Writing documentation: Because future you will have no idea what past you was thinking.\"*",
+            "🔧 *\"99 little bugs in the code, 99 bugs to fix... Take one down, patch it around, 127 bugs in the code.\"*",
+            "📚 *\"Good documentation is like a love letter to your future self.\"*",
+            "🎯 *\"Documentation: The fine art of explaining what you should have written clearly the first time.\"*",
+            "⚡ *\"First we code, then we document, then we explain why we documented.\"*",
+            "🚀 *\"If debugging is the process of removing bugs, then programming must be the process of putting them in.\"*",
+            "📖 *\"Documentation is a love story between your code and everyone else.\"*",
+            "🎨 *\"Writing docs: Where creativity meets procrastination.\"*",
+            "🧩 *\"The code works perfectly... until someone reads the documentation.\"*",
+            "🌟 *\"Behind every great feature is an even greater README.\"*",
+            "🤖 *\"AI won't replace writers. It'll just become their extremely enthusiastic intern.\"*",
+            "✍️ *\"Writers: AI can write docs, but can it understand the joy of perfectly placed semicolons?\"*",
+            "🧠 *\"Fear not the AI, dear writer. It still can't make coffee or attend meetings for you.\"*",
+            "📱 *\"AI writes fast, but writers write with soul. And occasional typos.\"*",
+            "🌈 *\"Will AI replace writers? Only if robots start appreciating their own jokes.\"*",
+            "🎪 *\"AI is the co-pilot, writers are still the captain. Mostly because AI can't argue with editors.\"*",
+            "💼 *\"Writers + AI = Dream team. Writers - coffee = Different story.\"*",
+            "🎬 *\"AI can generate text, but can it panic at 3 AM before a deadline? Didn't think so.\"*",
+            "🏆 *\"AI: Your writing assistant that never judges your comma usage. Unlike humans.\"*",
+            "😄 *\"AI tells bad jokes. Writers know which bad jokes to keep.\"*",
+            "🎤 *\"AI makes puns. Writers think we know when to stop.\"*",
+            "🎯 *\"AI can write a joke. Only writers can write the apology for it.\"*",
+        ]
+        st.caption(random.choice(quotes))
+        
         st.markdown("---")
         
         # Navigation menu
@@ -1109,7 +1223,7 @@ def main():
     elif page == "🎯 Hallucination Check":
         render_hallucination_check_page()
     elif page == "⚙️ Settings":
-        render_placeholder_page("Settings", "⚙️")
+        render_settings_page()
 
 if __name__ == "__main__":
     main()
