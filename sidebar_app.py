@@ -65,6 +65,43 @@ def save_product_preference(product_name):
     config['product_name'] = product_name
     save_config(config)
 
+def get_available_guides(product_name):
+    """Get list of available PDF guides for a product from the vector store"""
+    try:
+        from vector_store_manager import get_vector_store
+        vectorstore = get_vector_store()
+        
+        # Map UI product names to internal product codes
+        product_mapping = {
+            "Cisco SD-WAN": "sdwan",
+            "Cisco 9800": "9800",
+            "ASR 9000": "ASR9000",
+            "Cisco 8000": "Cisco8000",
+            "cisco_generic": "cisco_generic"
+        }
+        
+        product_code = product_mapping.get(product_name, product_name)
+        
+        # Query vector store to get unique sources for this product
+        results = vectorstore.get(
+            where={"product": product_code},
+            include=["metadatas"]
+        )
+        
+        # Extract unique guide names (PDF filenames only)
+        guides = set()
+        for metadata in results.get('metadatas', []):
+            source = metadata.get('source', '')
+            if source and source.endswith('.pdf'):
+                # Extract just the filename
+                guide_name = source.split('/')[-1]
+                guides.add(guide_name)
+        
+        return sorted(list(guides))
+    except Exception as e:
+        st.error(f"Error retrieving guides: {str(e)}")
+        return []
+
 def estimate_tokens(text):
     """Rough token estimation: ~4 chars per token"""
     return len(text) // 4
@@ -243,13 +280,13 @@ def render_analysis_summary_page():
     
     with col1:
         # ===== FETCH BUG FROM CDETS SECTION =====
-        st.subheader("🐛 Fetch Bug from CDETS")
+        st.subheader("Step 1: Enter Bug Number. Click Fetch Bug(s)")
         
         # Add checkbox for extracting all notes
         extract_all_notes = st.checkbox(
             "📋 Extract all notes (default: Behavior-changed + Release-note)",
             value=False,
-            help="Check this to extract all notes from the bug. By default, only 'Behavior-changed' and 'Release-note' notes are extracted along with the bug summary.",
+            help="Check this to extract all notes from the bug. By default, only 'Behavior-changed' and 'Release-note' notes are extracted along with the bug summary and Documentation-link field.",
             key="analysis_extract_all_notes"
         )
         
@@ -308,6 +345,16 @@ def render_analysis_summary_page():
                                                  'Component', 'Version', 'Description', 'FoundIn', 'FixedIn']:
                                     bug_content += f"**{field_name}:** {field_value}\n\n"
                         
+                        # Extract Documentation-link field
+                        try:
+                            doc_link_values = get_bug_field_values(bug_number, 'Documentation-link', auth)
+                            doc_link = doc_link_values.get('Documentation-link', 'N/A')
+                            if doc_link and doc_link != 'N/A':
+                                bug_content += f"**Documentation-link:** {doc_link}\n\n"
+                        except Exception as e:
+                            # If Documentation-link field doesn't exist or error, skip silently
+                            pass
+                        
                         # Get notes
                         bug_content += "\n## Notes\n\n"
                         
@@ -364,6 +411,23 @@ def render_analysis_summary_page():
         
         st.markdown("---")
         
+        # Step 1: (OR) Paste SR RCA
+        st.subheader("Step 1: (OR) Paste your SR RCA")
+        
+        # RCA content input
+        rca_content = st.text_area(
+            "Bug Report / RCA Content",
+            height=300,
+            placeholder="Paste your bug report, root cause analysis, or SR RCA here...",
+            help="Use this field to paste your SR RCA or bug content",
+            key="analysis_rca_text_area"
+        )
+        
+        st.markdown("---")
+        
+        # Step 2: Choose your docset
+        st.subheader("Step 2: Choose your docset")
+        
         # ===== PRODUCT NAME SECTION =====
         product_options = ["Cisco SD-WAN", "Cisco 9800", "ASR 9000", "Cisco 8000", "cisco_generic"]
         saved_product = get_saved_product()
@@ -383,12 +447,79 @@ def render_analysis_summary_page():
             on_change=lambda: save_product_preference(st.session_state.get("analysis_product_name"))
         )
         
+        # ===== GUIDE SELECTION SECTION =====
+        st.markdown("### 📚 Select Guides")
+        st.caption("Limit the search scope to specific guides (optional)")
+        
+        # Get available guides for the selected product
+        available_guides = get_available_guides(product_name)
+        
+        if available_guides:
+            # Initialize session state for selected guides if not exists
+            # Default: all guides selected
+            if 'selected_guides' not in st.session_state:
+                st.session_state.selected_guides = available_guides.copy()
+            
+            # Also reset to all guides when product changes
+            if 'last_product' not in st.session_state or st.session_state.last_product != product_name:
+                st.session_state.selected_guides = available_guides.copy()
+                st.session_state.last_product = product_name
+            
+            # Add "Select All" / "Deselect All" buttons
+            col_guide1, col_guide2 = st.columns(2)
+            with col_guide1:
+                if st.button("✅ Select All", use_container_width=True, key="select_all_guides"):
+                    st.session_state.selected_guides = available_guides.copy()
+                    # Clear all checkbox widget states to force refresh
+                    for guide in available_guides:
+                        key = f"guide_{guide}"
+                        if key in st.session_state:
+                            st.session_state[key] = True
+                    st.rerun()
+            with col_guide2:
+                if st.button("❌ Deselect All", use_container_width=True, key="deselect_all_guides"):
+                    st.session_state.selected_guides = []
+                    # Clear all checkbox widget states to force refresh
+                    for guide in available_guides:
+                        key = f"guide_{guide}"
+                        if key in st.session_state:
+                            st.session_state[key] = False
+                    st.rerun()
+            
+            # Display guides as checkboxes in an expander
+            with st.expander(f"📖 Available Guides ({len(available_guides)})", expanded=True):
+                st.caption(f"Found {len(available_guides)} guide(s) for {product_name}")
+                
+                # Create checkboxes for each guide
+                selected_guides = []
+                for guide in available_guides:
+                    # Check if guide was previously selected
+                    is_selected = guide in st.session_state.selected_guides
+                    if st.checkbox(guide, value=is_selected, key=f"guide_{guide}"):
+                        selected_guides.append(guide)
+                
+                # Update session state
+                st.session_state.selected_guides = selected_guides
+                
+                # Show selection summary
+                if selected_guides:
+                    st.success(f"✅ {len(selected_guides)} guide(s) selected")
+                else:
+                    st.info("ℹ️ No guides selected - will search all guides")
+        else:
+            st.warning(f"⚠️ No guides found for {product_name}")
+        
         # Load default prompt from BugAnalyze.md
         try:
             with open("BugAnalyze.md", "r") as f:
                 default_prompt = f.read()
         except FileNotFoundError:
             default_prompt = "Analyze the Bug/RCA content"
+        
+        st.markdown("---")
+        
+        # Step 3: Click Analyze or Summarize
+        st.subheader("Step 3: Click Analyze or Summarize")
         
         # Question input for Analysis
         question = st.text_area(
@@ -412,18 +543,12 @@ def render_analysis_summary_page():
                         st.markdown(f"  {idx}. {note_title}")
                     if bug_num != list(all_notes_summary.keys())[-1]:  # Not the last bug
                         st.markdown("---")
-        
-        # RCA content input
-        rca_content = st.text_area(
-            "Bug Report / RCA Content",
-            height=300,
-            placeholder="Paste your bug report, root cause analysis, or case notes here...",
-            help="Paste the content of your RCA",
-            key="analysis_rca_text_area"
-        )
     
     with col2:
         st.subheader("📊 Output")
+        
+        # Step 6: Clear Output and start again
+        st.subheader("Step 6: Clear Output and start again")
         
         # Add "Post Analysis to Bug" button above output
         post_analysis_button = st.button("📤 Post Analysis to Bug", type="secondary", use_container_width=True, key="analysis_post_to_bug")
@@ -527,10 +652,11 @@ def render_analysis_summary_page():
                         # Get product name and RCA content from session state
                         product_name_state = st.session_state.get('product_name', product_name)
                         rca_content_state = st.session_state.get('current_rca_content', rca_content)
+                        selected_guides = st.session_state.get('selected_guides', [])
                         
                         # Run the agent with the follow-up prompt
                         if use_rag_followup:
-                            result = run_agent(product_name_state, full_prompt, rca_content_state)
+                            result = run_agent(product_name_state, full_prompt, rca_content_state, selected_guides)
                         else:
                             # For non-RAG, just use the LLM directly
                             from openai import OpenAI
@@ -569,7 +695,7 @@ def render_analysis_summary_page():
     
     # Test Section
     st.markdown("---")
-    st.subheader("🧪 Capture your test results!")
+    st.subheader("Step 4: Post your test results (Optional)")
     
     with st.expander("📝 Test Results", expanded=False):
         st.markdown("Capture test results for this analysis")
@@ -724,8 +850,11 @@ def render_analysis_summary_page():
                     st.session_state.current_rca_content = rca_content
                     st.session_state.initial_analysis_done = True
                     
-                    # Run the agent
-                    result = run_agent(product_name, question, rca_content)
+                    # Get selected guides from session state
+                    selected_guides = st.session_state.get('selected_guides', [])
+                    
+                    # Run the agent with selected guides
+                    result = run_agent(product_name, question, rca_content, selected_guides)
                     
                     # Add to conversation history
                     st.session_state.conversation_history.append({

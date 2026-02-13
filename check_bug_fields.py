@@ -5,8 +5,13 @@ Quick script to check what fields are available in a bug
 from bug2 import create_auth, get_bug_summary
 import xml.etree.ElementTree as ET
 
-def list_all_bug_fields(bug_number):
-    """List all available fields in a bug"""
+def list_all_bug_fields(bug_number, highlight_fields=None):
+    """List all available fields in a bug
+    
+    Args:
+        bug_number: The bug ID to fetch
+        highlight_fields: List of field names to highlight (case-insensitive)
+    """
     auth = create_auth()
     
     print(f"Fetching bug {bug_number}...")
@@ -30,10 +35,34 @@ def list_all_bug_fields(bug_number):
         # Sort by field name
         fields.sort()
         
+        # Show highlighted fields first if specified
+        if highlight_fields:
+            highlight_lower = [f.lower() for f in highlight_fields]
+            highlighted = [(name, val) for name, val in fields if name.lower() in highlight_lower]
+            
+            if highlighted:
+                print("📌 HIGHLIGHTED FIELDS:")
+                print("-" * 60)
+                for field_name, field_value in highlighted:
+                    display_value = field_value[:80] + "..." if len(field_value) > 80 else field_value
+                    print(f"  ⭐ {field_name:28} = {display_value}")
+                print()
+        
+        print("ALL FIELDS:")
+        print("-" * 60)
+        
+        # Determine if we're highlighting fields
+        highlight_lower = [f.lower() for f in (highlight_fields or [])]
+        
         for field_name, field_value in fields:
             # Truncate long values
             display_value = field_value[:80] + "..." if len(field_value) > 80 else field_value
-            print(f"  {field_name:30} = {display_value}")
+            
+            # Mark highlighted fields
+            if highlight_lower and field_name.lower() in highlight_lower:
+                print(f"  ⭐ {field_name:28} = {display_value}")
+            else:
+                print(f"  {field_name:30} = {display_value}")
         
         print(f"\n{'='*60}")
         print(f"Total fields: {len(fields)}")
@@ -56,11 +85,14 @@ if __name__ == "__main__":
     
     if len(sys.argv) > 1:
         bug_number = sys.argv[1]
+        # Additional args are fields to highlight
+        highlight_fields = sys.argv[2:] if len(sys.argv) > 2 else ['Documentation-link']
     else:
-        bug_number = "CSCwr71167"  # Default bug from the error
+        bug_number = "CSCwq89779"  # Default bug
+        highlight_fields = ['Documentation-link']
     
     try:
-        list_all_bug_fields(bug_number)
+        list_all_bug_fields(bug_number, highlight_fields)
     except Exception as e:
         print(f"Error: {e}")
         import traceback

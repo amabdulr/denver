@@ -53,6 +53,8 @@ def get_product_info(product: str, query: str) -> str:
         query: user query about the product
     Returns:
         Formatted string with content and metadata (page, section) for each chunk
+    
+    Note: If guides have been selected by the user, results will be automatically filtered to those guides
     """
     global _last_tool_call_time
     
@@ -65,6 +67,14 @@ def get_product_info(product: str, query: str) -> str:
         time.sleep(sleep_time)
     
     _last_tool_call_time = time.time()
+    
+    # Get selected guides from session state if available
+    guides = None
+    try:
+        import streamlit as st
+        guides = st.session_state.get('selected_guides_for_search', None)
+    except:
+        pass  # Session state not available, search all guides
     
     metadata_field_info = [
         AttributeInfo(
@@ -99,16 +109,61 @@ def get_product_info(product: str, query: str) -> str:
             vectorstore = initialize_vector_store()
             st.session_state.vector_store_init_attempted = True
     
-    retriever = SelfQueryRetriever.from_llm(
-        llm,
-        vectorstore,
-        document_content_description,
-        metadata_field_info,
-        enable_limit=True,
-        verbose=True,
-    )
-
-    result = retriever.invoke(f"Product: {product}\nQuery: {query}")
+    # If guides are selected, use direct similarity search instead of SelfQueryRetriever
+    # SelfQueryRetriever doesn't work well with source file filtering
+    if guides and len(guides) > 0:
+        # Build filter for selected guides
+        guide_paths = [f"knowledge_docs/{product.lower()}/{guide}" if '/' not in guide else guide 
+                      for guide in guides]
+        
+        # Map UI product names to internal codes if needed
+        product_mapping = {
+            "Cisco SD-WAN": "sdwan",
+            "Cisco 9800": "9800",
+            "ASR 9000": "ASR9000",
+            "Cisco 8000": "Cisco8000",
+            "cisco_generic": "cisco_generic"
+        }
+        product_code = product_mapping.get(product, product)
+        
+        # Update paths with correct product code
+        guide_paths = [f"knowledge_docs/{product_code}/{guide}" for guide in guides]
+        
+        # For single guide, use direct filter
+        if len(guides) == 1:
+            search_filter = {
+                "$and": [
+                    {"product": product_code},
+                    {"source": guide_paths[0]}
+                ]
+            }
+        else:
+            # For multiple guides, use $or
+            search_filter = {
+                "$and": [
+                    {"product": product_code},
+                    {"$or": [{"source": path} for path in guide_paths]}
+                ]
+            }
+        
+        # Use direct similarity search with metadata filter
+        result = vectorstore.similarity_search(
+            query=query,
+            k=10,
+            filter=search_filter
+        )
+    else:
+        # Use SelfQueryRetriever for normal searches without guide filtering
+        retriever = SelfQueryRetriever.from_llm(
+            llm,
+            vectorstore,
+            document_content_description,
+            metadata_field_info,
+            enable_limit=True,
+            verbose=True,
+        )
+        
+        result = retriever.invoke(f"Product: {product}\nQuery: {query}")
     
     # Filter out unwanted content (e.g., Cisco Bug Search Tool references)
     excluded_keywords = [
@@ -165,19 +220,44 @@ You MUST tell the user that no documents were found and cannot provide recommend
     return "\n".join(formatted_chunks)
 
 
-def run_agent(product_name: str, question: str, rca_content: str):
-    """Run the agent with the given inputs"""
+def run_agent(product_name: str, question: str, rca_content: str, selected_guides: List[str] = None):
+    """Run the agent with the given inputs
+    
+    Args:
+        product_name: Cisco product name
+        question: User's question/task
+        rca_content: Bug report or RCA content
+        selected_guides: Optional list of guide filenames to limit search scope
+    """
+    
+    # Store selected guides in session state for tool access
+    if selected_guides:
+        import streamlit as st
+        st.session_state.selected_guides_for_search = selected_guides
     
     # Append RCA content to the question
     full_question = question + rca_content
     
-    product_version_prompt_template = """
+    # Build guide filter message for prompt
+    guide_filter_message = ""
+    if selected_guides and len(selected_guides) > 0:
+        guides_list = ', '.join(selected_guides)
+        guide_filter_message = f"""
+    
+    🎯 SEARCH SCOPE LIMITATION:
+    The user has selected specific guides to search. You MUST limit your search to these guides only:
+    {guides_list}
+    
+    When calling get_product_info, the results will automatically be filtered to these guides.
+    """
+    
+    product_version_prompt_template = f"""
     given a Cisco product name and a question from a user, return the answer.
     Use your tools to fetch context to answer the question to provide a more accurate answer.
     
-    Cisco product: {product_name}
-    question: {question}
-    
+    Cisco product: {{product_name}}
+    question: {{question}}
+    {guide_filter_message}
     ⚠️ CRITICAL ANTI-HALLUCINATION RULES:
     1. ONLY use information that the get_product_info tool actually returned
     2. If the tool returns "❌ NO DOCUMENTS FOUND ❌", you MUST tell the user no documentation was found

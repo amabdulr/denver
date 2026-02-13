@@ -271,13 +271,14 @@ def render_shared_inputs(tab_prefix="", show_header=True):
         st.subheader("📝 Input Configuration")
     
     # CDETS Bug Fetcher Section
-    st.markdown("#### 🐛 Fetch Bug from CDETS")
+    st.markdown("#### 🐛 Fetch Bug or Paste SR RCA")
+    st.info("Enter your bug number and click Fetch  \n(OR) Paste your RCA in the Bug Report / RCA Content text field.  \nThen click Analyze")
     
     # Add checkbox for extracting all notes
     extract_all_notes = st.checkbox(
         "📋 Extract all notes (default: Behavior-changed + Release-note)",
         value=False,
-        help="Check this to extract all notes from the bug. By default, only 'Behavior-changed' and 'Release-note' notes are extracted along with the bug summary.",
+        help="Check this to extract all notes from the bug. By default, only 'Behavior-changed' and 'Release-note' notes are extracted along with the bug summary and Documentation-link field.",
         key=f"{tab_prefix}_extract_all_notes"
     )
     
@@ -334,6 +335,26 @@ def render_shared_inputs(tab_prefix="", show_header=True):
                             if field_name in ['Headline', 'Status', 'Severity', 'Priority', 'Product', 
                                              'Component', 'Version', 'Description', 'FoundIn', 'FixedIn']:
                                 bug_content += f"**{field_name}:** {field_value}\n\n"
+                    
+                    # Extract Documentation-link field
+                    try:
+                        doc_link_values = get_bug_field_values(bug_number, 'Documentation-link', auth)
+                        doc_link = doc_link_values.get('Documentation-link', 'N/A')
+                        if doc_link and doc_link != 'N/A':
+                            bug_content += f"**Documentation-link:** {doc_link}\n\n"
+                    except Exception as e:
+                        # If Documentation-link field doesn't exist or error, skip silently
+                        pass
+                    
+                    # Extract Documentation-link field
+                    try:
+                        doc_link_values = get_bug_field_values(bug_number, 'Documentation-link', auth)
+                        doc_link = doc_link_values.get('Documentation-link', 'N/A')
+                        if doc_link and doc_link != 'N/A':
+                            bug_content += f"**Documentation-link:** {doc_link}\n\n"
+                    except Exception as e:
+                        # If Documentation-link field doesn't exist or error, skip silently
+                        pass
                     
                     # Get notes
                     bug_content += "\n## Notes\n\n"

@@ -635,7 +635,7 @@ def clear_bulk_session_state():
 
 def render_bug_section(product_name: str):
     """Render the Bug section with file upload and processing"""
-    from bug2 import create_auth, get_bug_summary, get_note_content, get_all_notes
+    from bug2 import create_auth, get_bug_summary, get_note_content, get_all_notes, get_bug_field_values
     import xml.etree.ElementTree as ET
     
     # Important note about Streamlit behavior
@@ -646,7 +646,7 @@ def render_bug_section(product_name: str):
     extract_all_bug_notes = st.checkbox(
         "📋 Extract all notes (default: Behavior-changed + Release-note)",
         value=False,
-        help="Check to extract all notes from bugs. Default extracts only Behavior-changed and Release-note notes.",
+        help="Check to extract all notes from bugs. Default extracts only Behavior-changed and Release-note notes, plus the Documentation-link field.",
         key="sidebar_bulk_bug_extract_all_notes"
     )
     
@@ -817,7 +817,7 @@ def calculate_bug_processing_time(num_rows: int) -> str:
 
 def process_bulk_bugs(df: pd.DataFrame, bug_column: str, product_name: str, extract_all_notes: bool):
     """Process all bugs in the DataFrame (limited to first 10 rows for testing)"""
-    from bug2 import create_auth, get_bug_summary, get_note_content, get_all_notes
+    from bug2 import create_auth, get_bug_summary, get_note_content, get_all_notes, get_bug_field_values
     from app_functions import run_agent_with_prompt_file
     import xml.etree.ElementTree as ET
     
@@ -885,6 +885,16 @@ def process_bulk_bugs(df: pd.DataFrame, bug_column: str, product_name: str, extr
                         if field_name in ['Headline', 'Status', 'Severity', 'Priority', 'Product', 
                                          'Component', 'Version', 'Description', 'FoundIn', 'FixedIn']:
                             bug_content += f"**{field_name}:** {field_value}\n\n"
+                
+                # Extract Documentation-link field
+                try:
+                    doc_link_values = get_bug_field_values(bug_number, 'Documentation-link', auth)
+                    doc_link = doc_link_values.get('Documentation-link', 'N/A')
+                    if doc_link and doc_link != 'N/A':
+                        bug_content += f"**Documentation-link:** {doc_link}\n\n"
+                except Exception as e:
+                    # If Documentation-link field doesn't exist or error, skip silently
+                    pass
                 
                 # Get notes
                 bug_content += "\n## Notes\n\n"
