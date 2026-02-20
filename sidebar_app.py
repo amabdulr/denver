@@ -18,6 +18,7 @@ from openpyxl import load_workbook, Workbook
 
 # Import helper functions
 from app_functions import run_agent, format_output, apply_prompt_file, extract_doc_clues_data, match_terms_to_guides
+from utils import get_llm
 from sidebar_first_draft_page import render_first_draft_page
 from sidebar_bulk_analysis_page import render_bulk_analysis_page
 from sidebar_resolve_bug_page import render_resolve_bug_page
@@ -436,82 +437,113 @@ def render_analysis_summary_page():
         
         st.markdown("---")
         
-        # ===== EXTRACTED TECHNOLOGY TERMS (auto-detected from RCA content) =====
-        # Always scan as soon as ANY content is in the RCA text area
-        if rca_content and rca_content.strip():
-            clues_data = extract_doc_clues_data(rca_content)
-            all_detected_terms = [term for _, term in clues_data.get('tech_terms', [])]
-            url_clues = clues_data.get('url_clues', [])
-            
-            # Always show the section header when there's RCA content
-            col_terms_header, col_terms_refresh = st.columns([3, 1])
-            with col_terms_header:
-                st.markdown("<h3 style='color: #1f77b4;'>🔧 Detected Technology Terms</h3>", unsafe_allow_html=True)
-            with col_terms_refresh:
-                if st.button("🔄 Refresh", key="refresh_tech_terms", use_container_width=True, help="Re-scan RCA content for technology terms"):
-                    # Force re-scan by clearing the hash
-                    st.session_state.pop('_last_rca_hash_for_terms', None)
-                    st.session_state.pop('tech_terms_multiselect', None)
-                    st.session_state.pop('selected_tech_terms', None)
-                    st.session_state.pop('selected_raw_tech_terms', None)
-                    st.session_state.pop('_guide_state_hash', None)
-                    # Clear cached networking terms so any JSON edits are picked up
+        # Step 2: Detect Technology Terms
+        st.markdown("<h3 style='color: #1f77b4;'>Step 2: Detect Technology Terms</h3>", unsafe_allow_html=True)
+        
+        # ===== EXTRACTED TECHNOLOGY TERMS (on-demand, cached in session_state) =====
+        has_rca = bool(rca_content and rca_content.strip())
+        
+        if has_rca:
+            rca_hash = hash(rca_content.strip())
+            has_cached_results = (
+                'cached_clues_data' in st.session_state
+                and st.session_state.get('_last_rca_hash_for_terms') == rca_hash
+            )
+        else:
+            rca_hash = None
+            has_cached_results = False
+        
+        # Always show the button row
+        col_detect, col_clear = st.columns([3, 1])
+        with col_detect:
+            btn_label = "🔄 Re-detect Terms" if has_cached_results else "🔍 Detect Technology Terms"
+            detect_clicked = st.button(btn_label, key="detect_tech_terms", use_container_width=True,
+                                       type="primary" if not has_cached_results else "secondary")
+        with col_clear:
+            if has_cached_results:
+                if st.button("🗑️ Clear", key="clear_tech_terms", use_container_width=True, help="Clear cached detection results"):
+                    for k in ['cached_clues_data', '_last_rca_hash_for_terms', 'tech_terms_multiselect',
+                               'selected_tech_terms', 'selected_raw_tech_terms', '_guide_state_hash']:
+                        st.session_state.pop(k, None)
                     import app_functions
                     app_functions._networking_terms_cache = None
                     st.rerun()
-            
-            st.caption("Auto-extracted from your bug/RCA content. Deselect irrelevant terms to focus the search.")
-            
-            # Show URL clues as info (not selectable — always used)
-            if url_clues:
-                for clue in url_clues:
-                    chapter_str = ', '.join(c.upper() for c in clue['chapter_clues']) if clue['chapter_clues'] else 'none'
-                    st.info(f"📎 **Book:** {clue['book_pdf']}  ·  **Chapter clues:** {chapter_str}")
-            
-            # Show technology terms as multiselect
-            if all_detected_terms:
-                # Build display labels — just the term in uppercase, no category prefix
-                display_terms = [term.upper() for _, term in clues_data.get('tech_terms', [])]
-                
-                # Initialize session state for selected terms
-                if 'selected_tech_terms' not in st.session_state:
-                    st.session_state.selected_tech_terms = display_terms.copy()
-                
-                # Reset selections when RCA content changes
-                rca_hash = hash(rca_content)
-                if st.session_state.get('_last_rca_hash_for_terms') != rca_hash:
-                    st.session_state.selected_tech_terms = display_terms.copy()
+        
+        if not has_rca:
+            if detect_clicked:
+                st.warning("⚠️ No bug/RCA content found. Fetch a bug or paste content above first.")
+            st.session_state.selected_raw_tech_terms = None
+        elif has_rca:
+            # Run detection only when button is clicked
+            if detect_clicked:
+                with st.spinner("🔍 Detecting technologies… please wait"):
+                    # Clear cached networking terms so any JSON edits are picked up
+                    import app_functions
+                    app_functions._networking_terms_cache = None
+                    
+                    clues_data = extract_doc_clues_data(rca_content)
+                    st.session_state.cached_clues_data = clues_data
                     st.session_state._last_rca_hash_for_terms = rca_hash
-                    # Clear the multiselect widget's own state so it picks up new defaults
-                    if 'tech_terms_multiselect' in st.session_state:
-                        del st.session_state['tech_terms_multiselect']
+                    # Reset selections for fresh results
+                    for k in ['tech_terms_multiselect', 'selected_tech_terms', 'selected_raw_tech_terms', '_guide_state_hash']:
+                        st.session_state.pop(k, None)
                     st.rerun()
+            
+            # Display cached results if available
+            if has_cached_results:
+                clues_data = st.session_state.cached_clues_data
+                all_detected_terms = [term for _, term in clues_data.get('tech_terms', [])]
+                url_clues = clues_data.get('url_clues', [])
                 
-                selected_display = st.multiselect(
-                    f"Technology terms ({len(all_detected_terms)} detected)",
-                    options=display_terms,
-                    default=st.session_state.selected_tech_terms,
-                    key="tech_terms_multiselect",
-                    help="Remove terms that aren't relevant to narrow the search"
-                )
-                st.session_state.selected_tech_terms = selected_display
+                # Summary line
+                if all_detected_terms:
+                    term_preview = ", ".join(t.upper() for t in all_detected_terms[:8])
+                    if len(all_detected_terms) > 8:
+                        term_preview += f" … +{len(all_detected_terms) - 8} more"
+                    st.success(f"✅ Detected **{len(all_detected_terms)}** technology term(s) and **{len(url_clues)}** documentation URL(s)")
+                else:
+                    st.warning("⚠️ No known networking terms detected. The search will use the full bug content as-is.")
                 
-                # Convert display labels back to raw terms for the engine
-                selected_raw_terms = [t.lower() for t in selected_display]
-                st.session_state.selected_raw_tech_terms = selected_raw_terms
+                st.markdown("<h3 style='color: #1f77b4;'>🔧 Detected Technology Terms</h3>", unsafe_allow_html=True)
+                st.caption("Auto-extracted from your bug/RCA content. Deselect irrelevant terms to focus the search.")
                 
-                st.caption(f"✅ {len(selected_raw_terms)} of {len(all_detected_terms)} terms selected")
-            else:
-                st.warning("⚠️ No known networking terms detected. The search will use the full bug content as-is.")
-                st.caption("You can add terms to `networking_terms.json` to improve detection.")
+                # Show URL clues as info (not selectable — always used)
+                if url_clues:
+                    for clue in url_clues:
+                        chapter_str = ', '.join(c.upper() for c in clue['chapter_clues']) if clue['chapter_clues'] else 'none'
+                        st.info(f"📎 **Book:** {clue['book_pdf']}  ·  **Chapter clues:** {chapter_str}")
+                
+                # Show technology terms as multiselect
+                if all_detected_terms:
+                    display_terms = [term.upper() for _, term in clues_data.get('tech_terms', [])]
+                    
+                    if 'selected_tech_terms' not in st.session_state:
+                        st.session_state.selected_tech_terms = display_terms.copy()
+                    
+                    selected_display = st.multiselect(
+                        f"Technology terms ({len(all_detected_terms)} detected)",
+                        options=display_terms,
+                        default=st.session_state.selected_tech_terms,
+                        key="tech_terms_multiselect",
+                        help="Remove terms that aren't relevant to narrow the search"
+                    )
+                    st.session_state.selected_tech_terms = selected_display
+                    
+                    selected_raw_terms = [t.lower() for t in selected_display]
+                    st.session_state.selected_raw_tech_terms = selected_raw_terms
+                    
+                    st.caption(f"✅ {len(selected_raw_terms)} of {len(all_detected_terms)} terms selected")
+                else:
+                    st.caption("You can add terms to `networking_terms.json` to improve detection.")
+                    st.session_state.selected_raw_tech_terms = None
+            elif not detect_clicked:
+                st.caption("Click **Detect Technology Terms** to scan your bug/RCA content for networking keywords.")
                 st.session_state.selected_raw_tech_terms = None
-        else:
-            st.session_state.selected_raw_tech_terms = None  # None = no filtering
         
         st.markdown("---")
         
-        # Step 2: Choose your docset
-        st.markdown("<h3 style='color: #1f77b4;'>Step 2: Choose your docset</h3>", unsafe_allow_html=True)
+        # Step 3: Choose your docset
+        st.markdown("<h3 style='color: #1f77b4;'>Step 3: Choose your docset</h3>", unsafe_allow_html=True)
         
         # ===== PRODUCT NAME SECTION =====
         product_options = ["Cisco SD-WAN", "Cisco 9800", "ASR 9000", "Cisco 8000", "cisco_generic"]
@@ -540,8 +572,8 @@ def render_analysis_summary_page():
         available_guides = get_available_guides(product_name)
         
         if available_guides:
-            # Define default guides for Cisco SD-WAN (curated subset)
-            sdwan_default_guides = [
+            # Define priority guides for Cisco SD-WAN (curated subset)
+            sdwan_priority_guides = [
                 "systems-interfaces-book-xe-sdwan.pdf",
                 "security-book-xe.pdf",
                 "sdwan-xe-gs-book.pdf",
@@ -553,29 +585,25 @@ def render_analysis_summary_page():
             ]
             
             # Initialize session state for selected guides if not exists
-            # Default: all guides selected (except for SD-WAN which uses curated subset)
+            # Default: NO guides checked — auto-match from terms will populate them
             if 'selected_guides' not in st.session_state:
-                if product_name == "Cisco SD-WAN":
-                    # For SD-WAN, only select the curated guides that exist in available_guides
-                    st.session_state.selected_guides = [g for g in sdwan_default_guides if g in available_guides]
-                else:
-                    st.session_state.selected_guides = available_guides.copy()
+                st.session_state.selected_guides = []
             
-            # Also reset guides when product changes
+            # Reset guides when product changes
             if 'last_product' not in st.session_state or st.session_state.last_product != product_name:
-                if product_name == "Cisco SD-WAN":
-                    # For SD-WAN, only select the curated guides that exist in available_guides
-                    st.session_state.selected_guides = [g for g in sdwan_default_guides if g in available_guides]
-                else:
-                    st.session_state.selected_guides = available_guides.copy()
+                st.session_state.selected_guides = []
                 st.session_state.last_product = product_name
+                # Clear checkbox widget states
+                for guide in available_guides:
+                    key = f"guide_{guide}"
+                    if key in st.session_state:
+                        del st.session_state[key]
             
-            # Add "Select All" / "Deselect All" buttons
-            col_guide1, col_guide2 = st.columns(2)
+            # Guide action buttons row
+            col_guide1, col_guide2, col_guide3 = st.columns(3)
             with col_guide1:
                 if st.button("✅ Select All", use_container_width=True, key="select_all_guides"):
                     st.session_state.selected_guides = available_guides.copy()
-                    # Clear all checkbox widget states to force refresh
                     for guide in available_guides:
                         key = f"guide_{guide}"
                         if key in st.session_state:
@@ -584,11 +612,29 @@ def render_analysis_summary_page():
             with col_guide2:
                 if st.button("❌ Deselect All", use_container_width=True, key="deselect_all_guides"):
                     st.session_state.selected_guides = []
-                    # Clear all checkbox widget states to force refresh
                     for guide in available_guides:
                         key = f"guide_{guide}"
                         if key in st.session_state:
                             st.session_state[key] = False
+                    st.rerun()
+            with col_guide3:
+                # "Check Priority Guides" button — only enabled for SD-WAN
+                is_sdwan = product_name == "Cisco SD-WAN"
+                if st.button(
+                    "⭐ Check Priority Guides",
+                    use_container_width=True,
+                    key="check_priority_guides",
+                    disabled=not is_sdwan,
+                    help="Check the curated high-priority SD-WAN guides" if is_sdwan else "Only available for Cisco SD-WAN product"
+                ):
+                    priority_set = set(g for g in sdwan_priority_guides if g in available_guides)
+                    # Additive: keep existing selections and add priority guides
+                    current = set(st.session_state.get('selected_guides', []))
+                    merged = current | priority_set
+                    st.session_state.selected_guides = list(merged)
+                    for guide in available_guides:
+                        key = f"guide_{guide}"
+                        st.session_state[key] = guide in merged
                     st.rerun()
             
             # Display guides as checkboxes in an expander
@@ -629,17 +675,8 @@ def render_analysis_summary_page():
                             del st.session_state[key]
                     st.session_state['_guide_state_hash'] = guide_state_hash
                     
-                    # Build the default set: product defaults PLUS auto-matched guides
-                    if product_name == "Cisco SD-WAN":
-                        default_set = set(g for g in sdwan_default_guides if g in available_guides)
-                    else:
-                        default_set = set(available_guides)
-                    
-                    # Merge in auto-matched guides (additive, not replacing)
-                    if auto_matched_guides:
-                        default_set = default_set | auto_matched_guides
-                    
-                    st.session_state.selected_guides = list(default_set)
+                    # Start with ONLY auto-matched guides checked (empty if no matches)
+                    st.session_state.selected_guides = list(auto_matched_guides)
                 
                 # Create checkboxes for each guide
                 for guide in available_guides:
@@ -693,8 +730,8 @@ def render_analysis_summary_page():
         st.markdown("---")
     
     with col2:
-        # Step 3: Click Analyze or Summarize
-        st.markdown("<h3 style='color: #1f77b4;'>Step 3: Click Analyze or Summarize</h3>", unsafe_allow_html=True)
+        # Step 4: Click Analyze or Summarize
+        st.markdown("<h3 style='color: #1f77b4;'>Step 4: Click Analyze or Summarize</h3>", unsafe_allow_html=True)
         
         st.markdown("**🔍 Analysis & Summary Tools**")
         
@@ -719,28 +756,39 @@ def render_analysis_summary_page():
         
         output_container = st.container()
         
-        # Display the last analysis output if available
+        # Display conversation: latest follow-up first so the user sees the newest answer without scrolling
         if st.session_state.conversation_history:
             with output_container:
-                # Display the most recent answer
-                last_exchange = st.session_state.conversation_history[-1]
-                st.markdown(last_exchange['answer'])
-        
-        # Display follow-up answer if available
-        if 'last_followup_answer' in st.session_state and st.session_state.last_followup_answer:
-            with output_container:
-                st.markdown("---")
-                st.markdown("## 💬 Follow-up Answer")
-                st.markdown(st.session_state.last_followup_answer)
-                
-                # Show raw output in expander
-                if 'last_followup_raw' in st.session_state:
-                    with st.expander("🔍 View Raw Response"):
-                        st.json(st.session_state.last_followup_raw)
+                followups = st.session_state.conversation_history[1:]
+                if followups:
+                    # Show the most recent follow-up at the top
+                    latest = followups[-1]
+                    latest_num = len(followups)
+                    q_preview = latest['question'][:200] + "..." if len(latest['question']) > 200 else latest['question']
+                    st.markdown(f"**💬 Follow-up {latest_num} _(latest)_:** {q_preview}")
+                    st.markdown(latest['answer'])
+
+                    # Show older follow-ups in reverse order (newest → oldest) inside a collapsible
+                    if len(followups) > 1:
+                        with st.expander(f"📜 Earlier follow-ups ({len(followups) - 1})", expanded=False):
+                            for i in range(len(followups) - 2, -1, -1):
+                                exchange = followups[i]
+                                q_prev = exchange['question'][:200] + "..." if len(exchange['question']) > 200 else exchange['question']
+                                st.markdown(f"**💬 Follow-up {i + 1}:** {q_prev}")
+                                st.markdown(exchange['answer'])
+                                if i > 0:
+                                    st.markdown("---")
+
+                    # Initial analysis tucked into a collapsible below
+                    with st.expander("📋 Initial Analysis", expanded=False):
+                        st.markdown(st.session_state.conversation_history[0]['answer'])
+                else:
+                    # No follow-ups yet — show the initial analysis directly
+                    st.markdown(st.session_state.conversation_history[0]['answer'])
         
         # Test Section
         st.markdown("---")
-        st.markdown("<h3 style='color: #1f77b4;'>Step 4: Post your test results (Optional)</h3>", unsafe_allow_html=True)
+        st.markdown("<h3 style='color: #1f77b4;'>Step 5: Post your test results (Optional)</h3>", unsafe_allow_html=True)
         
         with st.expander("📝 Test Results", expanded=False):
             st.markdown("Capture test results for this analysis")
@@ -867,8 +915,8 @@ def render_analysis_summary_page():
         
         st.markdown("---")
         
-        # Step 5: Post Analysis to CDETS
-        st.markdown("<h3 style='color: #1f77b4;'>Step 5: Post Analysis to CDETS</h3>", unsafe_allow_html=True)
+        # Step 6: Post Analysis to CDETS
+        st.markdown("<h3 style='color: #1f77b4;'>Step 6: Post Analysis to CDETS</h3>", unsafe_allow_html=True)
         
         # Add "Post Analysis to Bug" button above output
         post_analysis_button = st.button("📤 Post Analysis to Bug", type="secondary", use_container_width=True, key="analysis_post_to_bug")
@@ -879,38 +927,24 @@ def render_analysis_summary_page():
             st.markdown("### 💬 Conversation Thread")
             st.caption("View your questions and answers, then ask follow-ups below")
             
-            # Show conversation thread visibly (not in expander)
+            # Show recent follow-up questions in reverse order (newest first)
             if len(st.session_state.conversation_history) > 1:
                 with st.container():
-                    st.markdown("**Recent exchanges:**")
-                    # Show last 3 exchanges in compact format
-                    for idx, exchange in enumerate(st.session_state.conversation_history[-3:], len(st.session_state.conversation_history)-2):
-                        if idx > 0:
-                            st.markdown(f"**Q{idx}:** {exchange['question'][:150]}..." if len(exchange['question']) > 150 else f"**Q{idx}:** {exchange['question']}")
+                    st.markdown("**Recent follow-ups:**")
+                    followups = st.session_state.conversation_history[1:]
+                    recent = followups[-3:]
+                    for j in range(len(recent) - 1, -1, -1):
+                        num = len(followups) - (len(recent) - 1 - j)
+                        q_preview = recent[j]['question'][:150] + "..." if len(recent[j]['question']) > 150 else recent[j]['question']
+                        tag = " _(latest)_" if j == len(recent) - 1 else ""
+                        st.markdown(f"💬 **{num}.{tag}** {q_preview}")
             
-            # Compact settings
-            with st.expander("⚙️ Follow-up Settings & Full History", expanded=False):
-                context_window = st.slider(
-                    "Context Window (number of recent exchanges to include)",
-                    min_value=1,
-                    max_value=10,
-                    value=st.session_state.context_window_size,
-                    help="Controls how many recent Q&A exchanges are included in follow-up context. Lower = faster, higher = more context.",
-                    key="analysis_context_window"
-                )
-                st.session_state.context_window_size = context_window
-                
-                use_rag_followup = st.checkbox(
-                    "🔍 Use RAG Search for Follow-ups",
-                    value=True,
-                    help="When enabled, follow-up questions will search the documentation database. When disabled, uses only conversation context.",
-                    key="analysis_use_rag"
-                )
-                
-                # Display conversation history
-                st.markdown("**📜 Conversation History**")
+            # Full conversation history
+            with st.expander("📜 Full Conversation History", expanded=False):
                 for idx, exchange in enumerate(st.session_state.conversation_history, 1):
-                    with st.expander(f"Exchange {idx}: {exchange['question'][:80]}...", expanded=False):
+                    label = "Initial Analysis" if idx == 1 else f"Follow-up {idx - 1}"
+                    q_preview = exchange['question'][:80] + "..." if len(exchange['question']) > 80 else exchange['question']
+                    with st.expander(f"{label}: {q_preview}", expanded=False):
                         st.markdown(f"**Question:**")
                         st.markdown(exchange['question'])
                         st.markdown(f"**Answer:**")
@@ -935,58 +969,42 @@ def render_analysis_summary_page():
             if ask_followup_button and followup_question.strip():
                 with st.spinner("💭 Thinking..."):
                     try:
-                        # Get conversation context
-                        context = get_relevant_context(
-                            st.session_state.conversation_history,
-                            window_size=context_window
-                        )
+                        # Build conversation history for the LLM
+                        # (Direct LLM call — NOT run_agent, which would re-run the
+                        #  full BugAnalyze pipeline with boost queries, wrong for follow-ups)
+                        conversation_context = ""
+                        for i, ex in enumerate(st.session_state.conversation_history):
+                            if i == 0:
+                                # First exchange is the initial analysis — include answer only
+                                # (the question is the full BugAnalyze prompt, too long and irrelevant)
+                                conversation_context += f"Initial Analysis Result:\n{ex['answer']}\n\n"
+                            else:
+                                conversation_context += f"Follow-up Q{i}: {ex['question']}\nFollow-up A{i}: {ex['answer']}\n\n"
                         
-                        # Build the follow-up prompt
-                        full_prompt = build_followup_prompt(
-                            followup_question,
-                            context,
-                            use_rag_followup
-                        )
+                        followup_prompt = f"""You are a Cisco documentation assistant continuing a conversation about bug analysis.
+
+Previous conversation:
+{conversation_context}
+User's follow-up question: {followup_question}
+
+Instructions:
+- Answer based on the conversation above and your general knowledge
+- If referencing a previous answer, be specific about which point
+- If the user asks for clarification, expand on the specific point mentioned
+- Keep the answer focused and concise
+- Do not repeat the entire analysis unless specifically asked
+"""
                         
-                        # Get product name and RCA content from session state
-                        product_name_state = st.session_state.get('product_name', product_name)
-                        rca_content_state = st.session_state.get('current_rca_content', rca_content)
-                        selected_guides = st.session_state.get('selected_guides', [])
-                        
-                        # Get user-selected technology terms
-                        selected_tech_terms = st.session_state.get('selected_raw_tech_terms', None)
-                        
-                        # Run the agent with the follow-up prompt
-                        if use_rag_followup:
-                            result = run_agent(product_name_state, full_prompt, rca_content_state, selected_guides, selected_tech_terms)
-                        else:
-                            # For non-RAG, just use the LLM directly
-                            from openai import OpenAI
-                            client = OpenAI()
-                            response = client.chat.completions.create(
-                                model="gpt-4",
-                                messages=[
-                                    {"role": "system", "content": "You are a helpful Cisco documentation assistant."},
-                                    {"role": "user", "content": full_prompt}
-                                ]
-                            )
-                            result = {
-                                'output': response.choices[0].message.content,
-                                'raw': response
-                            }
-                        
-                        # Extract answer
-                        answer = result.get('output', str(result))
+                        # Direct LLM call for fast, focused follow-ups
+                        llm = get_llm()
+                        llm_result = llm.invoke(followup_prompt)
+                        answer = llm_result.content if hasattr(llm_result, 'content') else str(llm_result)
                         
                         # Add to conversation history
                         st.session_state.conversation_history.append({
                             "question": followup_question,
                             "answer": answer
                         })
-                        
-                        # Store for display
-                        st.session_state.last_followup_answer = answer
-                        st.session_state.last_followup_raw = result
                         
                         st.rerun()
                         
@@ -1014,8 +1032,12 @@ def render_analysis_summary_page():
                         st.session_state.current_rca_content = rca_content
                         st.session_state.initial_analysis_done = True
                         
-                        # Get selected guides from session state
-                        selected_guides = st.session_state.get('selected_guides', [])
+                        # Get selected guides LIVE from checkbox widget states
+                        # (not from st.session_state.selected_guides which may be stale
+                        #  if the user toggled a checkbox and clicked Analyze in the same interaction)
+                        live_guides = get_available_guides(product_name)
+                        selected_guides = [g for g in live_guides if st.session_state.get(f"guide_{g}", False)]
+                        st.session_state.selected_guides = selected_guides  # sync back
                         
                         # Get user-selected technology terms (None = use all)
                         selected_tech_terms = st.session_state.get('selected_raw_tech_terms', None)
@@ -1030,12 +1052,6 @@ def render_analysis_summary_page():
                             "question": question,
                             "answer": result['output'] if 'output' in result else str(result)
                         })
-                        
-                        # Clear follow-up answer when new analysis is done
-                        if 'last_followup_answer' in st.session_state:
-                            del st.session_state.last_followup_answer
-                        if 'last_followup_raw' in st.session_state:
-                            del st.session_state.last_followup_raw
                         
                         st.success("✅ Analysis complete!")
                         st.rerun()

@@ -114,6 +114,18 @@ def _scan_for_networking_terms(text: str) -> list:
     return found
 
 
+    # ── Load guide mappings from JSON (editable without touching code) ──
+_GUIDE_MAPPINGS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "guide_mappings.json")
+
+def _load_guide_mappings():
+    """Load guide matching configuration from guide_mappings.json"""
+    try:
+        with open(_GUIDE_MAPPINGS_FILE, 'r') as f:
+            return json.load(f)
+    except Exception as e:
+        print(f"⚠️ Could not load guide_mappings.json: {e}")
+        return {}
+
 def match_terms_to_guides(detected_terms: list, product_name: str) -> tuple:
     """
     Match detected technology terms against actual PDF guide filenames
@@ -148,26 +160,29 @@ def match_terms_to_guides(detected_terms: list, product_name: str) -> tuple:
     if not guide_files:
         return {}, []
     
+    # ── Load all configuration from guide_mappings.json ──
+    mappings = _load_guide_mappings()
+    
+    install_cfg = mappings.get('install_upgrade_terms', {})
+    install_terms = set(install_cfg.get('terms', []))
+    install_patterns = install_cfg.get('guide_patterns', [])
+    
+    concept_map = {k: v for k, v in mappings.get('concept_to_guide', {}).items() if k != '_comment'}
+    
+    product_noise_cfg = mappings.get('product_noise', {})
+    filename_noise = set(mappings.get('filename_noise_words', {}).get('words', []))
+    stop_words = set(mappings.get('stop_words', {}).get('words', []))
+    
     matched = {}  # term -> [guide filenames]
     
     # Build a set of product-name terms to SKIP — these are too generic
-    # and would match every guide in the docset (e.g. "sdwan" matches all SD-WAN guides)
     product_noise = set()
-    # Add the product_name words
     for word in product_name.lower().replace("-", " ").split():
         product_noise.add(word)
-    # Add the folder code
     product_noise.add(product_code.lower())
-    # Add known product identifiers that appear in most/all filenames for a docset
-    product_noise_terms = {
-        "sdwan": {"sdwan", "sd-wan", "sd wan", "cisco sd-wan", "cisco sdwan", "xe", "catalyst"},
-        "ASR9000": {"asr9000", "asr9k", "asr 9000", "asr 9k"},
-        "Cisco8000": {"cisco8000", "cisco 8000", "8000", "cisco8k", "8k"},
-        "9800": {"9800", "catalyst 9800"},
-    }
-    for noise_term in product_noise_terms.get(product_code, set()):
+    for noise_term in product_noise_cfg.get(product_code, []):
         product_noise.add(noise_term)
-    
+
     for term in detected_terms:
         term_lower = term.lower()
         
@@ -175,17 +190,32 @@ def match_terms_to_guides(detected_terms: list, product_name: str) -> tuple:
         if term_lower in product_noise:
             continue
         
+        # Skip terms that are substrings of common guide-type words
+        # (e.g. "gui" matches every filename containing "guide")
+        if any(term_lower in noise_word for noise_word in filename_noise):
+            continue
+        
         # Create variants for flexible matching
+        # Strip stop words that filenames often omit
+        # e.g. "monitor and maintain" → "monitor maintain" → matches "monitor-maintain-book.pdf"
+        term_no_stops = " ".join(w for w in term_lower.split() if w not in stop_words)
+        
         term_variants = [
             term_lower,                          # exact: "cnbng"
-            term_lower.replace(" ", "-"),        # spaces→hyphens: "high availability" → "high-availability"
+            term_lower.replace(" ", "-"),        # spaces→hyphens
             term_lower.replace(" ", "_"),        # spaces→underscores
-            term_lower.replace(" ", ""),          # no spaces: "high availability" → "highavailability"
+            term_lower.replace(" ", ""),          # no spaces
         ]
+        # Add stop-word-stripped variants if different from original
+        if term_no_stops and term_no_stops != term_lower:
+            term_variants.extend([
+                term_no_stops,
+                term_no_stops.replace(" ", "-"),
+                term_no_stops.replace(" ", ""),
+            ])
         
         for guide in guide_files:
             guide_lower = guide.lower()
-            # Normalize guide name for matching
             guide_normalized = guide_lower.replace(".pdf", "").replace("-", "").replace("_", "")
             
             for variant in term_variants:
@@ -196,6 +226,34 @@ def match_terms_to_guides(detected_terms: list, product_name: str) -> tuple:
                     if guide not in matched[term_lower]:
                         matched[term_lower].append(guide)
                     break
+
+    # ── Install / Upgrade guide injection ──
+    install_terms_found = [t for t in detected_terms if t.lower() in install_terms]
+    if install_terms_found:
+        trigger_term = install_terms_found[0].lower()
+        for guide in guide_files:
+            guide_lower = guide.lower()
+            if any(pat in guide_lower for pat in install_patterns):
+                if trigger_term not in matched:
+                    matched[trigger_term] = []
+                if guide not in matched[trigger_term]:
+                    matched[trigger_term].append(guide)
+
+    # ── Concept-to-guide injection ──
+    # If a detected term is in the concept map, also match guides
+    # whose filenames contain the mapped patterns.
+    for term in detected_terms:
+        term_lower = term.lower()
+        if term_lower in concept_map:
+            guide_patterns = concept_map[term_lower]
+            for guide in guide_files:
+                guide_lower = guide.lower()
+                guide_normalized = guide_lower.replace(".pdf", "").replace("-", "").replace("_", "")
+                if any(pat in guide_normalized or pat in guide_lower for pat in guide_patterns):
+                    if term_lower not in matched:
+                        matched[term_lower] = []
+                    if guide not in matched[term_lower]:
+                        matched[term_lower].append(guide)
     
     return matched, guide_files
 

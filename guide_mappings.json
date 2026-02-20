@@ -1,0 +1,121 @@
+{
+    "_comment": "Guide-matching configuration. Controls how detected technology terms map to PDF guide filenames. Edit this file to add new mappings without touching Python code.",
+
+    "install_upgrade_terms": {
+        "_comment": "Terms that trigger auto-selection of install/upgrade guides. When any of these terms are detected in bug/RCA content, guides matching 'install_guide_patterns' filenames are auto-checked.",
+        "terms": [
+            "upgrade", "install", "installation", "firmware", "image",
+            "boot", "rommon", "rom monitor", "rom-monitor",
+            "software install", "software upgrade", "software image",
+            "sw install", "setup and upgrade", "install and upgrade",
+            "smu", "pie", "issu", "fpd", "downgrade",
+            "hardware installation"
+        ],
+        "guide_patterns": [
+            "install", "upgrade", "setup", "-hig", "gs-book"
+        ]
+    },
+
+    "concept_to_guide": {
+        "_comment": "Concept-to-guide mapping. When a term (key) is detected in bug/RCA content, guides whose filenames contain ANY of the listed patterns (values) are auto-checked. Use this for terms that don't literally appear in guide filenames but semantically belong to a specific guide. Patterns are matched as substrings against the normalized filename (lowercase, no .pdf). Built from actual book table-of-contents analysis.",
+
+        "stuck":                ["monitor", "maintain", "troubleshoot"],
+        "recovery":             ["monitor", "maintain", "troubleshoot"],
+        "database":             ["monitor", "maintain"],
+        "neo4j":                ["monitor", "maintain"],
+        "cleanup":              ["monitor", "maintain"],
+        "task management":      ["monitor", "maintain"],
+        "deploy failure":       ["monitor", "maintain", "configuration-group"],
+        "deploy failed":        ["monitor", "maintain", "configuration-group"],
+        "troubleshoot":         ["monitor", "maintain", "troubleshoot"],
+        "troubleshooting":      ["monitor", "maintain", "troubleshoot"],
+        "debug":                ["monitor", "maintain", "troubleshoot"],
+        "logs":                 ["monitor", "maintain"],
+        "show commands":        ["monitor", "maintain"],
+        "monitor":              ["monitor", "maintain"],
+        "maintenance":          ["monitor", "maintain"],
+        "backup":               ["monitor", "maintain"],
+        "restore":              ["monitor", "maintain"],
+        "disaster recovery":    ["monitor", "maintain", "troubleshoot"],
+        "alarm":                ["alarm", "monitor", "maintain"],
+        "logging":              ["monitor", "maintain"],
+        "certificate":          ["monitor", "maintain", "security"],
+
+        "deployment":           ["monitor", "maintain", "configuration-group"],
+        "deploy":               ["monitor", "maintain", "configuration-group"],
+        "provisioning":         ["configuration-group", "gs-book", "getting-started"],
+        "pnp":                  ["configuration-group", "gs-book", "getting-started"],
+        "plug and play":        ["configuration-group", "gs-book", "getting-started"],
+        "quick connect":        ["configuration-group"],
+        "bootstrap":            ["configuration-group", "gs-book"],
+        "ztp":                  ["configuration-group", "gs-book", "getting-started"],
+        "onboarding":           ["configuration-group", "gs-book", "getting-started"],
+        "day0":                 ["configuration-group", "gs-book", "getting-started"],
+        "day1":                 ["configuration-group", "systems-interfaces"],
+
+        "configuration group":  ["configuration-group"],
+        "config group":         ["configuration-group"],
+        "feature profile":      ["configuration-group"],
+        "system profile":       ["configuration-group"],
+        "transport profile":    ["configuration-group"],
+        "service profile":      ["configuration-group"],
+        "policy object":        ["configuration-group"],
+        "policy object profile":["configuration-group"],
+        "topology profile":     ["configuration-group"],
+        "traffic profile":      ["configuration-group"],
+        "cli profile":          ["configuration-group"],
+        "cli add-on":           ["configuration-group"],
+        "config catalog":       ["configuration-group"],
+
+        "prefix list":          ["configuration-group", "policy"],
+        "data prefix":          ["configuration-group", "policy"],
+        "app probe":            ["configuration-group"],
+        "sla class":            ["configuration-group"],
+        "color list":           ["configuration-group"],
+        "policer":              ["configuration-group", "policy"],
+        "class map":            ["configuration-group", "policy"],
+        "mirror":               ["configuration-group"],
+        "tloc":                 ["configuration-group"],
+
+        "hub-spoke":            ["configuration-group"],
+        "hub spoke":            ["configuration-group"],
+        "custom control":       ["configuration-group", "policy"],
+        "app-aware routing":    ["configuration-group", "appqoe"],
+        "traffic data":         ["configuration-group", "policy"],
+        "qos map":              ["configuration-group"],
+
+        "wan edge":             ["configuration-group", "systems-interfaces"],
+        "wan interface":        ["configuration-group", "systems-interfaces"],
+        "management interface": ["configuration-group", "systems-interfaces"],
+        "cellular":             ["configuration-group"],
+        "tracker":              ["configuration-group"],
+
+        "switchport":           ["configuration-group", "systems-interfaces"],
+        "wireless lan":         ["configuration-group"],
+
+        "embedded security":    ["configuration-group", "security"],
+        "url filtering":        ["configuration-group", "security"],
+        "dns security":         ["configuration-group", "security"],
+
+        "policy group":         ["configuration-group", "policy"],
+        "security group":       ["configuration-group", "security", "policy"]
+    },
+
+    "product_noise": {
+        "_comment": "Product-specific terms to SKIP during guide matching. These terms appear in most/all filenames for a product and would match every guide. Keys are product folder codes.",
+        "sdwan":    ["sdwan", "sd-wan", "sd wan", "cisco sd-wan", "cisco sdwan", "xe", "catalyst"],
+        "ASR9000":  ["asr9000", "asr9k", "asr 9000", "asr 9k"],
+        "Cisco8000": ["cisco8000", "cisco 8000", "8000", "cisco8k", "8k"],
+        "9800":     ["9800", "catalyst 9800"]
+    },
+
+    "filename_noise_words": {
+        "_comment": "Common words that appear in guide filenames. Any detected term that is a substring of these words gets skipped to avoid false matches (e.g. 'gui' inside 'guide').",
+        "words": ["guide", "configuration", "troubleshooting", "reference", "overview"]
+    },
+
+    "stop_words": {
+        "_comment": "English stop words stripped from terms before filename matching. Filenames often drop these (e.g. 'monitor and maintain' becomes 'monitor-maintain' in the filename).",
+        "words": ["and", "or", "the", "for", "of", "to", "a", "an", "in", "on", "with"]
+    }
+}
