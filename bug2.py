@@ -1,7 +1,52 @@
+import re
 import requests
 from requests_oauthlib import OAuth1
 import xml.etree.ElementTree as ET
 from xml.sax.saxutils import escape as xml_escape
+
+
+def safe_parse_cdets_xml(xml_content):
+    """
+    Safely parse CDETS XML that may contain embedded HTML with mismatched tags.
+    
+    CDETS bug fields (Description, Release-note, etc.) often contain raw HTML
+    like <B>Symptom:</B> which is valid HTML but breaks strict XML parsing.
+    """
+    try:
+        return ET.fromstring(xml_content)
+    except ET.ParseError:
+        pass
+    
+    if isinstance(xml_content, bytes):
+        xml_str = xml_content.decode('utf-8', errors='replace')
+    else:
+        xml_str = xml_content
+    
+    def escape_field_content(match):
+        prefix = match.group(1)
+        content = match.group(2)
+        suffix = match.group(3)
+        content = re.sub(r'<(?!/?(Field|Defect|Note|Enclosure|Bug)[ />])', '&lt;', content)
+        content = re.sub(r'(?<!Field)(?<!Defect)(?<!Note)(?<!Enclosure)(?<!Bug)(?<!\?)>', '&gt;', content)
+        return prefix + content + suffix
+    
+    cleaned = re.sub(
+        r'(name="[^"]+">)(.*?)(</(?:cdets:)?Field>)',
+        escape_field_content,
+        xml_str,
+        flags=re.DOTALL
+    )
+    
+    try:
+        return ET.fromstring(cleaned.encode('utf-8'))
+    except ET.ParseError:
+        stripped = re.sub(
+            r'(name="[^"]+">)(.*?)(</(?:cdets:)?Field>)',
+            lambda m: m.group(1) + re.sub(r'<[^>]*>', '', m.group(2)) + m.group(3),
+            xml_str,
+            flags=re.DOTALL
+        )
+        return ET.fromstring(stripped.encode('utf-8'))
 
 # Configuration
 BUG_NUMBER = "CSCwr82677"
@@ -105,7 +150,7 @@ def get_all_notes(bug_number, auth):
     response.raise_for_status()
     
     # Parse XML to extract note titles
-    root = ET.fromstring(response.content)
+    root = safe_parse_cdets_xml(response.content)
     ns = {'cdets': 'cdetsng'}
     notes = []
     for note_elem in root.findall('.//cdets:Note', ns):
@@ -171,7 +216,7 @@ def get_bug_field_values(bug_number, fields, auth):
     response.raise_for_status()
     
     # Parse XML response
-    root = ET.fromstring(response.content)
+    root = safe_parse_cdets_xml(response.content)
     ns = {'cdets': 'cdetsng'}
     
     # Convert fields to list if it's a string
@@ -230,7 +275,7 @@ if __name__ == "__main__":
     print("\n" + "="*80 + "\n")
 
     # Parse XML response
-    root = ET.fromstring(response.content)
+    root = safe_parse_cdets_xml(response.content)
 
     # Define namespaces
     ns = {
@@ -294,7 +339,7 @@ if __name__ == "__main__":
             print("\nFetching bug summary...")
             try:
                 summary_response = get_bug_summary(bug_number, auth)
-                summary_root = ET.fromstring(summary_response.content)
+                summary_root = safe_parse_cdets_xml(summary_response.content)
                 
                 # Define namespaces for parsing
                 summary_ns = {'cdets': 'cdetsng', 'ns2': 'http://www.w3.org/1999/xlink'}

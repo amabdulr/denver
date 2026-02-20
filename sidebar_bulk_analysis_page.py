@@ -17,7 +17,7 @@ def render_bulk_analysis_page():
     st.markdown("Process multiple RCAs at once through ChapterFinder and ContentWriter workflows")
     
     st.markdown("---")
-    st.warning("🧪 **Testing Mode Active:** Processing limited to first 2 rows only")
+    st.warning("🧪 **Testing Mode Active:** Processing limited to first 40 rows only")
     st.info("💡 Process multiple RCAs at once through ChapterFinder and ContentWriter workflows")
     
     # Step-by-step instructions
@@ -395,9 +395,9 @@ def render_rca_section(product_name: str):
                         clear_bulk_session_state()
                         st.rerun()
                 
-                # Time estimate (for first 2 rows in testing mode)
+                # Time estimate (for first 40 rows in testing mode)
                 if not st.session_state.get('bulk_processing', False):
-                    rows_to_process = min(2, len(df))
+                    rows_to_process = min(40, len(df))
                     estimated_time = calculate_processing_time(rows_to_process)
                     st.info(f"⏱️ Estimated processing time for first {rows_to_process} rows (testing mode): {estimated_time}")
                 
@@ -455,8 +455,8 @@ def process_bulk_rca(df: pd.DataFrame, rca_column: str, product_name: str):
     status_text = st.empty()
     results_container = st.container()
     
-    # **TESTING MODE: Limit to first 2 rows**
-    total_rows = min(2, len(df))
+    # **TESTING MODE: Limit to first 40 rows**
+    total_rows = min(40, len(df))
     st.info(f"🧪 **Testing Mode:** Processing limited to first {total_rows} rows (out of {len(df)} total)")
     
     # Determine starting point (for resume functionality)
@@ -854,9 +854,9 @@ def render_bug_section(product_name: str):
                         clear_bulk_bug_session_state()
                         st.rerun()
                 
-                # Time estimate (for first 2 rows in testing mode)
+                # Time estimate (for first 40 rows in testing mode)
                 if not st.session_state.get('bulk_bug_processing', False):
-                    rows_to_process = min(2, len(df))
+                    rows_to_process = min(40, len(df))
                     # Each bug: Fetch (no API call) + Summarize (1 call) + Analyze (1 call) = 2 API calls
                     # With 10 second delays: 2 calls × 10s = 20 seconds per row
                     estimated_time = calculate_bug_processing_time(rows_to_process)
@@ -903,7 +903,7 @@ def calculate_bug_processing_time(num_rows: int) -> str:
 
 def process_bulk_bugs(df: pd.DataFrame, bug_column: str, product_name: str, extract_all_notes: bool):
     """Process all bugs in the DataFrame (limited to first 10 rows for testing)"""
-    from bug2 import create_auth, get_bug_summary, get_note_content, get_all_notes, get_bug_field_values
+    from bug2 import create_auth, get_bug_summary, get_note_content, get_all_notes, get_bug_field_values, safe_parse_cdets_xml
     from app_functions import run_agent_with_prompt_file
     import xml.etree.ElementTree as ET
     
@@ -916,8 +916,8 @@ def process_bulk_bugs(df: pd.DataFrame, bug_column: str, product_name: str, extr
     progress_bar = st.progress(0)
     status_text = st.empty()
     
-    # **TESTING MODE: Limit to first 2 rows**
-    total_rows = min(2, len(df))
+    # **TESTING MODE: Limit to first 40 rows**
+    total_rows = min(40, len(df))
     st.info(f"🧪 **Testing Mode:** Processing limited to first {total_rows} rows (out of {len(df)} total)")
     
     # Determine starting point (for resume functionality)
@@ -955,7 +955,7 @@ def process_bulk_bugs(df: pd.DataFrame, bug_column: str, product_name: str, extr
                 
                 # Get bug summary
                 summary_response = get_bug_summary(bug_number, auth)
-                summary_root = ET.fromstring(summary_response.content)
+                summary_root = safe_parse_cdets_xml(summary_response.content)
                 
                 # Build bug content
                 bug_content = f"# Bug {bug_number} - Complete Report\n\n"

@@ -5,7 +5,7 @@ Main application file for analyzing bug reports and suggesting documentation upd
 
 import streamlit as st
 from dotenv import load_dotenv
-from bug2 import create_auth, get_bug_summary, get_file_content, get_note_content, get_all_notes, create_note, get_bug_field_values
+from bug2 import create_auth, get_bug_summary, get_file_content, get_note_content, get_all_notes, create_note, get_bug_field_values, safe_parse_cdets_xml
 import xml.etree.ElementTree as ET
 import requests
 import json
@@ -319,7 +319,7 @@ def render_shared_inputs(tab_prefix="", show_header=True):
                     
                     # Get bug summary
                     summary_response = get_bug_summary(bug_number, auth)
-                    summary_root = ET.fromstring(summary_response.content)
+                    summary_root = safe_parse_cdets_xml(summary_response.content)
                     
                     # Build bug content
                     bug_content = f"# Bug {bug_number} - Complete Report\n\n"
@@ -440,17 +440,22 @@ with tab1:
     with col1:
         product_name = render_shared_inputs("tab1")
         
-        # Load default prompt from BugAnalyze.md
+        # Load default prompt from BugAnalyze.md (always read fresh from disk)
         try:
             with open("BugAnalyze.md", "r") as f:
                 default_prompt = f.read()
         except FileNotFoundError:
             default_prompt = "Analyze the Bug/RCA content"
         
+        # Keep session state in sync with the file on disk
+        # so edits to BugAnalyze.md are reflected without clearing session
+        if 'analysis_question' not in st.session_state or st.session_state.get('_last_prompt_hash') != hash(default_prompt):
+            st.session_state['analysis_question'] = default_prompt
+            st.session_state['_last_prompt_hash'] = hash(default_prompt)
+        
         # Question input for Analysis (only in Tab 1)
         question = st.text_area(
             "Question/Task",
-            value=default_prompt,
             key="analysis_question",
             height=200
         )
@@ -677,7 +682,9 @@ if analyze_button:
                 st.session_state.current_rca_content = rca_content
                 st.session_state.initial_analysis_done = True
                 
-                # Run the agent
+                # Use the question from the text area (user may have edited it)
+                # The text area is already synced with BugAnalyze.md on startup/file changes
+                # but user edits in the UI take precedence at execution time
                 result = run_agent(product_name, question, rca_content)
                 
                 # Add to conversation history

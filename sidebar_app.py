@@ -6,17 +6,18 @@ Analysis & Summary - Full Implementation
 
 import streamlit as st
 from dotenv import load_dotenv
-from bug2 import create_auth, get_bug_summary, get_file_content, get_note_content, get_all_notes, create_note, get_bug_field_values
+from bug2 import create_auth, get_bug_summary, get_file_content, get_note_content, get_all_notes, create_note, get_bug_field_values, safe_parse_cdets_xml
 import xml.etree.ElementTree as ET
 import requests
 import json
 import os
+import hashlib
 import pandas as pd
 from datetime import datetime
 from openpyxl import load_workbook, Workbook
 
 # Import helper functions
-from app_functions import run_agent, format_output, apply_prompt_file
+from app_functions import run_agent, format_output, apply_prompt_file, extract_doc_clues_data, match_terms_to_guides
 from sidebar_first_draft_page import render_first_draft_page
 from sidebar_bulk_analysis_page import render_bulk_analysis_page
 from sidebar_resolve_bug_page import render_resolve_bug_page
@@ -272,10 +273,10 @@ def render_analysis_summary_page():
     
     with col1:
         # ===== FETCH BUG FROM CDETS SECTION =====
-        st.subheader("Step 1: Enter Bug Number. Click Fetch Bug")
+        st.markdown("<h3 style='color: #1f77b4;'>Step 1: Enter Bug Number. Click Fetch Bug</h3>", unsafe_allow_html=True)
         
         # Add checkbox for extracting all notes with better visibility
-        st.markdown("#### 📋 Note Extraction Options")
+        st.markdown("**📋 Note Extraction Options**")
         extract_all_notes = st.checkbox(
             "**Extract all notes** (default: Behavior-changed + Release-note only)",
             value=False,
@@ -300,6 +301,22 @@ def render_analysis_summary_page():
             st.success(f"✅ Successfully fetched bug data!")
             st.session_state.bug_fetched = False  # Clear the flag
         
+        # Display notes summary right after fetch (most visible location)
+        if 'fetched_notes_summary' in st.session_state and st.session_state.fetched_notes_summary:
+            all_notes_summary = st.session_state.fetched_notes_summary
+            total_notes = sum(len(notes) for notes in all_notes_summary.values())
+            
+            with st.expander(f"📋 Extracted Notes Summary ({total_notes} total notes)", expanded=True):
+                for bug_num, notes in all_notes_summary.items():
+                    if notes:
+                        st.markdown(f"**Bug {bug_num}** ({len(notes)} notes):")
+                        for idx, note_title in enumerate(notes, 1):
+                            st.markdown(f"  {idx}. {note_title}")
+                    else:
+                        st.markdown(f"**Bug {bug_num}**: No notes extracted")
+                    if bug_num != list(all_notes_summary.keys())[-1]:  # Not the last bug
+                        st.markdown("---")
+        
         # Handle fetch bug button
         if fetch_bug_button and bug_number_input:
             # Parse multiple bug numbers (comma-separated)
@@ -321,7 +338,7 @@ def render_analysis_summary_page():
                         
                         # Get bug summary
                         summary_response = get_bug_summary(bug_number, auth)
-                        summary_root = ET.fromstring(summary_response.content)
+                        summary_root = safe_parse_cdets_xml(summary_response.content)
                         
                         # Build bug content
                         bug_content = f"# Bug {bug_number} - Complete Report\n\n"
@@ -406,7 +423,7 @@ def render_analysis_summary_page():
         
         # Step 1: (OR) Paste SR RCA
         st.subheader("(OR)")
-        st.subheader("Step 1: Paste your SR RCA")
+        st.markdown("<h3 style='color: #1f77b4;'>Step 1: Paste your SR RCA</h3>", unsafe_allow_html=True)
         
         # RCA content input
         rca_content = st.text_area(
@@ -419,8 +436,82 @@ def render_analysis_summary_page():
         
         st.markdown("---")
         
+        # ===== EXTRACTED TECHNOLOGY TERMS (auto-detected from RCA content) =====
+        # Always scan as soon as ANY content is in the RCA text area
+        if rca_content and rca_content.strip():
+            clues_data = extract_doc_clues_data(rca_content)
+            all_detected_terms = [term for _, term in clues_data.get('tech_terms', [])]
+            url_clues = clues_data.get('url_clues', [])
+            
+            # Always show the section header when there's RCA content
+            col_terms_header, col_terms_refresh = st.columns([3, 1])
+            with col_terms_header:
+                st.markdown("<h3 style='color: #1f77b4;'>🔧 Detected Technology Terms</h3>", unsafe_allow_html=True)
+            with col_terms_refresh:
+                if st.button("🔄 Refresh", key="refresh_tech_terms", use_container_width=True, help="Re-scan RCA content for technology terms"):
+                    # Force re-scan by clearing the hash
+                    st.session_state.pop('_last_rca_hash_for_terms', None)
+                    st.session_state.pop('tech_terms_multiselect', None)
+                    st.session_state.pop('selected_tech_terms', None)
+                    st.session_state.pop('selected_raw_tech_terms', None)
+                    st.session_state.pop('_guide_state_hash', None)
+                    # Clear cached networking terms so any JSON edits are picked up
+                    import app_functions
+                    app_functions._networking_terms_cache = None
+                    st.rerun()
+            
+            st.caption("Auto-extracted from your bug/RCA content. Deselect irrelevant terms to focus the search.")
+            
+            # Show URL clues as info (not selectable — always used)
+            if url_clues:
+                for clue in url_clues:
+                    chapter_str = ', '.join(c.upper() for c in clue['chapter_clues']) if clue['chapter_clues'] else 'none'
+                    st.info(f"📎 **Book:** {clue['book_pdf']}  ·  **Chapter clues:** {chapter_str}")
+            
+            # Show technology terms as multiselect
+            if all_detected_terms:
+                # Build display labels — just the term in uppercase, no category prefix
+                display_terms = [term.upper() for _, term in clues_data.get('tech_terms', [])]
+                
+                # Initialize session state for selected terms
+                if 'selected_tech_terms' not in st.session_state:
+                    st.session_state.selected_tech_terms = display_terms.copy()
+                
+                # Reset selections when RCA content changes
+                rca_hash = hash(rca_content)
+                if st.session_state.get('_last_rca_hash_for_terms') != rca_hash:
+                    st.session_state.selected_tech_terms = display_terms.copy()
+                    st.session_state._last_rca_hash_for_terms = rca_hash
+                    # Clear the multiselect widget's own state so it picks up new defaults
+                    if 'tech_terms_multiselect' in st.session_state:
+                        del st.session_state['tech_terms_multiselect']
+                    st.rerun()
+                
+                selected_display = st.multiselect(
+                    f"Technology terms ({len(all_detected_terms)} detected)",
+                    options=display_terms,
+                    default=st.session_state.selected_tech_terms,
+                    key="tech_terms_multiselect",
+                    help="Remove terms that aren't relevant to narrow the search"
+                )
+                st.session_state.selected_tech_terms = selected_display
+                
+                # Convert display labels back to raw terms for the engine
+                selected_raw_terms = [t.lower() for t in selected_display]
+                st.session_state.selected_raw_tech_terms = selected_raw_terms
+                
+                st.caption(f"✅ {len(selected_raw_terms)} of {len(all_detected_terms)} terms selected")
+            else:
+                st.warning("⚠️ No known networking terms detected. The search will use the full bug content as-is.")
+                st.caption("You can add terms to `networking_terms.json` to improve detection.")
+                st.session_state.selected_raw_tech_terms = None
+        else:
+            st.session_state.selected_raw_tech_terms = None  # None = no filtering
+        
+        st.markdown("---")
+        
         # Step 2: Choose your docset
-        st.subheader("Step 2: Choose your docset")
+        st.markdown("<h3 style='color: #1f77b4;'>Step 2: Choose your docset</h3>", unsafe_allow_html=True)
         
         # ===== PRODUCT NAME SECTION =====
         product_options = ["Cisco SD-WAN", "Cisco 9800", "ASR 9000", "Cisco 8000", "cisco_generic"]
@@ -442,7 +533,7 @@ def render_analysis_summary_page():
         )
         
         # ===== GUIDE SELECTION SECTION =====
-        st.markdown("### 📚 Select Guides")
+        st.markdown("**📚 Select Guides**")
         st.caption("Limit the search scope to specific guides (optional)")
         
         # Get available guides for the selected product
@@ -504,14 +595,66 @@ def render_analysis_summary_page():
             with st.expander(f"📖 Available Guides ({len(available_guides)})", expanded=True):
                 st.caption(f"Found {len(available_guides)} guide(s) for {product_name}")
                 
+                # Auto-match guides based on detected technology terms
+                auto_matched_guides = set()
+                auto_match_reasons = {}  # guide -> [matched terms]
+                current_selected_terms = []
+                
+                if rca_content and rca_content.strip():
+                    current_selected_terms = st.session_state.get('selected_raw_tech_terms', []) or []
+                    if current_selected_terms:
+                        matched, _ = match_terms_to_guides(current_selected_terms, product_name)
+                        for term, matched_guide_list in matched.items():
+                            for g in matched_guide_list:
+                                auto_matched_guides.add(g)
+                                if g not in auto_match_reasons:
+                                    auto_match_reasons[g] = []
+                                auto_match_reasons[g].append(term.upper())
+                
+                if auto_matched_guides:
+                    st.info(f"🎯 **{len(auto_matched_guides)}** guide(s) auto-selected based on detected terms")
+                
+                # Build a hash that changes when content/terms change, to reset checkbox defaults
+                terms_sig = str(sorted(current_selected_terms)).encode() if current_selected_terms else b"none"
+                guide_state_hash = hashlib.md5(
+                    (rca_content or "").encode() + terms_sig + product_name.encode()
+                ).hexdigest()[:8]
+                
+                # Reset checkbox states when content, terms, or product changes
+                prev_guide_hash = st.session_state.get('_guide_state_hash', '')
+                if prev_guide_hash != guide_state_hash:
+                    for guide in available_guides:
+                        key = f"guide_{guide}"
+                        if key in st.session_state:
+                            del st.session_state[key]
+                    st.session_state['_guide_state_hash'] = guide_state_hash
+                    
+                    # Build the default set: product defaults PLUS auto-matched guides
+                    if product_name == "Cisco SD-WAN":
+                        default_set = set(g for g in sdwan_default_guides if g in available_guides)
+                    else:
+                        default_set = set(available_guides)
+                    
+                    # Merge in auto-matched guides (additive, not replacing)
+                    if auto_matched_guides:
+                        default_set = default_set | auto_matched_guides
+                    
+                    st.session_state.selected_guides = list(default_set)
+                
                 # Create checkboxes for each guide
                 for guide in available_guides:
-                    # Initialize checkbox state if not exists
                     checkbox_key = f"guide_{guide}"
                     if checkbox_key not in st.session_state:
-                        st.session_state[checkbox_key] = guide in st.session_state.selected_guides
+                        st.session_state[checkbox_key] = guide in st.session_state.get('selected_guides', available_guides)
                     
-                    st.checkbox(guide, key=checkbox_key)
+                    # Build label with match indicator
+                    if guide in auto_match_reasons:
+                        match_tags = ", ".join(auto_match_reasons[guide])
+                        label = f"{guide}  ⭐ {match_tags}"
+                    else:
+                        label = guide
+                    
+                    st.checkbox(label, key=checkbox_key)
                 
                 # Collect selected guides from checkboxes
                 selected_guides = [guide for guide in available_guides if st.session_state.get(f"guide_{guide}", False)]
@@ -525,43 +668,35 @@ def render_analysis_summary_page():
         else:
             st.warning(f"⚠️ No guides found for {product_name}")
         
-        # Load default prompt from BugAnalyze.md
+        # Load default prompt from BugAnalyze.md (always read fresh from disk)
         try:
             with open("BugAnalyze.md", "r") as f:
                 default_prompt = f.read()
         except FileNotFoundError:
             default_prompt = "Analyze the Bug/RCA content"
         
+        # Keep session state in sync with the file on disk
+        # so edits to BugAnalyze.md are reflected without clearing session
+        if 'analysis_question' not in st.session_state or st.session_state.get('_last_prompt_hash') != hash(default_prompt):
+            st.session_state['analysis_question'] = default_prompt
+            st.session_state['_last_prompt_hash'] = hash(default_prompt)
+        
         st.markdown("---")
         
         # Question input for Analysis
         question = st.text_area(
             "Task/Prompt",
-            value=default_prompt,
             key="analysis_question",
             height=200
         )
         
         st.markdown("---")
-        
-        # Display notes summary if available (persistent display after fetch)
-        if 'fetched_notes_summary' in st.session_state and st.session_state.fetched_notes_summary:
-            all_notes_summary = st.session_state.fetched_notes_summary
-            total_notes = sum(len(notes) for notes in all_notes_summary.values())
-            
-            with st.expander(f"📋 Extracted Notes Summary ({total_notes} total notes)", expanded=False):
-                for bug_num, notes in all_notes_summary.items():
-                    st.markdown(f"**Bug {bug_num}** ({len(notes)} notes):")
-                    for idx, note_title in enumerate(notes, 1):
-                        st.markdown(f"  {idx}. {note_title}")
-                    if bug_num != list(all_notes_summary.keys())[-1]:  # Not the last bug
-                        st.markdown("---")
     
     with col2:
         # Step 3: Click Analyze or Summarize
-        st.subheader("Step 3: Click Analyze or Summarize")
+        st.markdown("<h3 style='color: #1f77b4;'>Step 3: Click Analyze or Summarize</h3>", unsafe_allow_html=True)
         
-        st.markdown("### 🔍 Analysis & Summary Tools")
+        st.markdown("**🔍 Analysis & Summary Tools**")
         
         # Analysis and Summary buttons
         col_btn1, col_btn2, col_btn3 = st.columns(3)
@@ -580,7 +715,7 @@ def render_analysis_summary_page():
         
         st.markdown("---")
         
-        st.subheader("📊 Output")
+        st.markdown("**📊 Output**")
         
         output_container = st.container()
         
@@ -605,7 +740,7 @@ def render_analysis_summary_page():
         
         # Test Section
         st.markdown("---")
-        st.subheader("Step 4: Post your test results (Optional)")
+        st.markdown("<h3 style='color: #1f77b4;'>Step 4: Post your test results (Optional)</h3>", unsafe_allow_html=True)
         
         with st.expander("📝 Test Results", expanded=False):
             st.markdown("Capture test results for this analysis")
@@ -733,7 +868,7 @@ def render_analysis_summary_page():
         st.markdown("---")
         
         # Step 5: Post Analysis to CDETS
-        st.subheader("Step 5: Post Analysis to CDETS")
+        st.markdown("<h3 style='color: #1f77b4;'>Step 5: Post Analysis to CDETS</h3>", unsafe_allow_html=True)
         
         # Add "Post Analysis to Bug" button above output
         post_analysis_button = st.button("📤 Post Analysis to Bug", type="secondary", use_container_width=True, key="analysis_post_to_bug")
@@ -818,9 +953,12 @@ def render_analysis_summary_page():
                         rca_content_state = st.session_state.get('current_rca_content', rca_content)
                         selected_guides = st.session_state.get('selected_guides', [])
                         
+                        # Get user-selected technology terms
+                        selected_tech_terms = st.session_state.get('selected_raw_tech_terms', None)
+                        
                         # Run the agent with the follow-up prompt
                         if use_rag_followup:
-                            result = run_agent(product_name_state, full_prompt, rca_content_state, selected_guides)
+                            result = run_agent(product_name_state, full_prompt, rca_content_state, selected_guides, selected_tech_terms)
                         else:
                             # For non-RAG, just use the LLM directly
                             from openai import OpenAI
@@ -879,8 +1017,13 @@ def render_analysis_summary_page():
                         # Get selected guides from session state
                         selected_guides = st.session_state.get('selected_guides', [])
                         
-                        # Run the agent with selected guides
-                        result = run_agent(product_name, question, rca_content, selected_guides)
+                        # Get user-selected technology terms (None = use all)
+                        selected_tech_terms = st.session_state.get('selected_raw_tech_terms', None)
+                        
+                        # Use the question from the text area (user may have edited it)
+                        # The text area is already synced with BugAnalyze.md on startup/file changes
+                        # but user edits in the UI take precedence at execution time
+                        result = run_agent(product_name, question, rca_content, selected_guides, selected_tech_terms)
                         
                         # Add to conversation history
                         st.session_state.conversation_history.append({

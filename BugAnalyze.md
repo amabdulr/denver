@@ -63,10 +63,44 @@ CONTENT:
 2. **Add `.pdf` extension** → `sdwan-xe-gs-book.pdf`
 3. **This is your PRIMARY TARGET DOCUMENT**
 
+**How to extract CHAPTER CLUES from the HTML filename:**
+
+⚠️ **IMPORTANT: The RAG system works with PDFs (entire books), NOT individual HTML chapter pages.** The HTML filename after the book identifier contains valuable clues about WHICH CHAPTER within the book is being referenced.
+
+1. **Identify the HTML filename** - it's the last segment of the URL (after the book identifier)
+   - Example URL: `https://www.cisco.com/c/en/us/td/docs/wireless/controller/9800/17-18/config-guide/b_wl_17_18_cg/m_wireless_qos_cg_vewlc1_from_17_3_1_onwards.html`
+   - Book identifier: `b_wl_17_18_cg`
+   - HTML filename: `m_wireless_qos_cg_vewlc1_from_17_3_1_onwards.html`
+
+2. **Extract topic keywords** from the HTML filename:
+   - Strip the `.html` extension
+   - Split on underscores: `m`, `wireless`, `qos`, `cg`, `vewlc1`, `from`, `17`, `3`, `1`, `onwards`
+   - **IGNORE** these noise tokens:
+     * Single letters: `m`, `b`, `c`
+     * Version numbers and digits: `17`, `3`, `1`, `vewlc1`
+     * Generic filler words: `from`, `onwards`, `cg`, `config`, `guide`, `chapter`, `book`
+   - **KEEP** meaningful technology/feature words: `wireless`, `qos`
+   - These are your **CHAPTER TOPIC CLUES**
+
+3. **Use chapter clues to refine your search:**
+   - After finding the book PDF, use the extracted topic keywords (e.g., "QoS", "wireless QoS") as your PRIMARY search terms within that book
+   - This dramatically narrows down which chapter/section to recommend
+   - **REASONING**: State: "HTML filename '[filename]' suggests this references a chapter about [extracted topics]. Using these as search keywords within [book name]."
+
+**More examples:**
+| URL HTML filename | Extracted chapter clues |
+|---|---|
+| `m_wireless_qos_cg_vewlc1_from_17_3_1_onwards.html` | **QoS**, **wireless** → likely a QoS chapter |
+| `install-upgrade-17-2-later.html` | **install**, **upgrade** → likely an install/upgrade chapter |
+| `m_multicast_vewlc.html` | **multicast** → likely a multicast chapter |
+| `b_wl_16_12_cg_chapter_01001.html` | No meaningful clues (generic chapter numbering) → fall back to other keywords |
+| `m_high_availability_sso_ewlc.html` | **high availability**, **SSO** → likely an HA/SSO chapter |
+
 **If documentation link found:**
 - ✅ **MANDATORY ACTION**: Use ONLY this document name for searching
 - ✅ **DO NOT search other documents unless this one returns NO results**
-- ✅ **REASONING**: State: "Bug explicitly references: [URL]. Extracted document: [document name]. This is the PRIMARY and ONLY target for search."
+- ✅ **REASONING**: State: "Bug explicitly references: [URL]. Extracted document: [document name]. Chapter clue from HTML filename: [topic keywords]. This is the PRIMARY and ONLY target for search."
+- ✅ **Use the chapter clue keywords** as your primary search terms within the book
 - ✅ **SKIP STEP 2 and 3**: Go directly to searching within this document
 
 **If NO documentation link found:**
@@ -76,12 +110,19 @@ CONTENT:
 
 ### For Bugs (has Component field):
 - **Find the Component field** in Bug Summary (format: `**Component**: <value>`)
-- **Extract technical keyword** from Component:
-  * "cnbng_nal" → "Cloud native BNG" or "BNG NAL"
-  * "ewlc-rrm" → "RRM" 
-  * "asr9k-routing" → "routing"
-- **IGNORE** generic words: "documentation", "docs", "config", "system", "asr9000-doc", "ewlc-docs", "sdwan-docs"
-- **REASONING**: State: "The Component field is [value], which indicates [keyword] as primary search term"
+- **Split the Component into sub-parts** by splitting on `-`, `_`, and digits:
+  * `vmanage-cfg2-basic-ui` → `vmanage`, `cfg`, `basic`, `ui`
+  * `cnbng_nal` → `cnbng`, `nal`
+  * `ewlc-rrm` → `ewlc`, `rrm`
+  * `asr9k-routing` → `asr9k`, `routing`
+- **Map each meaningful sub-part** to a search keyword:
+  * `cnbng` → "Cloud native BNG" or "BNG"
+  * `cfg` → "configuration" or "configuration group"
+  * `rrm` → "RRM"
+  * `routing` → "routing"
+  * `ui` → (ignore - too generic, but note this is a UI behavior bug)
+- **IGNORE** generic sub-parts: `basic`, `ui`, `nal`, `docs`, `doc`, `system`, version numbers
+- **REASONING**: State: "Component '[value]' breaks down to: [list of sub-parts] → search keywords: [list]"
 
 ### For All Content (bugs and RCAs):
 - **Extract technology elements** from the description:
@@ -89,7 +130,18 @@ CONTENT:
   * Feature names: rate limiting, authentication, routing, switching, etc.
   * Interface types, hardware components, software modules
 - **Prioritize specific terms** over generic ones
-- **REASONING**: State: "Key technical elements identified: [list]"
+
+- **⚠️ CRITICAL: Mine the Description for UI NAVIGATION PATHS and SPECIFIC FEATURES:**
+  * Look for vManage menu paths like: "navigate to configuration group → objects and profiles"
+  * Extract the **specific feature or object** mentioned: "prefixes", "policy objects", "profiles"
+  * These are often more precise search terms than the Component keyword
+  * Examples:
+    - "navigate to configuration group -objects and profiles" → search for **"policy object profile"** and **"prefix"**
+    - "go to Administration > Settings > Cloud Services" → search for **"cloud services"** and **"administration settings"**
+    - "access Monitor > Network > Alarms" → search for **"alarms"** and **"monitor network"**
+  * Use these as **ADDITIONAL search queries** alongside Component keywords
+
+- **REASONING**: State: "Key technical elements identified: [list]. UI navigation suggests searching for: [specific feature/object]"
 
 ---
 
@@ -141,15 +193,30 @@ CONTENT:
 
 ## STEP 4: SEARCH WITHIN SELECTED GUIDE
 
-**Now search for specific sections:**
-- Use Component keyword + technology elements
-- Look for: configuration chapters, troubleshooting sections, feature explanations
-- **Call the tool again** with more specific query for the selected guide
-- **Consider making MULTIPLE searches** with different angles to find diverse relevant sections:
-  * Search for the specific feature/command mentioned in the bug
-  * Search for related troubleshooting content
-  * Search for configuration procedures
-  * Search for behavior explanations
+**Now search for specific sections using MULTIPLE TARGETED SEARCHES:**
+
+Do NOT rely on a single generic search. Make at least 2-3 searches with different angles:
+
+### Search Strategy (in priority order):
+1. **Search #1 — Description-derived terms** (MOST SPECIFIC):
+   - Use the specific feature/object from the Description or UI navigation path
+   - Example: If bug says "navigate to configuration group → objects and profiles" and mentions "prefixes", search for: `"policy object profile prefix"`
+   - This targets the EXACT chapter/section, not just the guide overview
+
+2. **Search #2 — Component-derived terms:**
+   - Use the technical keyword extracted from the Component field
+   - Example: Component `vmanage-cfg2-basic-ui` → search for `"configuration group create edit delete"`
+
+3. **Search #3 — Action/behavior terms:**
+   - Combine the specific action from the bug with the feature
+   - Example: Bug about edit/delete icons → search for `"edit delete manage system generated"`
+   - Bug about stuck deployment → search for `"deploy configuration group state"`
+
+4. **Search #4 (optional) — Broader fallback:**
+   - If specific searches didn't return good results, broaden the query
+   - Search for related troubleshooting content or behavior explanations
+
+**⚠️ CRITICAL: Do NOT just search for the high-level topic name** (e.g., don't just search for "configuration group" — that returns the Introduction chapter). **Search for the SPECIFIC sub-feature or action** (e.g., "policy object profile prefix list" → returns Chapter 8, which is the correct location).
 
 **REASONING**: For each section found, explain: "This section is relevant because [specific connection to bug/RCA]"
 

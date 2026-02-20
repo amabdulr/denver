@@ -30,6 +30,49 @@ Section: [hierarchy or "Not available"]
 
 ## STEP 1: EXTRACT SEARCH KEYWORDS
 
+### ⚠️ CHECK FOR CISCO DOCUMENTATION LINKS FIRST (HIGHEST PRIORITY):
+
+**MANDATORY: Scan the ENTIRE bug/RCA content for Cisco documentation URLs BEFORE doing anything else.**
+
+**Look for URLs matching these patterns:**
+- `https://www.cisco.com/c/en/us/td/docs/...`
+- `https://www.cisco.com/c/en/us/support/docs/...`
+
+**How to extract document name and chapter clues:**
+1. **Find the book identifier** in the URL - it's usually the segment before the final HTML file
+   - Example URL: `https://www.cisco.com/c/en/us/td/docs/wireless/controller/9800/17-18/config-guide/b_wl_17_18_cg/m_wireless_qos_cg_vewlc1_from_17_3_1_onwards.html`
+   - Book identifier: `b_wl_17_18_cg`
+2. **Add `.pdf` extension** → `b_wl_17_18_cg.pdf`
+3. **This is your PRIMARY TARGET DOCUMENT**
+
+4. **Extract CHAPTER CLUES from the HTML filename:**
+
+   ⚠️ **IMPORTANT: The RAG system works with PDFs (entire books), NOT individual HTML chapter pages.** The HTML filename after the book identifier contains valuable clues about WHICH CHAPTER within the book is being referenced.
+
+   - **Identify the HTML filename** (last segment after the book identifier): `m_wireless_qos_cg_vewlc1_from_17_3_1_onwards.html`
+   - Strip `.html`, split on underscores: `m`, `wireless`, `qos`, `cg`, `vewlc1`, `from`, `17`, `3`, `1`, `onwards`
+   - **IGNORE** noise tokens: single letters (`m`, `b`, `c`), version numbers/digits (`17`, `3`, `1`, `vewlc1`), generic filler (`from`, `onwards`, `cg`, `config`, `guide`, `chapter`, `book`)
+   - **KEEP** meaningful technology/feature words: `wireless`, `qos`
+   - These are your **CHAPTER TOPIC CLUES** — use them as primary search keywords within the book
+
+   **Examples:**
+   | URL HTML filename | Chapter clues |
+   |---|---|
+   | `m_wireless_qos_cg_vewlc1_from_17_3_1_onwards.html` | **QoS**, **wireless** → QoS chapter |
+   | `install-upgrade-17-2-later.html` | **install**, **upgrade** → install/upgrade chapter |
+   | `m_multicast_vewlc.html` | **multicast** → multicast chapter |
+   | `m_high_availability_sso_ewlc.html` | **high availability**, **SSO** → HA/SSO chapter |
+
+**If documentation link found:**
+- ✅ **MANDATORY ACTION**: Use ONLY this document name for searching
+- ✅ **REASONING**: State: "Bug explicitly references: [URL]. Extracted document: [document name]. Chapter clue from HTML filename: [topic keywords]."
+- ✅ **Use chapter clue keywords** as primary search terms within the book
+- ✅ **SKIP STEP 2 and 3**: Go directly to searching within this document
+
+**If NO documentation link found** → proceed with keyword extraction below
+
+---
+
 ### For Bugs (has Component field):
 - **Find the Component field** in Bug Summary (format: `**Component**: <value>`)
 - **Extract technical keyword** from Component:

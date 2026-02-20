@@ -12,7 +12,8 @@ Analyze the **Original Source Content** and **Modified/AI-Generated Content** pr
 2. **NO ASSUMPTIONS**: If something appears in Modified Content but is not explicitly in Original Content, flag it as a potential hallucination
 3. **PARAPHRASING IS OK**: Modified content can rephrase or reorganize original content - this is NOT a hallucination
 4. **ADDITIONS ARE SUSPECT**: New information, examples, features, or steps not in the original are hallucinations
-5. **BE PRECISE**: Quote specific text from both Original and Modified to support your findings
+5. **COMPLETENESS CHECK**: Identify important information from the Original that is missing in the Modified Content
+6. **BE PRECISE**: Quote specific text from both Original and Modified to support your findings
 
 ## Analysis Structure
 
@@ -53,11 +54,31 @@ List any content in the Modified version that appears to be fabricated or cannot
 
 ---
 
-### 📊 **Hallucination Summary**
+### ❌ **Missing/Omitted Content**
+
+List any important content from the Original Source that is missing or omitted in the Modified Content. For each:
+- Quote the content from the Original Source that is missing
+- Explain its importance/significance
+- Impact: Low (minor detail) / Medium (useful information) / High (critical information)
+
+**Format:**
+```
+❌ [Missing Content #N - Brief description]
+  - Original content: "[quote the missing content from original]"
+  - Issue: [Explain why this omission is significant]
+  - Impact: [Low/Medium/High]
+  - Recommendation: [Should be included/Optional/Consider adding]
+```
+
+---
+
+### 📊 **Analysis Summary**
 
 Provide:
 - **Total hallucinations found**: [number]
-- **Severity breakdown**: Major: [X] | Moderate: [X] | Minor: [X]
+- **Hallucination severity breakdown**: Major: [X] | Moderate: [X] | Minor: [X]
+- **Total missing content items**: [number]
+- **Missing content impact breakdown**: High: [X] | Medium: [X] | Low: [X]
 - **Overall assessment**: [Clean / Minor issues / Significant concerns / Major problems]
 - **Confidence level**: [How confident are you in this analysis: High/Medium/Low]
 
@@ -65,9 +86,10 @@ Provide:
 
 ### 💡 **Recommendations**
 
-- Specific actions the user should take
+- Specific actions to address hallucinations
+- Specific actions to address missing content
 - Which sections need immediate attention
-- Suggestions for improvement
+- Suggestions for improvement to ensure both accuracy and completeness
 
 ---
 
@@ -75,6 +97,8 @@ Provide:
 
 - Be thorough but fair - paraphrasing and reorganization are acceptable
 - Focus on factual content, not stylistic choices
+- Check BOTH directions: hallucinations (added content) AND missing content (omitted information)
+- Not all missing content is critical - use judgment on impact level
 - If the original source has file separators (=== FILE: name ===), consider all files as valid source material
 - Context matters - some inferences from source material may be reasonable, flag only clear inventions
 

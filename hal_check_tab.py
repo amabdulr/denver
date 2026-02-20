@@ -1,5 +1,6 @@
 import streamlit as st
-from app_functions import apply_prompt_file, run_agent
+from app_functions import apply_prompt_file
+from utils import get_llm
 
 
 def render_hal_check_tab():
@@ -103,7 +104,7 @@ def render_hal_check_tab():
         with st.expander("📜 View Conversation History", expanded=False):
             for idx, exchange in enumerate(st.session_state.hal_conversation_history, 1):
                 st.markdown(f"**Q{idx}:** {exchange['question']}")
-                st.markdown(f"**A{idx}:** {exchange['answer'][:500]}..." if len(exchange['answer']) > 500 else f"**A{idx}:** {exchange['answer']}")
+                st.markdown(f"**A{idx}:** {exchange['answer']}")
                 st.markdown("---")
         
         # Follow-up question input
@@ -128,25 +129,35 @@ def render_hal_check_tab():
             else:
                 with st.spinner("🔍 Processing your follow-up question..."):
                     try:
-                        # Build context from conversation history
-                        context = "\n\nPrevious conversation:\n"
+                        # Use the stored original + modified content for context
+                        content_context = st.session_state.get('hal_analysis_context', '')
+                        
+                        # Build conversation history
+                        conversation_history = ""
                         for idx, exchange in enumerate(st.session_state.hal_conversation_history, 1):
-                            context += f"Q{idx}: {exchange['question']}\nA{idx}: {exchange['answer']}\n\n"
+                            conversation_history += f"Q{idx}: {exchange['question']}\nA{idx}: {exchange['answer']}\n\n"
                         
-                        # Add follow-up question with context
-                        full_followup = context + f"\nFollow-up question: {followup_question}"
-                        
-                        # Use the stored content for context
-                        content_to_use = st.session_state.get('hal_analysis_context', '')
-                        
-                        # Run the agent with follow-up question
-                        result = run_agent(
-                            "", 
-                            full_followup, 
-                            content_to_use
-                        )
-                        
-                        followup_answer = result['output'] if 'output' in result else str(result)
+                        # Build a coherent follow-up prompt with full context
+                        followup_prompt = f"""You are a meticulous content analyst specializing in detecting hallucinations in AI-generated content.
+
+Below is the original and modified content that was analyzed:
+
+{content_context}
+
+Here is the conversation history from the hallucination analysis so far:
+
+{conversation_history}
+
+The user has a follow-up question about the analysis above.
+
+Follow-up question: {followup_question}
+
+Please answer the follow-up question based on the original content, modified content, and the previous analysis. Be specific and reference the actual content when relevant."""
+
+                        # Direct LLM call to maintain proper context
+                        llm = get_llm()
+                        result = llm.invoke(followup_prompt)
+                        followup_answer = result.content if hasattr(result, 'content') else str(result)
                         
                         # Add to conversation history
                         st.session_state.hal_conversation_history.append({

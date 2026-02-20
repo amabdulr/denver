@@ -25,6 +25,10 @@ This module handles:
 
 from typing import List
 import time
+import re
+import json
+import os
+from urllib.parse import urlparse
 from langchain.agents import (
     AgentExecutor,
     OpenAIFunctionsAgent,
@@ -39,6 +43,599 @@ from langchain.chains.query_constructor.base import AttributeInfo
 from langchain.retrievers.self_query.base import SelfQueryRetriever
 from utils import get_llm
 import streamlit as st
+
+
+def _load_networking_terms() -> dict:
+    """Load networking technology terms from networking_terms.json.
+    Returns a dict with category -> list of terms.
+    Caches in module-level variable to avoid re-reading on every call.
+    """
+    global _networking_terms_cache
+    if _networking_terms_cache is not None:
+        return _networking_terms_cache
+    
+    terms_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "networking_terms.json")
+    try:
+        with open(terms_file, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        # Remove the comment key
+        data.pop("_comment", None)
+        _networking_terms_cache = data
+    except (FileNotFoundError, json.JSONDecodeError) as e:
+        print(f"⚠️ Could not load networking_terms.json: {e}")
+        _networking_terms_cache = {}
+    return _networking_terms_cache
+
+_networking_terms_cache = None
+
+
+def _scan_for_networking_terms(text: str) -> list:
+    """
+    Scan bug/RCA text for known networking technology terms from networking_terms.json.
+    Returns a deduplicated list of matched terms, sorted by category.
+    
+    Multi-word terms (e.g. 'segment routing') are matched first, then single-word terms.
+    All matching is case-insensitive and uses word boundary checks.
+    Also scans a normalized version of the text where underscores/hyphens become spaces,
+    so component fields like 'cnbng_nal' can match the term 'cnbng'.
+    """
+    terms_db = _load_networking_terms()
+    if not terms_db:
+        return []
+    
+    text_lower = text.lower()
+    # Also create a normalized version where underscores/hyphens become spaces
+    # This lets 'cnbng_nal' match 'cnbng', 'ap-qos' match 'qos', etc.
+    text_normalized = re.sub(r'[_\-./]', ' ', text_lower)
+    combined_text = text_lower + " " + text_normalized
+    
+    found = []  # list of (category, term)
+    seen = set()
+    
+    # Build a flat list: multi-word terms first (greedy match), then single-word
+    all_terms = []
+    for category, terms in terms_db.items():
+        for term in terms:
+            all_terms.append((category, term.lower()))
+    
+    # Sort by term length descending so multi-word matches come first
+    all_terms.sort(key=lambda x: len(x[1]), reverse=True)
+    
+    for category, term in all_terms:
+        if term in seen:
+            continue
+        # Use word boundary regex for accurate matching
+        # For terms with special chars like "ios-xe", escape them
+        pattern = r'\b' + re.escape(term) + r'\b'
+        if re.search(pattern, combined_text):
+            found.append((category, term))
+            seen.add(term)
+    
+    return found
+
+
+def match_terms_to_guides(detected_terms: list, product_name: str) -> tuple:
+    """
+    Match detected technology terms against actual PDF guide filenames
+    in the knowledge_docs folder for a given product.
+    
+    Args:
+        detected_terms: List of term strings (e.g. ['cnbng', 'bng', 'pppoe'])
+        product_name: UI product name (e.g. 'ASR 9000') — will be mapped to folder name
+    
+    Returns:
+        (matched_dict, all_guides) where:
+        - matched_dict: {term: [guide_filename, ...]} for terms that match a guide title
+        - all_guides: list of all guide filenames in the product folder
+    """
+    # Map UI product names to folder names (same mapping as sidebar_app.py)
+    product_mapping = {
+        "Cisco SD-WAN": "sdwan",
+        "Cisco 9800": "9800",
+        "ASR 9000": "ASR9000",
+        "Cisco 8000": "Cisco8000",
+        "cisco_generic": "cisco_generic"
+    }
+    product_code = product_mapping.get(product_name, product_name)
+    
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    knowledge_dir = os.path.join(base_dir, "knowledge_docs", product_code)
+    
+    if not os.path.isdir(knowledge_dir):
+        return {}, []
+    
+    guide_files = sorted([f for f in os.listdir(knowledge_dir) if f.lower().endswith('.pdf')])
+    if not guide_files:
+        return {}, []
+    
+    matched = {}  # term -> [guide filenames]
+    
+    # Build a set of product-name terms to SKIP — these are too generic
+    # and would match every guide in the docset (e.g. "sdwan" matches all SD-WAN guides)
+    product_noise = set()
+    # Add the product_name words
+    for word in product_name.lower().replace("-", " ").split():
+        product_noise.add(word)
+    # Add the folder code
+    product_noise.add(product_code.lower())
+    # Add known product identifiers that appear in most/all filenames for a docset
+    product_noise_terms = {
+        "sdwan": {"sdwan", "sd-wan", "sd wan", "cisco sd-wan", "cisco sdwan", "xe", "catalyst"},
+        "ASR9000": {"asr9000", "asr9k", "asr 9000", "asr 9k"},
+        "Cisco8000": {"cisco8000", "cisco 8000", "8000", "cisco8k", "8k"},
+        "9800": {"9800", "catalyst 9800"},
+    }
+    for noise_term in product_noise_terms.get(product_code, set()):
+        product_noise.add(noise_term)
+    
+    for term in detected_terms:
+        term_lower = term.lower()
+        
+        # Skip terms that are just the product name — they'd match every guide
+        if term_lower in product_noise:
+            continue
+        
+        # Create variants for flexible matching
+        term_variants = [
+            term_lower,                          # exact: "cnbng"
+            term_lower.replace(" ", "-"),        # spaces→hyphens: "high availability" → "high-availability"
+            term_lower.replace(" ", "_"),        # spaces→underscores
+            term_lower.replace(" ", ""),          # no spaces: "high availability" → "highavailability"
+        ]
+        
+        for guide in guide_files:
+            guide_lower = guide.lower()
+            # Normalize guide name for matching
+            guide_normalized = guide_lower.replace(".pdf", "").replace("-", "").replace("_", "")
+            
+            for variant in term_variants:
+                variant_normalized = variant.replace("-", "").replace("_", "")
+                if variant_normalized in guide_normalized or variant in guide_lower:
+                    if term_lower not in matched:
+                        matched[term_lower] = []
+                    if guide not in matched[term_lower]:
+                        matched[term_lower].append(guide)
+                    break
+    
+    return matched, guide_files
+
+
+### ── Component abbreviation expansions ────────────────────────────
+_component_abbreviations = {
+    'cfg': 'configuration', 'cfg2': 'configuration group',
+    'mgmt': 'management', 'mon': 'monitor', 'sec': 'security',
+    'pol': 'policy', 'cert': 'certificate', 'topo': 'topology',
+    'deploy': 'deployment', 'intf': 'interface', 'rte': 'route',
+    'rtng': 'routing', 'acl': 'access control list', 'vpn': 'VPN',
+    'wan': 'WAN', 'tun': 'tunnel', 'bfd': 'BFD', 'omp': 'OMP',
+    'ntp': 'NTP', 'snmp': 'SNMP', 'aaa': 'AAA authentication',
+    'qos': 'QoS', 'nat': 'NAT', 'dhcp': 'DHCP', 'bgp': 'BGP',
+    'ospf': 'OSPF', 'isis': 'IS-IS', 'mpls': 'MPLS',
+    'multicast': 'multicast', 'ha': 'high availability', 'sso': 'SSO',
+    'rrm': 'RRM radio resource management',
+    'ewlc': 'embedded wireless controller',
+    'cnbng': 'cloud native BNG', 'bng': 'BNG broadband network gateway',
+    'xe': 'IOS-XE', 'xr': 'IOS-XR',
+    'vmanage': 'vManage', 'vedge': 'vEdge', 'vsmart': 'vSmart',
+    'pref': 'prefix', 'tmpl': 'template', 'tmpt': 'template',
+    'ctrl': 'control', 'svc': 'service', 'svcs': 'services',
+    'app': 'application', 'dash': 'dashboard',
+}
+_component_noise = {
+    'basic', 'ui', 'nal', 'docs', 'doc', 'system', 'test', 'core',
+    'main', 'page', 'view', 'module', 'lib', 'util', 'utils',
+}
+
+
+def _extract_search_hints(text: str) -> dict:
+    """
+    Mine bug/RCA content for explicit search query suggestions.
+    
+    Extracts:
+    - Component sub-parts (expanded abbreviations)
+    - UI navigation paths from Description ("navigate to X → Y")
+    - Specific feature/object nouns from Description
+    - Action verbs (edit, delete, create, etc.)
+    
+    Returns a dict with 'suggested_queries' list ready for the LLM to use directly.
+    """
+    result = {
+        'component_keywords': [],   # Expanded component sub-parts
+        'nav_endpoints': [],        # Terminal destinations from UI navigation paths
+        'description_nouns': [],    # Specific features/objects from description
+        'actions': [],              # Action verbs
+        'suggested_queries': [],    # Ready-to-use search queries for the LLM
+    }
+
+    if not text or not text.strip():
+        return result
+
+    # ── Extract Component field ──────────────────────────────────────
+    # Find ALL Component fields and pick the most meaningful one.
+    # Bugs can have multiple Component values (e.g. "documentation" then "ap-qos")
+    # and the first one is often generic. We want the most specific.
+    _generic_components = {'documentation', 'general', 'other', 'none', 'unknown', 'docs', 'doc'}
+    comp_matches = re.findall(r'\*\*Component:?\*\*[:\s]*(\S+)', text, re.IGNORECASE)
+    best_component = None
+    for comp_val in comp_matches:
+        comp_val = comp_val.strip()
+        if comp_val.lower() in _generic_components:
+            if best_component is None:
+                best_component = comp_val  # keep as fallback
+            continue
+        # Prefer non-generic components
+        best_component = comp_val
+        break  # first non-generic wins
+
+    if best_component:
+        component = best_component
+        parts = re.split(r'[-_]+', component)
+        expanded = []
+        for part in parts:
+            p = part.lower().strip()
+            if not p or p in _component_noise or p.isdigit():
+                continue
+            # Remove trailing digits (e.g., cfg2 → cfg)
+            p_base = re.sub(r'\d+$', '', p)
+            if p_base in _component_abbreviations:
+                expanded.append(_component_abbreviations[p_base])
+            elif p in _component_abbreviations:
+                expanded.append(_component_abbreviations[p])
+            elif len(p) > 2:
+                expanded.append(p)
+        result['component_keywords'] = expanded
+
+    # ── Extract Description field (or fall back to full text) ────────
+    desc_text = text
+    desc_match = re.search(
+        r'\*\*Description:?\*\*[:\s]*(.*?)(?=\n\*\*[A-Z]|\Z)',
+        text, re.DOTALL | re.IGNORECASE
+    )
+    if desc_match:
+        desc_text = desc_match.group(1)
+
+    # ── Extract UI navigation paths ──────────────────────────────────
+    # Only look for explicit "navigate to" / "go to" patterns with arrows
+    nav_patterns = [
+        r'(?:navigate|go|goes?|navigating)\s+to\s+(.+?)(?:\.|,|$|\n)',
+        r'(?:under|within)\s+(?:the\s+)?(.+?[→>].+?)(?:\.|,|$|\n)',
+    ]
+
+    # Noise words to strip from the endpoints
+    nav_noise = {'section', 'page', 'tab', 'menu', 'screen', 'window', 'panel', 'area', 'the', 'a', 'an'}
+
+    nav_endpoints = []
+    for pattern in nav_patterns:
+        matches = re.findall(pattern, desc_text, re.IGNORECASE)
+        for match in matches:
+            # Split on arrows/greater-than
+            parts = re.split(r'[→>]+', match)
+            parts = [p.strip().strip('"\'()[]') for p in parts if p.strip()]
+            # Clean noise words from each part
+            cleaned_parts = []
+            for p in parts:
+                words = p.split()
+                cleaned = ' '.join(w for w in words if w.lower() not in nav_noise)
+                if cleaned and len(cleaned) > 2:
+                    cleaned_parts.append(cleaned)
+            if cleaned_parts:
+                # The last part is the most specific destination
+                nav_endpoints.append(cleaned_parts[-1])
+                # Also keep last two parts joined (for broader search)
+                if len(cleaned_parts) > 1:
+                    full_path = ' '.join(cleaned_parts[-2:])
+                    nav_endpoints.append(full_path)
+
+    result['nav_endpoints'] = list(dict.fromkeys(nav_endpoints))  # Dedupe, preserve order
+
+    # ── Extract specific nouns/features from description ─────────────
+    noun_patterns = [
+        r'\b(prefix(?:es)?(?:\s+list(?:s)?)?)\b',
+        r'\b(policy\s+object(?:s)?)\b',
+        r'\b(object(?:s)?\s+and\s+profile(?:s)?)\b',
+        r'\b(profile(?:s)?)\b',
+        r'\b(feature\s+template(?:s)?)\b',
+        r'\b(device\s+template(?:s)?)\b',
+        r'\b(configuration\s+group(?:s)?)\b',
+        r'\b(config(?:uration)?\s+profile(?:s)?)\b',
+        r'\b(cloud\s+service(?:s)?)\b',
+        r'\b(certificate(?:s)?)\b',
+        r'\b(security\s+polic(?:y|ies))\b',
+        r'\b(access[\s-](?:control[\s-])?list(?:s)?)\b',
+        r'\b(route\s+polic(?:y|ies))\b',
+        r'\b(localized\s+polic(?:y|ies))\b',
+        r'\b(centralized\s+polic(?:y|ies))\b',
+        r'\b(data\s+polic(?:y|ies))\b',
+        r'\b(app(?:lication)?[\s-]aware\s+routing)\b',
+        r'\b(SLA\s+class(?:es)?)\b',
+        r'\b(color\s+list(?:s)?)\b',
+        r'\b(site\s+list(?:s)?)\b',
+        r'\b(TLOC(?:\s+list(?:s)?)?)\b',
+        r'\b(VPN\s+list(?:s)?)\b',
+        r'\b(community\s+list(?:s)?)\b',
+        r'\b(prefix\s+list(?:s)?)\b',
+        r'\b(deployment(?:s)?)\b',
+        r'\b(dashboard(?:s)?)\b',
+        r'\b(topology(?:ies)?)\b',
+        r'\b(system[\s-]generated)\b',
+        r'\b(alarm(?:s)?)\b',
+    ]
+
+    desc_nouns = []
+    for pattern in noun_patterns:
+        matches = re.findall(pattern, desc_text, re.IGNORECASE)
+        desc_nouns.extend(m.lower().strip() for m in matches)
+
+    result['description_nouns'] = list(dict.fromkeys(desc_nouns))
+
+    # ── Extract action verbs ─────────────────────────────────────────
+    action_match = re.findall(
+        r'\b(edit(?:ing|ed)?|delet(?:e|ing|ed)|remov(?:e|ing|ed)|creat(?:e|ing|ed)|'
+        r'add(?:ing|ed)?|configur(?:e|ing|ed)|deploy(?:ing|ed|ment)?|'
+        r'attach(?:ing|ed)?|detach(?:ing|ed)?|modif(?:y|ying|ied)|'
+        r'updat(?:e|ing|ed)|system[\s-]generated)\b',
+        desc_text, re.IGNORECASE
+    )
+    result['actions'] = list(dict.fromkeys(a.lower() for a in action_match))
+
+    # ── Build suggested search queries ───────────────────────────────
+    # IMPORTANT: Shorter, more specific queries perform BETTER in vector search.
+    # Long queries like "configuration group objects and profiles prefix" get
+    # pulled back to intro chapters. Keep queries focused and concise.
+    queries = []
+
+    # Priority 1: Most-specific nav endpoint + description noun
+    # Use only the FIRST (most specific) endpoint, not the full path
+    best_endpoint = result['nav_endpoints'][0] if result['nav_endpoints'] else None
+    if best_endpoint:
+        for noun in result['description_nouns'][:3]:
+            if noun.lower() not in best_endpoint.lower():
+                combo = f"{best_endpoint} {noun}"
+                if combo not in queries:
+                    queries.append(combo)
+        # Nav endpoint alone if no nouns overlap
+        if not queries:
+            queries.append(best_endpoint)
+
+    # Priority 2: Description noun + action (targets specific behavior)
+    for noun in result['description_nouns'][:2]:
+        for action in result['actions'][:2]:
+            if action != noun:
+                combo = f"{noun} {action}"
+                if combo not in queries:
+                    queries.append(combo)
+
+    # Priority 3: Standalone description nouns (specific features)
+    for noun in result['description_nouns'][:3]:
+        if noun not in queries and not any(noun in q for q in queries):
+            queries.append(noun)
+
+    # Priority 4: Component keyword + description noun (only if short)
+    for kw in result['component_keywords'][:2]:
+        for noun in result['description_nouns'][:2]:
+            combo = f"{kw} {noun}"
+            # Skip combos that are too long — they dilute vector search
+            if len(combo) <= 50 and noun.lower() not in kw.lower() and kw.lower() not in noun.lower():
+                if combo not in queries:
+                    queries.append(combo)
+
+    # Fallback: component keywords alone if nothing better found
+    if not queries:
+        for kw in result['component_keywords'][:3]:
+            if kw not in queries:
+                queries.append(kw)
+
+    result['suggested_queries'] = queries[:6]  # Cap at 6
+
+    return result
+
+
+def extract_doc_clues_data(text: str) -> dict:
+    """
+    Extract structured data from RCA/bug content: URLs, book names, chapter clues,
+    networking technology terms, and search query suggestions from Description mining.
+    Returns raw data (not formatted string) so the UI can display it for user selection.
+    
+    Returns:
+        {
+            'url_clues': [{'url': str, 'book_pdf': str, 'book_id': str, 'chapter_clues': [str]}],
+            'tech_terms': [(category, term), ...],   # all detected terms
+            'tech_terms_by_category': {category: [term, ...]}  # grouped
+            'search_hints': {                        # from Description mining
+                'component_keywords': [str],
+                'nav_endpoints': [str],
+                'description_nouns': [str],
+                'actions': [str],
+                'suggested_queries': [str],
+            }
+        }
+    """
+    result = {'url_clues': [], 'tech_terms': [], 'tech_terms_by_category': {}, 'search_hints': {}}
+    
+    if not text or not text.strip():
+        return result
+    
+    # ── PART 1: URL extraction ──────────────────────────────────────
+    url_pattern = r'https?://(?:www\.)?cisco\.com/c/en/us/(?:td|support)/docs/[^\s\)\]\"\'<>]+'
+    urls = re.findall(url_pattern, text, re.IGNORECASE)
+    
+    noise_tokens = {
+        'm', 'b', 'c', 'a', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'n', 'o', 'p',
+        'from', 'onwards', 'cg', 'config', 'guide', 'chapter', 'book', 'later',
+        'the', 'and', 'for', 'with', 'on', 'in', 'to', 'of', 'html', 'htm',
+    }
+    
+    seen_books = set()
+    for url in urls:
+        try:
+            url = url.rstrip('.,;:')
+            parsed = urlparse(url)
+            path_parts = [p for p in parsed.path.split('/') if p]
+            if len(path_parts) < 2:
+                continue
+            html_filename = path_parts[-1]
+            book_identifier = path_parts[-2]
+            if not html_filename.endswith(('.html', '.htm')):
+                book_identifier = html_filename
+                html_filename = ""
+            book_pdf = f"{book_identifier}.pdf"
+            if book_pdf in seen_books:
+                continue
+            seen_books.add(book_pdf)
+            chapter_clues = []
+            if html_filename:
+                name_no_ext = re.sub(r'\.html?$', '', html_filename, flags=re.IGNORECASE)
+                tokens = re.split(r'[_\-]', name_no_ext)
+                for token in tokens:
+                    t = token.lower().strip()
+                    if not t or t in noise_tokens or t.isdigit():
+                        continue
+                    if re.match(r'^[a-z]+\d+$', t) and len(t) <= 8:
+                        continue
+                    chapter_clues.append(t)
+            result['url_clues'].append({
+                'url': url, 'book_pdf': book_pdf,
+                'book_id': book_identifier, 'chapter_clues': chapter_clues
+            })
+        except Exception:
+            continue
+    
+    # ── PART 2: Networking technology term scan ─────────────────────
+    net_terms = _scan_for_networking_terms(text)
+    result['tech_terms'] = net_terms
+    by_cat = {}
+    for cat, term in net_terms:
+        by_cat.setdefault(cat, []).append(term)
+    result['tech_terms_by_category'] = by_cat
+
+    # ── PART 3: Description mining for search query suggestions ────
+    result['search_hints'] = _extract_search_hints(text)
+    
+    return result
+
+
+def format_doc_clues_for_prompt(clues_data: dict, selected_terms: List[str] = None, product_name: str = None) -> str:
+    """
+    Format the extracted clues data into a structured block for the LLM prompt.
+    
+    Args:
+        clues_data: Output from extract_doc_clues_data()
+        selected_terms: Optional list of user-selected technology terms.
+                        If provided, only these terms are included.
+                        If None, all detected terms are included.
+        product_name: Optional UI product name (e.g. 'ASR 9000').
+                      If provided, matches terms to actual PDF guide filenames.
+    
+    Returns:
+        Formatted string block for injection into the agent prompt.
+    """
+    sections = []
+    
+    # ── URL clues ───────────────────────────────────────────────────
+    for clue in clues_data.get('url_clues', []):
+        entry = f"  📎 URL found: {clue['url']}\n"
+        entry += f"     Book PDF: {clue['book_pdf']}\n"
+        entry += f"     Book identifier (for source filter): {clue['book_id']}\n"
+        if clue['chapter_clues']:
+            entry += f"     Chapter clue keywords: {', '.join(clue['chapter_clues'])}\n"
+            entry += f"     → This likely references a chapter about: {', '.join(c.upper() for c in clue['chapter_clues'])}\n"
+        else:
+            entry += f"     Chapter clue keywords: (none extracted - use bug content keywords)\n"
+        sections.append(entry)
+    
+    if sections:
+        sections.insert(0, "📎 CISCO DOCUMENTATION URLs DETECTED:")
+        sections.insert(1, "-" * 50)
+    
+    # ── Technology terms (filtered by user selection) ───────────────
+    all_terms = clues_data.get('tech_terms', [])
+    if selected_terms is not None:
+        # Only include terms the user selected
+        selected_set = {t.lower() for t in selected_terms}
+        filtered = [(cat, term) for cat, term in all_terms if term.lower() in selected_set]
+    else:
+        filtered = all_terms
+    
+    if filtered:
+        by_cat = {}
+        for cat, term in filtered:
+            by_cat.setdefault(cat, []).append(term)
+        
+        sections.append("🔧 NETWORKING TECHNOLOGY TERMS (user-selected):")
+        sections.append("-" * 50)
+        for cat, terms in by_cat.items():
+            label = cat.replace("_", " ").title()
+            sections.append(f"  {label}: {', '.join(t.upper() for t in terms)}")
+        
+        terms_flat = [t for _, t in filtered]
+        sections.append(f"\n  → Use these as ADDITIONAL search keywords: {', '.join(terms_flat)}")
+    
+    # ── Guide matching (match terms to actual PDF filenames) ────────
+    if product_name and filtered:
+        terms_for_matching = [t for _, t in filtered]
+        matched_guides, all_guides = match_terms_to_guides(terms_for_matching, product_name)
+        
+        if matched_guides:
+            sections.append("")
+            sections.append("📚 MATCHED GUIDES (detected terms matched against available PDF guide filenames):")
+            sections.append("-" * 50)
+            sections.append("  ⚠️  THESE ARE YOUR HIGHEST-PRIORITY GUIDES — search these FIRST!")
+            for term, guides in matched_guides.items():
+                for guide in guides:
+                    sections.append(f"  ✅ Term '{term.upper()}' → Guide: {guide}")
+            
+            all_matched = sorted(set(g for guides in matched_guides.values() for g in guides))
+            sections.append(f"\n  🎯 PRIMARY GUIDES TO SEARCH: {', '.join(all_matched)}")
+            sections.append("  → Filter your vector store searches to these guides using source metadata")
+        
+        if all_guides:
+            sections.append(f"\n  📋 All available guides in '{product_name}' docset ({len(all_guides)} total):")
+            for g in all_guides:
+                marker = " ⭐" if matched_guides and any(g in guides for guides in matched_guides.values()) else ""
+                sections.append(f"     - {g}{marker}")
+    
+    # ── Suggested search queries (from Description mining) ──────────
+    search_hints = clues_data.get('search_hints', {})
+    suggested_queries = search_hints.get('suggested_queries', [])
+    
+    if suggested_queries:
+        sections.append("")
+        sections.append("🔍 SUGGESTED SEARCH QUERIES (mined from Component + Description by system):")
+        sections.append("-" * 50)
+        sections.append("  ⚠️  USE THESE EXACT QUERIES — they target the correct chapter/section,")
+        sections.append("      not just the guide overview or introduction.")
+        for i, query in enumerate(suggested_queries, 1):
+            sections.append(f"  {i}. \"{query}\"")
+        
+        # Show reasoning
+        if search_hints.get('component_keywords'):
+            sections.append(f"\n  📦 Component sub-parts expanded: {', '.join(search_hints['component_keywords'])}")
+        if search_hints.get('nav_endpoints'):
+            sections.append(f"  🧭 UI navigation destinations: {', '.join(search_hints['nav_endpoints'])}")
+        if search_hints.get('description_nouns'):
+            sections.append(f"  📝 Specific features mentioned: {', '.join(search_hints['description_nouns'])}")
+        if search_hints.get('actions'):
+            sections.append(f"  🔧 Actions: {', '.join(search_hints['actions'])}")
+    
+    # ── Build final block ───────────────────────────────────────────
+    if not sections:
+        return ""
+    
+    block = "\n\n🔗 PRE-EXTRACTED DOCUMENTATION REFERENCES (extracted by system, NOT by LLM):\n"
+    block += "=" * 70 + "\n"
+    block += "\n".join(sections)
+    block += "\n" + "=" * 70 + "\n"
+    block += "🚨 MANDATORY FIRST ACTIONS:\n"
+    block += "1. If SUGGESTED SEARCH QUERIES (🔍) are listed above, use THOSE as your get_product_info queries\n"
+    block += "   — DO NOT simplify them. They are pre-built to target the RIGHT chapter, not just the intro.\n"
+    block += "2. If MATCHED GUIDES (⭐) are listed, filter searches to THOSE guides first\n"
+    block += "3. If a Book PDF name was detected from a URL, use that as primary search source\n"
+    block += "4. Use networking terms as ADDITIONAL search keywords after the suggested queries\n"
+    block += "5. For EACH suggestion, specify the EXACT guide name and chapter/section\n"
+    block += "⚠️ Do NOT just search for a high-level topic like 'configuration group' — that returns the Introduction.\n"
+    block += "   Use the SPECIFIC sub-feature queries listed above instead.\n"
+    
+    return block
 
 # Rate limiting: Track last call time to avoid API throttling
 _last_tool_call_time = 0
@@ -109,6 +706,19 @@ def get_product_info(product: str, query: str) -> str:
             vectorstore = initialize_vector_store()
             st.session_state.vector_store_init_attempted = True
     
+    # ── BOOST: Inject pre-extracted suggested queries on the FIRST tool call ──
+    # The LLM consistently ignores our suggested search queries in the prompt,
+    # so we intercept the tool and run them ourselves, merging with the LLM's query.
+    boosted_queries = []
+    try:
+        import streamlit as st
+        pending = st.session_state.pop('_pending_search_queries', None)
+        if pending:
+            boosted_queries = pending
+            print(f"🚀 BOOST: Injecting {len(boosted_queries)} pre-extracted search queries")
+    except:
+        pass
+    
     # If guides are selected, use direct similarity search instead of SelfQueryRetriever
     # SelfQueryRetriever doesn't work well with source file filtering
     if guides and len(guides) > 0:
@@ -146,12 +756,40 @@ def get_product_info(product: str, query: str) -> str:
                 ]
             }
         
-        # Use direct similarity search with metadata filter
+        # Run the LLM's original query
         result = vectorstore.similarity_search(
             query=query,
             k=10,
             filter=search_filter
         )
+        
+        # BOOST: Also run each suggested query and merge results
+        if boosted_queries:
+            seen_pages = set()
+            for doc in result:
+                page_key = (doc.metadata.get('source', ''), doc.metadata.get('page', ''), doc.page_content[:80])
+                seen_pages.add(page_key)
+            
+            boost_results = []
+            for bq in boosted_queries:
+                try:
+                    bq_results = vectorstore.similarity_search(
+                        query=bq,
+                        k=5,
+                        filter=search_filter
+                    )
+                    for doc in bq_results:
+                        page_key = (doc.metadata.get('source', ''), doc.metadata.get('page', ''), doc.page_content[:80])
+                        if page_key not in seen_pages:
+                            boost_results.append(doc)
+                            seen_pages.add(page_key)
+                except Exception as e:
+                    print(f"⚠️ Boost query '{bq}' failed: {e}")
+            
+            if boost_results:
+                print(f"🚀 BOOST: Added {len(boost_results)} new chunks from suggested queries")
+                # Prepend boost results so they appear FIRST (higher priority)
+                result = boost_results + result
     else:
         # Use SelfQueryRetriever for normal searches without guide filtering
         retriever = SelfQueryRetriever.from_llm(
@@ -220,7 +858,7 @@ You MUST tell the user that no documents were found and cannot provide recommend
     return "\n".join(formatted_chunks)
 
 
-def run_agent(product_name: str, question: str, rca_content: str, selected_guides: List[str] = None):
+def run_agent(product_name: str, question: str, rca_content: str, selected_guides: List[str] = None, selected_tech_terms: List[str] = None):
     """Run the agent with the given inputs
     
     Args:
@@ -228,6 +866,8 @@ def run_agent(product_name: str, question: str, rca_content: str, selected_guide
         question: User's question/task
         rca_content: Bug report or RCA content
         selected_guides: Optional list of guide filenames to limit search scope
+        selected_tech_terms: Optional list of user-selected technology terms to focus search on.
+                             If None, all auto-detected terms are used.
     """
     
     # Store selected guides in session state for tool access
@@ -237,6 +877,27 @@ def run_agent(product_name: str, question: str, rca_content: str, selected_guide
     
     # Append RCA content to the question
     full_question = question + rca_content
+    
+    # Pre-extract Cisco documentation references from the content
+    # This deterministic Python extraction replaces unreliable LLM URL parsing
+    clues_data = extract_doc_clues_data(rca_content)
+    doc_clues = format_doc_clues_for_prompt(clues_data, selected_terms=selected_tech_terms, product_name=product_name)
+    
+    # Store suggested search queries in session state so get_product_info can
+    # inject them on the FIRST tool call — this bypasses the LLM ignoring our queries
+    suggested_queries = clues_data.get('search_hints', {}).get('suggested_queries', [])
+    if suggested_queries:
+        import streamlit as st
+        st.session_state._pending_search_queries = suggested_queries[:4]  # Top 4
+    
+    # Build the clues as a SEPARATE top-level section in the agent prompt
+    # (NOT buried inside the question blob where it gets lost)
+    doc_clues_section = ""
+    if doc_clues:
+        doc_clues_section = f"""
+    
+    {doc_clues}
+    """
     
     # Build guide filter message for prompt
     guide_filter_message = ""
@@ -256,8 +917,19 @@ def run_agent(product_name: str, question: str, rca_content: str, selected_guide
     Use your tools to fetch context to answer the question to provide a more accurate answer.
     
     Cisco product: {{product_name}}
+    {doc_clues_section}
     question: {{question}}
     {guide_filter_message}
+    
+    🚨 MANDATORY FIRST ACTIONS (before anything else):
+    If PRE-EXTRACTED DOCUMENTATION REFERENCES appear above, you MUST:
+    1. If SUGGESTED SEARCH QUERIES (🔍) are listed, use THOSE EXACT queries in your get_product_info calls
+       — They are pre-built from the bug Description to target the correct chapter, not just the intro
+       — Example: call get_product_info(product="sdwan", query="objects and profiles prefix")
+    2. Use the "Book PDF" name as your primary search source filter
+    3. Only AFTER exhausting the suggested queries, try your own search terms
+    ⚠️ Do NOT simplify or generalize the suggested queries. "configuration group" alone will return the wrong chapter.
+    
     ⚠️ CRITICAL ANTI-HALLUCINATION RULES:
     1. ONLY use information that the get_product_info tool actually returned
     2. If the tool returns "❌ NO DOCUMENTS FOUND ❌", you MUST tell the user no documentation was found
@@ -338,9 +1010,16 @@ def apply_prompt_file(prompt_file_path: str, rca_content: str, product_name: str
     with open(prompt_file_path, 'r', encoding='utf-8') as f:
         prompt_template = f.read()
     
-    # Replace placeholders with actual content
-    full_prompt = prompt_template.replace("{rca_content}", rca_content)
-    full_prompt = full_prompt.replace("{extracted_text}", rca_content)
+    # Pre-extract Cisco documentation references from the content
+    clues_data = extract_doc_clues_data(rca_content)
+    doc_clues = format_doc_clues_for_prompt(clues_data, product_name=product_name)
+    enriched_rca = rca_content
+    if doc_clues:
+        enriched_rca = doc_clues + "\n\n" + rca_content
+    
+    # Replace placeholders with actual content (use enriched version with doc clues)
+    full_prompt = prompt_template.replace("{rca_content}", enriched_rca)
+    full_prompt = full_prompt.replace("{extracted_text}", enriched_rca)
     full_prompt = full_prompt.replace("{product_name}", product_name)
     full_prompt = full_prompt.replace("{product}", product_name)
     
@@ -351,7 +1030,7 @@ def apply_prompt_file(prompt_file_path: str, rca_content: str, product_name: str
     return result.content if hasattr(result, 'content') else str(result)
 
 
-def run_agent_with_prompt_file(prompt_file_path: str, rca_content: str, product_name: str) -> str:
+def run_agent_with_prompt_file(prompt_file_path: str, rca_content: str, product_name: str, selected_tech_terms: List[str] = None) -> str:
     """
     Run the agent with a custom prompt file and RAG capabilities
     
@@ -362,6 +1041,7 @@ def run_agent_with_prompt_file(prompt_file_path: str, rca_content: str, product_
         prompt_file_path: Path to the prompt.md file (e.g., "ChapterFinder.md")
         rca_content: The RCA/bug content to analyze
         product_name: Cisco product name for context
+        selected_tech_terms: Optional list of user-selected technology terms to focus search on.
     
     Returns:
         Agent's response as string
@@ -370,7 +1050,17 @@ def run_agent_with_prompt_file(prompt_file_path: str, rca_content: str, product_
     with open(prompt_file_path, 'r', encoding='utf-8') as f:
         prompt_template = f.read()
     
-    # Build the full question with RCA content
+    # Pre-extract Cisco documentation references from the content
+    clues_data = extract_doc_clues_data(rca_content)
+    doc_clues = format_doc_clues_for_prompt(clues_data, selected_terms=selected_tech_terms, product_name=product_name)
+    
+    # Store suggested search queries in session state for tool-level boost
+    suggested_queries = clues_data.get('search_hints', {}).get('suggested_queries', [])
+    if suggested_queries:
+        import streamlit as st
+        st.session_state._pending_search_queries = suggested_queries[:4]
+    
+    # Build the full question with RCA content (clues go in agent template, NOT here)
     full_question = f"""
 {prompt_template}
 
@@ -385,15 +1075,30 @@ def run_agent_with_prompt_file(prompt_file_path: str, rca_content: str, product_
 Cisco Product: {product_name}
 """
     
+    # Build the clues as a top-level section in the agent template
+    doc_clues_section = ""
+    if doc_clues:
+        doc_clues_section = doc_clues
+    
     # Create the agent prompt template
-    agent_prompt_template = """
+    agent_prompt_template = f"""
     Given a Cisco product name and analysis instructions, provide the requested analysis.
     Use your tools to fetch context from documentation to provide accurate recommendations.
     
-    Cisco product: {product_name}
+    Cisco product: {{product_name}}
+    {doc_clues_section}
+    
+    🚨 MANDATORY FIRST ACTIONS (before anything else):
+    If PRE-EXTRACTED DOCUMENTATION REFERENCES appear above, you MUST:
+    1. If SUGGESTED SEARCH QUERIES (🔍) are listed, use THOSE EXACT queries in your get_product_info calls
+       — They are pre-built from the bug Description to target the correct chapter, not just the intro
+       — Example: call get_product_info(product="sdwan", query="objects and profiles prefix")
+    2. Use the "Book PDF" name as your primary search source filter
+    3. Only AFTER exhausting the suggested queries, try your own search terms
+    ⚠️ Do NOT simplify or generalize the suggested queries. "configuration group" alone will return the wrong chapter.
     
     Analysis request and content:
-    {question}
+    {{question}}
     
     ⚠️ CRITICAL ANTI-HALLUCINATION RULES:
     1. ONLY use information that the get_product_info tool actually returned
