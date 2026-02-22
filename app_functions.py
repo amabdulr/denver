@@ -1088,14 +1088,41 @@ def run_agent(product_name: str, question: str, rca_content: str, selected_guide
     
     # Build a pinned Location Recommendation #1 from code-derived signals
     # so the LLM's first recommendation always points to the right chapter
+    # Then pin #2 and #3 from the next-highest-scored guides.
+    # The user still reviews/edits all of these — we're pre-populating, not dictating.
+    
+    matched_term_guides = st.session_state.get('_matched_term_guides', {})
+    
+    def _section_hints_for_guide(guide_name):
+        """Get the top term-based section hints for a specific guide."""
+        if not matched_term_guides:
+            return None
+        tw = []
+        for term, guides in matched_term_guides.items():
+            if term.startswith('_'):
+                continue
+            if guide_name in guides:
+                w = 1.0 / len(guides)
+                tw.append((term, w))
+        tw.sort(key=lambda x: -x[1])
+        top = [t.title() for t, _ in tw[:5]]
+        return ", ".join(top) if top else None
+    
+    # Sort all guides by score descending
+    sorted_guides = sorted(guide_scores.items(), key=lambda x: -x[1]) if guide_scores else []
+    
+    # ── PINNED REC #1 ──
     pinned_rec_section = ""
+    rec1_guide = None  # track which guide is #1 so we skip it for #2/#3
+    
     if url_clues and section_label and section_label != "(see location recommendations above)":
         # Strong signal: URL gave us both guide and chapter
+        rec1_guide = url_clues[0]['book_pdf']
         pinned_rec_section = f"""
     
     📌 PINNED LOCATION RECOMMENDATION #1 (pre-determined from documentation URL — DO NOT REPLACE):
     ══════════════════════════════════════════════════════════════════════
-    Document name: {url_clues[0]['book_pdf']}
+    Document name: {rec1_guide}
     Chapter/Section: {section_label}
     Page number: <FILL IN from your search results within this chapter>
     Actual content location indicator: <FILL IN — quote 8-15 words from a chunk in this chapter>
@@ -1103,27 +1130,52 @@ def run_agent(product_name: str, question: str, rca_content: str, selected_guide
     ══════════════════════════════════════════════════════════════════════
     
     ⚠️ MANDATORY: Your Location Recommendations MUST include this as Recommendation #1.
-    - Search specifically within "{section_label}" in {url_clues[0]['book_pdf']} to fill in the page number and content indicator.
+    - Search specifically within "{section_label}" in {rec1_guide} to fill in the page number and content indicator.
     - Use query: "{' '.join(url_clues[0].get('chapter_clues', []))} tcp mss" or similar to find chunks from this chapter.
-    - Then add 2-3 MORE recommendations from your search results as relevant alternatives.
     """
     elif top_guide and section_label and section_label != "(see location recommendations above)":
         # Moderate signal: term scoring gave us guide + section hints (no URL)
+        rec1_guide = top_guide
         pinned_rec_section = f"""
     
     📌 SUGGESTED LOCATION RECOMMENDATION #1 (from term-based scoring — highest confidence):
     ══════════════════════════════════════════════════════════════════════
-    Document name: {top_guide}
+    Document name: {rec1_guide}
     Likely section topics: {section_label}
     Page number: <FILL IN from your search results>
     Actual content location indicator: <FILL IN — quote 8-15 words from a relevant chunk>
-    Detailed reasoning: This guide scored highest ({guide_scores.get(top_guide, 'n/a')}) based on detected technology terms.
+    Detailed reasoning: This guide scored highest ({guide_scores.get(rec1_guide, 'n/a')}) based on detected technology terms.
     ══════════════════════════════════════════════════════════════════════
     
     ⚠️ Your Location Recommendations SHOULD include this guide as Recommendation #1.
-    - Search within {top_guide} for sections related to: {section_label}
+    - Search within {rec1_guide} for sections related to: {section_label}
     - Fill in page number and content indicator from actual search results.
-    - Then add 2-3 MORE recommendations as relevant alternatives.
+    """
+    
+    # ── PINNED RECS #2 and #3 — next highest-scored guides ──
+    # These are pre-populated suggestions the user can verify/edit.
+    remaining_guides = [(g, s) for g, s in sorted_guides if g != rec1_guide]
+    for rank, (guide_name, score) in enumerate(remaining_guides[:2], start=2):
+        hints = _section_hints_for_guide(guide_name)
+        hint_text = hints if hints else "(search this guide for relevant sections)"
+        pinned_rec_section += f"""
+    
+    📌 SUGGESTED LOCATION RECOMMENDATION #{rank} (from term-based scoring — score: {score}):
+    ══════════════════════════════════════════════════════════════════════
+    Document name: {guide_name}
+    Likely section topics: {hint_text}
+    Page number: <FILL IN from your search results>
+    Actual content location indicator: <FILL IN — quote 8-15 words from a relevant chunk>
+    Detailed reasoning: This guide scored #{rank} ({score}) based on detected technology terms matching: {hint_text}
+    ══════════════════════════════════════════════════════════════════════
+    """
+    
+    if pinned_rec_section:
+        pinned_rec_section += """
+    ⚠️ IMPORTANT: Use ALL the pinned/suggested recommendations above as your Location Recommendations #1, #2, #3.
+    - Search within EACH guide to fill in page numbers and content indicators from actual search results.
+    - You may add additional recommendations beyond these if your search results reveal other relevant locations.
+    - The user will review and verify all recommendations — these are pre-populated suggestions, not final answers.
     """
     
     # Append RCA content to the question
@@ -1170,8 +1222,8 @@ def run_agent(product_name: str, question: str, rca_content: str, selected_guide
     {guide_filter_message}
     
     🚨 MANDATORY FIRST ACTIONS (before anything else):
-    1. If a 📌 PINNED LOCATION RECOMMENDATION appears above, search within that specific document and chapter FIRST
-       to fill in the page number and content indicator.
+    1. If 📌 PINNED/SUGGESTED LOCATION RECOMMENDATIONS appear above, search within EACH of those documents
+       to fill in the page numbers and content indicators. Use them as your Location Recommendations #1, #2, #3.
     2. If SUGGESTED SEARCH QUERIES (🔍) are listed, use THOSE EXACT queries in your get_product_info calls
        — They are pre-built from the bug Description to target the correct chapter, not just the intro
        — Example: call get_product_info(product="sdwan", query="objects and profiles prefix")

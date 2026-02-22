@@ -370,6 +370,68 @@ The user has selected specific guides to search. You MUST limit your search to t
 When calling get_product_info, the results will automatically be filtered to these guides.
 """
 
+# ── Build pinned recs (replicate run_agent logic) ──
+def _section_hints_for_guide(guide_name):
+    """Get the top term-based section hints for a specific guide."""
+    if not matched_term_guides:
+        return None
+    tw = []
+    for term, guides in matched_term_guides.items():
+        if term.startswith('_'):
+            continue
+        if guide_name in guides:
+            w = 1.0 / len(guides)
+            tw.append((term, w))
+    tw.sort(key=lambda x: -x[1])
+    top = [t.title() for t, _ in tw[:5]]
+    return ", ".join(top) if top else None
+
+sorted_guides_list = sorted(guide_scores.items(), key=lambda x: -x[1]) if guide_scores else []
+
+pinned_rec_section = ""
+rec1_guide = None
+
+if url_clues_agent and section_label and section_label != "(see location recommendations above)":
+    rec1_guide = url_clues_agent[0]['book_pdf']
+    pinned_rec_section = f"""
+📌 PINNED LOCATION RECOMMENDATION #1 (pre-determined from documentation URL — DO NOT REPLACE):
+══════════════════════════════════════════════════════════════════════
+Document name: {rec1_guide}
+Chapter/Section: {section_label}
+Page number: <FILL IN from your search results within this chapter>
+Actual content location indicator: <FILL IN — quote 8-15 words from a chunk in this chapter>
+Detailed reasoning: The bug/RCA explicitly references this document and chapter via URL.
+══════════════════════════════════════════════════════════════════════
+"""
+elif top_guide and section_label and section_label != "(see location recommendations above)":
+    rec1_guide = top_guide
+    pinned_rec_section = f"""
+📌 SUGGESTED LOCATION RECOMMENDATION #1 (from term-based scoring — highest confidence):
+══════════════════════════════════════════════════════════════════════
+Document name: {rec1_guide}
+Likely section topics: {section_label}
+Page number: <FILL IN from your search results>
+Actual content location indicator: <FILL IN — quote 8-15 words from a relevant chunk>
+Detailed reasoning: This guide scored highest ({guide_scores.get(rec1_guide, 'n/a')}) based on detected technology terms.
+══════════════════════════════════════════════════════════════════════
+"""
+
+# Pinned #2 and #3
+remaining = [(g, s) for g, s in sorted_guides_list if g != rec1_guide]
+for rank, (gname, gscore) in enumerate(remaining[:2], start=2):
+    hints = _section_hints_for_guide(gname)
+    hint_text = hints if hints else "(search this guide for relevant sections)"
+    pinned_rec_section += f"""
+📌 SUGGESTED LOCATION RECOMMENDATION #{rank} (from term-based scoring — score: {gscore}):
+══════════════════════════════════════════════════════════════════════
+Document name: {gname}
+Likely section topics: {hint_text}
+Page number: <FILL IN from your search results>
+Actual content location indicator: <FILL IN — quote 8-15 words from a relevant chunk>
+Detailed reasoning: This guide scored #{rank} ({gscore}) based on detected technology terms matching: {hint_text}
+══════════════════════════════════════════════════════════════════════
+"""
+
 # Build the PromptTemplate equivalent
 product_version_prompt = f"""
 given a Cisco product name and a question from a user, return the answer.
@@ -377,24 +439,33 @@ Use your tools to fetch context to answer the question to provide a more accurat
 
 Cisco product: {PRODUCT_NAME}
 {doc_clues_section}
+{pinned_rec_section}
 question: {full_question[:500]}...
 
 [FULL QUESTION TRUNCATED — {len(full_question):,} chars total]
 {guide_filter_message}
 
 🚨 MANDATORY FIRST ACTIONS (before anything else):
-If PRE-EXTRACTED DOCUMENTATION REFERENCES appear above, you MUST:
-1. If SUGGESTED SEARCH QUERIES (🔍) are listed, use THOSE EXACT queries
-2. Use the "Book PDF" name as your primary search source filter
-3. Only AFTER exhausting the suggested queries, try your own search terms
+1. If 📌 PINNED/SUGGESTED LOCATION RECOMMENDATIONS appear above, search within EACH of those documents
+   to fill in the page numbers and content indicators. Use them as your Location Recommendations #1, #2, #3.
+2. If SUGGESTED SEARCH QUERIES (🔍) are listed, use THOSE EXACT queries
+3. Use the "Book PDF" name as your primary search source filter
+4. Only AFTER exhausting the suggested queries, try your own search terms
 
 answer:
 """
 
-# Show the prompt (truncated for readability)
+# Show the prompt (doc_clues section can be huge, so show separately)
 print(product_version_prompt[:3000])
 if len(product_version_prompt) > 3000:
-    print(f"\n... [prompt truncated, total {len(product_version_prompt):,} chars]")
+    print(f"\n... [doc_clues section truncated]")
+
+# Always show pinned recommendations clearly
+if pinned_rec_section.strip():
+    section("STEP 6b: Pinned Location Recommendations (sent to LLM)")
+    print(pinned_rec_section)
+else:
+    print("\n⚠️  No pinned recommendations generated (missing URL clues and guide scores)")
 
 
 # ═══════════════════════════════════════════════════════════════════
