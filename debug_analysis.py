@@ -151,6 +151,58 @@ Root Cause:
 The root cause was that the policy apply direction was set to "from-service" instead of "from-tunnel". Since branch traffic enters the SD-WAN fabric through the tunnel interface, the policy must be applied in the "from-tunnel" direction to match ingress traffic at the branch. With "from-service" direction, the policy only matches traffic originating from the local service-side (LAN) at the hub, not traffic arriving from remote branches.
 """,
     },
+
+    "ike_vpn": {
+        "product": "Cisco SD-WAN",
+        "description": "IKE/IPsec VPN tunnel fvrf mismatch on 8000v",
+        "content": """\
+Executive Summary:
+The customer, Westpac Banking Corporation, reported an issue configuring and establishing an IKE/IPsec VPN tunnel between a Cisco 8000v router managed via Cisco SD-WAN vManage feature templates and a Juniper SRX device. The VPN tunnel failed to come up due to a mismatch in Forwarding VRF (fvrf) parameters within the IKEv2 policy and profile configuration. The impact was that secure connectivity between the Cisco and Juniper devices was not operational. The root cause was identified as the absence of the `match fvrf` configuration in the IKEv2 policy and profile, which vManage feature templates do not natively support. The issue was resolved by manually defining `fvrf` in both the IKEv2 profile and policy using CLI configuration snippets.
+
+Steps to Reproduce:
+1. Configure an IKE/IPsec VPN between a Cisco 8000v router and a Juniper SRX device using Cisco SD-WAN vManage feature templates.
+2. Apply Phase 1 and Phase 2 parameters matching the SRX configuration:
+   - IKEv2, AES-256-CBC, SHA2, DH Group 19, Main mode.
+   - IPsec AES256, SHA256, PFS Group 19.
+3. Attempt to bring up the tunnel.
+4. Observe failure in IKEv2 negotiation with error logs indicating policy mismatch due to fvrf.
+
+Condition:
+- Device: Cisco 8000v router managed via Cisco SD-WAN vManage.
+- Peer device: Juniper SRX.
+- Configuration parameters:
+  IKEv2
+  AES-256-CBC encryption
+  SHA2 hash
+  DH Group 19
+  IPsec AES256 encryption
+  SHA256 hash
+  PFS Group 19
+- Tunnel configured using vManage feature templates.
+- The vManage feature template does not support defining `fvrf` under IKEv2 policy or profile.
+
+Workarounds:
+The issue was mitigated by manually defining the `fvrf` parameter in both the IKEv2 policy and profile using CLI configuration snippets, as vManage feature templates do not support this configuration natively.
+
+Procedure (Solution):
+The issue was resolved by adding the following CLI configuration lines to explicitly define the `fvrf`:
+crypto ikev2 policy policy1-global
+   proposal p1-global
+   match fvrf 50
+crypto ikev2 profile if-ipsec50-ikev2-profile
+   match fvrf 50
+interface Tunnel00050
+   tunnel vrf 50
+These lines were applied manually since the vManage feature template could not handle the `fvrf` requirement. After applying this configuration, the IKE/IPsec tunnel successfully came up.
+
+Root Cause:
+The root cause was the absence of the `match fvrf` configuration in the IKEv2 policy and profile when using vManage feature templates. The vManage templates do not provide native support for defining `fvrf` under IKEv2 configurations. As a result, the IKEv2 negotiation failed. Manually defining `fvrf` in both the IKEv2 policy and profile resolved the mismatch and allowed successful tunnel establishment.
+
+Affected Devices/Versions:
+- Cisco 8000v router (managed via Cisco SD-WAN vManage)
+- Cisco Catalyst C8300-1N1S-6T
+""",
+    },
 }
 
 # ═══════════════════════════════════════════════════════════════════
@@ -393,43 +445,47 @@ rec1_guide = None
 
 if url_clues_agent and section_label and section_label != "(see location recommendations above)":
     rec1_guide = url_clues_agent[0]['book_pdf']
+    chapter_query = ' '.join(url_clues_agent[0].get('chapter_clues', []))
     pinned_rec_section = f"""
-📌 PINNED LOCATION RECOMMENDATION #1 (pre-determined from documentation URL — DO NOT REPLACE):
+🔒 MANDATORY LOCATION RECOMMENDATION #1 (from documentation URL — DO NOT SKIP OR REPLACE):
 ══════════════════════════════════════════════════════════════════════
 Document name: {rec1_guide}
 Chapter/Section: {section_label}
-Page number: <FILL IN from your search results within this chapter>
-Actual content location indicator: <FILL IN — quote 8-15 words from a chunk in this chapter>
+Page number: <SEARCH THIS GUIDE and fill in>
+Actual content location indicator: <SEARCH THIS GUIDE and quote 8-15 words>
 Detailed reasoning: The bug/RCA explicitly references this document and chapter via URL.
 ══════════════════════════════════════════════════════════════════════
+🔍 REQUIRED SEARCH: call get_product_info with query targeting "{chapter_query}" in {rec1_guide}
 """
 elif top_guide and section_label and section_label != "(see location recommendations above)":
     rec1_guide = top_guide
     pinned_rec_section = f"""
-📌 SUGGESTED LOCATION RECOMMENDATION #1 (from term-based scoring — highest confidence):
+🔒 MANDATORY LOCATION RECOMMENDATION #1 (highest scoring guide — DO NOT SKIP OR REPLACE):
 ══════════════════════════════════════════════════════════════════════
 Document name: {rec1_guide}
 Likely section topics: {section_label}
-Page number: <FILL IN from your search results>
-Actual content location indicator: <FILL IN — quote 8-15 words from a relevant chunk>
+Page number: <SEARCH THIS GUIDE and fill in>
+Actual content location indicator: <SEARCH THIS GUIDE and quote 8-15 words>
 Detailed reasoning: This guide scored highest ({guide_scores.get(rec1_guide, 'n/a')}) based on detected technology terms.
 ══════════════════════════════════════════════════════════════════════
+🔍 REQUIRED SEARCH: call get_product_info with query targeting "{section_label}" in {rec1_guide}
 """
 
-# Pinned #2 and #3
+# Mandatory #2 and #3
 remaining = [(g, s) for g, s in sorted_guides_list if g != rec1_guide]
 for rank, (gname, gscore) in enumerate(remaining[:2], start=2):
     hints = _section_hints_for_guide(gname)
     hint_text = hints if hints else "(search this guide for relevant sections)"
     pinned_rec_section += f"""
-📌 SUGGESTED LOCATION RECOMMENDATION #{rank} (from term-based scoring — score: {gscore}):
+🔒 MANDATORY LOCATION RECOMMENDATION #{rank} (DO NOT SKIP — search this DIFFERENT guide):
 ══════════════════════════════════════════════════════════════════════
 Document name: {gname}
 Likely section topics: {hint_text}
-Page number: <FILL IN from your search results>
-Actual content location indicator: <FILL IN — quote 8-15 words from a relevant chunk>
+Page number: <SEARCH THIS GUIDE and fill in>
+Actual content location indicator: <SEARCH THIS GUIDE and quote 8-15 words>
 Detailed reasoning: This guide scored #{rank} ({gscore}) based on detected technology terms matching: {hint_text}
 ══════════════════════════════════════════════════════════════════════
+🔍 REQUIRED SEARCH: call get_product_info with query targeting "{hint_text}" in {gname}
 """
 
 # Build the PromptTemplate equivalent
@@ -446,11 +502,12 @@ question: {full_question[:500]}...
 {guide_filter_message}
 
 🚨 MANDATORY FIRST ACTIONS (before anything else):
-1. If 📌 PINNED/SUGGESTED LOCATION RECOMMENDATIONS appear above, search within EACH of those documents
-   to fill in the page numbers and content indicators. Use them as your Location Recommendations #1, #2, #3.
-2. If SUGGESTED SEARCH QUERIES (🔍) are listed, use THOSE EXACT queries
-3. Use the "Book PDF" name as your primary search source filter
-4. Only AFTER exhausting the suggested queries, try your own search terms
+1. If � MANDATORY LOCATION RECOMMENDATIONS appear above, you MUST make a SEPARATE get_product_info call
+   for EACH of the 3 guides listed. Do NOT skip any. Do NOT combine searches. 3 guides = 3 separate searches.
+2. Your final Location Recommendations #1, #2, #3 MUST match the 3 mandatory guides above — same order, same guides.
+3. If SUGGESTED SEARCH QUERIES (🔍) are listed, use THOSE EXACT queries
+4. Use the "Book PDF" name as your primary search source filter
+5. Only AFTER exhausting the suggested queries, try your own search terms
 
 answer:
 """
