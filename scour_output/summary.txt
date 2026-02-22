@@ -1,0 +1,21 @@
+======================================================================
+SCOUR BOOKS — SUMMARY
+======================================================================
+
+Books processed:         1
+  Successful:            1
+  Failed (no TOC):       0
+Total headings found:    53
+LLM concepts extracted:  34
+Mechanical vocab matches:4
+Final merged concepts:   576
+New terms (gap report):  27
+
+----------------------------------------------------------------------
+PER-BOOK BREAKDOWN
+----------------------------------------------------------------------
+
+✅ compatibility-and-server-recommendations.pdf
+   Product: sdwan  |  TOC: bookmarks  |  Headings: 53  |  LLM concepts: 34  |  Vocab matches: 4
+   LLM samples: sd-wan, sdwan, catalyst sd-wan, sd wan, viptela, control components, vmanage, vsmart ... +26 more
+

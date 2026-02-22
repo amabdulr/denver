@@ -644,13 +644,21 @@ def render_analysis_summary_page():
                 # Auto-match guides based on detected technology terms
                 auto_matched_guides = set()
                 auto_match_reasons = {}  # guide -> [matched terms]
+                guide_scores = {}  # guide -> score (number of terms pointing to it)
                 current_selected_terms = []
                 
                 if rca_content and rca_content.strip():
                     current_selected_terms = st.session_state.get('selected_raw_tech_terms', []) or []
                     if current_selected_terms:
                         matched, _ = match_terms_to_guides(current_selected_terms, product_name)
+                        # Extract guide scores (stored under special key)
+                        guide_scores = matched.pop('_guide_scores', {})
+                        st.session_state['_guide_scores'] = guide_scores
+                        # Store the term→guide mapping so run_agent can derive section hints
+                        st.session_state['_matched_term_guides'] = dict(matched)
                         for term, matched_guide_list in matched.items():
+                            if term.startswith('_'):
+                                continue
                             for g in matched_guide_list:
                                 auto_matched_guides.add(g)
                                 if g not in auto_match_reasons:
@@ -658,7 +666,12 @@ def render_analysis_summary_page():
                                 auto_match_reasons[g].append(term.upper())
                 
                 if auto_matched_guides:
-                    st.info(f"🎯 **{len(auto_matched_guides)}** guide(s) auto-selected based on detected terms")
+                    # Sort by score and show top guides
+                    top_guide = max(auto_matched_guides, key=lambda g: guide_scores.get(g, 0)) if guide_scores else None
+                    top_msg = f"🎯 **{len(auto_matched_guides)}** guide(s) auto-selected"
+                    if top_guide:
+                        top_msg += f" — **#{1}: {top_guide}** (score={guide_scores.get(top_guide, 0)})"
+                    st.info(top_msg)
                 
                 # Build a hash that changes when content/terms change, to reset checkbox defaults
                 terms_sig = str(sorted(current_selected_terms)).encode() if current_selected_terms else b"none"
@@ -678,16 +691,24 @@ def render_analysis_summary_page():
                     # Start with ONLY auto-matched guides checked (empty if no matches)
                     st.session_state.selected_guides = list(auto_matched_guides)
                 
-                # Create checkboxes for each guide
-                for guide in available_guides:
+                # Create checkboxes for each guide, sorted by score (highest first)
+                # Matched guides come first (sorted by score), then unmatched
+                sorted_guides = sorted(
+                    available_guides,
+                    key=lambda g: guide_scores.get(g, 0),
+                    reverse=True
+                )
+                for guide in sorted_guides:
                     checkbox_key = f"guide_{guide}"
                     if checkbox_key not in st.session_state:
                         st.session_state[checkbox_key] = guide in st.session_state.get('selected_guides', available_guides)
                     
-                    # Build label with match indicator
+                    # Build label with match indicator and score
+                    score = guide_scores.get(guide, 0)
                     if guide in auto_match_reasons:
                         match_tags = ", ".join(auto_match_reasons[guide])
-                        label = f"{guide}  ⭐ {match_tags}"
+                        rank_marker = f"🥇" if score == max(guide_scores.values(), default=0) and score > 0 else "⭐"
+                        label = f"{guide}  {rank_marker} score={score} ({match_tags})"
                     else:
                         label = guide
                     

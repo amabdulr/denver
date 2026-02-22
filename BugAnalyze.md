@@ -266,21 +266,17 @@ For each relevant recommendation, report EXACTLY what you see in the chunks:
 
 ---
 
-### ✅ CORRECT EXAMPLE:
+### ✅ CORRECT EXAMPLE (these are FAKE guide names — do NOT copy them into your real output):
 
 ```
-Document name: policies-book-xe.pdf
+Document name: <GUIDE-FROM-SEARCH-RESULTS>.pdf
 
-Part/Section hierarchy: CHAPTER 8 Device Access Policy > NAME NAME COUNTER
-Page number: Page 141
-Actual content location indicator: "Device Access Policy Verifying ACL Policy on SSH"
-Detailed reasoning: This section discusses device access policies and verifying ACL policies on SSH, which is directly related to the issue of ACLs remaining active on VTY lines.
-Document name: configuration-group-guide.pdf
+Part/Section hierarchy: <COPY EXACTLY from the Section: field of the chunk>
+Page number: <COPY EXACTLY from the Page: field of the chunk>
+Actual content location indicator: "<COPY 8-15 consecutive words verbatim from chunk CONTENT>"
+Detailed reasoning: <Explain how this specific chunk relates to the bug/RCA>
 
-Part/Section hierarchy: CHAPTER 5 System Profile > SNMP IFINDEX Persist
-Page number: Page 63
-Actual content location indicator: "Device access policies define the rules that traffic must meet to pass through an interface."
-Detailed reasoning: This section provides information on configuring device access policies, which could be relevant for understanding how ACLs are applied and managed.
+(Repeat for each relevant chunk — aim for 3-5 recommendations)
 
 What do you think? Which recommendation is best?
 ```
@@ -324,50 +320,44 @@ Create content in appropriate format:
 2. Documentation content (STEP 6)
 
 ---
-# Here is an example of the output:
+# Here is the STRUCTURE of the expected output (do NOT copy the placeholder values — fill in from YOUR search results):
+
+⚠️ **ALL guide names, chapters, page numbers, and content below are PLACEHOLDERS. Replace every `<...>` field with real data from get_product_info results.**
 
 Location Recommendations
-Document name: policies-book-xe.pdf
+Document name: <guide-name-from-search-results>.pdf
 
-Part/Section hierarchy: CHAPTER 8 Device Access Policy > NAME NAME COUNTER
-Page number: Page 141
-Actual content location indicator: "Device Access Policy Verifying ACL Policy on SSH"
-Detailed reasoning: This section discusses device access policies and verifying ACL policies on SSH, which is directly related to the issue of ACLs remaining active on VTY lines.
-Document name: configuration-group-guide.pdf
+Part/Section hierarchy: <COPY from Section: field of chunk>
+Page number: <COPY from Page: field of chunk>
+Actual content location indicator: "<COPY 8-15 words verbatim from chunk CONTENT>"
+Detailed reasoning: <Your explanation of why this chunk is relevant>
 
-Part/Section hierarchy: CHAPTER 5 System Profile > SNMP IFINDEX Persist
-Page number: Page 63
-Actual content location indicator: "Device access policies define the rules that traffic must meet to pass through an interface."
-Detailed reasoning: This section provides information on configuring device access policies, which could be relevant for understanding how ACLs are applied and managed.
-Document name: systems-interfaces-book-xe-sdwan.pdf
+(Repeat for 2-4 more relevant chunks from your search results)
 
-Part/Section hierarchy: CHAPTER 5 Configure User Access and Authentication
-Page number: Page 102
-Actual content location indicator: "Configure SSH Authentication Table 49: Feature History"
-Detailed reasoning: This section covers SSH authentication configuration, which is pertinent to the issue of SSH access being blocked due to ACLs.
 Documentation Content
-Problem Summary: The issue involves a login security configuration that blocks SSH connections for 5 minutes after multiple failed login attempts. The ACL remains active on VTY lines even after the block period expires, preventing SSH access.
+Problem Summary: <Brief statement of the issue from the bug/RCA>
 
-Recommended Guide: configuration-group-guide.pdf
+Recommended Guide: {{RECOMMENDED_GUIDE}}
+Recommended Section: {{RECOMMENDED_SECTION}}
 
-Documentation Strategy: Provide detailed configuration steps and behavior explanation to address the issue of persistent ACLs on VTY lines.
+Documentation Strategy: <1-2 sentences on your approach>
 
 Actual Documentation Content:
 
-Behavior Explanation: When multiple failed login attempts occur, a self-defense ACL is applied to the VTY lines to block SSH connections for 5 minutes. However, the ACL may remain active beyond this period due to configuration issues or switchover events.
+Behavior Explanation: <Explain the behavior described in the bug/RCA>
 
-Configuration Steps:
+**Configuration Steps** (if applicable):
+1. <Step based on bug/RCA content and retrieved docs>
+2. <Step...>
 
-Access the device via console.
-Manually remove the sl_def_acl entry from the configuration to restore SSH access.
-Verify the ACL policy on SSH to ensure it is correctly configured to remove itself after the block period.
-Workaround: If the ACL does not remove itself automatically, use the console to manually delete the ACL entry from the VTY configuration.
+**Restriction/Caveat** (if applicable):
+<Describe any limitation, caveat, or platform-specific behavior from the bug/RCA>
 
-Recommended Format: This content should be documented as a troubleshooting guide with configuration steps and a behavior explanation.
+Workaround: <If applicable, describe the workaround from the bug/RCA>
 
-This documentation content aims to provide a clear understanding of the issue and steps to resolve it, ensuring that users can manage ACLs effectively on their Cisco SD-WAN devices.
+Recommended Format: This content should be documented in the {{RECOMMENDED_SECTION}} section of the {{RECOMMENDED_GUIDE}} guide as the appropriate format (configuration steps, restriction with behavior explanation, note, or concept topic).
 
-Do you agree to this recommendation? Would you prefer another documetn?
+Do you agree to this recommendation? Would you prefer another document?
 
 ---
 

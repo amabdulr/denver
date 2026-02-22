@@ -48,25 +48,38 @@ import streamlit as st
 def _load_networking_terms() -> dict:
     """Load networking technology terms from networking_terms.json.
     Returns a dict with category -> list of terms.
-    Caches in module-level variable to avoid re-reading on every call.
+    Caches in module-level variable; auto-refreshes if file has been modified.
     """
-    global _networking_terms_cache
-    if _networking_terms_cache is not None:
-        return _networking_terms_cache
+    global _networking_terms_cache, _networking_terms_mtime
     
     terms_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "networking_terms.json")
+    
+    # Check file modification time to auto-refresh cache
+    try:
+        current_mtime = os.path.getmtime(terms_file)
+    except OSError:
+        current_mtime = 0
+    
+    if _networking_terms_cache is not None and current_mtime == _networking_terms_mtime:
+        return _networking_terms_cache
+    
     try:
         with open(terms_file, 'r', encoding='utf-8') as f:
             data = json.load(f)
         # Remove the comment key
         data.pop("_comment", None)
         _networking_terms_cache = data
+        _networking_terms_mtime = current_mtime
+        if current_mtime != 0:
+            print(f"📖 Loaded networking_terms.json ({sum(len(v) for v in data.values() if isinstance(v, list))} terms)")
     except (FileNotFoundError, json.JSONDecodeError) as e:
         print(f"⚠️ Could not load networking_terms.json: {e}")
         _networking_terms_cache = {}
+        _networking_terms_mtime = 0
     return _networking_terms_cache
 
 _networking_terms_cache = None
+_networking_terms_mtime = 0
 
 
 def _scan_for_networking_terms(text: str) -> list:
@@ -139,6 +152,9 @@ def match_terms_to_guides(detected_terms: list, product_name: str) -> tuple:
         (matched_dict, all_guides) where:
         - matched_dict: {term: [guide_filename, ...]} for terms that match a guide title
         - all_guides: list of all guide filenames in the product folder
+    
+    Also stores guide_scores in the returned matched_dict under a special key '_guide_scores':
+        {'guide_filename': score, ...} — higher score = stronger match
     """
     # Map UI product names to folder names (same mapping as sidebar_app.py)
     product_mapping = {
@@ -254,6 +270,22 @@ def match_terms_to_guides(detected_terms: list, product_name: str) -> tuple:
                         matched[term_lower] = []
                     if guide not in matched[term_lower]:
                         matched[term_lower].append(guide)
+    
+    # ── Build guide scores with inverse breadth weighting ──
+    # A term that maps to 1 guide scores +1.0 (strong signal).
+    # A term that sprays across 5 guides scores +0.2 each (weak signal).
+    # This rewards specificity: laser terms beat spray terms.
+    guide_scores = {}  # guide_filename -> weighted score
+    for term, guides in matched.items():
+        weight = 1.0 / len(guides) if guides else 0
+        for guide in guides:
+            guide_scores[guide] = guide_scores.get(guide, 0) + weight
+    
+    # Round for display clarity
+    guide_scores = {g: round(s, 2) for g, s in guide_scores.items()}
+    
+    # Attach scores to the matched dict under a special key
+    matched['_guide_scores'] = guide_scores
     
     return matched, guide_files
 
@@ -634,22 +666,44 @@ def format_doc_clues_for_prompt(clues_data: dict, selected_terms: List[str] = No
         matched_guides, all_guides = match_terms_to_guides(terms_for_matching, product_name)
         
         if matched_guides:
+            # Extract guide scores for ranking
+            guide_scores = matched_guides.pop('_guide_scores', {})
+            
             sections.append("")
             sections.append("📚 MATCHED GUIDES (detected terms matched against available PDF guide filenames):")
             sections.append("-" * 50)
             sections.append("  ⚠️  THESE ARE YOUR HIGHEST-PRIORITY GUIDES — search these FIRST!")
             for term, guides in matched_guides.items():
+                if term.startswith('_'):
+                    continue
                 for guide in guides:
                     sections.append(f"  ✅ Term '{term.upper()}' → Guide: {guide}")
             
-            all_matched = sorted(set(g for guides in matched_guides.values() for g in guides))
-            sections.append(f"\n  🎯 PRIMARY GUIDES TO SEARCH: {', '.join(all_matched)}")
+            # Rank guides by score (highest first)
+            all_matched = sorted(
+                set(g for term, guides in matched_guides.items() if not term.startswith('_') for g in guides),
+                key=lambda g: guide_scores.get(g, 0),
+                reverse=True
+            )
+            
+            # Show ranked primary guides with scores
+            sections.append(f"\n  🎯 PRIMARY GUIDES TO SEARCH (ranked by relevance):")
+            for i, g in enumerate(all_matched, 1):
+                score = guide_scores.get(g, 0)
+                marker = " ← TOP PRIORITY" if i <= 2 else ""
+                sections.append(f"    {i}. {g}  (score={score}){marker}")
+            
+            sections.append("  → Search the TOP-RANKED guides FIRST — they have the strongest term matches")
             sections.append("  → Filter your vector store searches to these guides using source metadata")
         
         if all_guides:
             sections.append(f"\n  📋 All available guides in '{product_name}' docset ({len(all_guides)} total):")
             for g in all_guides:
-                marker = " ⭐" if matched_guides and any(g in guides for guides in matched_guides.values()) else ""
+                if matched_guides:
+                    score = guide_scores.get(g, 0) if guide_scores else 0
+                    marker = f" ⭐ score={score}" if score > 0 else ""
+                else:
+                    marker = ""
                 sections.append(f"     - {g}{marker}")
     
     # ── Suggested search queries (from Description mining) ──────────
@@ -797,6 +851,19 @@ def get_product_info(product: str, query: str) -> str:
         # Update paths with correct product code
         guide_paths = [f"knowledge_docs/{product_code}/{guide}" for guide in guides]
         
+        # ── Priority-weighted search: top guides get more search slots ──
+        # Get guide scores from session state (set by match_terms_to_guides)
+        guide_scores = {}
+        try:
+            import streamlit as st
+            guide_scores = st.session_state.get('_guide_scores', {})
+        except:
+            pass
+        
+        # Rank guides by score; top 3 get dedicated search slots
+        scored_guides = sorted(guides, key=lambda g: guide_scores.get(g, 0), reverse=True)
+        top_guides = [g for g in scored_guides if guide_scores.get(g, 0) > 0][:3]
+        
         # For single guide, use direct filter
         if len(guides) == 1:
             search_filter = {
@@ -814,20 +881,50 @@ def get_product_info(product: str, query: str) -> str:
                 ]
             }
         
-        # Run the LLM's original query
-        result = vectorstore.similarity_search(
+        result = []
+        seen_pages = set()
+        
+        # PHASE 1: Dedicated search on top-ranked guides (5 results each for top 2)
+        if top_guides and len(guides) > 1:
+            for i, tg in enumerate(top_guides[:2]):
+                tg_path = f"knowledge_docs/{product_code}/{tg}"
+                tg_filter = {
+                    "$and": [
+                        {"product": product_code},
+                        {"source": tg_path}
+                    ]
+                }
+                try:
+                    tg_results = vectorstore.similarity_search(
+                        query=query,
+                        k=5,
+                        filter=tg_filter
+                    )
+                    for doc in tg_results:
+                        page_key = (doc.metadata.get('source', ''), doc.metadata.get('page', ''), doc.page_content[:80])
+                        if page_key not in seen_pages:
+                            result.append(doc)
+                            seen_pages.add(page_key)
+                except Exception as e:
+                    print(f"⚠️ Priority search for '{tg}' failed: {e}")
+            
+            if result:
+                print(f"🎯 PRIORITY: Got {len(result)} chunks from top {min(2, len(top_guides))} guides: {top_guides[:2]}")
+        
+        # PHASE 2: Broad search across ALL selected guides (fills remaining slots)
+        broad_results = vectorstore.similarity_search(
             query=query,
             k=10,
             filter=search_filter
         )
-        
-        # BOOST: Also run each suggested query and merge results
-        if boosted_queries:
-            seen_pages = set()
-            for doc in result:
-                page_key = (doc.metadata.get('source', ''), doc.metadata.get('page', ''), doc.page_content[:80])
+        for doc in broad_results:
+            page_key = (doc.metadata.get('source', ''), doc.metadata.get('page', ''), doc.page_content[:80])
+            if page_key not in seen_pages:
+                result.append(doc)
                 seen_pages.add(page_key)
-            
+        
+        # PHASE 3: BOOST with pre-extracted suggested queries
+        if boosted_queries:
             boost_results = []
             for bq in boosted_queries:
                 try:
@@ -933,12 +1030,104 @@ def run_agent(product_name: str, question: str, rca_content: str, selected_guide
         import streamlit as st
         st.session_state.selected_guides_for_search = selected_guides
     
+    # Pre-extract Cisco documentation references from the content FIRST
+    # so URL clues can override guide/section with highest priority
+    clues_data = extract_doc_clues_data(rca_content)
+    url_clues = clues_data.get('url_clues', [])
+    
+    # Inject the top-scored guide and section hints into the prompt at runtime
+    # Priority chain: URL clue > term-based scoring > fallback
+    import streamlit as st
+    guide_scores = st.session_state.get('_guide_scores', {})
+    
+    recommended_label = None
+    section_label = None
+    
+    # HIGHEST PRIORITY: URL clue in the RCA — deterministic, most specific
+    if url_clues:
+        url_book = url_clues[0]['book_pdf']  # e.g. systems-interfaces-book-xe-sdwan.pdf
+        chapter_tokens = url_clues[0].get('chapter_clues', [])  # e.g. ['configure', 'interfaces']
+        url_score = guide_scores.get(url_book, 'n/a')
+        recommended_label = f"{url_book} (from URL reference, score: {url_score})"
+        if chapter_tokens:
+            # Turn ['configure', 'interfaces'] into "Configure Interfaces"
+            section_label = " ".join(t.title() for t in chapter_tokens)
+    
+    # FALLBACK: term-based scoring (no URL found)
+    if not recommended_label:
+        if guide_scores:
+            top_guide = max(guide_scores, key=guide_scores.get)
+            top_score = guide_scores[top_guide]
+            recommended_label = f"{top_guide} (confidence score: {top_score})"
+        else:
+            top_guide = None
+            recommended_label = "(no guide scores available — use your best judgment from search results)"
+    else:
+        top_guide = url_clues[0]['book_pdf'] if url_clues else None
+    
+    # Section fallback: term-based hints if URL didn't provide chapter clues
+    if not section_label:
+        matched_term_guides = st.session_state.get('_matched_term_guides', {})
+        effective_guide = top_guide or (max(guide_scores, key=guide_scores.get) if guide_scores else None)
+        if effective_guide and matched_term_guides:
+            term_weights = []
+            for term, guides in matched_term_guides.items():
+                if term.startswith('_'):
+                    continue
+                if effective_guide in guides:
+                    weight = 1.0 / len(guides)
+                    term_weights.append((term, weight))
+            term_weights.sort(key=lambda x: -x[1])
+            top_terms = [t.title() for t, _ in term_weights[:5]]
+            section_label = ", ".join(top_terms) if top_terms else "(see location recommendations above)"
+        else:
+            section_label = "(see location recommendations above)"
+    
+    question = question.replace('{{RECOMMENDED_GUIDE}}', recommended_label)
+    question = question.replace('{{RECOMMENDED_SECTION}}', section_label)
+    
+    # Build a pinned Location Recommendation #1 from code-derived signals
+    # so the LLM's first recommendation always points to the right chapter
+    pinned_rec_section = ""
+    if url_clues and section_label and section_label != "(see location recommendations above)":
+        # Strong signal: URL gave us both guide and chapter
+        pinned_rec_section = f"""
+    
+    📌 PINNED LOCATION RECOMMENDATION #1 (pre-determined from documentation URL — DO NOT REPLACE):
+    ══════════════════════════════════════════════════════════════════════
+    Document name: {url_clues[0]['book_pdf']}
+    Chapter/Section: {section_label}
+    Page number: <FILL IN from your search results within this chapter>
+    Actual content location indicator: <FILL IN — quote 8-15 words from a chunk in this chapter>
+    Detailed reasoning: The bug/RCA explicitly references this document and chapter via URL.
+    ══════════════════════════════════════════════════════════════════════
+    
+    ⚠️ MANDATORY: Your Location Recommendations MUST include this as Recommendation #1.
+    - Search specifically within "{section_label}" in {url_clues[0]['book_pdf']} to fill in the page number and content indicator.
+    - Use query: "{' '.join(url_clues[0].get('chapter_clues', []))} tcp mss" or similar to find chunks from this chapter.
+    - Then add 2-3 MORE recommendations from your search results as relevant alternatives.
+    """
+    elif top_guide and section_label and section_label != "(see location recommendations above)":
+        # Moderate signal: term scoring gave us guide + section hints (no URL)
+        pinned_rec_section = f"""
+    
+    📌 SUGGESTED LOCATION RECOMMENDATION #1 (from term-based scoring — highest confidence):
+    ══════════════════════════════════════════════════════════════════════
+    Document name: {top_guide}
+    Likely section topics: {section_label}
+    Page number: <FILL IN from your search results>
+    Actual content location indicator: <FILL IN — quote 8-15 words from a relevant chunk>
+    Detailed reasoning: This guide scored highest ({guide_scores.get(top_guide, 'n/a')}) based on detected technology terms.
+    ══════════════════════════════════════════════════════════════════════
+    
+    ⚠️ Your Location Recommendations SHOULD include this guide as Recommendation #1.
+    - Search within {top_guide} for sections related to: {section_label}
+    - Fill in page number and content indicator from actual search results.
+    - Then add 2-3 MORE recommendations as relevant alternatives.
+    """
+    
     # Append RCA content to the question
     full_question = question + rca_content
-    
-    # Pre-extract Cisco documentation references from the content
-    # This deterministic Python extraction replaces unreliable LLM URL parsing
-    clues_data = extract_doc_clues_data(rca_content)
     doc_clues = format_doc_clues_for_prompt(clues_data, selected_terms=selected_tech_terms, product_name=product_name)
     
     # Store suggested search queries in session state so get_product_info can
@@ -976,16 +1165,18 @@ def run_agent(product_name: str, question: str, rca_content: str, selected_guide
     
     Cisco product: {{product_name}}
     {doc_clues_section}
+    {pinned_rec_section}
     question: {{question}}
     {guide_filter_message}
     
     🚨 MANDATORY FIRST ACTIONS (before anything else):
-    If PRE-EXTRACTED DOCUMENTATION REFERENCES appear above, you MUST:
-    1. If SUGGESTED SEARCH QUERIES (🔍) are listed, use THOSE EXACT queries in your get_product_info calls
+    1. If a 📌 PINNED LOCATION RECOMMENDATION appears above, search within that specific document and chapter FIRST
+       to fill in the page number and content indicator.
+    2. If SUGGESTED SEARCH QUERIES (🔍) are listed, use THOSE EXACT queries in your get_product_info calls
        — They are pre-built from the bug Description to target the correct chapter, not just the intro
        — Example: call get_product_info(product="sdwan", query="objects and profiles prefix")
-    2. Use the "Book PDF" name as your primary search source filter
-    3. Only AFTER exhausting the suggested queries, try your own search terms
+    3. Use the "Book PDF" name as your primary search source filter
+    4. Only AFTER exhausting the suggested queries, try your own search terms
     ⚠️ Do NOT simplify or generalize the suggested queries. "configuration group" alone will return the wrong chapter.
     
     ⚠️ CRITICAL ANTI-HALLUCINATION RULES:
