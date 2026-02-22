@@ -6,8 +6,11 @@ what the LLM will receive in {{RECOMMENDED_GUIDE}}, {{RECOMMENDED_SECTION}},
 and {{RECOMMENDED_FORMAT}}.
 
 Usage:
-    python3 debug_analysis.py          # runs the default MSS-clamping RCA
-    python3 debug_analysis.py --no-llm # skip the actual LLM call (just show prompt)
+    python3 debug_analysis.py                   # default RCA (mss_clamping)
+    python3 debug_analysis.py --rca template    # template negotiation RCA
+    python3 debug_analysis.py --rca policy      # policy configuration RCA
+    python3 debug_analysis.py --no-llm          # skip the actual LLM call
+    python3 debug_analysis.py --rca policy --no-llm   # combine flags
 """
 
 import importlib
@@ -30,11 +33,14 @@ from app_functions import (
 )
 
 # ═══════════════════════════════════════════════════════════════════
-# CONFIG — change these to test different RCAs
+# TEST RCAs — add more here as needed
 # ═══════════════════════════════════════════════════════════════════
-PRODUCT_NAME = "Cisco SD-WAN"
 
-RCA_CONTENT = """
+TEST_RCAS = {
+    "mss_clamping": {
+        "product": "Cisco SD-WAN",
+        "description": "TCP MSS Clamping on cEdge C8300",
+        "content": """\
 Executive Summary:
 This case addressed a customer inquiry regarding the behavior and configuration of TCP MSS (Maximum Segment Size) Clamping on Cisco Catalyst C8300-1N1S-4T2X routers running IOS-XE SD-WAN (cEdge) in controller mode. The customer specifically sought clarification on whether MSS clamping applies equally on both ingress and egress directions, and whether it affects both SYN and SYN+ACK packets. Additionally, they wanted to know if configuring MSS clamping only on the LAN-side interface is sufficient, or if it must also be set on tunnel interfaces. The root cause of the confusion stemmed from platform-dependent behavior and ambiguous documentation, leading to uncertainty in best practices for configuration.
 
@@ -66,10 +72,110 @@ Procedure (Solution):
 
 Root Cause:
 The root cause of the confusion was the platform-dependent behavior of the `ip tcp adjust-mss` command and the lack of explicit documentation regarding its directionality (ingress/egress) on different Cisco hardware and software versions.
-"""
+""",
+    },
+
+    "template": {
+        "product": "Cisco SD-WAN",
+        "description": "Feature template negotiation failure on vEdge",
+        "content": """\
+Executive Summary:
+Customer reported that after upgrading vManage to 20.12.2, pushing a feature template to vEdge 2000 devices fails with error "Template negotiation failed - device unreachable". The template push worked fine on the previous vManage version 20.9.4. The issue affects all vEdge 2000 routers across the SD-WAN overlay, but Catalyst 8000v (cEdge) devices accept templates normally.
+
+Steps to Reproduce:
+1. Upgrade vManage from 20.9.4 to 20.12.2.
+2. Open vManage Configuration > Templates.
+3. Select an existing device feature template attached to a vEdge 2000.
+4. Push the template to the vEdge 2000 device.
+5. Observe the error "Template negotiation failed - device unreachable" in the task status.
+6. Verify the same template pushes successfully to a cEdge (Catalyst 8000v) device.
+
+Condition:
+- vManage version: 20.12.2 (upgraded from 20.9.4)
+- Device: vEdge 2000, software version 20.9.4
+- Overlay: Full mesh topology with 150+ devices
+- Control connections: All active, OMP sessions established
+- Feature template: VPN 0 transport + VPN 512 management + system template
+
+Workarounds:
+- Downgrade vManage to 20.9.4 and re-push templates.
+- Use CLI add-on template as a temporary workaround.
+
+Procedure (Solution):
+1. Verify control connections between vManage and vEdge devices using `show control connections`.
+2. Check NETCONF session status on the vEdge device.
+3. Reference: https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-xe-gs-book/manage-devices.html
+4. Upgrade vEdge devices to a compatible software version (20.12.x) to match vManage.
+
+Root Cause:
+The root cause was a NETCONF version mismatch between vManage 20.12.2 and vEdge 2000 running 20.9.4. The newer vManage uses NETCONF 1.1 by default, while older vEdge software only supports NETCONF 1.0, causing template push negotiation to fail.
+""",
+    },
+
+    "policy": {
+        "product": "Cisco SD-WAN",
+        "description": "Centralized data policy not applying to traffic",
+        "content": """\
+Executive Summary:
+Customer configured a centralized data policy on vManage to redirect traffic from VPN 10 to a service chain (firewall) for specific applications. The policy was successfully pushed to vSmart controllers, but traffic from branch sites is not being redirected according to the policy. Direct internet access (DIA) traffic bypasses the firewall entirely. The customer confirmed the policy shows as active on vSmart using `show running-config policy`.
+
+Steps to Reproduce:
+1. Create a centralized data policy in vManage under Configuration > Policies.
+2. Define a match condition for VPN 10, matching application "Office365" traffic.
+3. Define an action to redirect matching traffic to a service chain (Firewall at site 100).
+4. Apply the policy to the target site list containing branch site IDs 200-210.
+5. Activate the policy on vSmart controllers.
+6. Generate Office365 traffic from a host in VPN 10 at branch site 200.
+7. Observe that traffic takes the direct path instead of being redirected to the firewall.
+
+Condition:
+- vManage/vSmart version: 20.11.1
+- Branch routers: Catalyst 8300 (cEdge), IOS-XE 17.11.1a
+- Topology: Hub-and-spoke with regional hubs
+- VPN 10: Corporate LAN, internet exit via DIA at branch
+- Service chain: Palo Alto firewall at hub site 100
+- Policy type: Centralized data policy with app-route match
+
+Workarounds:
+- Apply a localized data policy directly on the cEdge router as a temporary measure.
+- Use access-list based PBR on the cEdge as a fallback.
+
+Procedure (Solution):
+1. Verify the policy is active on vSmart: `show running-config policy`.
+2. Check that OMP routes include the policy from vSmart to cEdge: `show sdwan policy from-vsmart`.
+3. Verify the service chain is reachable: `show sdwan service-chain database`.
+4. Reference: https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/policies/ios-xe-17/policies-book-xe/centralized-policy.html
+5. Ensure the site-list in the policy apply section includes the correct site IDs.
+
+Root Cause:
+The root cause was that the policy apply direction was set to "from-service" instead of "from-tunnel". Since branch traffic enters the SD-WAN fabric through the tunnel interface, the policy must be applied in the "from-tunnel" direction to match ingress traffic at the branch. With "from-service" direction, the policy only matches traffic originating from the local service-side (LAN) at the hub, not traffic arriving from remote branches.
+""",
+    },
+}
 
 # ═══════════════════════════════════════════════════════════════════
+# Parse arguments
+# ═══════════════════════════════════════════════════════════════════
 SKIP_LLM = "--no-llm" in sys.argv
+
+# Pick the RCA to test
+rca_key = "mss_clamping"  # default
+if "--rca" in sys.argv:
+    idx = sys.argv.index("--rca")
+    if idx + 1 < len(sys.argv):
+        rca_key = sys.argv[idx + 1]
+
+if rca_key not in TEST_RCAS:
+    print(f"❌ Unknown RCA '{rca_key}'. Available: {', '.join(TEST_RCAS.keys())}")
+    sys.exit(1)
+
+selected_rca = TEST_RCAS[rca_key]
+PRODUCT_NAME = selected_rca["product"]
+RCA_CONTENT = selected_rca["content"]
+
+print(f"🧪 Test RCA: {rca_key} — {selected_rca['description']}")
+print(f"   Product: {PRODUCT_NAME}")
+print(f"   Content: {len(RCA_CONTENT):,} chars\n")
 
 def section(title):
     print(f"\n{'='*70}")
