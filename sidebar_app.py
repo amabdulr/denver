@@ -650,7 +650,10 @@ def render_analysis_summary_page():
                 if rca_content and rca_content.strip():
                     current_selected_terms = st.session_state.get('selected_raw_tech_terms', []) or []
                     if current_selected_terms:
-                        matched, _ = match_terms_to_guides(current_selected_terms, product_name)
+                        # Pass term frequencies so scoring weights heavily-discussed terms higher
+                        _clues = st.session_state.get('cached_clues_data', {})
+                        _term_freq = _clues.get('term_frequencies', {})
+                        matched, _ = match_terms_to_guides(current_selected_terms, product_name, _term_freq)
                         # Extract guide scores (stored under special key)
                         guide_scores = matched.pop('_guide_scores', {})
                         st.session_state['_guide_scores'] = guide_scores
@@ -807,6 +810,99 @@ def render_analysis_summary_page():
                     # No follow-ups yet — show the initial analysis directly
                     st.markdown(st.session_state.conversation_history[0]['answer'])
         
+        # ===== FOLLOW-UP SECTION - Right below output =====
+        if st.session_state.initial_analysis_done and st.session_state.conversation_history:
+            st.markdown("---")
+            st.markdown("### 💬 Conversation Thread")
+            st.caption("View your questions and answers, then ask follow-ups below")
+            
+            # Show recent follow-up questions in reverse order (newest first)
+            if len(st.session_state.conversation_history) > 1:
+                with st.container():
+                    st.markdown("**Recent follow-ups:**")
+                    followups = st.session_state.conversation_history[1:]
+                    recent = followups[-3:]
+                    for j in range(len(recent) - 1, -1, -1):
+                        num = len(followups) - (len(recent) - 1 - j)
+                        q_preview = recent[j]['question'][:150] + "..." if len(recent[j]['question']) > 150 else recent[j]['question']
+                        tag = " _(latest)_" if j == len(recent) - 1 else ""
+                        st.markdown(f"💬 **{num}.{tag}** {q_preview}")
+            
+            # Full conversation history
+            with st.expander("📜 Full Conversation History", expanded=False):
+                for idx, exchange in enumerate(st.session_state.conversation_history, 1):
+                    label = "Initial Analysis" if idx == 1 else f"Follow-up {idx - 1}"
+                    q_preview = exchange['question'][:80] + "..." if len(exchange['question']) > 80 else exchange['question']
+                    with st.expander(f"{label}: {q_preview}", expanded=False):
+                        st.markdown(f"**Question:**")
+                        st.markdown(exchange['question'])
+                        st.markdown(f"**Answer:**")
+                        st.markdown(exchange['answer'])
+            
+            # Follow-up question input - more prominent
+            followup_question = st.text_area(
+                "Your follow-up question",
+                placeholder="e.g., Can you explain the first point in more detail? Can you provide more examples?",
+                height=100,
+                key="analysis_followup_input"
+            )
+            
+            ask_followup_button = st.button(
+                "💬 Ask Follow-up", 
+                type="primary", 
+                use_container_width=True, 
+                key="analysis_ask_followup"
+            )
+            
+            # Handle follow-up button
+            if ask_followup_button and followup_question.strip():
+                with st.spinner("💭 Thinking..."):
+                    try:
+                        # Build conversation history for the LLM
+                        # (Direct LLM call — NOT run_agent, which would re-run the
+                        #  full BugAnalyze pipeline with boost queries, wrong for follow-ups)
+                        conversation_context = ""
+                        for i, ex in enumerate(st.session_state.conversation_history):
+                            if i == 0:
+                                # First exchange is the initial analysis — include answer only
+                                # (the question is the full BugAnalyze prompt, too long and irrelevant)
+                                conversation_context += f"Initial Analysis Result:\n{ex['answer']}\n\n"
+                            else:
+                                conversation_context += f"Follow-up Q{i}: {ex['question']}\nFollow-up A{i}: {ex['answer']}\n\n"
+                        
+                        followup_prompt = f"""You are a Cisco documentation assistant continuing a conversation about bug analysis.
+
+Previous conversation:
+{conversation_context}
+User's follow-up question: {followup_question}
+
+Instructions:
+- Answer based on the conversation above and your general knowledge
+- If referencing a previous answer, be specific about which point
+- If the user asks for clarification, expand on the specific point mentioned
+- Keep the answer focused and concise
+- Do not repeat the entire analysis unless specifically asked
+"""
+                        
+                        # Direct LLM call for fast, focused follow-ups
+                        _model = st.session_state.get('selected_model', 'gpt-4o')
+                        llm = get_llm(model_name=_model)
+                        llm_result = llm.invoke(followup_prompt)
+                        answer = llm_result.content if hasattr(llm_result, 'content') else str(llm_result)
+                        
+                        # Add to conversation history
+                        st.session_state.conversation_history.append({
+                            "question": followup_question,
+                            "answer": answer
+                        })
+                        
+                        st.rerun()
+                        
+                    except Exception as e:
+                        st.error(f"❌ Error processing follow-up: {str(e)}")
+                        with st.expander("🐛 Error Details"):
+                            st.exception(e)
+        
         # Test Section
         st.markdown("---")
         st.markdown("<h3 style='color: #1f77b4;'>Step 5: Post your test results (Optional)</h3>", unsafe_allow_html=True)
@@ -941,99 +1037,6 @@ def render_analysis_summary_page():
         
         # Add "Post Analysis to Bug" button above output
         post_analysis_button = st.button("📤 Post Analysis to Bug", type="secondary", use_container_width=True, key="analysis_post_to_bug")
-        
-        # ===== FOLLOW-UP SECTION - Placed after output display =====
-        if st.session_state.initial_analysis_done and st.session_state.conversation_history:
-            st.markdown("---")
-            st.markdown("### 💬 Conversation Thread")
-            st.caption("View your questions and answers, then ask follow-ups below")
-            
-            # Show recent follow-up questions in reverse order (newest first)
-            if len(st.session_state.conversation_history) > 1:
-                with st.container():
-                    st.markdown("**Recent follow-ups:**")
-                    followups = st.session_state.conversation_history[1:]
-                    recent = followups[-3:]
-                    for j in range(len(recent) - 1, -1, -1):
-                        num = len(followups) - (len(recent) - 1 - j)
-                        q_preview = recent[j]['question'][:150] + "..." if len(recent[j]['question']) > 150 else recent[j]['question']
-                        tag = " _(latest)_" if j == len(recent) - 1 else ""
-                        st.markdown(f"💬 **{num}.{tag}** {q_preview}")
-            
-            # Full conversation history
-            with st.expander("📜 Full Conversation History", expanded=False):
-                for idx, exchange in enumerate(st.session_state.conversation_history, 1):
-                    label = "Initial Analysis" if idx == 1 else f"Follow-up {idx - 1}"
-                    q_preview = exchange['question'][:80] + "..." if len(exchange['question']) > 80 else exchange['question']
-                    with st.expander(f"{label}: {q_preview}", expanded=False):
-                        st.markdown(f"**Question:**")
-                        st.markdown(exchange['question'])
-                        st.markdown(f"**Answer:**")
-                        st.markdown(exchange['answer'])
-            
-            # Follow-up question input - more prominent
-            followup_question = st.text_area(
-                "Your follow-up question",
-                placeholder="e.g., Can you explain the first point in more detail? Can you provide more examples?",
-                height=100,
-                key="analysis_followup_input"
-            )
-            
-            ask_followup_button = st.button(
-                "💬 Ask Follow-up", 
-                type="primary", 
-                use_container_width=True, 
-                key="analysis_ask_followup"
-            )
-            
-            # Handle follow-up button
-            if ask_followup_button and followup_question.strip():
-                with st.spinner("💭 Thinking..."):
-                    try:
-                        # Build conversation history for the LLM
-                        # (Direct LLM call — NOT run_agent, which would re-run the
-                        #  full BugAnalyze pipeline with boost queries, wrong for follow-ups)
-                        conversation_context = ""
-                        for i, ex in enumerate(st.session_state.conversation_history):
-                            if i == 0:
-                                # First exchange is the initial analysis — include answer only
-                                # (the question is the full BugAnalyze prompt, too long and irrelevant)
-                                conversation_context += f"Initial Analysis Result:\n{ex['answer']}\n\n"
-                            else:
-                                conversation_context += f"Follow-up Q{i}: {ex['question']}\nFollow-up A{i}: {ex['answer']}\n\n"
-                        
-                        followup_prompt = f"""You are a Cisco documentation assistant continuing a conversation about bug analysis.
-
-Previous conversation:
-{conversation_context}
-User's follow-up question: {followup_question}
-
-Instructions:
-- Answer based on the conversation above and your general knowledge
-- If referencing a previous answer, be specific about which point
-- If the user asks for clarification, expand on the specific point mentioned
-- Keep the answer focused and concise
-- Do not repeat the entire analysis unless specifically asked
-"""
-                        
-                        # Direct LLM call for fast, focused follow-ups
-                        _model = st.session_state.get('selected_model', 'gpt-4o')
-                        llm = get_llm(model_name=_model)
-                        llm_result = llm.invoke(followup_prompt)
-                        answer = llm_result.content if hasattr(llm_result, 'content') else str(llm_result)
-                        
-                        # Add to conversation history
-                        st.session_state.conversation_history.append({
-                            "question": followup_question,
-                            "answer": answer
-                        })
-                        
-                        st.rerun()
-                        
-                    except Exception as e:
-                        st.error(f"❌ Error processing follow-up: {str(e)}")
-                        with st.expander("🐛 Error Details"):
-                            st.exception(e)
     
     # ===== HANDLE BUTTON CLICKS =====
     

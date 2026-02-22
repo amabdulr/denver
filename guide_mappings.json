@@ -397,6 +397,19 @@
             "security",
             "system-security"
         ],
+        "dns regex": [
+            "security",
+            "policy-groups"
+        ],
+        "fqdn": [
+            "security",
+            "policy-groups"
+        ],
+        "security template": [
+            "security",
+            "policy-groups",
+            "configuration-group"
+        ],
         "policy group": [
             "configuration-group",
             "policy",
@@ -5582,7 +5595,9 @@
             "systems-interfaces"
         ],
         "dns": [
-            "systems-interfaces"
+            "systems-interfaces",
+            "security",
+            "policy-groups"
         ],
         "domain name system": [
             "systems-interfaces"

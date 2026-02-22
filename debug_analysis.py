@@ -203,6 +203,68 @@ Affected Devices/Versions:
 - Cisco Catalyst C8300-1N1S-6T
 """,
     },
+
+    "dns_security": {
+        "product": "Cisco SD-WAN",
+        "description": "DNS regex/FQDN entries exceed limit causing C8300 crash",
+        "content": """\
+Executive Summary:
+The customer reported that their Cisco Catalyst C8300-1N1S-6T router (serial FDO2932M00G, running IOS XE SD-WAN 17.12.5a) was constantly rebooting after being newly onboarded into SD-WAN controller mode. The impact was severe: the device was unusable, unable to collect logs, and unable to maintain network connectivity. Root cause analysis revealed that the device was crashing due to an excessive number of DNS regex (FQDN) entries configured via the SD-WAN security template, exceeding the supported limit for the platform and software version. This triggered repeated faults in the critical cpp_cp_svr process, causing system reloads.
+
+Steps to Reproduce:
+1. Onboard a Cisco Catalyst C8300-1N1S-6T router into SD-WAN controller mode, running IOS XE 17.12.5a.
+2. Apply a device template from vManage that includes a security policy with more than 64 DNS regex (FQDN) entries.
+3. The device will begin to reload repeatedly.
+4. Each reload generates a crash file and system report, with the reboot reason indicating "Critical process cpp_cp_svr fault on fp_0_0 (rc=134)".
+5. Console logs and tracebacks show repeated CPU hog events and faults in the cpp_cp_svr process.
+
+Condition:
+- Device: Cisco Catalyst C8300-1N1S-6T
+- Software: IOS XE SD-WAN 17.12.5a (c8000be-universalk9.17.12.05a.SPA.bin)
+- SD-WAN controller mode, managed by vManage.
+- Security template applied with more than 64 DNS regex (FQDN) entries.
+- Device was newly onboarded and synced with vManage after password recovery via ROMMON.
+- No other hardware or environmental issues reported.
+- The crash occurs specifically when the number of regex entries exceeds the documented platform limit (64).
+
+Workarounds:
+- Reduce the number of DNS regex (FQDN) entries configured on the device to 64 or fewer, as per the documented supported limit.
+- Remove the security template from the device template in vManage, then reapply with a reduced number of DNS entries.
+- Temporarily operate the device without DNS-based security policies until a software fix is available.
+
+Procedure (Solution):
+1. Access vManage and locate the device template assigned to the affected C8300 router.
+2. Edit the security policy section of the template.
+3. Count the number of DNS regex (FQDN) entries configured. If more than 64, reduce the list to 64 or fewer.
+4. Save the updated template.
+5. Push the updated template to the device.
+6. Monitor the device for stability and confirm that it no longer reboots or generates cpp_cp_svr faults.
+7. Optionally, collect "show sdwan reboot history" and "show logging" to confirm the absence of new crash events.
+8. If DNS security policies require more than 64 entries, plan to upgrade to a future software release (see Fixed Versions) when available.
+
+Root Cause:
+The root cause is a software limitation in IOS XE SD-WAN 17.12.5a on the C8300 platform, where the cpp_cp_svr process (responsible for handling DNS regex/FQDN security policies) cannot reliably handle more than 64 regex entries. When the number of entries exceeds this threshold, the process encounters memory and CPU exhaustion, resulting in repeated faults and system reloads. This is evidenced by:
+- Reboot history logs showing "Critical process cpp_cp_svr fault on fp_0_0 (rc=134)" as the reboot reason.
+- Tracebacks in system logs showing CPU hog events and faults in cpp_cp_svr, cpp_regexp, and related libraries (cpp_tfc_svr_lib, cpp_common_os, evlib).
+- Example log:
+  *Oct 19 10:07:08.743: %EVENTLIB-3-CPUHOG: F0/0: cpp_cp_svr: undefined: 1946ms, Traceback=1#f4940dfb468da80738b97077c0f1f01e c:7664048F8000+3C740 cpp_regexp:76640862E000+45A3 ...
+- Decoded tracebacks point to failures in DNS regex compilation and transaction handling (functions like make_deterministic, re_compile_prepare, cpp_tfc_dsa_regexp_compose_table).
+- The documented supported limit for DNS regex entries is 64 for this platform and version, though some devices may handle up to 128. Exceeding this is not deterministic and leads to instability.
+- Bug CSCwp83555 has been filed to increase the supported scale in future releases.
+
+Affected Devices/Versions:
+- Device: Cisco Catalyst C8300-1N1S-6T
+- Software: IOS XE SD-WAN 17.12.5a (c8000be-universalk9.17.12.05a.SPA.bin)
+- All C8300 platforms running affected versions with security templates exceeding 64 DNS regex entries.
+
+Bugs:
+- CSCwp83555: SD-WAN DNS Regex/FQDN scale enhancement. This bug tracks the work to increase the supported number of DNS regex entries beyond 64, targeted for release in IOS XE 17.19.x.
+
+Fixed Versions, Patches:
+- The scale enhancement for DNS regex entries will be available in IOS XE SD-WAN 17.19.x and later, per CSCwp83555.
+- Until then, the only supported workaround is to limit DNS regex entries to 64 or fewer.
+""",
+    },
 }
 
 # ═══════════════════════════════════════════════════════════════════
@@ -244,6 +306,8 @@ clues_data = extract_doc_clues_data(RCA_CONTENT)
 all_detected_terms = [term for _, term in clues_data.get('tech_terms', [])]
 url_clues = clues_data.get('url_clues', [])
 
+term_frequencies = clues_data.get('term_frequencies', {})
+
 print(f"Detected {len(all_detected_terms)} terms, {len(url_clues)} URL(s)")
 print(f"\nURL Clues:")
 for c in url_clues:
@@ -252,9 +316,11 @@ for c in url_clues:
     print(f"  chapter_clues:  {c['chapter_clues']}")
     print(f"  url:            {c['url'][:100]}...")
 
-print(f"\nDetected Terms ({len(all_detected_terms)}):")
+print(f"\nDetected Terms ({len(all_detected_terms)}) — with frequency:")
 for cat, term in clues_data.get('tech_terms', []):
-    print(f"  [{cat:12s}] {term}")
+    freq = term_frequencies.get(term, 1)
+    freq_bar = '█' * min(freq, 30)
+    print(f"  [{cat:12s}] {term:25s}  ×{freq:3d}  {freq_bar}")
 
 # In the real UI, all terms start selected
 selected_raw_terms = all_detected_terms  # user hasn't deselected any
@@ -265,7 +331,7 @@ selected_raw_terms = all_detected_terms  # user hasn't deselected any
 # ═══════════════════════════════════════════════════════════════════
 section("STEP 2: Guide Matching & Scoring")
 
-matched, available_guides = match_terms_to_guides(selected_raw_terms, PRODUCT_NAME)
+matched, available_guides = match_terms_to_guides(selected_raw_terms, PRODUCT_NAME, term_frequencies)
 guide_scores = matched.pop('_guide_scores', {})
 matched_term_guides = dict(matched)  # what sidebar stores in session_state
 

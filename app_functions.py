@@ -24,6 +24,7 @@ This module handles:
 """
 
 from typing import List
+import math
 import time
 import re
 import json
@@ -81,10 +82,12 @@ _networking_terms_cache = None
 _networking_terms_mtime = 0
 
 
-def _scan_for_networking_terms(text: str) -> list:
+def _scan_for_networking_terms(text: str) -> tuple:
     """
     Scan bug/RCA text for known networking technology terms from networking_terms.json.
-    Returns a deduplicated list of matched terms, sorted by category.
+    Returns (found, frequencies) where:
+      - found: deduplicated list of (category, term) tuples
+      - frequencies: {term_lower: count} — how many times each term appears in the text
     
     Multi-word terms (e.g. 'segment routing') are matched first, then single-word terms.
     All matching is case-insensitive and uses word boundary checks.
@@ -93,7 +96,7 @@ def _scan_for_networking_terms(text: str) -> list:
     """
     terms_db = _load_networking_terms()
     if not terms_db:
-        return []
+        return [], {}
     
     text_lower = text.lower()
     # Also create a normalized version where underscores/hyphens become spaces
@@ -102,6 +105,7 @@ def _scan_for_networking_terms(text: str) -> list:
     combined_text = text_lower + " " + text_normalized
     
     found = []  # list of (category, term)
+    frequencies = {}  # term -> count of occurrences in original text
     seen = set()
     
     # Build a flat list: multi-word terms first (greedy match), then single-word
@@ -119,11 +123,13 @@ def _scan_for_networking_terms(text: str) -> list:
         # Use word boundary regex for accurate matching
         # For terms with special chars like "ios-xe", escape them
         pattern = r'\b' + re.escape(term) + r'\b'
-        if re.search(pattern, combined_text):
+        matches = re.findall(pattern, combined_text)
+        if matches:
             found.append((category, term))
             seen.add(term)
+            frequencies[term] = len(matches)
     
-    return found
+    return found, frequencies
 
 
     # ── Load guide mappings from JSON (editable without touching code) ──
@@ -138,7 +144,7 @@ def _load_guide_mappings():
         print(f"⚠️ Could not load guide_mappings.json: {e}")
         return {}
 
-def match_terms_to_guides(detected_terms: list, product_name: str) -> tuple:
+def match_terms_to_guides(detected_terms: list, product_name: str, term_frequencies: dict = None) -> tuple:
     """
     Match detected technology terms against actual PDF guide filenames
     in the knowledge_docs folder for a given product.
@@ -146,6 +152,11 @@ def match_terms_to_guides(detected_terms: list, product_name: str) -> tuple:
     Args:
         detected_terms: List of term strings (e.g. ['cnbng', 'bng', 'pppoe'])
         product_name: UI product name (e.g. 'ASR 9000') — will be mapped to folder name
+        term_frequencies: Optional {term: count} from _scan_for_networking_terms.
+                          When provided, each term's score is multiplied by
+                          log2(frequency) + 1.  A term appearing 16× gets 5× the
+                          weight of a term appearing once.  This ensures that
+                          heavily-discussed topics dominate the guide ranking.
     
     Returns:
         (matched_dict, all_guides) where:
@@ -270,18 +281,45 @@ def match_terms_to_guides(detected_terms: list, product_name: str) -> tuple:
                     if guide not in matched[term_lower]:
                         matched[term_lower].append(guide)
     
-    # ── Build guide scores with inverse breadth weighting ──
-    # A term that maps to 1 guide scores +1.0 (strong signal).
-    # A term that sprays across 5 guides scores +0.2 each (weak signal).
-    # This rewards specificity: laser terms beat spray terms.
+    # ── Build guide scores with inverse breadth × frequency × specificity ──
+    #
+    # Three scoring factors per term:
+    #
+    # 1. Inverse breadth: 1 guide → 1.0;  5 guides → 0.2 each.
+    #    Rewards laser-targeted terms over spray terms.
+    #
+    # 2. Frequency boost: log2(occurrences) + 1, capped at 3.0.
+    #    A term mentioned 8× matters more than one mentioned once,
+    #    but the cap prevents "dns" ×32 from running away.
+    #
+    # 3. Specificity bonus: multi-word terms get a 2× multiplier.
+    #    "dns security" (2 words) is far more informative than "dns" alone.
+    #    This rewards compound technology phrases that precisely identify
+    #    the topic over generic single-word noise like "template" or "process".
+    #
+    # After per-term scoring, we apply diminishing returns per guide:
+    #    final_score = raw_score ^ 0.7
+    # This compresses high scores and narrows the gap between a guide that
+    # hoards 8 generic exclusive terms and one with 3 highly relevant terms.
+    # Without this, "catch-all" guides like systems-interfaces dominate just
+    # by accumulating many low-value exclusive mappings.
+    #
+    FREQ_BOOST_CAP = 3.0
+    MULTIWORD_BONUS = 2.0
+    DIMINISHING_EXPONENT = 0.7  # <1.0 compresses; 1.0 = linear (no diminishing)
+    freq = term_frequencies or {}
     guide_scores = {}  # guide_filename -> weighted score
     for term, guides in matched.items():
-        weight = 1.0 / len(guides) if guides else 0
+        breadth_weight = 1.0 / len(guides) if guides else 0
+        term_freq = freq.get(term, 1)
+        freq_boost = min(math.log2(term_freq) + 1, FREQ_BOOST_CAP) if term_freq >= 1 else 1
+        specificity = MULTIWORD_BONUS if ' ' in term or '-' in term else 1.0
+        weight = breadth_weight * freq_boost * specificity
         for guide in guides:
             guide_scores[guide] = guide_scores.get(guide, 0) + weight
     
-    # Round for display clarity
-    guide_scores = {g: round(s, 2) for g, s in guide_scores.items()}
+    # Apply diminishing returns so "catch-all" guides don't run away
+    guide_scores = {g: round(s ** DIMINISHING_EXPONENT, 2) for g, s in guide_scores.items()}
     
     # Attach scores to the matched dict under a special key
     matched['_guide_scores'] = guide_scores
@@ -590,8 +628,9 @@ def extract_doc_clues_data(text: str) -> dict:
             continue
     
     # ── PART 2: Networking technology term scan ─────────────────────
-    net_terms = _scan_for_networking_terms(text)
+    net_terms, term_frequencies = _scan_for_networking_terms(text)
     result['tech_terms'] = net_terms
+    result['term_frequencies'] = term_frequencies
     by_cat = {}
     for cat, term in net_terms:
         by_cat.setdefault(cat, []).append(term)
@@ -662,7 +701,8 @@ def format_doc_clues_for_prompt(clues_data: dict, selected_terms: List[str] = No
     # ── Guide matching (match terms to actual PDF filenames) ────────
     if product_name and filtered:
         terms_for_matching = [t for _, t in filtered]
-        matched_guides, all_guides = match_terms_to_guides(terms_for_matching, product_name)
+        term_frequencies = clues_data.get('term_frequencies', {})
+        matched_guides, all_guides = match_terms_to_guides(terms_for_matching, product_name, term_frequencies)
         
         if matched_guides:
             # Extract guide scores for ranking
