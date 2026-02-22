@@ -1017,7 +1017,8 @@ Instructions:
 """
                         
                         # Direct LLM call for fast, focused follow-ups
-                        llm = get_llm()
+                        _model = st.session_state.get('selected_model', 'gpt-4o')
+                        llm = get_llm(model_name=_model)
                         llm_result = llm.invoke(followup_prompt)
                         answer = llm_result.content if hasattr(llm_result, 'content') else str(llm_result)
                         

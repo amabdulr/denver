@@ -31,12 +31,11 @@ import os
 from urllib.parse import urlparse
 from langchain.agents import (
     AgentExecutor,
-    OpenAIFunctionsAgent,
-    create_openai_functions_agent,
+    create_tool_calling_agent,
 )
 from langchain_chroma import Chroma
 from langchain_core.documents import Document
-from langchain_core.prompts import PromptTemplate
+from langchain_core.prompts import PromptTemplate, ChatPromptTemplate, MessagesPlaceholder
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_core.tools import tool
 from langchain.chains.query_constructor.base import AttributeInfo
@@ -798,7 +797,8 @@ def get_product_info(product: str, query: str) -> str:
         ),
     ]
     document_content_description = "Cisco Product information"
-    llm = get_llm()
+    _model = st.session_state.get('selected_model', 'gpt-4o')
+    llm = get_llm(model_name=_model)
     
     # IMPORTANT: Using shared in-memory ChromaDB due to SQLite 3.26.0 constraint
     # Vector store is initialized at app startup via vector_store_manager
@@ -1201,11 +1201,19 @@ def run_agent(product_name: str, question: str, rca_content: str, selected_guide
         template=product_version_prompt_template,
     )
 
-    llm = get_llm()
+    # Use the user-selected model (from sidebar dropdown)
+    _model = st.session_state.get('selected_model', 'gpt-4o')
+    llm = get_llm(model_name=_model)
 
-    prompt = OpenAIFunctionsAgent.create_prompt()
-    agent = create_openai_functions_agent(
-        llm=llm, tools=[get_product_info], prompt=prompt
+    # Model-agnostic agent: works with GPT, Claude, Gemini — any model
+    # that supports tool/function calling via LangChain
+    agent_prompt = ChatPromptTemplate.from_messages([
+        ("system", "You are a helpful technical writing assistant that analyzes Cisco documentation."),
+        ("human", "{input}"),
+        MessagesPlaceholder(variable_name="agent_scratchpad"),
+    ])
+    agent = create_tool_calling_agent(
+        llm=llm, tools=[get_product_info], prompt=agent_prompt
     )
 
     agent_executor = AgentExecutor(
@@ -1272,8 +1280,9 @@ def apply_prompt_file(prompt_file_path: str, rca_content: str, product_name: str
     full_prompt = full_prompt.replace("{product_name}", product_name)
     full_prompt = full_prompt.replace("{product}", product_name)
     
-    # Get LLM and invoke
-    llm = get_llm()
+    # Get LLM and invoke (use selected model)
+    _model = st.session_state.get('selected_model', 'gpt-4o')
+    llm = get_llm(model_name=_model)
     result = llm.invoke(full_prompt)
     
     return result.content if hasattr(result, 'content') else str(result)
@@ -1371,11 +1380,18 @@ Cisco Product: {product_name}
         template=agent_prompt_template,
     )
     
-    llm = get_llm()
+    # Use the user-selected model (from sidebar dropdown)
+    _model = st.session_state.get('selected_model', 'gpt-4o')
+    llm = get_llm(model_name=_model)
     
-    prompt = OpenAIFunctionsAgent.create_prompt()
-    agent = create_openai_functions_agent(
-        llm=llm, tools=[get_product_info], prompt=prompt
+    # Model-agnostic agent: works with GPT, Claude, Gemini
+    agent_prompt = ChatPromptTemplate.from_messages([
+        ("system", "You are a helpful technical writing assistant that analyzes Cisco documentation."),
+        ("human", "{input}"),
+        MessagesPlaceholder(variable_name="agent_scratchpad"),
+    ])
+    agent = create_tool_calling_agent(
+        llm=llm, tools=[get_product_info], prompt=agent_prompt
     )
     
     agent_executor = AgentExecutor(

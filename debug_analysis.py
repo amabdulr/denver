@@ -305,6 +305,7 @@ if not SKIP_LLM:
         '_guide_scores': guide_scores,
         '_matched_term_guides': matched_term_guides,
         'selected_guides_for_search': selected_guides,
+        'selected_model': 'gpt-4o',  # Model selection — change to test Claude/Gemini
     }
 
     # Patch streamlit session_state
