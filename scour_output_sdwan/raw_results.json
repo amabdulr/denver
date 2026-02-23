@@ -1,0 +1,545 @@
+[
+  {
+    "filename": "asr-9000-licensing-reference.pdf",
+    "product": "ASR9000",
+    "toc_method": "bookmarks",
+    "headings_count": 24,
+    "headings": [
+      "Cisco ASR 9000 Series Routers Licensing Quick Reference",
+      "Licensing for Cisco IOS XR Routers",
+      "Cisco ASR 9000 Series Routers",
+      "Licensing Solutions and Offerings",
+      "Key Differences between Licensing Solutions",
+      "What are the Flexible Consumption Models?",
+      "Key Features of FCM",
+      "Smart Licensing, Smart Licensing Using Policy and Flexible Consumption Model",
+      "Parts of the FCM Model",
+      "RTU Licenses",
+      "Enable FCM",
+      "Flexible Consumption Model Licenses",
+      "FCM license consumption rules",
+      "Calculate per-system and per-port feature license consumption",
+      "Calculate \u00e0 la carte feature license consumption",
+      "Non-Consumption Model Licenses",
+      "Software Innovation Access",
+      "Benefits of SIA Licenses",
+      "Types of SIA Licenses",
+      "SIA License Term",
+      "Managing SIA Entitlements",
+      "Verify the Compliance Status",
+      "Achieving and Maintaining Network Licenses Compliance",
+      "Revision History"
+    ],
+    "concepts": {
+      "licensing": [
+        "licensing"
+      ],
+      "license": [
+        "licensing"
+      ],
+      "smart licensing": [
+        "licensing"
+      ],
+      "smart licensing using policy": [
+        "licensing"
+      ],
+      "slup": [
+        "licensing"
+      ],
+      "flexible consumption model": [
+        "licensing"
+      ],
+      "fcm": [
+        "licensing"
+      ],
+      "consumption model": [
+        "licensing"
+      ],
+      "rtu": [
+        "licensing"
+      ],
+      "rtu license": [
+        "licensing"
+      ],
+      "right to use": [
+        "licensing"
+      ],
+      "software innovation access": [
+        "licensing"
+      ],
+      "sia": [
+        "licensing"
+      ],
+      "sia license": [
+        "licensing"
+      ],
+      "entitlement": [
+        "licensing"
+      ],
+      "entitlements": [
+        "licensing"
+      ],
+      "license consumption": [
+        "licensing"
+      ],
+      "license compliance": [
+        "licensing"
+      ],
+      "compliance": [
+        "licensing"
+      ],
+      "per-system license": [
+        "licensing"
+      ],
+      "per-port license": [
+        "licensing"
+      ],
+      "a la carte license": [
+        "licensing"
+      ],
+      "non-consumption model": [
+        "licensing"
+      ],
+      "license term": [
+        "licensing"
+      ],
+      "license verification": [
+        "licensing"
+      ],
+      "asr 9000": [
+        "asr-9000"
+      ],
+      "asr9000": [
+        "asr-9000"
+      ],
+      "asr9k": [
+        "asr-9000"
+      ],
+      "ios xr": [
+        "asr-9000"
+      ],
+      "iosxr": [
+        "asr-9000"
+      ],
+      "xr": [
+        "asr-9000"
+      ]
+    },
+    "mechanical_matches": [
+      "policy",
+      "asr",
+      "smart licensing using policy",
+      "license",
+      "licensing",
+      "compliance",
+      "smart licensing"
+    ],
+    "status": "ok"
+  },
+  {
+    "filename": "b-asr9000-satellite-hig.pdf",
+    "product": "ASR9000",
+    "toc_method": "bookmarks",
+    "headings_count": 187,
+    "headings": [
+      "Cisco ASR 9000 Series Aggregation Services Router Satellite Systems Installation Guide",
+      "Contents",
+      "Preface",
+      "Audience",
+      "Documentation Conventions",
+      "Related Documentation",
+      "Changes to This Document",
+      "Obtaining Documentation and Submitting a Service Request",
+      "Overview",
+      "Power Supply Safety Precautions",
+      "Cisco ASR 9000v Satellite Shelf Hardware Description",
+      "Cisco ASR 9000v Satellite Shelf Faceplates",
+      "Power Module",
+      "Cisco ASR 901 Router Hardware Description",
+      "Cisco ASR 901 Router Ethernet Version Front View",
+      "Cisco ASR 901 Router Rear View",
+      "LEDs",
+      "Regulatory Compliance",
+      "Where to Go Next",
+      "Cisco ASR 903 Router Hardware Description",
+      "Cisco ASR 903 Router Front View",
+      "LEDs",
+      "RSP LEDs",
+      "Interface Module LEDs",
+      "Power Supply LEDs",
+      "Fan Tray LEDs",
+      "Where to Go Next",
+      "Installing and Maintaining the Cisco ASR 9000v Satellite Shelf",
+      "Electrostatic Discharge",
+      "Preparing Your Location",
+      "Preparing the Rack Room",
+      "Preparing Yourself",
+      "Installing the Cisco ASR 9000v Satellite Shelf",
+      "Important Safety Recommendations",
+      "Required Tools and Equipment",
+      "Unpacking and Inspecting the Cisco ASR 9000v Satellite Shelf",
+      "ANSI Rack Installation",
+      "ETSI Rack Installation",
+      "Installing the Cisco ASR 9000v Satellite Shelf",
+      "Mounting the 19-Inch Brackets on the Cisco ASR 9000v Satellite Shelf for the ANSI Rack Configuration",
+      "Mounting the 23-Inch Brackets on the Cisco ASR 9000v Satellite Shelf for the ANSI Rack Configuration",
+      "Mounting the Brackets on the Cisco ASR 9000v Satellite Shelf for the ETSI Rack Configuration",
+      "Mounting the Cisco ASR 9000v Satellite Shelf on a Rack (One Person)",
+      "Mounting the Cisco ASR 9000v Satellite Shelf on the Wall",
+      "Mounting the Cisco ASR 9000v Satellite Shelf on the Desktop",
+      "Connecting the Chassis Ground and Power",
+      "ANSI Power and Ground",
+      "ETSI Power and Ground",
+      "Grounding the Cisco ASR 9000v Satellite Shelf",
+      "Installing the Power Feeds and Ground to the Cisco ASR 9000v Satellite Shelf",
+      "Connecting Office Power (AC) to the Cisco ASR 9000v Satellite Shelf",
+      "Connecting Office Power (DC) to the Cisco ASR 9000v Satellite Shelf (ANSI Only)",
+      "Connecting Office Power (DC) to the Cisco ASR 9000v Satellite Shelf (ETSI Only)",
+      "Turning On and Verifying Office Power (AC) on the Cisco ASR 9000v Satellite Shelf",
+      "Turning On and Verifying Office Power (DC) on the Cisco ASR 9000v Satellite Shelf",
+      "Connecting Cables to the EOBC, Timing, and Console Ports on the Cisco ASR 9000v Satellite Shelf",
+      "Connecting the Timing Cables to the PPS, 10-MHz, and ToD/PPS Ports on the Cisco ASR 9000v Satellite Shelf",
+      "Connecting the Cables to the EOBC or Console Port on the Cisco ASR 9000v Satellite Shelf",
+      "Installing and Routing Fiber-Optic Cables",
+      "Performing the Cisco ASR 9000v Satellite Shelf Installation Acceptance Test",
+      "Inspecting the Cisco ASR 9000v Satellite Shelf Installation and Connections",
+      "Measuring DC Voltage on the Cisco ASR 9000v Satellite Shelf",
+      "Maintaining the Cisco ASR 9000v Satellite Shelf",
+      "Air Filter Overview",
+      "Replacing the Air Filter in the Cisco ASR 9000v Satellite Shelf",
+      "Fan Tray Assembly",
+      "Replacing the Fan Tray Assembly in the Cisco ASR 9000v Satellite Shelf",
+      "Cleaning Fiber Connectors",
+      "Cleaning Multi-Fiber Optic Cable Connectors",
+      "Cleaning Fiber Connectors with CLETOP",
+      "Cleaning Fiber Adapters",
+      "Next Steps",
+      "Installing the Cisco ASR 901 Mobile Wireless Router as a Satellite Shelf",
+      "Safety Guidelines",
+      "Safety with Equipment",
+      "Safety with Electricity",
+      "Preventing Electrostatic Discharge Damage",
+      "Prerequisites",
+      "Site Planning",
+      "Power Supply Considerations",
+      "Site Environment",
+      "Airflow Guidelines",
+      "Method of Procedure",
+      "Unpacking and Checking the Contents of Your Shipment",
+      "Required Tools and Equipment",
+      "Installation Checklist",
+      "Creating a Site Log",
+      "Console Port Considerations",
+      "Console Port Connections",
+      "Network Modules",
+      "Mounting the Cisco ASR 901 Router",
+      "Rack-Mounting Configuration Guidelines",
+      "Attaching the Rack-Mounting Brackets",
+      "Mounting the Cisco ASR 901 Router in a Rack",
+      "Attaching the Cable Guides",
+      "Connecting the Chassis Ground and Power",
+      "Grounding the Cisco ASR 901 Router",
+      "Power Connection Compliance",
+      "Wiring the DC Input Power Source",
+      "Installing and Removing SFP Modules",
+      "Installing SFP Modules",
+      "Removing SFP Modules",
+      "Connecting Cables",
+      "Connecting the Console Port",
+      "Connecting the Network Cables",
+      "Dressing Router Cables",
+      "Powering On the Router",
+      "Checklist for Power Up",
+      "Interpreting Front-Panel LEDs",
+      "Power-On Procedure",
+      "What to Do After Installing the Hardware",
+      "Installing the Cisco ASR 903 Router as a Satellite Shelf",
+      "Safety Guidelines",
+      "Standard Warning Statements",
+      "Safety Guidelines for Personal Safety and Equipment Protection",
+      "Safety Precautions for Module Installation and Removal",
+      "Safety with Electricity",
+      "Power Supply Considerations",
+      "Preventing ESD Damage",
+      "Site Planning",
+      "General Precautions",
+      "Site Planning Checklist",
+      "Site Selection Guidelines",
+      "AirFlow Guidelines",
+      "Floor Loading Considerations",
+      "Site Power Guidelines",
+      "Site Cabling Guidelines",
+      "Rack-Mounting Guidelines",
+      "Installation Checklist",
+      "Creating a Site Log",
+      "Receiving the Cisco ASR 903 Router",
+      "Chassis-Lifting Guidelines",
+      "Tools and Equipment",
+      "Unpacking and Verifying the Shipped Contents",
+      "Installing the Router in a Rack",
+      "Installing the Chassis Brackets",
+      "Installing the Router Chassis in the Rack",
+      "Attaching the Cable Management Brackets",
+      "Installing the Chassis Ground Connection",
+      "Installing the Chassis Ground",
+      "Installing the Fan Tray",
+      "Removing and Replacing the Fan Tray",
+      "Installing and Removing an RSP Module",
+      "Installing an RSP Module",
+      "Removing an RSP Module",
+      "Installing and Removing an Interface Module",
+      "Installing an Interface Module",
+      "Removing an Interface Module",
+      "Installing the Power Supply",
+      "Preventing Power Loss",
+      "Power Connection Guidelines",
+      "Installing the DC Power Supply",
+      "Removing and Replacing the DC Power Supply",
+      "Installing the AC Power Supply",
+      "Removing and Replacing the AC Power Supply",
+      "Connecting the Cisco ASR 903 Router to the Network",
+      "Connecting Console Cables",
+      "Connecting to the Auxiliary Port",
+      "Connecting a Management Ethernet Cable",
+      "Installing and Removing SFP and XFP Modules",
+      "Connecting a USB Flash Device",
+      "Connecting Ethernet Cables",
+      "Connecting Cables to SFP Modules",
+      "Connecting the Fan Tray Alarm Port",
+      "Installing Optional Chassis Accessories",
+      "Pre-assembly of Plenum Before Mounting in Rack",
+      "Assembly of Plenum After Mounting in Rack",
+      "Technical Specifications and Product IDs",
+      "Cisco ASR 9000v Satellite Shelf",
+      "Cisco ASR 9000v Satellite Shelf Product IDs",
+      "Cisco ASR 9000v Satellite Shelf System Specifications",
+      "System Power for the Cisco ASR 9000v Satellite Shelf",
+      "Cisco ASR 9000v Satellite Shelf Physical Dimensions",
+      "Cisco ASR 9000v Satellite Shelf Operating Temperature and Humidity",
+      "Cisco ASR 9000v Satellite Shelf Switching Capacity",
+      "Cisco ASR 9000v Satellite Shelf GBIC, SFP, SFP+, and XFP Compatibility",
+      "Cisco ASR 901 as a Satellite Shelf",
+      "Cisco ASR 901 System Specifications",
+      "Cisco ASR 901 Power Specifications",
+      "Cisco ASR 901 Environmental Monitoring Temperature Sensor",
+      "Cisco ASR 901 Router Interface Numbering",
+      "Cisco ASR 901 Cable Specifications",
+      "Cisco ASR 903 as a Satellite Shelf",
+      "Cisco ASR 903 System Specifications",
+      "ASR 903 Connector and Cable Specifications",
+      "Site Log",
+      "Site Log"
+    ],
+    "concepts": {
+      "satellite": [
+        "satellite"
+      ],
+      "satellite shelf": [
+        "satellite"
+      ],
+      "satellite system": [
+        "satellite"
+      ],
+      "satellite systems": [
+        "satellite"
+      ],
+      "asr 9000v": [
+        "satellite"
+      ],
+      "asr9000v": [
+        "satellite"
+      ],
+      "asr 901": [
+        "satellite"
+      ],
+      "asr901": [
+        "satellite"
+      ],
+      "asr 903": [
+        "satellite"
+      ],
+      "asr903": [
+        "satellite"
+      ],
+      "shelf": [
+        "satellite"
+      ],
+      "mobile wireless": [
+        "satellite"
+      ],
+      "mobile wireless router": [
+        "satellite"
+      ],
+      "power supply": [
+        "satellite"
+      ],
+      "power module": [
+        "satellite"
+      ],
+      "dc power": [
+        "satellite"
+      ],
+      "ac power": [
+        "satellite"
+      ],
+      "power feeds": [
+        "satellite"
+      ],
+      "grounding": [
+        "satellite"
+      ],
+      "chassis ground": [
+        "satellite"
+      ],
+      "rack mounting": [
+        "satellite"
+      ],
+      "rack installation": [
+        "satellite"
+      ],
+      "ansi rack": [
+        "satellite"
+      ],
+      "etsi rack": [
+        "satellite"
+      ],
+      "rack mount": [
+        "satellite"
+      ],
+      "eobc": [
+        "satellite"
+      ],
+      "ethernet out of band channel": [
+        "satellite"
+      ],
+      "timing": [
+        "satellite"
+      ],
+      "pps": [
+        "satellite"
+      ],
+      "pulse per second": [
+        "satellite"
+      ],
+      "tod": [
+        "satellite"
+      ],
+      "time of day": [
+        "satellite"
+      ],
+      "console port": [
+        "satellite"
+      ],
+      "console": [
+        "satellite"
+      ],
+      "fiber optic": [
+        "satellite"
+      ],
+      "fiber-optic": [
+        "satellite"
+      ],
+      "fiber": [
+        "satellite"
+      ],
+      "sfp": [
+        "satellite"
+      ],
+      "small form factor pluggable": [
+        "satellite"
+      ],
+      "xfp": [
+        "satellite"
+      ],
+      "10 gigabit small form factor pluggable": [
+        "satellite"
+      ],
+      "gbic": [
+        "satellite"
+      ],
+      "gigabit interface converter": [
+        "satellite"
+      ],
+      "sfp+": [
+        "satellite"
+      ],
+      "fan tray": [
+        "satellite"
+      ],
+      "air filter": [
+        "satellite"
+      ],
+      "led": [
+        "satellite"
+      ],
+      "leds": [
+        "satellite"
+      ],
+      "rsp": [
+        "satellite"
+      ],
+      "route switch processor": [
+        "satellite"
+      ],
+      "interface module": [
+        "satellite"
+      ],
+      "network module": [
+        "satellite"
+      ],
+      "management ethernet": [
+        "satellite"
+      ],
+      "auxiliary port": [
+        "satellite"
+      ],
+      "usb": [
+        "satellite"
+      ],
+      "usb flash": [
+        "satellite"
+      ],
+      "ethernet cables": [
+        "satellite"
+      ],
+      "cable management": [
+        "satellite"
+      ],
+      "plenum": [
+        "satellite"
+      ],
+      "esd": [
+        "satellite"
+      ],
+      "electrostatic discharge": [
+        "satellite"
+      ],
+      "alarm port": [
+        "satellite"
+      ],
+      "fan tray alarm": [
+        "satellite"
+      ]
+    },
+    "mechanical_matches": [
+      "interface",
+      "wireless",
+      "compatibility",
+      "installation",
+      "asr",
+      "switching",
+      "sfp",
+      "alarm",
+      "monitoring",
+      "ethernet",
+      "ids",
+      "temperature",
+      "satellite",
+      "compliance",
+      "routing",
+      "timing",
+      "rsp"
+    ],
+    "status": "ok"
+  }
+]

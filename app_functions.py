@@ -193,7 +193,16 @@ def match_terms_to_guides(detected_terms: list, product_name: str, term_frequenc
     install_terms = set(install_cfg.get('terms', []))
     install_patterns = install_cfg.get('guide_patterns', [])
     
-    concept_map = {k: v for k, v in mappings.get('concept_to_guide', {}).items() if k != '_comment'}
+    # ── Load product-scoped concept map ──
+    # New structure: concept_to_guide has per-product sub-dicts keyed by product_code.
+    # Falls back to flat (legacy) structure if product key not found.
+    raw_concept_map = mappings.get('concept_to_guide', {})
+    if product_code in raw_concept_map and isinstance(raw_concept_map[product_code], dict):
+        # New per-product structure
+        concept_map = {k: v for k, v in raw_concept_map[product_code].items() if not k.startswith('_')}
+    else:
+        # Legacy flat structure (backward compatible)
+        concept_map = {k: v for k, v in raw_concept_map.items() if not k.startswith('_') and not isinstance(v, dict)}
     
     product_noise_cfg = mappings.get('product_noise', {})
     filename_noise = set(mappings.get('filename_noise_words', {}).get('words', []))
@@ -320,6 +329,26 @@ def match_terms_to_guides(detected_terms: list, product_name: str, term_frequenc
     
     # Apply diminishing returns so "catch-all" guides don't run away
     guide_scores = {g: round(s ** DIMINISHING_EXPONENT, 2) for g, s in guide_scores.items()}
+    
+    # ── Exclude reference-only guides from scoring ──
+    # Reference guides (like the alarms guide) match almost every term
+    # because they have a one-line entry for every topic.  They pollute
+    # the top-3 slots without adding real signal.  Users can still
+    # manually check them in the UI.
+    # Supports per-product patterns: {"sdwan": ["alarms-guide"], "ASR9000": [...]}
+    # Falls back to flat patterns list for backward compatibility.
+    ref_cfg = _load_guide_mappings().get('reference_guides', {})
+    ref_patterns_raw = ref_cfg.get('patterns', {})
+    if isinstance(ref_patterns_raw, dict):
+        # Per-product reference guides
+        ref_patterns = [p.lower() for p in ref_patterns_raw.get(product_code, [])]
+    else:
+        # Legacy flat list
+        ref_patterns = [p.lower() for p in ref_patterns_raw]
+    if ref_patterns:
+        for g in list(guide_scores.keys()):
+            if any(pat in g.lower() for pat in ref_patterns):
+                del guide_scores[g]
     
     # Attach scores to the matched dict under a special key
     matched['_guide_scores'] = guide_scores

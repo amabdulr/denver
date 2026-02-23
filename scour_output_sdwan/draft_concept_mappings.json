@@ -26,15 +26,10 @@
     "access control list": [
         "configuration-group",
         "ip",
-        "ip-addresses",
         "policies",
-        "segment",
-        "segment-routing",
         "systems-interfaces"
     ],
     "access control lists": [
-        "ip",
-        "ip-addresses",
         "policies"
     ],
     "access list": [
@@ -44,7 +39,6 @@
     ],
     "access lists": [
         "ip",
-        "ip-addresses",
         "l2vpn",
         "qos"
     ],
@@ -52,8 +46,6 @@
         "systems-interfaces"
     ],
     "access port": [
-        "asr9k",
-        "asr9k-overview",
         "qos"
     ],
     "account lockout": [
@@ -71,7 +63,6 @@
         "routing",
         "segment",
         "system",
-        "system-security",
         "systems-interfaces"
     ],
     "aci": [
@@ -81,12 +72,10 @@
         "configuration-group",
         "interfaces",
         "ip",
-        "ip-addresses",
         "mpls",
         "policies",
         "qos",
         "segment",
-        "segment-routing",
         "systems-interfaces",
         "vsmig"
     ],
@@ -109,9 +98,6 @@
         "qos"
     ],
     "address resolution protocol": [
-        "cnbng",
-        "ip",
-        "ip-addresses",
         "systems-interfaces"
     ],
     "adfs": [
@@ -164,10 +150,7 @@
         "alarms",
         "asr9000",
         "asr9001",
-        "asr9001-hardware",
         "asr9k",
-        "asr9k-overview",
-        "hardware-installation",
         "maintain",
         "monitor",
         "system",
@@ -178,12 +161,9 @@
     ],
     "alarms": [
         "alarms",
-        "asr9k",
-        "hardware-installation",
         "interfaces",
         "monitor-maintain",
-        "system",
-        "system-monitoring"
+        "system"
     ],
     "alg": [
         "cgnat",
@@ -226,8 +206,7 @@
     ],
     "anycast": [
         "l2vpn",
-        "segment",
-        "segment-routing"
+        "segment"
     ],
     "anyconnect": [
         "remote-access",
@@ -253,8 +232,6 @@
         "alarms"
     ],
     "apm": [
-        "interfaces",
-        "interfaces-hardware",
         "policies"
     ],
     "app list": [
@@ -410,7 +387,6 @@
         "bng",
         "cnbng",
         "ip",
-        "ip-addresses",
         "l2vpn",
         "systems-interfaces"
     ],
@@ -462,7 +438,6 @@
     "atm": [
         "asr9000",
         "qos",
-        "sip-and-spa",
         "systems-interfaces"
     ],
     "audit log": [
@@ -485,18 +460,14 @@
         "remote-access",
         "routing",
         "system",
-        "system-security",
         "systems-interfaces",
         "vanalytics"
     ],
     "authentication authorization accounting": [
         "alarms",
-        "bng",
         "configuration-group",
         "remote-access",
-        "sd-wan-remote-access",
-        "system",
-        "system-security"
+        "sd-wan-remote-access"
     ],
     "authentication order": [
         "systems-interfaces"
@@ -505,14 +476,11 @@
         "bng",
         "remote-access",
         "system",
-        "system-security",
         "systems-interfaces",
         "vanalytics"
     ],
     "auto-negotiation": [
         "gs-book",
-        "interfaces",
-        "interfaces-hardware",
         "sdwan-xe-gs",
         "systems-interfaces"
     ],
@@ -594,8 +562,7 @@
         "qos",
         "routing",
         "segment",
-        "systems-interfaces",
-        "vsmig"
+        "systems-interfaces"
     ],
     "bandwidth forecasting": [
         "vanalytics"
@@ -622,7 +589,6 @@
         "alarms",
         "configuration-group",
         "ip",
-        "ip-addresses",
         "monitor-maintain",
         "mpls",
         "policies",
@@ -652,7 +618,6 @@
         "bgp",
         "configuration-group",
         "ip",
-        "ip-addresses",
         "l2vpn",
         "l3vpn",
         "monitor-maintain",
@@ -662,9 +627,7 @@
         "qos",
         "routing",
         "segment",
-        "segment-routing",
-        "system",
-        "vsmig"
+        "system"
     ],
     "bgp hierarchical": [
         "hierarchical-sdwan"
@@ -693,11 +656,8 @@
     "bidirectional forwarding detection": [
         "alarms",
         "configuration-group",
-        "ip",
-        "ip-addresses",
         "monitor-maintain",
         "policies",
-        "qos",
         "routing",
         "segment"
     ],
@@ -717,10 +677,8 @@
     "boot": [
         "asr9001",
         "asr9k",
-        "hardware-installation",
         "ismig",
         "system",
-        "system-setup",
         "vsmig"
     ],
     "bootstrap": [
@@ -744,14 +702,9 @@
         "alarms",
         "configuration-group",
         "ip",
-        "ip-addresses",
-        "l3vpn",
         "monitor-maintain",
-        "programmability",
         "qos",
-        "routing",
-        "segment",
-        "segment-routing"
+        "routing"
     ],
     "border router": [
         "hierarchical-sdwan"
@@ -777,12 +730,10 @@
     "bridge domain": [
         "bridging",
         "interfaces",
-        "interfaces-hardware",
         "l2vpn",
         "l3vpn",
         "multicast",
         "system",
-        "system-security",
         "systems-interfaces"
     ],
     "bridge-domain": [
@@ -808,7 +759,6 @@
     ],
     "bundle": [
         "interfaces",
-        "interfaces-hardware",
         "l2vpn",
         "mpls",
         "multicast",
@@ -818,15 +768,12 @@
     ],
     "bvi": [
         "interfaces",
-        "interfaces-hardware",
         "ip",
-        "ip-addresses",
         "l2vpn",
         "multicast",
         "netflow",
         "qos",
-        "segment",
-        "segment-routing"
+        "segment"
     ],
     "c8200": [
         "compatibility",
@@ -848,8 +795,7 @@
     ],
     "ca": [
         "security",
-        "system",
-        "system-security"
+        "system"
     ],
     "call routing": [
         "configuration-group",
@@ -921,8 +867,7 @@
         "systems-interfaces"
     ],
     "cef": [
-        "ip",
-        "ip-addresses"
+        "ip"
     ],
     "cellular": [
         "configuration-group",
@@ -1008,8 +953,7 @@
     "certificate enrollment": [
         "remote-access",
         "sd-wan-remote-access",
-        "system",
-        "system-security"
+        "system"
     ],
     "certificate expiration": [
         "alarms"
@@ -1021,9 +965,7 @@
         "sdwan-xe-gs"
     ],
     "certificate renewal": [
-        "sdwan-xe-gs",
-        "system",
-        "system-security"
+        "sdwan-xe-gs"
     ],
     "certificate revocation": [
         "sdwan-xe-gs"
@@ -1043,8 +985,7 @@
     ],
     "certificates": [
         "sdwan-xe-gs",
-        "system",
-        "system-security"
+        "system"
     ],
     "certification": [
         "sdwan-ssp",
@@ -1063,7 +1004,6 @@
     ],
     "cfm": [
         "interfaces",
-        "interfaces-hardware",
         "l2vpn",
         "monitor-maintain"
     ],
@@ -1130,7 +1070,6 @@
     "class-map": [
         "bng",
         "ip",
-        "ip-addresses",
         "qos"
     ],
     "cleanup": [
@@ -1351,7 +1290,6 @@
         "cnbng",
         "ismig",
         "rcsi",
-        "rcsi-0350",
         "sdwan-ssp",
         "system",
         "vsmig"
@@ -1470,9 +1408,6 @@
         "systems-interfaces"
     ],
     "connectivity fault management": [
-        "interfaces",
-        "interfaces-hardware",
-        "l2vpn",
         "monitor-maintain"
     ],
     "container": [
@@ -1656,8 +1591,6 @@
     "csc": [
         "l3vpn",
         "mpls",
-        "multicast",
-        "routing",
         "systems-interfaces"
     ],
     "csp": [
@@ -1949,25 +1882,18 @@
         "cnbng",
         "configuration-group",
         "ip",
-        "ip-addresses",
         "l2vpn",
         "system",
-        "system-setup",
         "systems-interfaces"
     ],
     "dhcp relay": [
         "ip",
-        "ip-addresses",
-        "segment",
-        "segment-routing",
         "systems-interfaces"
     ],
     "dhcp server": [
         "alarms",
         "bng",
         "configuration-group",
-        "ip",
-        "ip-addresses",
         "monitor-maintain",
         "system",
         "systems-interfaces"
@@ -1976,9 +1902,7 @@
         "systems-interfaces"
     ],
     "dhcp snooping": [
-        "bng",
-        "ip",
-        "ip-addresses"
+        "ip"
     ],
     "dhcp vendor option": [
         "systems-interfaces"
@@ -1986,7 +1910,6 @@
     "dhcpv6": [
         "bng",
         "ip",
-        "ip-addresses",
         "l2vpn",
         "nat",
         "segment",
@@ -2050,9 +1973,7 @@
         "high-availability",
         "maintain",
         "monitor",
-        "system",
         "system-monitoring",
-        "system-setup",
         "systems-interfaces",
         "troubleshoot"
     ],
@@ -2082,8 +2003,6 @@
     ],
     "dns": [
         "bng",
-        "ip",
-        "ip-addresses",
         "multicast",
         "policy-groups",
         "security",
@@ -2146,7 +2065,6 @@
     ],
     "dr": [
         "high-availability",
-        "multicast",
         "routing",
         "systems-interfaces"
     ],
@@ -2171,8 +2089,7 @@
         "mpls",
         "programmability",
         "qos",
-        "system",
-        "system-security"
+        "system"
     ],
     "dsl": [
         "systems-interfaces"
@@ -2200,13 +2117,8 @@
     ],
     "dynamic host configuration protocol": [
         "alarms",
-        "bng",
-        "cnbng",
         "configuration-group",
         "ip",
-        "ip-addresses",
-        "system",
-        "system-setup",
         "systems-interfaces"
     ],
     "dynamic interfaces": [
@@ -2217,7 +2129,6 @@
     ],
     "e1": [
         "asr9000",
-        "sip-and-spa",
         "systems-interfaces"
     ],
     "e1 controller": [
@@ -2275,7 +2186,6 @@
         "nat",
         "routing",
         "system",
-        "system-security",
         "vsmig"
     ],
     "encryption": [
@@ -2310,8 +2220,6 @@
     ],
     "enhanced policy based routing": [
         "ip",
-        "ip-addresses",
-        "mpls",
         "policies"
     ],
     "enterprise agent": [
@@ -2334,7 +2242,6 @@
     ],
     "epbr": [
         "ip",
-        "ip-addresses",
         "mpls",
         "policies"
     ],
@@ -2369,9 +2276,7 @@
         "asr9k",
         "bng",
         "cnbng",
-        "ethernt-line-card",
         "interfaces",
-        "interfaces-hardware",
         "ip",
         "ismig",
         "l2vpn",
@@ -2387,14 +2292,12 @@
     "ethernet interface": [
         "configuration-group",
         "interfaces",
-        "interfaces-hardware",
         "ip",
         "l2vpn",
         "systems-interfaces"
     ],
     "ethernet oam": [
         "interfaces",
-        "interfaces-hardware",
         "monitor-maintain"
     ],
     "ethernet pppoe": [
@@ -2423,8 +2326,7 @@
         "l3vpn",
         "multicast",
         "routing",
-        "segment",
-        "segment-routing"
+        "segment"
     ],
     "ewc": [
         "systems-interfaces"
@@ -2471,16 +2373,12 @@
         "sdwan-ssp"
     ],
     "factory reset": [
-        "monitor-maintain",
-        "system",
-        "system-setup"
+        "monitor-maintain"
     ],
     "failover": [
         "high-availability",
         "interfaces",
-        "interfaces-hardware",
         "ip",
-        "ip-addresses",
         "l2vpn"
     ],
     "faulty controller": [
@@ -2513,7 +2411,6 @@
     ],
     "fec": [
         "interfaces",
-        "interfaces-hardware",
         "policies",
         "routing",
         "segment"
@@ -2534,8 +2431,7 @@
         "monitor-maintain"
     ],
     "fips": [
-        "system",
-        "system-security"
+        "system"
     ],
     "firewall": [
         "monitor-maintain",
@@ -2607,8 +2503,6 @@
         "policies"
     ],
     "forward error correction": [
-        "interfaces",
-        "interfaces-hardware",
         "policies"
     ],
     "forwarding": [
@@ -2632,26 +2526,21 @@
         "qos"
     ],
     "fpd": [
-        "interfaces",
-        "interfaces-hardware",
         "ismig",
         "system",
-        "system-setup",
         "vsmig"
     ],
     "fqdn": [
         "policy-groups",
         "security",
-        "system",
-        "system-management"
+        "system"
     ],
     "fragmentation": [
         "ip",
         "systems-interfaces"
     ],
     "ftp": [
-        "ip",
-        "ip-addresses"
+        "ip"
     ],
     "fxo": [
         "systems-interfaces"
@@ -2668,12 +2557,9 @@
     "generic routing encapsulation": [
         "configuration-group",
         "ip",
-        "ip-addresses",
         "l3vpn",
         "routing",
         "security",
-        "segment",
-        "segment-routing",
         "systems-interfaces"
     ],
     "geo db": [
@@ -2716,9 +2602,7 @@
         "systems-interfaces"
     ],
     "global positioning system": [
-        "rugged",
-        "system",
-        "system-management"
+        "rugged"
     ],
     "global settings": [
         "systems-interfaces"
@@ -2752,7 +2636,6 @@
         "configuration-group",
         "rugged",
         "system",
-        "system-management",
         "systems-interfaces"
     ],
     "gps dead reckoning": [
@@ -2760,7 +2643,6 @@
     ],
     "graceful restart": [
         "asr9k",
-        "asr9k-overview",
         "mpls",
         "routing"
     ],
@@ -2770,15 +2652,12 @@
     "gre": [
         "configuration-group",
         "ip",
-        "ip-addresses",
         "l2vpn",
         "l3vpn",
         "multicast",
         "qos",
-        "routing",
         "security",
         "segment",
-        "segment-routing",
         "systems-interfaces"
     ],
     "gre over ipsec": [
@@ -2799,20 +2678,13 @@
     "grpc": [
         "programmability",
         "system",
-        "system-security",
         "telemetry"
     ],
     "ha": [
-        "asr9k",
-        "asr9k-overview",
-        "cnbng",
         "configuration-group",
         "high-availability",
         "multicast",
         "segment",
-        "segment-routing",
-        "system",
-        "system-security",
         "systems-interfaces"
     ],
     "ha interconnect": [
@@ -2827,11 +2699,8 @@
     "hardware installation": [
         "asr9000",
         "asr9001",
-        "asr9001-hardware",
         "asr9k",
-        "hardware-installation",
         "ismig",
-        "sip-and-spa",
         "vsmig"
     ],
     "headend": [
@@ -2864,7 +2733,6 @@
     ],
     "high availability": [
         "asr9k",
-        "asr9k-overview",
         "bng",
         "cnbng",
         "configuration-group",
@@ -2873,9 +2741,7 @@
         "mpls",
         "multicast",
         "segment",
-        "segment-routing",
         "system",
-        "system-security",
         "systems-interfaces"
     ],
     "high speed logging": [
@@ -2903,8 +2769,6 @@
         "systems-interfaces"
     ],
     "hot standby router protocol": [
-        "ip",
-        "ip-addresses",
         "systems-interfaces"
     ],
     "hqos": [
@@ -2913,9 +2777,7 @@
     ],
     "hsrp": [
         "interfaces",
-        "interfaces-hardware",
         "ip",
-        "ip-addresses",
         "l2vpn",
         "systems-interfaces"
     ],
@@ -2967,7 +2829,6 @@
     "icmp": [
         "cgnat",
         "ip",
-        "ip-addresses",
         "qos",
         "system",
         "vsmig"
@@ -3073,9 +2934,7 @@
         "asr9k",
         "ismig",
         "rcsi",
-        "rcsi-0350",
         "routing",
-        "satellite",
         "segment",
         "sw-install-and-upgrade-guide-isr1100",
         "system",
@@ -3107,7 +2966,6 @@
         "cgnat",
         "cnbng",
         "interfaces",
-        "interfaces-hardware",
         "ip",
         "ismig",
         "l2vpn",
@@ -3154,7 +3012,6 @@
         "asr9k",
         "bng",
         "interfaces",
-        "interfaces-hardware",
         "ip",
         "ismig",
         "l2vpn",
@@ -3188,7 +3045,6 @@
         "systems-interfaces"
     ],
     "internet protocol version 6": [
-        "routing",
         "systems-interfaces"
     ],
     "intra-vpn nat": [
@@ -3238,8 +3094,6 @@
         "systems-interfaces"
     ],
     "ip over ethernet": [
-        "bng",
-        "cnbng",
         "systems-interfaces"
     ],
     "ip pool": [
@@ -3302,7 +3156,6 @@
         "routing",
         "segment",
         "system",
-        "system-security",
         "telemetry",
         "vsmig"
     ],
@@ -3339,7 +3192,6 @@
         "security",
         "segment",
         "system",
-        "system-security",
         "systems-interfaces",
         "telemetry",
         "vsmig"
@@ -3381,9 +3233,7 @@
     ],
     "isis": [
         "mpls",
-        "routing",
-        "segment",
-        "segment-routing"
+        "routing"
     ],
     "isr 1000": [
         "systems-interfaces"
@@ -3396,8 +3246,7 @@
     ],
     "issu": [
         "ip",
-        "system",
-        "system-security"
+        "system"
     ],
     "java web token": [
         "sdwan-xe-gs"
@@ -3447,19 +3296,14 @@
         "bridging"
     ],
     "l2 vpn": [
-        "interfaces",
-        "interfaces-hardware",
         "systems-interfaces"
     ],
     "l2vpn": [
         "bridging",
-        "interfaces",
-        "interfaces-hardware",
         "l2vpn",
         "qos",
         "segment",
         "system",
-        "system-security",
         "systems-interfaces"
     ],
     "l3": [
@@ -3480,13 +3324,10 @@
         "l3vpn",
         "routing",
         "segment",
-        "segment-routing",
-        "system",
-        "system-security"
+        "system"
     ],
     "lacp": [
         "interfaces",
-        "interfaces-hardware",
         "l2vpn",
         "qos"
     ],
@@ -3500,8 +3341,7 @@
     ],
     "lawful intercept": [
         "policies",
-        "system",
-        "system-security"
+        "system"
     ],
     "lawful intercept 2.0": [
         "policies"
@@ -3527,7 +3367,6 @@
     ],
     "layer 2 vpn": [
         "interfaces",
-        "interfaces-hardware",
         "l2vpn",
         "systems-interfaces"
     ],
@@ -3551,13 +3390,11 @@
         "l3vpn",
         "mpls",
         "routing",
-        "segment",
-        "segment-routing"
+        "segment"
     ],
     "li": [
         "policies",
-        "system",
-        "system-security"
+        "system"
     ],
     "li 2.0": [
         "policies"
@@ -3565,19 +3402,14 @@
     "license": [
         "alarms",
         "asr",
-        "cnbng",
-        "licensing",
-        "smart",
-        "smart-licensing"
+        "cnbng"
     ],
     "license information": [
         "cnbng",
         "monitor-maintain"
     ],
     "license management": [
-        "cloud-onramp",
-        "smart",
-        "smart-licensing"
+        "cloud-onramp"
     ],
     "license report": [
         "alarms"
@@ -3586,49 +3418,36 @@
         "asr",
         "bng",
         "ip",
-        "licensing",
         "monitor-maintain",
-        "smart",
-        "smart-licensing"
+        "smart"
     ],
     "line card": [
         "asr9001",
-        "asr9001-hardware",
         "asr9k",
-        "asr9k-overview",
         "bng",
-        "ethernt-line-card",
-        "hardware-installation",
         "interfaces",
-        "interfaces-hardware",
         "ismig",
         "netflow",
         "qos",
         "system",
-        "system-setup",
         "vsmig"
     ],
     "link aggregation": [
         "interfaces",
-        "interfaces-hardware",
-        "multicast",
-        "qos"
+        "multicast"
     ],
     "lisp": [
         "routing"
     ],
     "lldp": [
         "interfaces",
-        "interfaces-hardware",
         "programmability",
         "telemetry"
     ],
     "load balancing": [
         "bng",
         "interfaces",
-        "interfaces-hardware",
         "ip",
-        "ip-addresses",
         "l2vpn",
         "multicast",
         "qos",
@@ -3694,7 +3513,6 @@
     "loopback": [
         "cnbng",
         "interfaces",
-        "interfaces-hardware",
         "routing",
         "segment",
         "systems-interfaces",
@@ -3718,28 +3536,20 @@
         "application-hosting"
     ],
     "mac security": [
-        "asr9k",
-        "ethernt-line-card",
-        "security",
-        "system",
-        "system-security"
+        "security"
     ],
     "macsec": [
         "asr9k",
-        "ethernt-line-card",
         "macsec",
         "security",
         "system",
         "system-security"
     ],
     "maintenance": [
-        "asr9000",
         "maintain",
         "monitor",
         "rcsi",
-        "rcsi-0350",
         "routing",
-        "satellite",
         "system-management"
     ],
     "maintenance endpoint": [
@@ -3759,19 +3569,15 @@
         "snmp"
     ],
     "management interface": [
-        "asr9k",
-        "asr9k-overview",
         "configuration-group",
         "interfaces",
-        "interfaces-hardware",
         "ismig",
         "programmability",
         "system",
         "systems-interfaces"
     ],
     "management plane": [
-        "system",
-        "system-security"
+        "system"
     ],
     "management region": [
         "hierarchical-sdwan"
@@ -3806,8 +3612,6 @@
         "system"
     ],
     "maximum transmission unit": [
-        "interfaces",
-        "interfaces-hardware",
         "mpls",
         "segment",
         "systems-interfaces"
@@ -3842,13 +3646,10 @@
     ],
     "mfa": [
         "sdwan-ssp",
-        "system",
-        "system-security",
         "systems-interfaces"
     ],
     "mib": [
         "ip",
-        "ip-addresses",
         "mpls",
         "routing",
         "snmp",
@@ -3864,8 +3665,6 @@
         "sdwan-xe-gs"
     ],
     "migration": [
-        "asr9k",
-        "hardware-installation",
         "segment",
         "smart",
         "systems-interfaces"
@@ -3928,7 +3727,6 @@
         "routing",
         "segment",
         "system",
-        "system-monitoring",
         "telemetry"
     ],
     "mpls": [
@@ -3941,8 +3739,7 @@
         "qos",
         "routing",
         "segment",
-        "system",
-        "system-security"
+        "system"
     ],
     "mpls vpn": [
         "l3vpn",
@@ -3965,10 +3762,8 @@
     "mtu": [
         "cgnat",
         "interfaces",
-        "interfaces-hardware",
         "ip",
         "l2vpn",
-        "mpls",
         "segment",
         "systems-interfaces",
         "vsmig"
@@ -3981,14 +3776,12 @@
     ],
     "multi-factor authentication": [
         "sdwan-ssp",
-        "system",
-        "system-security"
+        "system"
     ],
     "multi-homing": [
         "l2vpn",
         "multicast",
         "segment",
-        "segment-routing",
         "systems-interfaces"
     ],
     "multi-region fabric": [
@@ -4165,9 +3958,7 @@
     ],
     "netconf": [
         "programmability",
-        "system",
-        "system-management",
-        "system-security"
+        "system"
     ],
     "netflow": [
         "cgnat",
@@ -4176,7 +3967,6 @@
     ],
     "network address translation": [
         "alarms",
-        "cgnat",
         "nat",
         "security",
         "systems-interfaces"
@@ -4221,8 +4011,6 @@
     "network time protocol": [
         "configuration-group",
         "system",
-        "system-management",
-        "system-setup",
         "systems-interfaces"
     ],
     "network topology": [
@@ -4259,22 +4047,14 @@
         "sdwan-xe-gs"
     ],
     "nsr": [
-        "asr9k",
-        "asr9k-overview",
         "ip",
-        "ip-addresses",
-        "mpls",
-        "routing",
-        "segment",
-        "segment-routing"
+        "routing"
     ],
     "ntp": [
         "configuration-group",
         "l2vpn",
         "qos",
         "system",
-        "system-management",
-        "system-setup",
         "systems-interfaces"
     ],
     "nv satellite": [
@@ -4291,13 +4071,11 @@
     ],
     "oam": [
         "interfaces",
-        "interfaces-hardware",
         "l2vpn",
         "monitor-maintain",
         "mpls",
         "programmability",
-        "segment",
-        "segment-routing"
+        "segment"
     ],
     "oauth bearer token": [
         "network-wide-path-insight"
@@ -4379,11 +4157,7 @@
     "open shortest path first": [
         "alarms",
         "configuration-group",
-        "l3vpn",
-        "mpls",
-        "routing",
-        "segment",
-        "segment-routing"
+        "routing"
     ],
     "operational technology": [
         "integrations"
@@ -4397,11 +4171,9 @@
     "ospf": [
         "alarms",
         "configuration-group",
-        "l3vpn",
         "mpls",
         "routing",
         "segment",
-        "segment-routing",
         "vsmig"
     ],
     "ospf authentication": [
@@ -4424,8 +4196,7 @@
         "configuration-group",
         "l3vpn",
         "routing",
-        "system",
-        "system-security"
+        "system"
     ],
     "ospfv3 ipsec": [
         "routing"
@@ -4478,7 +4249,6 @@
         "mpls",
         "multicast",
         "segment",
-        "segment-routing",
         "systems-interfaces"
     ],
     "p2p": [
@@ -4557,8 +4327,7 @@
     ],
     "path tracing": [
         "network-wide-path-insight",
-        "segment",
-        "segment-routing"
+        "segment"
     ],
     "path type": [
         "hierarchical-sdwan"
@@ -4569,7 +4338,6 @@
     ],
     "pbr": [
         "ip",
-        "ip-addresses",
         "policies",
         "telemetry"
     ],
@@ -4605,8 +4373,7 @@
     ],
     "performance monitoring": [
         "configuration-group",
-        "interfaces",
-        "interfaces-hardware"
+        "interfaces"
     ],
     "persona": [
         "rcsi"
@@ -4634,8 +4401,6 @@
     ],
     "ping": [
         "asr9000",
-        "ip",
-        "ip-addresses",
         "l2vpn",
         "monitor-maintain",
         "mpls",
@@ -4689,8 +4454,6 @@
     "point-to-multipoint": [
         "mpls",
         "multicast",
-        "segment",
-        "segment-routing",
         "systems-interfaces"
     ],
     "point-to-point": [
@@ -4740,7 +4503,6 @@
     ],
     "policy based routing": [
         "ip",
-        "ip-addresses",
         "policies"
     ],
     "policy commit": [
@@ -4784,16 +4546,14 @@
     ],
     "policy-map": [
         "bng",
-        "ip",
-        "ip-addresses"
+        "ip"
     ],
     "port channel": [
         "systems-interfaces"
     ],
     "port forwarding": [
         "nat",
-        "system",
-        "system-security"
+        "system"
     ],
     "port scanning detection": [
         "security"
@@ -4809,7 +4569,6 @@
     ],
     "positioning": [
         "asr9001",
-        "asr9001-hardware",
         "asr9k",
         "rugged"
     ],
@@ -4821,7 +4580,6 @@
     ],
     "power management": [
         "interfaces",
-        "interfaces-hardware",
         "rugged"
     ],
     "pppoa": [
@@ -4859,7 +4617,6 @@
     ],
     "prefix delegation": [
         "ip",
-        "ip-addresses",
         "systems-interfaces"
     ],
     "prefix list": [
@@ -4983,33 +4740,21 @@
         "mpls",
         "netflow",
         "qos",
-        "routing",
-        "segment",
-        "segment-routing",
-        "system",
-        "system-security"
+        "routing"
     ],
     "ptp": [
         "system",
-        "system-management",
         "timing"
     ],
     "public key infrastructure": [
         "remote-access",
         "sd-wan-remote-access",
-        "sdwan-xe-gs",
-        "system",
-        "system-security"
+        "sdwan-xe-gs"
     ],
     "pw": [
-        "bng",
         "l2vpn",
-        "mpls",
         "multicast",
-        "segment",
-        "segment-routing",
-        "system",
-        "system-security"
+        "system"
     ],
     "pxgrid": [
         "alarms"
@@ -5027,7 +4772,6 @@
         "bng",
         "cnbng",
         "interfaces",
-        "interfaces-hardware",
         "ip",
         "l2vpn",
         "monitor-maintain",
@@ -5059,7 +4803,6 @@
     ],
     "quality of service": [
         "bng",
-        "cnbng",
         "configuration-group",
         "l2vpn",
         "monitor-maintain",
@@ -5172,12 +4915,10 @@
     ],
     "redundancy": [
         "asr9k",
-        "asr9k-overview",
         "bng",
         "cnbng",
         "high-availability",
         "interfaces",
-        "interfaces-hardware",
         "ip",
         "l2vpn",
         "segment"
@@ -5251,7 +4992,6 @@
     ],
     "replacement": [
         "asr9001",
-        "asr9001-hardware",
         "asr9k",
         "sdwan-xe-gs",
         "vsmig"
@@ -5298,9 +5038,7 @@
         "monitor-maintain"
     ],
     "rest api": [
-        "sdwan-xe-gs",
-        "system",
-        "system-security"
+        "sdwan-xe-gs"
     ],
     "restconf": [
         "programmability"
@@ -5334,7 +5072,6 @@
         "routing"
     ],
     "rip": [
-        "l3vpn",
         "routing"
     ],
     "ripng": [
@@ -5363,12 +5100,10 @@
     ],
     "rollback": [
         "alarms",
-        "system",
-        "system-setup"
+        "system"
     ],
     "rom monitor": [
-        "sdwan-xe-gs",
-        "vsmig"
+        "sdwan-xe-gs"
     ],
     "rommon": [
         "sdwan-xe-gs",
@@ -5403,16 +5138,12 @@
         "routing"
     ],
     "route leak": [
-        "l3vpn",
-        "routing",
-        "segment",
-        "segment-routing"
+        "routing"
     ],
     "route leaking": [
         "l3vpn",
         "routing",
-        "segment",
-        "segment-routing"
+        "segment"
     ],
     "route policies": [
         "policies",
@@ -5486,20 +5217,13 @@
     ],
     "rp3": [
         "asr9k",
-        "asr9k-overview",
-        "hardware-installation",
         "increase",
-        "memory",
         "sdwan-xe-gs"
     ],
     "rsp": [
         "asr9000",
         "asr9k",
-        "asr9k-overview",
-        "hardware-installation",
         "interfaces",
-        "interfaces-hardware",
-        "satellite",
         "vsmig"
     ],
     "rsvp": [
@@ -5555,7 +5279,6 @@
     ],
     "scp": [
         "ip",
-        "ip-addresses",
         "ismig"
     ],
     "sd wan": [
@@ -5759,8 +5482,7 @@
         "configuration-group",
         "policy-groups",
         "security",
-        "system",
-        "system-security"
+        "system"
     ],
     "security virtual image": [
         "security"
@@ -5838,9 +5560,7 @@
     ],
     "service level agreement": [
         "alarms",
-        "policy-groups",
-        "system",
-        "system-monitoring"
+        "policy-groups"
     ],
     "service node": [
         "alarms",
@@ -5901,15 +5621,9 @@
     "sfp": [
         "alarms",
         "asr9000",
-        "asr9001",
-        "asr9001-hardware",
         "asr9k",
-        "ethernt-line-card",
         "interfaces",
-        "interfaces-hardware",
-        "monitor-maintain",
-        "satellite",
-        "sip-and-spa"
+        "monitor-maintain"
     ],
     "sgacl": [
         "security"
@@ -5971,9 +5685,7 @@
         "asr9000",
         "qos",
         "routing",
-        "sip-and-spa",
         "system",
-        "system-setup",
         "systems-interfaces"
     ],
     "site dashboard": [
@@ -6013,11 +5725,9 @@
     "sla": [
         "alarms",
         "interfaces",
-        "interfaces-hardware",
         "ip",
         "policy-groups",
-        "system",
-        "system-monitoring"
+        "system"
     ],
     "sla class": [
         "configuration-group",
@@ -6036,16 +5746,13 @@
     ],
     "slr": [
         "licensing",
-        "smart",
-        "smart-licensing"
+        "smart"
     ],
     "small form pluggable": [
         "alarms"
     ],
     "small form-factor pluggable": [
-        "alarms",
-        "asr9000",
-        "satellite"
+        "alarms"
     ],
     "smart account": [
         "sdwan-ssp",
@@ -6059,19 +5766,14 @@
         "bng",
         "ip",
         "licensing",
-        "smart",
-        "smart-licensing"
+        "smart"
     ],
     "smart licensing using policy": [
         "asr",
-        "licensing",
-        "smart",
-        "smart-licensing"
+        "smart"
     ],
     "smu": [
-        "monitor-maintain",
-        "system",
-        "system-setup"
+        "monitor-maintain"
     ],
     "snapshot": [
         "sdwan-ssp"
@@ -6081,14 +5783,11 @@
     ],
     "snmp": [
         "asr9k",
-        "asr9k-overview",
         "configuration-group",
         "ip",
-        "ip-addresses",
         "policies",
         "snmp",
-        "system",
-        "system-security"
+        "system"
     ],
     "snmp agent": [
         "snmp"
@@ -6113,8 +5812,7 @@
     ],
     "snmp mib": [
         "snmp",
-        "system",
-        "system-security"
+        "system"
     ],
     "snmp mibs": [
         "snmp"
@@ -6169,8 +5867,7 @@
     ],
     "snmpv3": [
         "snmp",
-        "system",
-        "system-security"
+        "system"
     ],
     "socket programming": [
         "rugged"
@@ -6193,8 +5890,7 @@
     ],
     "software installation": [
         "sw-install-and-upgrade-guide-isr1100",
-        "system",
-        "system-setup"
+        "system"
     ],
     "software maintenance": [
         "monitor-maintain"
@@ -6209,12 +5905,10 @@
         "monitor-maintain",
         "sw-install-and-upgrade-guide-isr1100",
         "system",
-        "system-setup",
         "systems-interfaces"
     ],
     "software version": [
         "system",
-        "system-setup",
         "systems-interfaces"
     ],
     "software versions": [
@@ -6231,13 +5925,10 @@
     ],
     "spa": [
         "asr9000",
-        "sip-and-spa",
-        "system",
-        "system-setup"
+        "system"
     ],
     "span": [
         "interfaces",
-        "interfaces-hardware",
         "system-monitoring",
         "traffic-mirroring"
     ],
@@ -6276,7 +5967,6 @@
         "programmability",
         "security",
         "system",
-        "system-security",
         "systems-interfaces"
     ],
     "ssh authentication": [
@@ -6309,8 +5999,6 @@
         "sd-wan-remote-access"
     ],
     "sso": [
-        "asr9k",
-        "asr9k-overview",
         "security",
         "vanalytics"
     ],
@@ -6327,8 +6015,6 @@
         "security"
     ],
     "stateless address autoconfiguration": [
-        "bng",
-        "cnbng",
         "systems-interfaces"
     ],
     "stateless dhcp": [
@@ -6357,12 +6043,9 @@
         "systems-interfaces"
     ],
     "storage device": [
-        "interfaces",
-        "interfaces-hardware",
         "system"
     ],
     "streaming telemetry": [
-        "programmability",
         "telemetry"
     ],
     "strong passwords": [
@@ -6374,8 +6057,6 @@
         "troubleshoot"
     ],
     "sub interface": [
-        "interfaces",
-        "interfaces-hardware",
         "systems-interfaces"
     ],
     "sub-locations": [
@@ -6386,7 +6067,6 @@
     ],
     "subinterface": [
         "interfaces",
-        "interfaces-hardware",
         "multicast",
         "qos",
         "system",
@@ -6397,7 +6077,6 @@
     ],
     "subinterfaces": [
         "interfaces",
-        "interfaces-hardware",
         "l2vpn",
         "qos",
         "systems-interfaces"
@@ -6484,14 +6163,10 @@
     ],
     "synce": [
         "interfaces",
-        "interfaces-hardware",
         "system",
-        "system-management",
         "timing"
     ],
     "synchronization": [
-        "asr9k",
-        "hardware-installation",
         "interfaces",
         "l2vpn",
         "l3vpn",
@@ -6499,7 +6174,6 @@
         "multicast",
         "routing",
         "system",
-        "system-management",
         "timing"
     ],
     "synthetic traffic": [
@@ -6508,14 +6182,12 @@
     "syslog": [
         "cgnat",
         "ip",
-        "ip-addresses",
         "maintain",
         "monitor",
         "monitor-maintain",
         "routing",
         "system",
         "system-monitoring",
-        "system-security",
         "systems-interfaces"
     ],
     "system clock": [
@@ -6533,17 +6205,14 @@
     ],
     "system logging": [
         "system",
-        "system-monitoring",
         "systems-interfaces"
     ],
     "system management": [
         "asr9k",
-        "asr9k-overview",
         "system"
     ],
     "system monitoring": [
-        "system",
-        "system-monitoring"
+        "system"
     ],
     "system parameters": [
         "systems-interfaces"
@@ -6571,7 +6240,6 @@
     ],
     "t1": [
         "asr9000",
-        "sip-and-spa",
         "systems-interfaces"
     ],
     "t1 controller": [
@@ -6588,8 +6256,6 @@
         "systems-interfaces"
     ],
     "tacacs+": [
-        "system",
-        "system-security",
         "systems-interfaces"
     ],
     "tags": [
@@ -6604,7 +6270,6 @@
     "tcp": [
         "cgnat",
         "ip",
-        "ip-addresses",
         "qos",
         "routing",
         "rugged",
@@ -6627,7 +6292,6 @@
     "tcp mss": [
         "cgnat",
         "ip",
-        "ip-addresses",
         "routing",
         "systems-interfaces"
     ],
@@ -6646,7 +6310,6 @@
     ],
     "telemetry": [
         "monitor-maintain",
-        "programmability",
         "system",
         "telemetry"
     ],
@@ -6655,15 +6318,12 @@
     ],
     "telnet": [
         "ip",
-        "ip-addresses",
         "system"
     ],
     "temperature": [
         "asr9000",
         "asr9001",
-        "asr9001-hardware",
         "asr9k",
-        "hardware-installation",
         "monitor-maintain"
     ],
     "template": [
@@ -6735,7 +6395,6 @@
     ],
     "tftp": [
         "ip",
-        "ip-addresses",
         "system",
         "vsmig"
     ],
@@ -6787,16 +6446,12 @@
         "systems-interfaces"
     ],
     "time synchronization": [
-        "system",
-        "system-management",
         "systems-interfaces"
     ],
     "timing": [
         "asr9000",
         "qos",
-        "satellite",
         "system",
-        "system-management",
         "timing"
     ],
     "tloc": [
@@ -6830,7 +6485,6 @@
         "appqoe",
         "security",
         "system",
-        "system-security",
         "systems-interfaces"
     ],
     "tls 1.3": [
@@ -6872,8 +6526,6 @@
         "network-wide-path-insight"
     ],
     "traceroute": [
-        "ip",
-        "ip-addresses",
         "monitor-maintain",
         "mpls",
         "multicast",
@@ -6936,7 +6588,6 @@
     ],
     "traffic mirroring": [
         "interfaces",
-        "interfaces-hardware",
         "traffic-mirroring"
     ],
     "traffic optimization": [
@@ -6981,8 +6632,6 @@
         "configuration-group"
     ],
     "transmission control protocol": [
-        "ip",
-        "ip-addresses",
         "rugged"
     ],
     "transport gateway": [
@@ -7001,7 +6650,6 @@
     ],
     "transport layer security": [
         "system",
-        "system-security",
         "systems-interfaces"
     ],
     "transport location": [
@@ -7045,8 +6693,6 @@
         "vsmig"
     ],
     "trunk": [
-        "interfaces",
-        "interfaces-hardware",
         "l2vpn"
     ],
     "trunk group": [
@@ -7064,7 +6710,6 @@
     "tunnel": [
         "cgnat",
         "ip",
-        "ip-addresses",
         "l2vpn",
         "l3vpn",
         "mpls",
@@ -7135,7 +6780,6 @@
     ],
     "udp": [
         "ip",
-        "ip-addresses",
         "l2vpn",
         "mpls",
         "rugged",
@@ -7180,7 +6824,6 @@
     ],
     "unicast": [
         "ip",
-        "ip-addresses",
         "l2vpn",
         "routing",
         "segment",
@@ -7216,8 +6859,6 @@
         "alarms"
     ],
     "upgrade": [
-        "asr9k",
-        "hardware-installation",
         "ismig",
         "segment",
         "smart",
@@ -7257,16 +6898,12 @@
         "sd-wan-remote-access"
     ],
     "user datagram protocol": [
-        "ip",
-        "ip-addresses",
         "rugged"
     ],
     "user groups": [
         "systems-interfaces"
     ],
     "user management": [
-        "system",
-        "system-security",
         "systems-interfaces"
     ],
     "utd": [
@@ -7349,9 +6986,7 @@
     ],
     "virtual machine": [
         "sdwan-xe-gs",
-        "system",
-        "system-setup",
-        "vsmig"
+        "system"
     ],
     "virtual machine catalog": [
         "cloud-onramp"
@@ -7371,9 +7006,7 @@
     "virtual private network": [
         "configuration-group",
         "l2vpn",
-        "mpls",
         "remote-access",
-        "routing",
         "sd-wan-remote-access",
         "security",
         "segmentation",
@@ -7381,7 +7014,6 @@
     ],
     "virtual router redundancy protocol": [
         "ip",
-        "ip-addresses",
         "routing",
         "security",
         "systems-interfaces"
@@ -7391,20 +7023,12 @@
     ],
     "virtual routing and forwarding": [
         "bridging",
-        "ip",
-        "ip-addresses",
-        "l3vpn",
-        "mpls",
         "routing",
         "rugged",
-        "segmentation",
-        "system",
-        "system-management"
+        "segmentation"
     ],
     "virtual routing forwarding": [
-        "bng",
         "bridging",
-        "multicast",
         "routing",
         "segmentation"
     ],
@@ -7422,7 +7046,6 @@
         "bng",
         "bridging",
         "interfaces",
-        "interfaces-hardware",
         "l2vpn",
         "multicast",
         "qos"
@@ -7433,7 +7056,6 @@
     "vlans": [
         "bridging",
         "interfaces",
-        "interfaces-hardware",
         "l2vpn",
         "routing"
     ],
@@ -7442,7 +7064,6 @@
         "l2vpn",
         "sdwan-xe-gs",
         "system",
-        "system-setup",
         "vsmig"
     ],
     "vm catalog": [
@@ -7498,11 +7119,9 @@
     ],
     "vpls": [
         "interfaces",
-        "interfaces-hardware",
         "l2vpn",
         "qos",
-        "system",
-        "system-security"
+        "system"
     ],
     "vpn": [
         "configuration-group",
@@ -7588,10 +7207,7 @@
         "bng",
         "bridging",
         "cgnat",
-        "interfaces",
-        "interfaces-hardware",
         "ip",
-        "ip-addresses",
         "l3vpn",
         "mpls",
         "multicast",
@@ -7599,9 +7215,7 @@
         "rugged",
         "segment",
         "segmentation",
-        "system",
-        "system-management",
-        "system-security"
+        "system"
     ],
     "vrf aware sockets": [
         "rugged"
@@ -7632,9 +7246,7 @@
     ],
     "vrrp": [
         "interfaces",
-        "interfaces-hardware",
         "ip",
-        "ip-addresses",
         "l2vpn",
         "monitor-maintain",
         "routing",
@@ -7798,11 +7410,7 @@
         "routing",
         "segment",
         "smart",
-        "smart-licensing",
         "system",
-        "system-management",
-        "system-monitoring",
-        "system-setup",
         "telemetry"
     ],
     "zbf": [
@@ -7814,9 +7422,7 @@
     "zero touch provisioning": [
         "alarms",
         "monitor-maintain",
-        "system",
-        "system-security",
-        "system-setup"
+        "system"
     ],
     "zone based firewall": [
         "alarms"
@@ -7838,7 +7444,6 @@
         "gs-book",
         "monitor-maintain",
         "system",
-        "system-security",
         "system-setup"
     ],
     "ztp upgrade": [

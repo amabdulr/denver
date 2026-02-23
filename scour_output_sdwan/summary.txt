@@ -1,0 +1,113 @@
+======================================================================
+SCOUR BOOKS — SUMMARY
+======================================================================
+
+Books processed:         32
+  Successful:            32
+  Failed (no TOC):       0
+Total headings found:    8419
+LLM concepts extracted:  0
+Mechanical vocab matches:1305
+Final merged concepts:   1872
+New terms (gap report):  0
+
+----------------------------------------------------------------------
+PER-BOOK BREAKDOWN
+----------------------------------------------------------------------
+
+✅ asr-9000-licensing-reference.pdf
+   Product: ASR9000  |  TOC: bookmarks  |  Headings: 24  |  LLM concepts: 0  |  Vocab matches: 7
+
+✅ b-asr9000-satellite-hig.pdf
+   Product: ASR9000  |  TOC: bookmarks  |  Headings: 187  |  LLM concepts: 0  |  Vocab matches: 17
+
+✅ b-asr9000-sip-and-spa-hardware-installation-guide.pdf
+   Product: ASR9000  |  TOC: bookmarks  |  Headings: 134  |  LLM concepts: 0  |  Vocab matches: 16
+
+✅ b-asr9001-hardware-installation-guide.pdf
+   Product: ASR9000  |  TOC: bookmarks  |  Headings: 134  |  LLM concepts: 0  |  Vocab matches: 16
+
+✅ b-asr9k-ethernt-line-card-install-guide.pdf
+   Product: ASR9000  |  TOC: bookmarks  |  Headings: 140  |  LLM concepts: 0  |  Vocab matches: 16
+
+✅ b-asr9k-hardware-installation-guide.pdf
+   Product: ASR9000  |  TOC: bookmarks  |  Headings: 156  |  LLM concepts: 0  |  Vocab matches: 16
+
+✅ b-asr9k-overview-reference-guide.pdf
+   Product: ASR9000  |  TOC: bookmarks  |  Headings: 104  |  LLM concepts: 0  |  Vocab matches: 19
+
+✅ b-bng-cg-asr9000-25xx.pdf
+   Product: ASR9000  |  TOC: bookmarks  |  Headings: 304  |  LLM concepts: 0  |  Vocab matches: 64
+
+✅ b-cgnat-cg-asr9k-25xx.pdf
+   Product: ASR9000  |  TOC: bookmarks  |  Headings: 124  |  LLM concepts: 0  |  Vocab matches: 22
+
+✅ b-cnbng-user-plane-cg-asr9000-25xx.pdf
+   Product: ASR9000  |  TOC: bookmarks  |  Headings: 98  |  LLM concepts: 0  |  Vocab matches: 32
+
+✅ b-increase-memory-of-rsp5-rp3-tr.pdf
+   Product: ASR9000  |  TOC: bookmarks  |  Headings: 2  |  LLM concepts: 0  |  Vocab matches: 2
+
+✅ b-interfaces-hardware-component-cg-asr9000-25xx.pdf
+   Product: ASR9000  |  TOC: bookmarks  |  Headings: 351  |  LLM concepts: 0  |  Vocab matches: 72
+
+✅ b-ip-addresses-cg-asr9000-25xx.pdf
+   Product: ASR9000  |  TOC: bookmarks  |  Headings: 400  |  LLM concepts: 0  |  Vocab matches: 94
+
+✅ b-l2vpn-cg-asr9000-25xx.pdf
+   Product: ASR9000  |  TOC: bookmarks  |  Headings: 459  |  LLM concepts: 0  |  Vocab matches: 97
+
+✅ b-l3vpn-cg-asr9000-25xx.pdf
+   Product: ASR9000  |  TOC: bookmarks  |  Headings: 110  |  LLM concepts: 0  |  Vocab matches: 39
+
+✅ b-mpls-cg-asr9000-25xx.pdf
+   Product: ASR9000  |  TOC: bookmarks  |  Headings: 336  |  LLM concepts: 0  |  Vocab matches: 58
+
+✅ b-multicast-cg-asr9k-25xx.pdf
+   Product: ASR9000  |  TOC: bookmarks  |  Headings: 174  |  LLM concepts: 0  |  Vocab matches: 57
+
+✅ b-netflow-cg-asr9k-25xx.pdf
+   Product: ASR9000  |  TOC: bookmarks  |  Headings: 68  |  LLM concepts: 0  |  Vocab matches: 20
+
+✅ b-programmability-cg-asr9000-25xx.pdf
+   Product: ASR9000  |  TOC: bookmarks  |  Headings: 80  |  LLM concepts: 0  |  Vocab matches: 29
+
+✅ b-qos-cg-asr9k-25xx (1).pdf
+   Product: ASR9000  |  TOC: bookmarks  |  Headings: 332  |  LLM concepts: 0  |  Vocab matches: 72
+
+✅ b-qos-cg-asr9k-25xx.pdf
+   Product: ASR9000  |  TOC: bookmarks  |  Headings: 332  |  LLM concepts: 0  |  Vocab matches: 72
+
+✅ b-routing-cg-asr9000-25xx.pdf
+   Product: ASR9000  |  TOC: bookmarks  |  Headings: 708  |  LLM concepts: 0  |  Vocab matches: 113
+
+✅ b-segment-routing-cg-asr9000-25xx.pdf
+   Product: ASR9000  |  TOC: bookmarks  |  Headings: 370  |  LLM concepts: 0  |  Vocab matches: 76
+
+✅ b-system-management-cg-asr9000-25xx.pdf
+   Product: ASR9000  |  TOC: bookmarks  |  Headings: 101  |  LLM concepts: 0  |  Vocab matches: 18
+
+✅ b-system-monitoring-cg-asr9000-25xx.pdf
+   Product: ASR9000  |  TOC: bookmarks  |  Headings: 226  |  LLM concepts: 0  |  Vocab matches: 33
+
+✅ b-system-security-cg-asr9000-25xx.pdf
+   Product: ASR9000  |  TOC: bookmarks  |  Headings: 354  |  LLM concepts: 0  |  Vocab matches: 84
+
+✅ b-system-setup-cg-asr9000-25xx.pdf
+   Product: ASR9000  |  TOC: bookmarks  |  Headings: 125  |  LLM concepts: 0  |  Vocab matches: 35
+
+✅ b-telemetry-cg-asr9000-25xx.pdf
+   Product: ASR9000  |  TOC: bookmarks  |  Headings: 45  |  LLM concepts: 0  |  Vocab matches: 17
+
+✅ ios-xr-smart-licensing-using-policy.pdf
+   Product: ASR9000  |  TOC: bookmarks  |  Headings: 28  |  LLM concepts: 0  |  Vocab matches: 14
+
+✅ ismig.pdf
+   Product: ASR9000  |  TOC: bookmarks  |  Headings: 102  |  LLM concepts: 0  |  Vocab matches: 22
+
+✅ rcsi-0350-book.pdf
+   Product: ASR9000  |  TOC: bookmarks  |  Headings: 902  |  LLM concepts: 0  |  Vocab matches: 7
+
+✅ vsmig.pdf
+   Product: ASR9000  |  TOC: bookmarks  |  Headings: 1409  |  LLM concepts: 0  |  Vocab matches: 49
+

@@ -11,6 +11,7 @@ import xml.etree.ElementTree as ET
 import requests
 import json
 import os
+import re
 import hashlib
 import pandas as pd
 from datetime import datetime
@@ -77,6 +78,39 @@ def save_tester_name(tester_name):
     config = load_config()
     config['tester_name'] = tester_name
     save_config(config)
+
+PRODUCT_KEYWORDS_FILE = "product_keywords.json"
+
+def _load_product_keywords():
+    """Load product keyword mappings from JSON file."""
+    if os.path.exists(PRODUCT_KEYWORDS_FILE):
+        try:
+            with open(PRODUCT_KEYWORDS_FILE, 'r') as f:
+                data = json.load(f)
+            return data.get('products', [])
+        except Exception:
+            return []
+    return []
+
+def detect_product_from_content(content):
+    """Auto-detect product name from pasted bug/RCA content.
+    
+    Reads keyword rules from product_keywords.json (order matters: first match wins).
+    Returns the product name string matching the selectbox options,
+    or None if no product could be detected.
+    """
+    if not content or not content.strip():
+        return None
+    
+    text = content.lower()
+    
+    for product_entry in _load_product_keywords():
+        name = product_entry.get('name')
+        keywords = product_entry.get('keywords', [])
+        if any(kw.lower() in text for kw in keywords):
+            return name
+    
+    return None
 
 def get_available_guides(product_name):
     """Get list of available PDF guides for a product from the vector store"""
@@ -435,6 +469,25 @@ def render_analysis_summary_page():
             key="analysis_rca_text_area"
         )
         
+        # ── Early bug ID detection ──
+        # Scan for Cisco bug IDs (CSCxx#####) only in pasted RCAs, not fetched bug reports
+        if rca_content and rca_content.strip():
+            # Skip if content is a fetched bug report (starts with "# Bug CSC...")
+            is_fetched_bug_report = bool(re.match(r'^#\s*Bug\s+CSC', rca_content.strip(), re.IGNORECASE))
+            if not is_fetched_bug_report:
+                bug_ids = list(set(re.findall(r'CSC[a-z]{2}\d{5}', rca_content, re.IGNORECASE)))
+                if bug_ids:
+                    bug_links = ", ".join(
+                        f"[**{b.upper()}**](https://cdetsng.cisco.com/webui/#view={b})"
+                        for b in sorted(bug_ids)
+                    )
+                    st.warning(
+                        f"🐛 **Known Bug(s) Detected:** {bug_links}\n\n"
+                        f"This RCA references {len(bug_ids)} existing bug(s). "
+                        f"If these bugs already have documentation, you may not need to run full analysis. "
+                        f"Check if the bug is already tracked before proceeding."
+                    )
+        
         st.markdown("---")
         
         # Step 2: Detect Technology Terms
@@ -487,7 +540,8 @@ def render_analysis_summary_page():
                     # Reset selections for fresh results
                     for k in ['tech_terms_multiselect', 'selected_tech_terms', 'selected_raw_tech_terms', '_guide_state_hash']:
                         st.session_state.pop(k, None)
-                    st.rerun()
+                    # Update local flag so results display immediately below
+                    has_cached_results = True
             
             # Display cached results if available
             if has_cached_results:
@@ -506,6 +560,7 @@ def render_analysis_summary_page():
                 
                 st.markdown("<h3 style='color: #1f77b4;'>🔧 Detected Technology Terms</h3>", unsafe_allow_html=True)
                 st.caption("Auto-extracted from your bug/RCA content. Deselect irrelevant terms to focus the search.")
+                st.info("💡 **Tip:** Remove generic terms (e.g. *template*, *process*, *security*) that describe the problem symptoms rather than the actual feature area. Fewer, more specific terms = better guide recommendations.")
                 
                 # Show URL clues as info (not selectable — always used)
                 if url_clues:
@@ -549,17 +604,30 @@ def render_analysis_summary_page():
         product_options = ["Cisco SD-WAN", "Cisco 9800", "ASR 9000", "Cisco 8000", "cisco_generic"]
         saved_product = get_saved_product()
         
-        # Find index of saved product, default to 1 if not found
-        try:
-            default_index = product_options.index(saved_product)
-        except ValueError:
-            default_index = 1
+        # Auto-detect product from pasted content
+        detected_product = detect_product_from_content(rca_content)
+        
+        if detected_product and detected_product in product_options:
+            # Only override when detection result actually changes
+            if st.session_state.get('_last_detected_product') != detected_product:
+                st.session_state._last_detected_product = detected_product
+                # Only set the widget value if it doesn't already match
+                if st.session_state.get('analysis_product_name') != detected_product:
+                    st.session_state.analysis_product_name = detected_product
+            # Show detection badge
+            st.success(f"🎯 Auto-detected product: **{detected_product}**")
+        else:
+            # No detection — clear tracking so next paste triggers again
+            st.session_state.pop('_last_detected_product', None)
+            # Set saved preference only if widget hasn't been touched yet
+            if 'analysis_product_name' not in st.session_state:
+                if saved_product in product_options:
+                    st.session_state.analysis_product_name = saved_product
         
         product_name = st.selectbox(
             "Product Name",
             options=product_options,
-            index=default_index,
-            help="Select the Cisco product (selection is remembered)",
+            help="Select the Cisco product (auto-detected from content, or selection is remembered)",
             key="analysis_product_name",
             on_change=lambda: save_product_preference(st.session_state.get("analysis_product_name"))
         )
@@ -696,6 +764,19 @@ def render_analysis_summary_page():
                 
                 # Create checkboxes for each guide, sorted by score (highest first)
                 # Matched guides come first (sorted by score), then unmatched
+                # Reference guides (e.g. alarms) are excluded from auto-selection
+                # but still shown so users can manually check them.
+                import json as _json
+                _gm_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "guide_mappings.json")
+                try:
+                    with open(_gm_path) as _f:
+                        _ref_patterns = [p.lower() for p in _json.load(_f).get('reference_guides', {}).get('patterns', [])]
+                except Exception:
+                    _ref_patterns = []
+                
+                def _is_reference_guide(name):
+                    return any(pat in name.lower() for pat in _ref_patterns)
+                
                 sorted_guides = sorted(
                     available_guides,
                     key=lambda g: guide_scores.get(g, 0),
@@ -703,12 +784,19 @@ def render_analysis_summary_page():
                 )
                 for guide in sorted_guides:
                     checkbox_key = f"guide_{guide}"
+                    is_ref = _is_reference_guide(guide)
                     if checkbox_key not in st.session_state:
-                        st.session_state[checkbox_key] = guide in st.session_state.get('selected_guides', available_guides)
+                        if is_ref:
+                            # Reference guides start unchecked
+                            st.session_state[checkbox_key] = False
+                        else:
+                            st.session_state[checkbox_key] = guide in st.session_state.get('selected_guides', available_guides)
                     
                     # Build label with match indicator and score
                     score = guide_scores.get(guide, 0)
-                    if guide in auto_match_reasons:
+                    if is_ref:
+                        label = f"{guide}  📋 Reference guide (check manually if needed)"
+                    elif guide in auto_match_reasons:
                         match_tags = ", ".join(auto_match_reasons[guide])
                         rank_marker = f"🥇" if score == max(guide_scores.values(), default=0) and score > 0 else "⭐"
                         label = f"{guide}  {rank_marker} score={score} ({match_tags})"
