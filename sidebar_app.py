@@ -791,24 +791,6 @@ def render_analysis_summary_page():
                 # Load document inventory for source URLs (currently available for sdwan)
                 doc_inventory = load_document_inventory(product_name)
                 
-                if auto_matched_guides and doc_inventory:
-                    sorted_matched = sorted(auto_matched_guides, key=lambda g: guide_scores.get(g, 0), reverse=True)
-                    top_3 = sorted_matched[:3]
-                    link_lines = []
-                    for rank, g in enumerate(top_3, 1):
-                        inv_entry = doc_inventory.get(g, {})
-                        url = inv_entry.get('source_url', '')
-                        title = inv_entry.get('title', g)
-                        score_val = guide_scores.get(g, 0)
-                        if url:
-                            link_lines.append(f"**#{rank}** [{title}]({url}) (score={score_val})")
-                        else:
-                            link_lines.append(f"**#{rank}** {title} (score={score_val})")
-                    if link_lines:
-                        st.markdown("📚 **Top Recommendations:**")
-                        for line in link_lines:
-                            st.markdown(f"&nbsp;&nbsp;&nbsp;&nbsp;{line}")
-                
                 # Build a hash that changes when content/terms change, to reset checkbox defaults
                 terms_sig = str(sorted(current_selected_terms)).encode() if current_selected_terms else b"none"
                 guide_state_hash = hashlib.md5(
@@ -942,6 +924,24 @@ def render_analysis_summary_page():
         # Display conversation: latest follow-up first so the user sees the newest answer without scrolling
         if st.session_state.conversation_history:
             with output_container:
+                # Show a guide links box above the output (for sdwan with document inventory)
+                _inv = load_document_inventory(product_name)
+                _gs = st.session_state.get('_guide_scores', {})
+                if _inv and _gs:
+                    _sorted_gs = sorted(_gs.items(), key=lambda x: -x[1])[:3]
+                    if _sorted_gs:
+                        _link_rows = ["| # | Guide | Score |", "|---|-------|-------|"]
+                        for _rank, (_g, _s) in enumerate(_sorted_gs, 1):
+                            _entry = _inv.get(_g, {})
+                            _url = _entry.get('source_url', '')
+                            _title = _entry.get('title', _g)
+                            if _url:
+                                _link_rows.append(f"| {_rank} | [{_title}]({_url}) | {_s} |")
+                            else:
+                                _link_rows.append(f"| {_rank} | {_title} | {_s} |")
+                        with st.expander("📚 **Guide Links** — click to open online guides", expanded=True):
+                            st.markdown("\n".join(_link_rows))
+                
                 followups = st.session_state.conversation_history[1:]
                 if followups:
                     # Show the most recent follow-up at the top
