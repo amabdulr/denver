@@ -18,7 +18,7 @@ from datetime import datetime
 from openpyxl import load_workbook, Workbook
 
 # Import helper functions
-from app_functions import run_agent, format_output, apply_prompt_file, extract_doc_clues_data, match_terms_to_guides
+from app_functions import run_agent, format_output, apply_prompt_file, extract_doc_clues_data, match_terms_to_guides, load_document_inventory
 from utils import get_llm
 from sidebar_first_draft_page import render_first_draft_page
 from sidebar_bulk_analysis_page import render_bulk_analysis_page
@@ -111,6 +111,34 @@ def detect_product_from_content(content):
             return name
     
     return None
+
+
+def _enrich_output_with_guide_links(text: str, product_name: str) -> str:
+    """Post-process LLM output to add clickable links next to 'Document name: xxx.pdf' lines.
+    
+    Looks up each mentioned guide in document_inventory.json and appends a
+    clickable link on the next line so users can jump straight to the online guide.
+    Only applies when an inventory exists for the product (currently sdwan).
+    """
+    doc_inventory = load_document_inventory(product_name)
+    if not doc_inventory:
+        return text
+    
+    lines = text.split('\n')
+    enriched = []
+    for line in lines:
+        enriched.append(line)
+        # Match lines like "Document name: some-guide.pdf" or "**Document name:** some-guide.pdf"
+        match = re.search(r'[Dd]ocument\s+name:?\s*\**\s*([^\s*]+\.pdf)', line)
+        if match:
+            guide_name = match.group(1)
+            inv_entry = doc_inventory.get(guide_name, {})
+            url = inv_entry.get('source_url', '')
+            title = inv_entry.get('title', '')
+            if url:
+                enriched.append(f"  🔗 **Online:** [{title or guide_name}]({url})")
+    
+    return '\n'.join(enriched)
 
 def get_available_guides(product_name):
     """Get list of available PDF guides for a product from the vector store"""
@@ -760,6 +788,27 @@ def render_analysis_summary_page():
                         top_msg += f" — **#{1}: {top_guide}** (score={guide_scores.get(top_guide, 0)})"
                     st.info(top_msg)
                 
+                # Load document inventory for source URLs (currently available for sdwan)
+                doc_inventory = load_document_inventory(product_name)
+                
+                if auto_matched_guides and doc_inventory:
+                    sorted_matched = sorted(auto_matched_guides, key=lambda g: guide_scores.get(g, 0), reverse=True)
+                    top_3 = sorted_matched[:3]
+                    link_lines = []
+                    for rank, g in enumerate(top_3, 1):
+                        inv_entry = doc_inventory.get(g, {})
+                        url = inv_entry.get('source_url', '')
+                        title = inv_entry.get('title', g)
+                        score_val = guide_scores.get(g, 0)
+                        if url:
+                            link_lines.append(f"**#{rank}** [{title}]({url}) (score={score_val})")
+                        else:
+                            link_lines.append(f"**#{rank}** {title} (score={score_val})")
+                    if link_lines:
+                        st.markdown("📚 **Top Recommendations:**")
+                        for line in link_lines:
+                            st.markdown(f"&nbsp;&nbsp;&nbsp;&nbsp;{line}")
+                
                 # Build a hash that changes when content/terms change, to reset checkbox defaults
                 terms_sig = str(sorted(current_selected_terms)).encode() if current_selected_terms else b"none"
                 guide_state_hash = hashlib.md5(
@@ -900,7 +949,7 @@ def render_analysis_summary_page():
                     latest_num = len(followups)
                     q_preview = latest['question'][:200] + "..." if len(latest['question']) > 200 else latest['question']
                     st.markdown(f"**💬 Follow-up {latest_num} _(latest)_:** {q_preview}")
-                    st.markdown(latest['answer'])
+                    st.markdown(_enrich_output_with_guide_links(latest['answer'], product_name))
 
                     # Show older follow-ups in reverse order (newest → oldest) inside a collapsible
                     if len(followups) > 1:
@@ -909,16 +958,16 @@ def render_analysis_summary_page():
                                 exchange = followups[i]
                                 q_prev = exchange['question'][:200] + "..." if len(exchange['question']) > 200 else exchange['question']
                                 st.markdown(f"**💬 Follow-up {i + 1}:** {q_prev}")
-                                st.markdown(exchange['answer'])
+                                st.markdown(_enrich_output_with_guide_links(exchange['answer'], product_name))
                                 if i > 0:
                                     st.markdown("---")
 
                     # Initial analysis tucked into a collapsible below
                     with st.expander("📋 Initial Analysis", expanded=False):
-                        st.markdown(st.session_state.conversation_history[0]['answer'])
+                        st.markdown(_enrich_output_with_guide_links(st.session_state.conversation_history[0]['answer'], product_name))
                 else:
                     # No follow-ups yet — show the initial analysis directly
-                    st.markdown(st.session_state.conversation_history[0]['answer'])
+                    st.markdown(_enrich_output_with_guide_links(st.session_state.conversation_history[0]['answer'], product_name))
         
         # ===== FOLLOW-UP SECTION - Right below output =====
         if st.session_state.initial_analysis_done and st.session_state.conversation_history:
@@ -1123,13 +1172,13 @@ Regards,
             email_col1, email_col2 = st.columns(2)
             
             with email_col1:
-                # Open in Outlook desktop app button
+                # Open in Outlook button
                 if email_recipient.strip():
                     import urllib.parse
                     to_addresses = ','.join(f"{u.strip()}@cisco.com" for u in email_recipient.split(',') if u.strip())
                     subject_text = st.session_state.get('analysis_email_subject', email_subject)
                     body_text = st.session_state.get('analysis_email_preview_edit', edited_email)
-                    outlook_url = f"ms-outlook://compose?to={urllib.parse.quote(to_addresses)}&subject={urllib.parse.quote(subject_text)}&body={urllib.parse.quote(body_text)}"
+                    outlook_url = f"https://outlook.office.com/mail/deeplink/compose?to={urllib.parse.quote(to_addresses)}&subject={urllib.parse.quote(subject_text)}&body={urllib.parse.quote(body_text)}"
                     
                     st.markdown(
                         f'''<a href="{outlook_url}" target="_blank" style="

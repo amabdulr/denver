@@ -30,6 +30,7 @@ from app_functions import (
     match_terms_to_guides,
     format_doc_clues_for_prompt,
     _scan_for_networking_terms,
+    load_document_inventory,
 )
 
 # ═══════════════════════════════════════════════════════════════════
@@ -794,16 +795,46 @@ def _section_hints_for_guide(guide_name):
 
 sorted_guides_list = sorted(guide_scores.items(), key=lambda x: -x[1]) if guide_scores else []
 
+# ── Load document inventory for source URLs ──
+doc_inventory = load_document_inventory(PRODUCT_NAME)
+if doc_inventory:
+    print(f"\n📚 Document inventory loaded: {len(doc_inventory)} guides with URLs")
+else:
+    print(f"\nℹ️  No document_inventory.json for {PRODUCT_NAME}")
+
+def _get_guide_url(guide_name):
+    """Look up the source URL for a guide from document_inventory.json."""
+    entry = doc_inventory.get(guide_name, {})
+    return entry.get('source_url', '')
+
+# ── Show top 3 recommendations with links (like sidebar_app.py) ──
+if doc_inventory and auto_matched_guides:
+    sorted_matched = sorted(auto_matched_guides, key=lambda g: guide_scores.get(g, 0), reverse=True)
+    top_3 = list(sorted_matched)[:3]
+    print(f"\n📚 Top 3 Recommendations with Links:")
+    for rank, g in enumerate(top_3, 1):
+        inv_entry = doc_inventory.get(g, {})
+        url = inv_entry.get('source_url', '')
+        title = inv_entry.get('title', g)
+        score_val = guide_scores.get(g, 0)
+        if url:
+            print(f"  #{rank}: {title} (score={score_val})")
+            print(f"       🔗 {url}")
+        else:
+            print(f"  #{rank}: {g} (score={score_val}) — no URL in inventory")
+
 pinned_rec_section = ""
 rec1_guide = None
 
 if url_clues_agent and section_label and section_label != "(see location recommendations above)":
     rec1_guide = url_clues_agent[0]['book_pdf']
     chapter_query = ' '.join(url_clues_agent[0].get('chapter_clues', []))
+    rec1_url = _get_guide_url(rec1_guide)
+    rec1_url_line = f"\nOnline guide URL: {rec1_url}" if rec1_url else ""
     pinned_rec_section = f"""
 🔒 MANDATORY LOCATION RECOMMENDATION #1 (from documentation URL — DO NOT SKIP OR REPLACE):
 ══════════════════════════════════════════════════════════════════════
-Document name: {rec1_guide}
+Document name: {rec1_guide}{rec1_url_line}
 Chapter/Section: {section_label}
 Page number: <SEARCH THIS GUIDE and fill in>
 Actual content location indicator: <SEARCH THIS GUIDE and quote 8-15 words>
@@ -813,10 +844,12 @@ Detailed reasoning: The bug/RCA explicitly references this document and chapter 
 """
 elif top_guide and section_label and section_label != "(see location recommendations above)":
     rec1_guide = top_guide
+    rec1_url = _get_guide_url(rec1_guide)
+    rec1_url_line = f"\nOnline guide URL: {rec1_url}" if rec1_url else ""
     pinned_rec_section = f"""
 🔒 MANDATORY LOCATION RECOMMENDATION #1 (highest scoring guide — DO NOT SKIP OR REPLACE):
 ══════════════════════════════════════════════════════════════════════
-Document name: {rec1_guide}
+Document name: {rec1_guide}{rec1_url_line}
 Likely section topics: {section_label}
 Page number: <SEARCH THIS GUIDE and fill in>
 Actual content location indicator: <SEARCH THIS GUIDE and quote 8-15 words>
@@ -830,10 +863,12 @@ remaining = [(g, s) for g, s in sorted_guides_list if g != rec1_guide]
 for rank, (gname, gscore) in enumerate(remaining[:2], start=2):
     hints = _section_hints_for_guide(gname)
     hint_text = hints if hints else "(search this guide for relevant sections)"
+    guide_url = _get_guide_url(gname)
+    guide_url_line = f"\nOnline guide URL: {guide_url}" if guide_url else ""
     pinned_rec_section += f"""
 🔒 MANDATORY LOCATION RECOMMENDATION #{rank} (DO NOT SKIP — search this DIFFERENT guide):
 ══════════════════════════════════════════════════════════════════════
-Document name: {gname}
+Document name: {gname}{guide_url_line}
 Likely section topics: {hint_text}
 Page number: <SEARCH THIS GUIDE and fill in>
 Actual content location indicator: <SEARCH THIS GUIDE and quote 8-15 words>

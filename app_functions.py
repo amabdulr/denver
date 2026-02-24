@@ -144,6 +144,31 @@ def _load_guide_mappings():
         print(f"⚠️ Could not load guide_mappings.json: {e}")
         return {}
 
+def load_document_inventory(product_name: str) -> dict:
+    """Load document_inventory.json for a product if it exists.
+    
+    Returns a dict mapping PDF filenames to {"title": ..., "source_url": ...}.
+    Returns empty dict if not available for this product.
+    """
+    product_mapping = {
+        "Cisco SD-WAN": "sdwan",
+        "Cisco 9800": "9800",
+        "ASR 9000": "ASR9000",
+        "Cisco 8000": "Cisco8000",
+        "cisco_generic": "cisco_generic"
+    }
+    product_code = product_mapping.get(product_name, product_name)
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    inv_path = os.path.join(base_dir, "knowledge_docs", product_code, "document_inventory.json")
+    if os.path.isfile(inv_path):
+        try:
+            with open(inv_path, 'r') as f:
+                return json.load(f)
+        except Exception as e:
+            print(f"⚠️ Could not load document_inventory.json for {product_code}: {e}")
+    return {}
+
+
 def match_terms_to_guides(detected_terms: list, product_name: str, term_frequencies: dict = None) -> tuple:
     """
     Match detected technology terms against actual PDF guide filenames
@@ -1184,15 +1209,25 @@ def run_agent(product_name: str, question: str, rca_content: str, selected_guide
     pinned_rec_section = ""
     rec1_guide = None  # track which guide is #1 so we skip it for #2/#3
     
+    # Load document inventory for source URLs (currently available for sdwan)
+    doc_inventory = load_document_inventory(product_name)
+    
+    def _get_guide_url(guide_name):
+        """Look up the source URL for a guide from document_inventory.json."""
+        entry = doc_inventory.get(guide_name, {})
+        return entry.get('source_url', '')
+    
     if url_clues and section_label and section_label != "(see location recommendations above)":
         # Strong signal: URL gave us both guide and chapter
         rec1_guide = url_clues[0]['book_pdf']
         chapter_query = ' '.join(url_clues[0].get('chapter_clues', []))
+        rec1_url = _get_guide_url(rec1_guide)
+        rec1_url_line = f"\n    Online guide URL: {rec1_url}" if rec1_url else ""
         pinned_rec_section = f"""
     
     🔒 MANDATORY LOCATION RECOMMENDATION #1 (from documentation URL — DO NOT SKIP OR REPLACE):
     ══════════════════════════════════════════════════════════════════════
-    Document name: {rec1_guide}
+    Document name: {rec1_guide}{rec1_url_line}
     Chapter/Section: {section_label}
     Page number: <SEARCH THIS GUIDE and fill in>
     Actual content location indicator: <SEARCH THIS GUIDE and quote 8-15 words>
@@ -1203,11 +1238,13 @@ def run_agent(product_name: str, question: str, rca_content: str, selected_guide
     elif top_guide and section_label and section_label != "(see location recommendations above)":
         # Moderate signal: term scoring gave us guide + section hints (no URL)
         rec1_guide = top_guide
+        rec1_url = _get_guide_url(rec1_guide)
+        rec1_url_line = f"\n    Online guide URL: {rec1_url}" if rec1_url else ""
         pinned_rec_section = f"""
     
     🔒 MANDATORY LOCATION RECOMMENDATION #1 (highest scoring guide — DO NOT SKIP OR REPLACE):
     ══════════════════════════════════════════════════════════════════════
-    Document name: {rec1_guide}
+    Document name: {rec1_guide}{rec1_url_line}
     Likely section topics: {section_label}
     Page number: <SEARCH THIS GUIDE and fill in>
     Actual content location indicator: <SEARCH THIS GUIDE and quote 8-15 words>
@@ -1221,11 +1258,13 @@ def run_agent(product_name: str, question: str, rca_content: str, selected_guide
     for rank, (guide_name, score) in enumerate(remaining_guides[:2], start=2):
         hints = _section_hints_for_guide(guide_name)
         hint_text = hints if hints else "(search this guide for relevant sections)"
+        guide_url = _get_guide_url(guide_name)
+        guide_url_line = f"\n    Online guide URL: {guide_url}" if guide_url else ""
         pinned_rec_section += f"""
     
     🔒 MANDATORY LOCATION RECOMMENDATION #{rank} (DO NOT SKIP — search this DIFFERENT guide):
     ══════════════════════════════════════════════════════════════════════
-    Document name: {guide_name}
+    Document name: {guide_name}{guide_url_line}
     Likely section topics: {hint_text}
     Page number: <SEARCH THIS GUIDE and fill in>
     Actual content location indicator: <SEARCH THIS GUIDE and quote 8-15 words>
