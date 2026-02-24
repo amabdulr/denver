@@ -265,6 +265,294 @@ Fixed Versions, Patches:
 - Until then, the only supported workaround is to limit DNS regex entries to 64 or fewer.
 """,
     },
+
+    # ── ASR 9000 test RCAs ──
+
+    "sr_autoroute": {
+        "product": "ASR 9000",
+        "description": "SR-TE autoroute docs missing IPv6 endpoint IS-IS restriction",
+        "content": """\
+Bug: CSCws82544
+Component: iosxr-pi-docs
+Product: ASR 9000 / NCS 5500 / Cisco 8000
+Severity: 3
+
+Headline: Update SR-TE autoroute documentation regarding IPv6 policy endpoints
+
+Description: SR-TE autoroute documentation should be updated to specify that autoroute feature for SR policies with IPv6 endpoints can only be used with IS-IS. OSPF supports only IPv4 endpoint policies.
+
+RCA: Eng.Escape_Restrictions
+Technology: Segment Routing
+Platforms: NCS 5500, ASR 9000, Cisco 8000
+Versions: 7.9.x, 7.10.x, 7.11.x, 24.1.x, 24.2.x, 24.3.x, 24.4.x
+
+Change description: Added a restriction — the autoroute feature for SR policies with IPv6 endpoints is supported only with IS-IS. OSPF supports autoroute only for SR policies with IPv4 endpoints.
+
+Updated URLs:
+ASR 9000: https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/25xx/segment-routing/configuration/guide/b-segment-routing-cg-asr9000-25xx
+
+Root Cause: The documentation did not include the restriction that autoroute for SR-TE policies with IPv6 endpoints requires IS-IS as the IGP. OSPF only supports autoroute for IPv4 endpoint SR policies. This caused confusion for customers attempting to use OSPF with IPv6 SR-TE autoroute and encountering unexpected behavior.
+""",
+    },
+
+    "srv6_bvi_mtu": {
+        "product": "ASR 9000",
+        "description": "SRv6 BVI MTU limitation on Tomahawk line cards",
+        "content": """\
+Bug: CSCwt18764
+Component: asr9k-doc
+Product: asr9k
+Severity: 3
+
+Headline: Refine SRv6 BVI MTU Limitation on Tomahawk
+
+Description: The currently documented description about the BVI MTU limitation on Tomahawk needs to be updated to explain the limitation in more granular manner.
+
+Reference: https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/25xx/segment-routing/configuration/guide/b-segment-routing-cg-asr9000-25xx/configure-srv6-full-length-sid.html#srv6-l3vpn-bvi-support
+
+Limitations of BVI over SRv6 on ASR 9000 3rd Generation High-Density Ethernet Line Cards:
+- The limitation applies specifically when a 3rd generation high-density Ethernet line card is SRv6 core facing.
+- The IPv6/SRv6 header length is not removed after SRv6 decapsulation during the BVI MTU check.
+- As a result, the BVI MTU check fails even if the inner packet length is within the MTU limit.
+
+Workarounds for BVI MTU Check Failures:
+For ASR 9000 3rd generation high-density Ethernet line cards experiencing BVI MTU check failures, the following workarounds are recommended:
+- Increase the MTU of the BVI interface to accommodate the additional IPv6/SRv6 header length.
+- If OSPF is used as the PE-CE protocol, it might be required to configure mtu-ignore and packet-size options and increase the MTU of the BVI interface accordingly.
+- Consider migrating to 5th generation Ethernet line cards as SRv6 core facing line card.
+
+Root Cause: On ASR 9000 3rd generation high-density Ethernet line cards, the SRv6 decapsulation process does not remove the IPv6/SRv6 header length from the packet size before performing the BVI MTU check. This causes the MTU check to fail for packets whose inner payload is within the MTU limit but whose total size (including the SRv6 encapsulation overhead) exceeds the configured BVI MTU. The documentation did not adequately explain this limitation or distinguish between line card generations.
+""",
+    },
+
+    "yang_pmengine": {
+        "product": "ASR 9000",
+        "description": "YANG pmengine-oper naming convention change breaks telemetry sensor paths",
+        "content": """\
+Bug: CSCwo96641
+Component: iosxr-pi-docs
+Product: ASR 9000 / Cisco 8000
+Severity: 4
+Related: CSCwn50223
+
+Headline: Cisco-IOS-XR-pmengine-oper.yang naming convention change
+
+Description: Format of PM engine layers have been changed to make it consistent. The naming convention has been standardized by modifying hour24fec to hour24-fec, minute15pcs to minute15-pcs, second30pcs to second30-pcs throughout all layers — otn, otnsec, pcs, fec, prbs, ether, gfp.
+
+Example — XR Version lower than 25.2.1:
+Cisco-IOS-XR-pmengine-oper:performance-management/otu/otu-ports/otu-port/otu-current/otu-minute15/otu-minute15fecs/otu-minute15fec
+Cisco-IOS-XR-pmengine-oper:performance-management/otu/otu-ports/otu-port/otu-current/otu-minute15/otu-minute15otns/otu-minute15otn
+
+Example — XR Version 25.2.1 onwards:
+Cisco-IOS-XR-pmengine-oper:performance-management/otu/otu-ports/otu-port/otu-current/otu-minute15/otu-minute15-fecs/otu-minute15-fec
+Cisco-IOS-XR-pmengine-oper:performance-management/otu/otu-ports/otu-port/otu-current/otu-minute15/otu-minute15-otns/otu-minute15-otn
+
+Symptom: Sensor paths will show as "Not Resolved" after upgrade.
+  Sensor Group Id: GNMI__10841413642326652779_0
+    Sensor Path: Cisco-IOS-XR-pmengine-oper:performance-management/otu/otu-ports/otu-port/otu-current/otu-second30/otu-second30fecs/otu-second30fec
+    Sensor Path State: Not Resolved
+    Status: Invalid sensor path
+
+Conditions: Cisco-IOS-XR-pmengine-oper.yang or sensors enabled for telemetry using the old naming convention after upgrading to 25.2.1 or later.
+
+Root Cause: The YANG model Cisco-IOS-XR-pmengine-oper.yang changed its naming convention for performance management layers in XR 25.2.1 to standardize hyphenated names (e.g., minute15-fec instead of minute15fec). Existing telemetry sensor path configurations using the old naming convention become invalid after the upgrade, causing "Not Resolved" sensor path errors. Documentation needs to be updated to reflect this YANG model change.
+""",
+    },
+
+    # ── ASR9000 #4 : Incorrect optical transmit power table for DP04QSDD-HE0 ──
+    "optical_tx_power": {
+        "product": "ASR 9000",
+        "description": "Incorrect DP04QSDD-HE0 optical transmit power table in interfaces guide",
+        "content": """
+Bug ID: CSCwp97550
+Component: iosxr-pi-docs
+Product: all
+Severity: 4
+Status: A
+
+Headline: Incorrect description of DP04QSDD-HE0 Supported Optical Tx Power
+
+Description: Please update Table 6. format and content to on par with NCS5500/8K description regarding DP04QSDD-HE0. Current content of ASR9k is incorrect and outdated regarding DP04QSDD-HE0
+
+Incorrect description of Configuring Optical Transmit Power - Table 6. Optical Transmit Power Values
+https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/25xx/interfaces/configuration/guide/b-interfaces-hardware-component-cg-asr9000-25xx/configuring-400G-digital-coherent-optics.html
+
+Correct description of Configuring Optical Transmit Power - Table 6. Optical Transmit Power Values
+https://www.cisco.com/c/en/us/td/docs/iosxr/ncs5xx/interfaces/25xx/b-interfaces-hardware-component-cg-25xx-ncs540/configuring-400g-digital-coherent-optics.html
+https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/Interfaces/25xx/configuration/guide/b-interfaces-config-guide-cisco8k-r25xx.html
+
+Symptom: Table 6 Optical Transmit Power Values for DP04QSDD-HE0 is incorrect and outdated in the ASR9000 interfaces hardware component configuration guide.
+
+Conditions: Viewing the ASR9000 interfaces hardware component configuration guide section on configuring 400G digital coherent optics.
+
+Root Cause: The documentation table for DP04QSDD-HE0 optical transmit power values in the ASR9000 interfaces hardware component guide has not been updated to match the corrected format and content present in the NCS5500 and Cisco 8000 equivalents.
+""",
+    },
+
+    # ── ASR9000 #5 : cnBNG PPPoE SRG warm standby feature ──
+    "cnbng_srg": {
+        "product": "ASR 9000",
+        "description": "cnBNG PPPoE SRG warm standby feature",
+        "content": """
+Bug ID: CSCwo04604
+Component: cnbng_nal
+Product: asr9k
+Severity: 6
+Status: R
+
+Headline: cnBNG PPPoE SRG warm standby feature
+
+Description: cnBNG PPPoE SRG warm standby feature
+scoping :EDCS-25572469
+
+Related headlines:
+- [CNBNG-NAL] Handle role change to standby for WARM SRG group
+- [Warm-stby] Handle PPPoE caps down for warm standby subscriber.
+- [Warm-standby] Add new queue to handle SRG switchover to active
+- [Warm-standby] Add new event history for warm standby subscriber
+
+Behavior-changed:
+Type of behavior change: Release introduced: 25.04.01
+Old behavior: SRG group mode had type "Hot" only
+New behavior: Added new SRG group mode "Warm"
+Impact on customer: It will save system memory and one asr9k can act is Warm standby node for multiple SRG nodes.
+
+Root Cause: The cnBNG (Cloud Native BNG) PPPoE implementation lacked support for Warm standby mode in Subscriber Redundancy Groups (SRG). Previously only Hot standby was available, which consumed significant memory. The new Warm SRG mode allows a single ASR9000 to act as a warm standby node for multiple SRG groups, reducing memory consumption while maintaining session redundancy for PPPoE subscribers.
+""",
+    },
+
+    # ── SD-WAN #6 : vManage upgrade failure Neo4j db member count ──
+    "vmanage_upgrade": {
+        "product": "Cisco SD-WAN",
+        "description": "vManage GUI upgrade blocked by Neo4j database member count check",
+        "content": """\
+Executive Summary:
+The customer attempted to upgrade their Cisco SDWAN vManage controller (vmanage-293139987.sdwan.cisco.com) from version 20.15.4 to 20.18.1 in a Cisco Cloud Hosted environment. The upgrade failed during the GUI pre-checks due to a "Configuration-db: System and/or Neo4j databases do not have the required member count" error. This prevented the upgrade from proceeding and caused delays in updating the SDWAN management infrastructure. The issue was traced to Cisco bug CSCwm11883, which blocks GUI upgrades when database member counts do not meet expected thresholds. The upgrade was successfully completed using a CLI workaround. Secondary issues included vSmart controllers losing control connections and certificates post-upgrade, requiring re-enrollment and static IPv6 assignment to restore full functionality.
+
+Steps to Reproduce:
+1. Initiate upgrade of vManage from version 20.15.4 to 20.18.1 via the vManage GUI.
+2. Observe pre-check failures, specifically:
+   - Error: "Failed: Configuration-db: System and/or Neo4j databases do not have the required member count"
+3. Attempt to proceed with upgrade; GUI blocks further progress.
+4. Consider forcing activation via CLI.
+5. If CLI workaround is used, upgrade completes successfully.
+6. Post-upgrade, attempt to upgrade vSmart controllers.
+7. vSmart upgrade fails/rolls back, vSmart loses control connection and certificate.
+8. vBond controllers experience intermittent loss of connectivity and IPv6 address assignment.
+9. Re-enroll vSmart and assign static IPv6 to vBond to restore control connections.
+
+Condition:
+- Cisco Cloud Hosted SDWAN environment.
+- Single-node vManage (vmanage-293139987.sdwan.cisco.com), two vBonds, two vSmarts.
+- Upgrade path: vManage 20.15.4 to 20.18.1.
+- Pre-checks during GUI upgrade require Configuration-db and Neo4j databases to meet specific member count requirements.
+- Known defect (CSCwm11883) causes pre-checks to fail in certain single-node/cloud deployments.
+- vSmart controllers running on AWS, subject to cloud network reachability and certificate synchronization.
+- vBond controllers rely on DHCP for IPv6; loss of DHCP or network flapping can impact control connections.
+
+Workarounds:
+- Upgrade vManage using CLI commands instead of GUI:
+  - request software install VERSION
+  - request software activate VERSION
+- Collect configuration-db backup before upgrade:
+  - request nms configuration-db backup path file_name_configdb
+- For vSmart/vBond certificate or connectivity issues:
+  - Re-enroll affected controllers via vManage GUI.
+  - Assign static IPv6 addresses to vBond controllers if DHCP fails.
+  - Bounce VPN 0 transport interfaces if control connections do not restore automatically.
+
+Root Cause:
+- The primary root cause of the vManage upgrade failure was the GUI pre-check logic enforcing Configuration-db and Neo4j database member count requirements, as described in Cisco bug CSCwm11883. In single-node or certain cloud-hosted deployments, these checks may incorrectly fail, blocking GUI upgrades even when the system is otherwise healthy.
+- Secondary root cause for vSmart/vBond issues:
+  - Repeated upgrade attempts and rollbacks led to certificate corruption and loss of control connections.
+  - vBond controllers lost IPv6 addresses due to DHCP failure or AWS network flapping, which prevented proper control plane establishment.
+  - vSmart lost its certificate, indicated by ERR_MY_CERT_REJ_BY_SERV and CRTREJSER errors in vManage logs.
+- Resolution required re-enrollment of vSmart and static IPv6 assignment to vBond.
+""",
+    },
+
+    # ── SD-WAN #7 : Stuck policy group deployment (Orange) ──
+    "stuck_policy_group": {
+        "product": "Cisco SD-WAN",
+        "description": "Stuck policy group deployment blocks all migrations — Neo4j residual task",
+        "content": """\
+Executive Summary:
+The customer, Orange, experienced a critical issue on their Cisco Catalyst C8300-1N1S-6T Router managed via vManage (software version 20.12.4.1), where it was impossible to push a new security group policy. Although the stuck deployment task was cleared from the vManage GUI using the API clean command, attempts to deploy a new policy resulted in the error: "Policy group state validation error: A deployment for Policy Group [name of the policy] is in-progress. Please wait to complete." This blocked all migrations and network changes for the customer. The root cause was a residual deployment task in the Neo4j database that was not cleared by the API, requiring manual intervention at the database level. The issue was resolved by editing the Neo4j database entry for the stuck task from "Deploying" to "Deploy Failure," which allowed policy deployment to proceed and unblocked migrations.
+
+Steps to Reproduce:
+1. Initiate a security group policy deployment from vManage to a group of cEdge routers.
+2. Observe that the deployment task becomes stuck in "in_progress" state (visible via API: /dataservice/device/action/status/tasks).
+3. Attempt to clean the stuck task using the API endpoint: /dataservice/device/action/status/tasks/clean?processId=<processId>.
+4. Verify that no running tasks are visible in the vManage GUI.
+5. Attempt to push a new security group policy.
+6. Encounter the error: "Policy group state validation error: A deployment for Policy Group [name of the policy] is in-progress. Please wait to complete."
+7. Confirm that migrations and policy changes are blocked.
+
+Condition:
+- vManage is running on-premises, managing Cisco Catalyst C8300-1N1S-6T routers.
+- Software version: vManage 20.12.4.1.
+- The stuck deployment task is for a security policy group push to cEdge devices.
+- The API shows no running tasks after clean-up, but the Neo4j database still contains a task with status "in_progress" for processId "deploy_policy_group-5d19b44b-30ab-44c8-a192-305208e724be".
+
+Workarounds:
+- No effective workaround was available via the vManage GUI or API; the only temporary mitigation was to avoid further policy pushes until the database was manually corrected.
+- Manual intervention in the Neo4j database was required to resolve the issue.
+
+Procedure (Solution):
+1. Access the Neo4j database on the vManage server.
+2. Locate the stuck deployment task using the processId "deploy_policy_group-5d19b44b-30ab-44c8-a192-305208e724be".
+3. Execute Neo4j queries to change the task status from "Deploying" to "Deploy Failure".
+4. Verify that the change is reflected and no tasks are stuck in "in_progress" state.
+5. Attempt to push the security group policy again from vManage.
+6. Confirm successful deployment and unblock migrations.
+
+Root Cause:
+The root cause was a race condition or software defect where a deployment task for a policy group remained in the Neo4j database with a status of "in_progress" even after the API clean command was executed and the task was no longer visible in the vManage GUI. This residual database entry caused vManage to block any new policy group deployments, resulting in the error: "Policy group state validation error: A deployment for Policy Group [name of the policy] is in-progress. Please wait to complete."
+""",
+    },
+
+    # ── SD-WAN #8 : Stuck config group deployment (UHS) ──
+    "stuck_config_group": {
+        "product": "Cisco SD-WAN",
+        "description": "Stuck configuration group deployment — Neo4j database state locked in Deploying",
+        "content": """\
+Executive Summary:
+The customer, UHS of Delaware, reported an issue on Cisco SD-WAN vManage (https://vmanage-388432205.sdwan.cisco.com) where a configuration group deployment was stuck, resulting in the error message:
+"Config Group State validation error: A deployment for this Configuration Group is in-progress. Please wait for it to complete."
+The Technical Consulting Engineer (TCE) confirmed that the job was stuck in the "Deploying" state. The issue was resolved by accessing the Neo4j database as root and manually changing the deployment state to "Deploy failed." This behavior is documented under Cisco bug ID CSCwf67010. After the manual correction, the deployment state was restored, and the case was confirmed resolved and closed.
+
+Steps to Reproduce:
+1. Access Cisco SD-WAN vManage at https://vmanage-388432205.sdwan.cisco.com.
+2. Attempt to deploy a configuration group.
+3. Observe that the deployment job becomes stuck in the "Deploying" state.
+4. Attempt to clear processes using the Cisco-documented API method.
+5. After clearing, observe the error message:
+   "Config Group State validation error: A deployment for this Configuration Group is in-progress. Please wait for it to complete."
+6. Confirm that the deployment remains in-progress and cannot be retried.
+
+Condition:
+- Platform: Cisco SD-WAN vManage (Cisco-hosted)
+- The issue occurs when a configuration group deployment becomes stuck in the "Deploying" state.
+- Attempts to clear the task using the API method result in a persistent validation error preventing further deployment.
+- The problem is consistent with previous cases where TAC intervention was required to modify the deployment state in the Neo4j database.
+
+Workarounds:
+- The documented workaround involved accessing the Neo4j database as root and manually changing the deployment state from "Deploying" to "Deploy failed."
+  neo4j query: match (n:vmanagedbCONFIGGROUPNODE) return n.name, n.state;
+- No other temporary workaround was documented.
+
+Procedure (Solution):
+- The TCE accessed the Neo4j database as root.
+- The deployment state was manually set to "Deploy failed."
+- This action cleared the stuck deployment and restored normal operation.
+- The customer confirmed resolution and the case was closed.
+
+Root Cause:
+The root cause was that the configuration group deployment process in Cisco SD-WAN vManage became stuck in the "Deploying" state and did not complete or fail automatically. This caused the system to reject new deployment attempts with the validation error:
+"Config Group State validation error: A deployment for this Configuration Group is in-progress. Please wait for it to complete."
+The underlying behavior is documented in Cisco bug CSCwf67010, which describes the condition where deployment states can remain locked in "Deploying," requiring manual database intervention to reset the state.
+""",
+    },
 }
 
 # ═══════════════════════════════════════════════════════════════════

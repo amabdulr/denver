@@ -1,0 +1,6332 @@
+{
+    "_comment": "Guide-matching configuration. Controls how detected technology terms map to PDF guide filenames. Edit this file to add new mappings without touching Python code.",
+    "reference_guides": {
+        "_comment": "Guides that are reference-only (e.g. alarms index). They match almost every term because they cover every topic superficially. Excluded from scoring and auto-selection, but users can still manually check them in the UI.",
+        "patterns": [
+            "alarms-guide"
+        ]
+    },
+    "install_upgrade_terms": {
+        "_comment": "Terms that trigger auto-selection of install/upgrade guides. When any of these terms are detected in bug/RCA content, guides matching 'install_guide_patterns' filenames are auto-checked.",
+        "terms": [
+            "upgrade",
+            "install",
+            "installation",
+            "firmware",
+            "image",
+            "boot",
+            "rommon",
+            "rom monitor",
+            "rom-monitor",
+            "software install",
+            "software upgrade",
+            "software image",
+            "sw install",
+            "setup and upgrade",
+            "install and upgrade",
+            "smu",
+            "pie",
+            "issu",
+            "fpd",
+            "downgrade",
+            "hardware installation"
+        ],
+        "guide_patterns": [
+            "install",
+            "upgrade",
+            "setup",
+            "-hig",
+            "gs-book"
+        ]
+    },
+    "concept_to_guide": {
+        "_comment": "Concept-to-guide mapping. When a term (key) is detected in bug/RCA content, guides whose filenames contain ANY of the listed patterns (values) are auto-checked. Use this for terms that don't literally appear in guide filenames but semantically belong to a specific guide. Patterns are matched as substrings against the normalized filename (lowercase, no .pdf). Built from actual book table-of-contents analysis.",
+        "stuck": [
+            "monitor",
+            "maintain",
+            "troubleshoot"
+        ],
+        "recovery": [
+            "monitor",
+            "maintain",
+            "troubleshoot"
+        ],
+        "database": [
+            "alarms",
+            "maintain",
+            "monitor"
+        ],
+        "neo4j": [
+            "monitor",
+            "maintain",
+            "system-monitoring"
+        ],
+        "cleanup": [
+            "monitor",
+            "maintain",
+            "system-monitoring"
+        ],
+        "task management": [
+            "monitor",
+            "maintain",
+            "system-management"
+        ],
+        "deploy failure": [
+            "monitor",
+            "maintain",
+            "configuration-group"
+        ],
+        "deploy failed": [
+            "monitor",
+            "maintain",
+            "configuration-group"
+        ],
+        "troubleshoot": [
+            "maintain",
+            "monitor",
+            "monitor-maintain",
+            "sw-install-and-upgrade-guide-isr1100",
+            "system-monitoring",
+            "troubleshoot"
+        ],
+        "troubleshooting": [
+            "maintain",
+            "monitor",
+            "monitor-maintain",
+            "sw-install-and-upgrade-guide-isr1100",
+            "system-monitoring",
+            "troubleshoot"
+        ],
+        "debug": [
+            "monitor",
+            "maintain",
+            "troubleshoot",
+            "system-monitoring"
+        ],
+        "logs": [
+            "maintain",
+            "monitor",
+            "monitor-maintain",
+            "system-monitoring"
+        ],
+        "show commands": [
+            "monitor",
+            "maintain",
+            "system-monitoring"
+        ],
+        "monitor": [
+            "monitor",
+            "maintain",
+            "system-monitoring"
+        ],
+        "maintenance": [
+            "monitor",
+            "maintain",
+            "system-management"
+        ],
+        "backup": [
+            "maintain",
+            "monitor",
+            "system-management",
+            "systems-interfaces"
+        ],
+        "restore": [
+            "maintain",
+            "monitor",
+            "system-management",
+            "systems-interfaces"
+        ],
+        "disaster recovery": [
+            "alarms",
+            "high-availability",
+            "maintain",
+            "monitor",
+            "system-monitoring",
+            "systems-interfaces",
+            "troubleshoot"
+        ],
+        "alarm": [
+            "alarm",
+            "alarms",
+            "maintain",
+            "monitor",
+            "system-monitoring"
+        ],
+        "logging": [
+            "configuration-group",
+            "maintain",
+            "monitor",
+            "monitor-maintain",
+            "system-monitoring",
+            "systems-interfaces"
+        ],
+        "certificate": [
+            "alarms",
+            "maintain",
+            "monitor",
+            "remote-access",
+            "sd-wan-remote-access",
+            "sdwan-xe-gs",
+            "security",
+            "system-security"
+        ],
+        "syslog": [
+            "maintain",
+            "monitor",
+            "monitor-maintain",
+            "system-monitoring",
+            "systems-interfaces"
+        ],
+        "snmp trap": [
+            "monitor",
+            "maintain",
+            "system-monitoring",
+            "snmp"
+        ],
+        "deployment": [
+            "compatibility",
+            "configuration-group",
+            "maintain",
+            "monitor"
+        ],
+        "deploy": [
+            "monitor",
+            "maintain",
+            "configuration-group"
+        ],
+        "provisioning": [
+            "configuration-group",
+            "getting-started",
+            "gs-book",
+            "system-setup"
+        ],
+        "pnp": [
+            "configuration-group",
+            "getting-started",
+            "gs-book",
+            "system-setup"
+        ],
+        "plug and play": [
+            "configuration-group",
+            "getting-started",
+            "gs-book",
+            "system-setup"
+        ],
+        "quick connect": [
+            "configuration-group"
+        ],
+        "bootstrap": [
+            "configuration-group",
+            "gs-book",
+            "sdwan-xe-gs",
+            "sw-install-and-upgrade-guide-isr1100",
+            "system-setup"
+        ],
+        "ztp": [
+            "alarms",
+            "configuration-group",
+            "getting-started",
+            "gs-book",
+            "monitor-maintain",
+            "system-setup"
+        ],
+        "onboarding": [
+            "configuration-group",
+            "getting-started",
+            "gs-book",
+            "sdwan-xe-gs",
+            "system-setup"
+        ],
+        "day0": [
+            "configuration-group",
+            "gs-book",
+            "getting-started",
+            "system-setup"
+        ],
+        "day1": [
+            "configuration-group",
+            "systems-interfaces"
+        ],
+        "configuration group": [
+            "configuration-group",
+            "hierarchical-sdwan",
+            "integrations",
+            "policies",
+            "remote-access",
+            "sd-wan-remote-access",
+            "snmp"
+        ],
+        "config group": [
+            "configuration-group",
+            "remote-access",
+            "sd-wan-remote-access"
+        ],
+        "feature profile": [
+            "configuration-group",
+            "remote-access",
+            "sd-wan-remote-access"
+        ],
+        "system profile": [
+            "configuration-group"
+        ],
+        "transport profile": [
+            "configuration-group",
+            "routing"
+        ],
+        "service profile": [
+            "configuration-group",
+            "routing"
+        ],
+        "policy object": [
+            "configuration-group"
+        ],
+        "policy object profile": [
+            "configuration-group"
+        ],
+        "topology profile": [
+            "configuration-group"
+        ],
+        "traffic profile": [
+            "configuration-group"
+        ],
+        "cli profile": [
+            "configuration-group"
+        ],
+        "cli add-on": [
+            "configuration-group",
+            "systems-interfaces"
+        ],
+        "config catalog": [
+            "configuration-group"
+        ],
+        "prefix list": [
+            "configuration-group",
+            "policy"
+        ],
+        "data prefix": [
+            "configuration-group",
+            "policy"
+        ],
+        "app probe": [
+            "configuration-group"
+        ],
+        "sla class": [
+            "configuration-group",
+            "policies"
+        ],
+        "color list": [
+            "configuration-group"
+        ],
+        "policer": [
+            "configuration-group",
+            "policy",
+            "qos",
+            "modular-qos"
+        ],
+        "class map": [
+            "configuration-group",
+            "policy",
+            "qos",
+            "modular-qos"
+        ],
+        "mirror": [
+            "configuration-group",
+            "traffic-mirroring"
+        ],
+        "custom control": [
+            "configuration-group",
+            "policy"
+        ],
+        "app-aware routing": [
+            "configuration-group",
+            "appqoe"
+        ],
+        "traffic data": [
+            "configuration-group",
+            "policy"
+        ],
+        "qos map": [
+            "configuration-group",
+            "qos",
+            "modular-qos"
+        ],
+        "wan edge": [
+            "configuration-group",
+            "monitor-maintain",
+            "sdwan-xe-gs",
+            "systems-interfaces"
+        ],
+        "wan interface": [
+            "configuration-group",
+            "interfaces",
+            "qos",
+            "systems-interfaces"
+        ],
+        "management interface": [
+            "configuration-group",
+            "systems-interfaces",
+            "interfaces"
+        ],
+        "cellular": [
+            "configuration-group",
+            "monitor-maintain",
+            "systems-interfaces"
+        ],
+        "tracker": [
+            "alarms",
+            "configuration-group"
+        ],
+        "switchport": [
+            "bridging",
+            "configuration-group",
+            "interfaces",
+            "systems-interfaces"
+        ],
+        "wireless lan": [
+            "configuration-group"
+        ],
+        "embedded security": [
+            "configuration-group",
+            "security",
+            "system-security"
+        ],
+        "url filtering": [
+            "alarms",
+            "configuration-group",
+            "monitor-maintain",
+            "security",
+            "system-security"
+        ],
+        "dns security": [
+            "configuration-group",
+            "policy-groups",
+            "security",
+            "system-security"
+        ],
+        "dns regex": [
+            "security",
+            "policy-groups"
+        ],
+        "fqdn": [
+            "security",
+            "policy-groups"
+        ],
+        "security template": [
+            "security",
+            "policy-groups",
+            "configuration-group"
+        ],
+        "policy group": [
+            "configuration-group",
+            "policy",
+            "policy-groups"
+        ],
+        "security group": [
+            "configuration-group",
+            "policy",
+            "sdwan-xe-gs",
+            "security",
+            "system-security"
+        ],
+        "_comment_routing": "\u2500\u2500 Routing concepts (cross-product: routing-book-xe, b-routing-cg-*, b-bgp-*, b-multicast-*, etc.) \u2500\u2500",
+        "omp": [
+            "alarms",
+            "configuration-group",
+            "hierarchical-sdwan",
+            "nat",
+            "routing",
+            "security",
+            "systems-interfaces"
+        ],
+        "overlay routing": [
+            "routing"
+        ],
+        "unicast overlay": [
+            "routing"
+        ],
+        "omp best-path": [
+            "routing"
+        ],
+        "omp graceful restart": [
+            "routing"
+        ],
+        "omp route": [
+            "routing"
+        ],
+        "route redistribution": [
+            "nat",
+            "routing"
+        ],
+        "administrative distance": [
+            "routing"
+        ],
+        "bgp": [
+            "alarms",
+            "bgp",
+            "configuration-group",
+            "monitor-maintain",
+            "routing"
+        ],
+        "ospf": [
+            "alarms",
+            "configuration-group",
+            "routing"
+        ],
+        "ospfv3": [
+            "configuration-group",
+            "routing"
+        ],
+        "eigrp": [
+            "configuration-group",
+            "routing"
+        ],
+        "rip": [
+            "routing"
+        ],
+        "ripv2": [
+            "routing"
+        ],
+        "ripng": [
+            "routing"
+        ],
+        "ospfv3 ipsec": [
+            "routing"
+        ],
+        "ospf authentication": [
+            "routing"
+        ],
+        "multicast": [
+            "configuration-group",
+            "monitor-maintain",
+            "multicast",
+            "policies",
+            "routing"
+        ],
+        "multicast overlay": [
+            "routing",
+            "multicast"
+        ],
+        "pim": [
+            "alarms",
+            "multicast",
+            "routing",
+            "rugged"
+        ],
+        "igmp": [
+            "routing",
+            "multicast"
+        ],
+        "msdp": [
+            "routing",
+            "multicast"
+        ],
+        "rendezvous point": [
+            "routing",
+            "multicast"
+        ],
+        "pim bsr": [
+            "routing",
+            "multicast"
+        ],
+        "route aggregation": [
+            "hierarchical-sdwan",
+            "routing"
+        ],
+        "route leaking": [
+            "routing"
+        ],
+        "route leak": [
+            "routing"
+        ],
+        "vpn route leak": [
+            "routing"
+        ],
+        "global vpn": [
+            "routing"
+        ],
+        "service vpn": [
+            "configuration-group",
+            "routing",
+            "security",
+            "systems-interfaces"
+        ],
+        "localized route policy": [
+            "routing"
+        ],
+        "bfd": [
+            "alarms",
+            "configuration-group",
+            "monitor-maintain",
+            "policies",
+            "routing"
+        ],
+        "bfd routing": [
+            "routing"
+        ],
+        "bidirectional forwarding": [
+            "routing"
+        ],
+        "tloc": [
+            "alarms",
+            "configuration-group",
+            "hierarchical-sdwan",
+            "monitor-maintain",
+            "policies",
+            "routing",
+            "systems-interfaces"
+        ],
+        "tloc color": [
+            "routing"
+        ],
+        "route filtering": [
+            "routing"
+        ],
+        "transport gateway": [
+            "hierarchical-sdwan",
+            "routing",
+            "systems-interfaces"
+        ],
+        "hub-spoke": [
+            "routing",
+            "configuration-group"
+        ],
+        "hub spoke": [
+            "routing",
+            "configuration-group"
+        ],
+        "symmetric routing": [
+            "remote-access",
+            "routing",
+            "sd-wan-remote-access"
+        ],
+        "affinity group": [
+            "hierarchical-sdwan",
+            "routing"
+        ],
+        "affinity groups": [
+            "hierarchical-sdwan",
+            "routing"
+        ],
+        "omp metric": [
+            "routing"
+        ],
+        "rib metric": [
+            "routing"
+        ],
+        "_comment_xproduct": "\u2500\u2500 Cross-product concepts (match dedicated books on IOS-XR platforms) \u2500\u2500",
+        "segment routing": [
+            "segment-routing",
+            "routing"
+        ],
+        "sr-mpls": [
+            "segment-routing",
+            "mpls"
+        ],
+        "srv6": [
+            "segment-routing",
+            "srv6"
+        ],
+        "mpls": [
+            "mpls",
+            "routing"
+        ],
+        "mpls vpn": [
+            "mpls",
+            "l3vpn"
+        ],
+        "ldp": [
+            "mpls"
+        ],
+        "rsvp": [
+            "mpls"
+        ],
+        "l2vpn": [
+            "bridging",
+            "l2vpn",
+            "systems-interfaces"
+        ],
+        "pseudowire": [
+            "l2vpn",
+            "bridging"
+        ],
+        "vpls": [
+            "l2vpn"
+        ],
+        "xconnect": [
+            "l2vpn",
+            "bridging"
+        ],
+        "l3vpn": [
+            "l3vpn",
+            "routing"
+        ],
+        "evpn": [
+            "evpn",
+            "l2vpn"
+        ],
+        "netflow": [
+            "netflow",
+            "policies"
+        ],
+        "flexible netflow": [
+            "netflow",
+            "policies"
+        ],
+        "ipfix": [
+            "netflow",
+            "policies"
+        ],
+        "sflow": [
+            "netflow"
+        ],
+        "telemetry": [
+            "monitor-maintain",
+            "telemetry"
+        ],
+        "streaming telemetry": [
+            "telemetry"
+        ],
+        "model-driven telemetry": [
+            "telemetry"
+        ],
+        "mdt": [
+            "telemetry"
+        ],
+        "gnmi": [
+            "telemetry",
+            "programmability"
+        ],
+        "grpc": [
+            "telemetry",
+            "programmability"
+        ],
+        "programmability": [
+            "programmability"
+        ],
+        "netconf": [
+            "programmability"
+        ],
+        "restconf": [
+            "programmability"
+        ],
+        "yang": [
+            "programmability"
+        ],
+        "automation": [
+            "programmability"
+        ],
+        "ip addresses": [
+            "ip-addresses",
+            "interfaces",
+            "systems-interfaces"
+        ],
+        "ipv4": [
+            "ip-addresses",
+            "routing"
+        ],
+        "ipv6": [
+            "ip-addresses",
+            "routing",
+            "security",
+            "systems-interfaces"
+        ],
+        "queuing": [
+            "qos",
+            "modular-qos"
+        ],
+        "shaping": [
+            "qos",
+            "modular-qos"
+        ],
+        "policing": [
+            "qos",
+            "modular-qos"
+        ],
+        "marking": [
+            "qos",
+            "modular-qos"
+        ],
+        "dscp": [
+            "qos",
+            "modular-qos"
+        ],
+        "wred": [
+            "qos",
+            "modular-qos"
+        ],
+        "priority queue": [
+            "qos",
+            "modular-qos"
+        ],
+        "service-policy": [
+            "qos",
+            "modular-qos"
+        ],
+        "hierarchical qos": [
+            "qos",
+            "modular-qos"
+        ],
+        "hqos": [
+            "qos",
+            "modular-qos"
+        ],
+        "macsec": [
+            "macsec",
+            "security",
+            "system-security"
+        ],
+        "mka": [
+            "macsec",
+            "security",
+            "system-security"
+        ],
+        "encryption": [
+            "configuration-group",
+            "macsec",
+            "security",
+            "system-security"
+        ],
+        "ipsec": [
+            "configuration-group",
+            "remote-access",
+            "sd-wan-remote-access",
+            "security",
+            "system-security",
+            "systems-interfaces"
+        ],
+        "aaa": [
+            "alarms",
+            "configuration-group",
+            "remote-access",
+            "sd-wan-remote-access",
+            "security",
+            "system-security",
+            "systems-interfaces"
+        ],
+        "tacacs": [
+            "security",
+            "system-security",
+            "systems-interfaces"
+        ],
+        "radius": [
+            "remote-access",
+            "sd-wan-remote-access",
+            "security",
+            "system-security",
+            "systems-interfaces"
+        ],
+        "dot1x": [
+            "security",
+            "system-security"
+        ],
+        "pki": [
+            "monitor-maintain",
+            "remote-access",
+            "sd-wan-remote-access",
+            "sdwan-xe-gs",
+            "security",
+            "system-security"
+        ],
+        "crypto": [
+            "security",
+            "system-security"
+        ],
+        "nat": [
+            "alarms",
+            "cgnat",
+            "monitor-maintain",
+            "nat",
+            "security",
+            "systems-interfaces"
+        ],
+        "pat": [
+            "nat",
+            "cgnat"
+        ],
+        "cgnat": [
+            "cgnat",
+            "nat"
+        ],
+        "carrier grade nat": [
+            "cgnat",
+            "nat"
+        ],
+        "bng": [
+            "bng",
+            "cnbng"
+        ],
+        "cnbng": [
+            "cnbng",
+            "bng"
+        ],
+        "broadband network gateway": [
+            "bng",
+            "cnbng"
+        ],
+        "span": [
+            "traffic-mirroring",
+            "system-monitoring"
+        ],
+        "erspan": [
+            "traffic-mirroring"
+        ],
+        "traffic mirroring": [
+            "traffic-mirroring"
+        ],
+        "timing": [
+            "timing"
+        ],
+        "synce": [
+            "timing"
+        ],
+        "ptp": [
+            "timing"
+        ],
+        "synchronization": [
+            "timing"
+        ],
+        "satellite": [
+            "satellite"
+        ],
+        "nv satellite": [
+            "satellite"
+        ],
+        "containers": [
+            "application-hosting"
+        ],
+        "docker": [
+            "application-hosting"
+        ],
+        "application hosting": [
+            "application-hosting",
+            "integrations"
+        ],
+        "lxc": [
+            "application-hosting"
+        ],
+        "smart licensing": [
+            "licensing"
+        ],
+        "slr": [
+            "licensing"
+        ],
+        "interfaces": [
+            "interfaces",
+            "systems-interfaces"
+        ],
+        "subinterface": [
+            "interfaces",
+            "systems-interfaces"
+        ],
+        "loopback": [
+            "interfaces",
+            "systems-interfaces",
+            "routing"
+        ],
+        "bundle": [
+            "interfaces"
+        ],
+        "lag": [
+            "interfaces"
+        ],
+        "etherchannel": [
+            "interfaces",
+            "systems-interfaces"
+        ],
+        "port-channel": [
+            "interfaces"
+        ],
+        "_comment_scoured": "\u2500\u2500 Auto-discovered concepts from book TOC analysis (scour_books.py) \u2500\u2500",
+        "controller mode": [
+            "getting-started",
+            "gs-book",
+            "systems-interfaces"
+        ],
+        "controller-mode": [
+            "gs-book",
+            "getting-started",
+            "systems-interfaces"
+        ],
+        "autonomous mode": [
+            "getting-started",
+            "gs-book",
+            "systems-interfaces"
+        ],
+        "nvram": [
+            "gs-book",
+            "getting-started",
+            "systems-interfaces"
+        ],
+        "config-register": [
+            "gs-book",
+            "getting-started"
+        ],
+        "configuration register": [
+            "gs-book",
+            "getting-started"
+        ],
+        "accounting": [
+            "remote-access",
+            "systems-interfaces"
+        ],
+        "admin password": [
+            "alarms"
+        ],
+        "amazon web services": [
+            "cloud-onramp",
+            "sdwan-xe-gs"
+        ],
+        "analytics": [
+            "alarms",
+            "monitor-maintain",
+            "vanalytics"
+        ],
+        "anyconnect": [
+            "remote-access",
+            "sd-wan-remote-access"
+        ],
+        "anyconnect profile": [
+            "remote-access",
+            "sd-wan-remote-access"
+        ],
+        "api volume": [
+            "alarms"
+        ],
+        "app list": [
+            "alarms"
+        ],
+        "app qoe": [
+            "appqoe"
+        ],
+        "application integration": [
+            "integrations"
+        ],
+        "application list": [
+            "alarms",
+            "policy-groups"
+        ],
+        "application lists": [
+            "cloud-onramp"
+        ],
+        "application path": [
+            "alarms"
+        ],
+        "application quality of experience": [
+            "alarms",
+            "appqoe",
+            "configuration-group"
+        ],
+        "appnav": [
+            "appqoe"
+        ],
+        "appnav cluster": [
+            "appqoe"
+        ],
+        "appnav-xe": [
+            "appqoe"
+        ],
+        "appqoe": [
+            "alarms",
+            "appqoe",
+            "configuration-group",
+            "monitor-maintain"
+        ],
+        "appqoe controller": [
+            "appqoe"
+        ],
+        "appqoe controllers": [
+            "appqoe"
+        ],
+        "appqoe service nodes": [
+            "appqoe"
+        ],
+        "audit management": [
+            "cloud-onramp"
+        ],
+        "authentication": [
+            "remote-access",
+            "systems-interfaces",
+            "vanalytics"
+        ],
+        "authentication authorization accounting": [
+            "alarms",
+            "configuration-group",
+            "remote-access",
+            "sd-wan-remote-access"
+        ],
+        "authorization": [
+            "remote-access",
+            "systems-interfaces",
+            "vanalytics"
+        ],
+        "aws": [
+            "cloud-onramp",
+            "sdwan-xe-gs"
+        ],
+        "aws govcloud": [
+            "cloud-onramp"
+        ],
+        "aws integration": [
+            "cloud-onramp"
+        ],
+        "azure": [
+            "cloud-onramp",
+            "sdwan-xe-gs"
+        ],
+        "azure virtual wan": [
+            "cloud-onramp"
+        ],
+        "bd": [
+            "bridging",
+            "systems-interfaces"
+        ],
+        "bfd down": [
+            "alarms"
+        ],
+        "bfd up": [
+            "alarms"
+        ],
+        "bgp peer": [
+            "alarms"
+        ],
+        "bgp router": [
+            "alarms"
+        ],
+        "bidirectional forwarding detection": [
+            "alarms",
+            "configuration-group",
+            "monitor-maintain",
+            "policies",
+            "routing"
+        ],
+        "border gateway protocol": [
+            "alarms",
+            "configuration-group",
+            "monitor-maintain",
+            "routing"
+        ],
+        "bridge": [
+            "bridging",
+            "systems-interfaces"
+        ],
+        "bridge domain": [
+            "bridging",
+            "systems-interfaces"
+        ],
+        "bridging": [
+            "bridging",
+            "systems-interfaces"
+        ],
+        "centralized policy": [
+            "appqoe",
+            "hierarchical-sdwan",
+            "policies",
+            "qos"
+        ],
+        "certificate enrollment": [
+            "remote-access",
+            "sd-wan-remote-access"
+        ],
+        "certificate expiration": [
+            "alarms"
+        ],
+        "certificate revocation list": [
+            "alarms"
+        ],
+        "certificate revoked": [
+            "alarms"
+        ],
+        "certificate signing request": [
+            "alarms",
+            "sdwan-xe-gs"
+        ],
+        "cisco anyconnect": [
+            "remote-access"
+        ],
+        "cisco cyber vision": [
+            "integrations"
+        ],
+        "cisco iox": [
+            "integrations"
+        ],
+        "cisco sd-wan manager": [
+            "integrations",
+            "remote-access"
+        ],
+        "cisco sea": [
+            "integrations"
+        ],
+        "cloned vedge": [
+            "alarms"
+        ],
+        "cloud connector": [
+            "alarms"
+        ],
+        "cloud gateway": [
+            "cloud-onramp",
+            "hierarchical-sdwan",
+            "sdwan-ssp"
+        ],
+        "cloud interconnect": [
+            "cloud-onramp"
+        ],
+        "cloud on-ramp": [
+            "cloud-onramp"
+        ],
+        "cloud onramp": [
+            "alarms",
+            "cloud-onramp",
+            "network-wide-path-insight"
+        ],
+        "cloud onramp for colocation": [
+            "cloud-onramp"
+        ],
+        "cloud onramp for iaas": [
+            "cloud-onramp"
+        ],
+        "cloud onramp for multicloud": [
+            "cloud-onramp"
+        ],
+        "cloud onramp for saas": [
+            "cloud-onramp",
+            "network-wide-path-insight"
+        ],
+        "cloud services platform": [
+            "cloud-onramp"
+        ],
+        "cloud-pro": [
+            "sdwan-ssp"
+        ],
+        "cluster": [
+            "appqoe",
+            "cloud-onramp",
+            "high-availability",
+            "systems-interfaces"
+        ],
+        "colo": [
+            "cloud-onramp"
+        ],
+        "colocation": [
+            "cloud-onramp"
+        ],
+        "config groups": [
+            "appqoe",
+            "configuration-group"
+        ],
+        "configuration group profile": [
+            "integrations"
+        ],
+        "configuration groups": [
+            "appqoe",
+            "configuration-group",
+            "hierarchical-sdwan",
+            "monitor-maintain",
+            "policies",
+            "routing",
+            "security"
+        ],
+        "container": [
+            "alarms"
+        ],
+        "container activate": [
+            "alarms"
+        ],
+        "container disk": [
+            "alarms"
+        ],
+        "container installation": [
+            "alarms"
+        ],
+        "container reload": [
+            "alarms"
+        ],
+        "container reset": [
+            "alarms"
+        ],
+        "container upgrade": [
+            "alarms"
+        ],
+        "control node": [
+            "alarms"
+        ],
+        "control plane": [
+            "alarms",
+            "high-availability",
+            "systems-interfaces"
+        ],
+        "control site": [
+            "alarms"
+        ],
+        "controller cluster": [
+            "appqoe"
+        ],
+        "cpu usage": [
+            "alarms",
+            "monitor-maintain"
+        ],
+        "cpu utilization": [
+            "alarms"
+        ],
+        "critical space": [
+            "alarms"
+        ],
+        "crl": [
+            "alarms"
+        ],
+        "csp": [
+            "cloud-onramp"
+        ],
+        "csr": [
+            "alarms",
+            "sdwan-xe-gs"
+        ],
+        "custom application": [
+            "configuration-group",
+            "integrations"
+        ],
+        "custom application integration": [
+            "integrations"
+        ],
+        "cyber vision": [
+            "configuration-group",
+            "integrations"
+        ],
+        "cyber vision application": [
+            "integrations"
+        ],
+        "cyber vision center": [
+            "integrations"
+        ],
+        "cyber vision integration": [
+            "integrations"
+        ],
+        "data policy": [
+            "alarms",
+            "hierarchical-sdwan",
+            "policies"
+        ],
+        "data redundancy elimination": [
+            "appqoe"
+        ],
+        "device activation": [
+            "alarms"
+        ],
+        "device links": [
+            "cloud-onramp"
+        ],
+        "device onboarding": [
+            "getting-started",
+            "gs-book"
+        ],
+        "device pairs": [
+            "cloud-onramp"
+        ],
+        "device provisioning": [
+            "gs-book",
+            "getting-started"
+        ],
+        "device quarantine": [
+            "alarms",
+            "sdwan-xe-gs"
+        ],
+        "device upgrade": [
+            "alarms",
+            "monitor-maintain"
+        ],
+        "dhcp": [
+            "alarms",
+            "configuration-group",
+            "systems-interfaces"
+        ],
+        "dhcp server": [
+            "alarms",
+            "configuration-group",
+            "monitor-maintain",
+            "systems-interfaces"
+        ],
+        "direct memory": [
+            "alarms"
+        ],
+        "disk read": [
+            "alarms"
+        ],
+        "disk usage": [
+            "alarms"
+        ],
+        "disk write": [
+            "alarms"
+        ],
+        "domain id": [
+            "alarms"
+        ],
+        "dre": [
+            "appqoe"
+        ],
+        "dre optimisation": [
+            "appqoe"
+        ],
+        "dre optimization": [
+            "appqoe"
+        ],
+        "dre profile": [
+            "appqoe"
+        ],
+        "dre profiles": [
+            "appqoe"
+        ],
+        "dynamic host configuration protocol": [
+            "alarms",
+            "configuration-group",
+            "systems-interfaces"
+        ],
+        "equinix": [
+            "cloud-onramp",
+            "policies"
+        ],
+        "exmem": [
+            "alarms"
+        ],
+        "external service nodes": [
+            "appqoe"
+        ],
+        "fabric": [
+            "sdwan-ssp"
+        ],
+        "file analysis": [
+            "alarms"
+        ],
+        "file reputation": [
+            "alarms"
+        ],
+        "flex port": [
+            "bridging"
+        ],
+        "flex port support": [
+            "bridging"
+        ],
+        "flex ports": [
+            "bridging"
+        ],
+        "flexport": [
+            "bridging"
+        ],
+        "gcp": [
+            "cloud-onramp"
+        ],
+        "geo db": [
+            "alarms"
+        ],
+        "geo fence": [
+            "alarms"
+        ],
+        "geographic database": [
+            "alarms"
+        ],
+        "geographical view": [
+            "cloud-onramp"
+        ],
+        "google cloud": [
+            "cloud-onramp"
+        ],
+        "govcloud": [
+            "cloud-onramp"
+        ],
+        "half open": [
+            "alarms"
+        ],
+        "headend": [
+            "remote-access",
+            "sd-wan-remote-access"
+        ],
+        "host vnet": [
+            "cloud-onramp"
+        ],
+        "host vpc": [
+            "cloud-onramp"
+        ],
+        "http connect": [
+            "appqoe"
+        ],
+        "http proxy": [
+            "alarms",
+            "appqoe",
+            "systems-interfaces"
+        ],
+        "http-connect": [
+            "appqoe"
+        ],
+        "iaas": [
+            "cloud-onramp"
+        ],
+        "ike v2": [
+            "remote-access",
+            "sd-wan-remote-access"
+        ],
+        "ikev2": [
+            "remote-access",
+            "sd-wan-remote-access"
+        ],
+        "infrastructure as a service": [
+            "cloud-onramp"
+        ],
+        "intent management": [
+            "cloud-onramp"
+        ],
+        "interconnect gateway": [
+            "cloud-onramp"
+        ],
+        "interface admin": [
+            "alarms"
+        ],
+        "interface state": [
+            "alarms"
+        ],
+        "internet key exchange": [
+            "remote-access",
+            "sd-wan-remote-access",
+            "systems-interfaces"
+        ],
+        "internet key exchange version 2": [
+            "remote-access"
+        ],
+        "intrusion prevention system": [
+            "alarms",
+            "security"
+        ],
+        "iox": [
+            "integrations"
+        ],
+        "ip pool": [
+            "remote-access",
+            "sd-wan-remote-access",
+            "systems-interfaces"
+        ],
+        "ip security": [
+            "configuration-group",
+            "remote-access",
+            "sd-wan-remote-access",
+            "security"
+        ],
+        "ips": [
+            "alarms",
+            "monitor-maintain",
+            "security"
+        ],
+        "l2": [
+            "bridging"
+        ],
+        "l2 bridging": [
+            "bridging"
+        ],
+        "l2 flex port": [
+            "bridging"
+        ],
+        "l3": [
+            "bridging"
+        ],
+        "l3 flex port": [
+            "bridging"
+        ],
+        "layer 2": [
+            "bridging"
+        ],
+        "layer 2 bridging": [
+            "bridging"
+        ],
+        "layer 2 flex port": [
+            "bridging"
+        ],
+        "layer 3": [
+            "bridging"
+        ],
+        "layer 3 flex port": [
+            "bridging"
+        ],
+        "license management": [
+            "cloud-onramp"
+        ],
+        "license report": [
+            "alarms"
+        ],
+        "local ip pool": [
+            "remote-access",
+            "sd-wan-remote-access"
+        ],
+        "megaport": [
+            "cloud-onramp"
+        ],
+        "memory usage": [
+            "alarms",
+            "monitor-maintain"
+        ],
+        "memory utilization": [
+            "alarms"
+        ],
+        "microsoft azure": [
+            "cloud-onramp",
+            "sdwan-xe-gs"
+        ],
+        "multi-cloud": [
+            "cloud-onramp"
+        ],
+        "multicloud": [
+            "alarms",
+            "cloud-onramp",
+            "hierarchical-sdwan",
+            "monitor-maintain"
+        ],
+        "multitenancy": [
+            "cloud-onramp",
+            "systems-interfaces"
+        ],
+        "multitenant": [
+            "cloud-onramp",
+            "compatibility",
+            "systems-interfaces"
+        ],
+        "nat update": [
+            "alarms"
+        ],
+        "network address translation": [
+            "alarms",
+            "nat",
+            "security",
+            "systems-interfaces"
+        ],
+        "network functions virtualization infrastructure software": [
+            "cloud-onramp"
+        ],
+        "network hierarchy": [
+            "integrations",
+            "systems-interfaces"
+        ],
+        "next hop resolution protocol": [
+            "alarms"
+        ],
+        "nfvis": [
+            "cloud-onramp"
+        ],
+        "nhrp": [
+            "alarms"
+        ],
+        "node reachability": [
+            "alarms"
+        ],
+        "omp node": [
+            "alarms"
+        ],
+        "omp ribout": [
+            "alarms"
+        ],
+        "omp site": [
+            "alarms"
+        ],
+        "open shortest path first": [
+            "alarms",
+            "configuration-group",
+            "routing"
+        ],
+        "ospf neighbor": [
+            "alarms"
+        ],
+        "ospf router": [
+            "alarms"
+        ],
+        "overlay management protocol": [
+            "alarms",
+            "configuration-group",
+            "hierarchical-sdwan",
+            "nat",
+            "routing",
+            "security",
+            "systems-interfaces"
+        ],
+        "packet capture": [
+            "cloud-onramp",
+            "monitor-maintain"
+        ],
+        "packet drop": [
+            "alarms"
+        ],
+        "password expired": [
+            "alarms"
+        ],
+        "password expiry": [
+            "alarms"
+        ],
+        "password sync": [
+            "alarms"
+        ],
+        "path selection": [
+            "cloud-onramp",
+            "routing"
+        ],
+        "pcap": [
+            "cloud-onramp"
+        ],
+        "physical network function": [
+            "cloud-onramp"
+        ],
+        "pim interface": [
+            "alarms"
+        ],
+        "pnf": [
+            "cloud-onramp"
+        ],
+        "policy commit": [
+            "alarms"
+        ],
+        "policy download": [
+            "alarms"
+        ],
+        "policy enforcement": [
+            "alarms"
+        ],
+        "policy groups": [
+            "cloud-onramp",
+            "policy-groups",
+            "security"
+        ],
+        "private ip pool": [
+            "remote-access",
+            "sd-wan-remote-access"
+        ],
+        "probes": [
+            "cloud-onramp"
+        ],
+        "process restart": [
+            "alarms"
+        ],
+        "profile download": [
+            "remote-access"
+        ],
+        "protocol independent multicast": [
+            "alarms",
+            "routing"
+        ],
+        "pseudo commit": [
+            "alarms"
+        ],
+        "public key infrastructure": [
+            "remote-access",
+            "sd-wan-remote-access",
+            "sdwan-xe-gs"
+        ],
+        "pxgrid": [
+            "alarms"
+        ],
+        "pxgrid connection": [
+            "alarms"
+        ],
+        "qfp": [
+            "alarms"
+        ],
+        "qos": [
+            "monitor-maintain",
+            "policies",
+            "qos",
+            "remote-access",
+            "sd-wan-remote-access",
+            "systems-interfaces"
+        ],
+        "quality of service": [
+            "configuration-group",
+            "monitor-maintain",
+            "policies",
+            "qos",
+            "remote-access",
+            "systems-interfaces"
+        ],
+        "quantum flow processor": [
+            "alarms"
+        ],
+        "quarantine monitoring": [
+            "alarms"
+        ],
+        "queue state": [
+            "alarms"
+        ],
+        "ra": [
+            "remote-access",
+            "sd-wan-remote-access"
+        ],
+        "radius server": [
+            "remote-access",
+            "sd-wan-remote-access"
+        ],
+        "rate limiting": [
+            "remote-access",
+            "sd-wan-remote-access"
+        ],
+        "rbac": [
+            "policy-groups",
+            "sdwan-ssp",
+            "systems-interfaces"
+        ],
+        "remote access": [
+            "configuration-group",
+            "remote-access",
+            "sd-wan-remote-access"
+        ],
+        "remote access headend": [
+            "remote-access",
+            "sd-wan-remote-access"
+        ],
+        "repository": [
+            "cloud-onramp"
+        ],
+        "rest api": [
+            "sdwan-xe-gs"
+        ],
+        "return of materials": [
+            "cloud-onramp"
+        ],
+        "rma": [
+            "cloud-onramp",
+            "sdwan-xe-gs"
+        ],
+        "role based access control": [
+            "policy-groups",
+            "systems-interfaces"
+        ],
+        "root certificate authority": [
+            "alarms"
+        ],
+        "root certification": [
+            "alarms"
+        ],
+        "rootca": [
+            "alarms"
+        ],
+        "saas": [
+            "alarms",
+            "cloud-onramp",
+            "policy-groups"
+        ],
+        "saas application lists": [
+            "cloud-onramp"
+        ],
+        "sd-avc": [
+            "alarms",
+            "policy-groups"
+        ],
+        "sd-wan analytics": [
+            "network-wide-path-insight",
+            "vanalytics"
+        ],
+        "sd-wan headend": [
+            "remote-access"
+        ],
+        "sd-wan manager": [
+            "hierarchical-sdwan",
+            "high-availability",
+            "integrations",
+            "nat",
+            "qos",
+            "remote-access",
+            "sd-wan-remote-access",
+            "sdwan-xe-gs",
+            "snmp",
+            "vanalytics"
+        ],
+        "sd-wan ra": [
+            "remote-access",
+            "sd-wan-remote-access"
+        ],
+        "sd-wan remote access": [
+            "remote-access",
+            "sd-wan-remote-access"
+        ],
+        "sdwan analytics": [
+            "network-wide-path-insight",
+            "vanalytics"
+        ],
+        "sdwan manager": [
+            "hierarchical-sdwan",
+            "integrations",
+            "qos",
+            "vanalytics"
+        ],
+        "sdwan ra": [
+            "remote-access",
+            "sd-wan-remote-access"
+        ],
+        "sdwan remote access": [
+            "remote-access",
+            "sd-wan-remote-access"
+        ],
+        "sea": [
+            "configuration-group",
+            "integrations"
+        ],
+        "secure access": [
+            "alarms",
+            "integrations",
+            "security"
+        ],
+        "secure equipment access": [
+            "integrations"
+        ],
+        "secure equipment access application": [
+            "integrations"
+        ],
+        "secure equipment access integration": [
+            "integrations"
+        ],
+        "secure equipment access portal": [
+            "integrations"
+        ],
+        "secure internet gateway": [
+            "cloud-onramp",
+            "monitor-maintain",
+            "policy-groups",
+            "security"
+        ],
+        "security certificate": [
+            "alarms"
+        ],
+        "security service edge": [
+            "alarms"
+        ],
+        "self signed certificate": [
+            "alarms"
+        ],
+        "service chain": [
+            "cloud-onramp",
+            "policies"
+        ],
+        "service controllers": [
+            "appqoe"
+        ],
+        "service directory": [
+            "cloud-onramp"
+        ],
+        "service groups": [
+            "cloud-onramp"
+        ],
+        "service level agreement": [
+            "alarms",
+            "policy-groups"
+        ],
+        "service node": [
+            "alarms",
+            "appqoe"
+        ],
+        "service nodes": [
+            "appqoe"
+        ],
+        "service state": [
+            "alarms"
+        ],
+        "session maximum": [
+            "alarms"
+        ],
+        "session rate": [
+            "alarms"
+        ],
+        "sfp": [
+            "alarms",
+            "monitor-maintain"
+        ],
+        "sig tunnels": [
+            "cloud-onramp"
+        ],
+        "site id": [
+            "alarms",
+            "systems-interfaces"
+        ],
+        "site id mismatch": [
+            "alarms"
+        ],
+        "sla": [
+            "alarms",
+            "policy-groups"
+        ],
+        "sla violation": [
+            "alarms"
+        ],
+        "small form pluggable": [
+            "alarms"
+        ],
+        "smart account": [
+            "sdwan-ssp",
+            "systems-interfaces"
+        ],
+        "software as a service": [
+            "alarms",
+            "cloud-onramp",
+            "policy-groups"
+        ],
+        "software defined application visibility and control": [
+            "alarms"
+        ],
+        "software defined wan": [
+            "alarms",
+            "sdwan-ssp"
+        ],
+        "sse": [
+            "alarms",
+            "monitor-maintain",
+            "policy-groups",
+            "security"
+        ],
+        "ssl certificate": [
+            "alarms"
+        ],
+        "ssl decryption": [
+            "appqoe",
+            "security"
+        ],
+        "ssl proxy": [
+            "appqoe",
+            "security"
+        ],
+        "sublocation": [
+            "alarms"
+        ],
+        "svi": [
+            "bridging",
+            "configuration-group",
+            "security",
+            "systems-interfaces"
+        ],
+        "switch port": [
+            "bridging",
+            "configuration-group",
+            "systems-interfaces"
+        ],
+        "switch virtual interface": [
+            "bridging"
+        ],
+        "switched": [
+            "bridging"
+        ],
+        "switched virtual interface": [
+            "bridging",
+            "configuration-group",
+            "systems-interfaces"
+        ],
+        "switching": [
+            "bridging"
+        ],
+        "switchports": [
+            "bridging"
+        ],
+        "system ip": [
+            "alarms",
+            "systems-interfaces"
+        ],
+        "system reboot": [
+            "alarms"
+        ],
+        "tcp opt": [
+            "appqoe"
+        ],
+        "tcp optimisation": [
+            "appqoe"
+        ],
+        "tcp optimization": [
+            "appqoe",
+            "monitor-maintain"
+        ],
+        "template interface": [
+            "remote-access",
+            "sd-wan-remote-access"
+        ],
+        "template rollback": [
+            "alarms"
+        ],
+        "tgw": [
+            "cloud-onramp"
+        ],
+        "third party application": [
+            "integrations"
+        ],
+        "third party integration": [
+            "integrations"
+        ],
+        "third-party application": [
+            "integrations"
+        ],
+        "third-party custom application": [
+            "integrations"
+        ],
+        "third-party integration": [
+            "integrations"
+        ],
+        "tls": [
+            "appqoe",
+            "security",
+            "systems-interfaces"
+        ],
+        "tls 1.3": [
+            "appqoe"
+        ],
+        "tracker state": [
+            "alarms"
+        ],
+        "traffic optimization": [
+            "appqoe"
+        ],
+        "traffic rate limiting": [
+            "remote-access",
+            "sd-wan-remote-access"
+        ],
+        "traffic symmetry": [
+            "remote-access",
+            "sd-wan-remote-access"
+        ],
+        "transit gateway": [
+            "cloud-onramp"
+        ],
+        "transit vnet": [
+            "cloud-onramp"
+        ],
+        "transit vpc": [
+            "cloud-onramp"
+        ],
+        "transport location": [
+            "alarms",
+            "hierarchical-sdwan"
+        ],
+        "trustpoint": [
+            "remote-access",
+            "sd-wan-remote-access",
+            "systems-interfaces"
+        ],
+        "ucs e series": [
+            "appqoe"
+        ],
+        "ucs e-series": [
+            "appqoe"
+        ],
+        "ucs-e": [
+            "appqoe",
+            "systems-interfaces"
+        ],
+        "umbrella": [
+            "alarms",
+            "monitor-maintain",
+            "security"
+        ],
+        "umbrella ca": [
+            "alarms"
+        ],
+        "unified threat defense": [
+            "alarms",
+            "monitor-maintain",
+            "security"
+        ],
+        "unsupported sfp": [
+            "alarms"
+        ],
+        "upgrade failed": [
+            "alarms"
+        ],
+        "url-f": [
+            "alarms",
+            "security"
+        ],
+        "user credentials": [
+            "remote-access",
+            "sd-wan-remote-access"
+        ],
+        "utd": [
+            "alarms",
+            "monitor-maintain",
+            "security"
+        ],
+        "vbond": [
+            "alarms",
+            "compatibility",
+            "sdwan-ssp"
+        ],
+        "vedge": [
+            "alarms",
+            "compatibility",
+            "monitor-maintain",
+            "sdwan-ssp",
+            "sdwan-xe-gs",
+            "snmp",
+            "sw-install-and-upgrade-guide-isr1100"
+        ],
+        "version mismatch": [
+            "alarms"
+        ],
+        "virtual lan": [
+            "bridging"
+        ],
+        "virtual local area network": [
+            "bridging"
+        ],
+        "virtual network": [
+            "cloud-onramp",
+            "sdwan-xe-gs"
+        ],
+        "virtual network function": [
+            "cloud-onramp",
+            "monitor-maintain"
+        ],
+        "virtual private cloud": [
+            "cloud-onramp",
+            "sdwan-xe-gs"
+        ],
+        "virtual private network": [
+            "configuration-group",
+            "remote-access",
+            "sd-wan-remote-access",
+            "security",
+            "segmentation",
+            "systems-interfaces"
+        ],
+        "virtual routing and forwarding": [
+            "bridging",
+            "routing",
+            "rugged",
+            "segmentation"
+        ],
+        "virtual routing forwarding": [
+            "bridging",
+            "segmentation"
+        ],
+        "virtual template": [
+            "remote-access",
+            "sd-wan-remote-access"
+        ],
+        "virtual wan": [
+            "cloud-onramp"
+        ],
+        "vlan": [
+            "bridging"
+        ],
+        "vlans": [
+            "bridging"
+        ],
+        "vm catalog": [
+            "cloud-onramp"
+        ],
+        "vmanage": [
+            "alarms",
+            "compatibility",
+            "nat",
+            "network-wide-path-insight",
+            "remote-access",
+            "sd-wan-remote-access",
+            "sdwan-ssp",
+            "sdwan-xe-gs",
+            "snmp",
+            "vanalytics"
+        ],
+        "vnet": [
+            "cloud-onramp",
+            "sdwan-xe-gs"
+        ],
+        "vnf": [
+            "cloud-onramp",
+            "monitor-maintain"
+        ],
+        "vpc": [
+            "cloud-onramp",
+            "sdwan-xe-gs"
+        ],
+        "vpn": [
+            "configuration-group",
+            "remote-access",
+            "routing",
+            "sd-wan-remote-access",
+            "security",
+            "segmentation",
+            "systems-interfaces"
+        ],
+        "vpn interface": [
+            "bridging"
+        ],
+        "vpn interface svi": [
+            "bridging"
+        ],
+        "vrf": [
+            "bridging",
+            "routing",
+            "rugged",
+            "segmentation"
+        ],
+        "vsmart": [
+            "alarms",
+            "compatibility",
+            "sdwan-ssp"
+        ],
+        "waas": [
+            "appqoe"
+        ],
+        "waas central manager": [
+            "appqoe"
+        ],
+        "wcm": [
+            "appqoe"
+        ],
+        "webserver certificate": [
+            "alarms"
+        ],
+        "wide area application services": [
+            "appqoe"
+        ],
+        "zbfw": [
+            "alarms"
+        ],
+        "zero touch provisioning": [
+            "alarms",
+            "monitor-maintain"
+        ],
+        "zone based firewall": [
+            "alarms"
+        ],
+        "zscaler": [
+            "alarms",
+            "security"
+        ],
+        "8000v": [
+            "sdwan-ssp"
+        ],
+        "aar": [
+            "monitor-maintain",
+            "policies"
+        ],
+        "access control list": [
+            "configuration-group",
+            "policies",
+            "systems-interfaces"
+        ],
+        "access control lists": [
+            "policies"
+        ],
+        "access list": [
+            "qos"
+        ],
+        "access lists": [
+            "qos"
+        ],
+        "aci": [
+            "policies"
+        ],
+        "acl": [
+            "configuration-group",
+            "policies",
+            "qos",
+            "systems-interfaces"
+        ],
+        "acl log": [
+            "monitor-maintain"
+        ],
+        "active active": [
+            "routing"
+        ],
+        "active directory federation services": [
+            "security"
+        ],
+        "active flows": [
+            "network-wide-path-insight"
+        ],
+        "active passive": [
+            "routing"
+        ],
+        "adaptive qos": [
+            "qos"
+        ],
+        "adfs": [
+            "security"
+        ],
+        "admin tech": [
+            "monitor-maintain"
+        ],
+        "admin-tech": [
+            "monitor-maintain"
+        ],
+        "administrator password": [
+            "high-availability"
+        ],
+        "administrator-triggered failover": [
+            "high-availability"
+        ],
+        "advanced malware protection": [
+            "monitor-maintain",
+            "security"
+        ],
+        "advisories": [
+            "monitor-maintain"
+        ],
+        "affinity": [
+            "high-availability"
+        ],
+        "affinity group preference": [
+            "routing"
+        ],
+        "affinity preference": [
+            "hierarchical-sdwan"
+        ],
+        "alarm notifications": [
+            "monitor-maintain"
+        ],
+        "alarms": [
+            "alarms",
+            "monitor-maintain"
+        ],
+        "alg": [
+            "nat"
+        ],
+        "amazon machine image": [
+            "sdwan-xe-gs"
+        ],
+        "ami": [
+            "sdwan-xe-gs"
+        ],
+        "amp": [
+            "monitor-maintain",
+            "security"
+        ],
+        "analog interface": [
+            "configuration-group"
+        ],
+        "anti replay": [
+            "qos"
+        ],
+        "anti-replay": [
+            "qos",
+            "security"
+        ],
+        "any connect": [
+            "sd-wan-remote-access"
+        ],
+        "api authentication": [
+            "sdwan-xe-gs"
+        ],
+        "apm": [
+            "policies"
+        ],
+        "app performance insight": [
+            "network-wide-path-insight"
+        ],
+        "application aware routing": [
+            "policies"
+        ],
+        "application awareness": [
+            "security"
+        ],
+        "application catalog": [
+            "policy-groups"
+        ],
+        "application centric infrastructure": [
+            "policies"
+        ],
+        "application compliance": [
+            "policy-groups"
+        ],
+        "application deployment": [
+            "integrations"
+        ],
+        "application health": [
+            "monitor-maintain"
+        ],
+        "application installation": [
+            "integrations"
+        ],
+        "application intelligence engine": [
+            "policies"
+        ],
+        "application level gateway": [
+            "nat"
+        ],
+        "application monitoring": [
+            "integrations",
+            "monitor-maintain"
+        ],
+        "application name conflicts": [
+            "policy-groups"
+        ],
+        "application navigation": [
+            "appqoe"
+        ],
+        "application offload": [
+            "monitor-maintain"
+        ],
+        "application performance": [
+            "monitor-maintain"
+        ],
+        "application performance insight": [
+            "network-wide-path-insight"
+        ],
+        "application performance monitor": [
+            "policies"
+        ],
+        "application priority": [
+            "policy-groups"
+        ],
+        "application probe class": [
+            "policies"
+        ],
+        "application qoe": [
+            "monitor-maintain"
+        ],
+        "application route policies": [
+            "hierarchical-sdwan"
+        ],
+        "application route policy": [
+            "hierarchical-sdwan"
+        ],
+        "application uninstall": [
+            "integrations"
+        ],
+        "application visibility and control": [
+            "alarms",
+            "policy-groups"
+        ],
+        "application-aware routing": [
+            "monitor-maintain",
+            "policies"
+        ],
+        "applications": [
+            "network-wide-path-insight"
+        ],
+        "arp table": [
+            "monitor-maintain"
+        ],
+        "as path": [
+            "configuration-group"
+        ],
+        "asr": [
+            "sdwan-xe-gs"
+        ],
+        "asr 1000": [
+            "sdwan-xe-gs"
+        ],
+        "asr 1006-x": [
+            "sdwan-xe-gs"
+        ],
+        "audit log": [
+            "monitor-maintain",
+            "systems-interfaces"
+        ],
+        "audit logging": [
+            "monitor-maintain"
+        ],
+        "audit logs": [
+            "security"
+        ],
+        "auto-on tasks": [
+            "network-wide-path-insight"
+        ],
+        "automatic affinity group": [
+            "routing"
+        ],
+        "automatic tunnels": [
+            "security"
+        ],
+        "autonomous system path": [
+            "configuration-group"
+        ],
+        "avc": [
+            "alarms",
+            "policy-groups"
+        ],
+        "azure active directory": [
+            "security"
+        ],
+        "azure ad": [
+            "security"
+        ],
+        "azure deployment": [
+            "compatibility"
+        ],
+        "azure for us government": [
+            "cloud-onramp"
+        ],
+        "azure government": [
+            "cloud-onramp"
+        ],
+        "backup and restore": [
+            "cloud-onramp"
+        ],
+        "banner": [
+            "configuration-group",
+            "systems-interfaces"
+        ],
+        "basic interface": [
+            "segmentation"
+        ],
+        "best path": [
+            "routing"
+        ],
+        "bfd connectivity": [
+            "monitor-maintain"
+        ],
+        "bfd session": [
+            "monitor-maintain"
+        ],
+        "bfd tunnel": [
+            "monitor-maintain"
+        ],
+        "bgp hierarchical": [
+            "hierarchical-sdwan"
+        ],
+        "bgp metrics": [
+            "routing"
+        ],
+        "bgp routing": [
+            "configuration-group"
+        ],
+        "bgp-based hierarchical": [
+            "hierarchical-sdwan"
+        ],
+        "bidirectional packet capture": [
+            "monitor-maintain"
+        ],
+        "binary trace": [
+            "monitor-maintain"
+        ],
+        "bootstrap configuration": [
+            "sdwan-xe-gs",
+            "sw-install-and-upgrade-guide-isr1100"
+        ],
+        "bootstrap router": [
+            "routing"
+        ],
+        "border router": [
+            "hierarchical-sdwan"
+        ],
+        "border router failover": [
+            "hierarchical-sdwan"
+        ],
+        "border routers": [
+            "hierarchical-sdwan"
+        ],
+        "ca": [
+            "security"
+        ],
+        "call routing": [
+            "configuration-group",
+            "systems-interfaces"
+        ],
+        "capwap": [
+            "rugged"
+        ],
+        "catalog": [
+            "configuration-group"
+        ],
+        "catalyst ir1800": [
+            "rugged"
+        ],
+        "catalyst sd-wan controller": [
+            "high-availability"
+        ],
+        "catalyst sd-wan manager": [
+            "high-availability"
+        ],
+        "catalyst sd-wan segmentation": [
+            "segmentation"
+        ],
+        "catalyst sd-wan validator": [
+            "high-availability"
+        ],
+        "catalyst sdwan": [
+            "hierarchical-sdwan"
+        ],
+        "cellular band select": [
+            "configuration-group"
+        ],
+        "cellular controller": [
+            "configuration-group"
+        ],
+        "cellular data usage": [
+            "monitor-maintain"
+        ],
+        "cellular devices": [
+            "monitor-maintain"
+        ],
+        "cellular firmware": [
+            "monitor-maintain"
+        ],
+        "cellular health": [
+            "monitor-maintain"
+        ],
+        "cellular interface": [
+            "configuration-group",
+            "monitor-maintain",
+            "systems-interfaces"
+        ],
+        "cellular interfaces": [
+            "monitor-maintain"
+        ],
+        "cellular modem": [
+            "monitor-maintain",
+            "systems-interfaces"
+        ],
+        "cellular monitoring": [
+            "monitor-maintain"
+        ],
+        "cellular profile": [
+            "configuration-group"
+        ],
+        "centralized policies": [
+            "hierarchical-sdwan",
+            "policies"
+        ],
+        "centralized traffic data policy": [
+            "qos"
+        ],
+        "cert": [
+            "sdwan-xe-gs"
+        ],
+        "certificate activities": [
+            "monitor-maintain"
+        ],
+        "certificate authority": [
+            "security",
+            "systems-interfaces"
+        ],
+        "certificate management": [
+            "sdwan-xe-gs"
+        ],
+        "certificate quarantine": [
+            "sdwan-xe-gs"
+        ],
+        "certificate renewal": [
+            "sdwan-xe-gs"
+        ],
+        "certificate revocation": [
+            "sdwan-xe-gs"
+        ],
+        "certificate status": [
+            "monitor-maintain"
+        ],
+        "certificates": [
+            "sdwan-xe-gs"
+        ],
+        "certification": [
+            "sdwan-ssp"
+        ],
+        "certification compliance": [
+            "sdwan-ssp"
+        ],
+        "certs": [
+            "sdwan-xe-gs"
+        ],
+        "cflowd": [
+            "monitor-maintain",
+            "policies",
+            "systems-interfaces"
+        ],
+        "cfm": [
+            "monitor-maintain"
+        ],
+        "change window": [
+            "sdwan-ssp"
+        ],
+        "cipher suites": [
+            "security"
+        ],
+        "cisco aci": [
+            "policies"
+        ],
+        "cisco cloud services platform": [
+            "cloud-onramp"
+        ],
+        "cisco hosted cloud": [
+            "compatibility"
+        ],
+        "cisco secure equipment access": [
+            "integrations"
+        ],
+        "cisco trustsec": [
+            "security"
+        ],
+        "cisco vedge": [
+            "sw-install-and-upgrade-guide-isr1100"
+        ],
+        "cli add-on template": [
+            "configuration-group",
+            "gs-book",
+            "nat",
+            "sdwan-xe-gs",
+            "systems-interfaces"
+        ],
+        "cli addon": [
+            "configuration-group"
+        ],
+        "cli template": [
+            "configuration-group",
+            "gs-book",
+            "monitor-maintain",
+            "nat",
+            "qos",
+            "routing",
+            "sdwan-xe-gs",
+            "snmp",
+            "systems-interfaces"
+        ],
+        "cli templates": [
+            "snmp",
+            "systems-interfaces"
+        ],
+        "client details": [
+            "monitor-maintain"
+        ],
+        "cloud": [
+            "sdwan-xe-gs"
+        ],
+        "cloud connection": [
+            "policy-groups"
+        ],
+        "cloud deployment": [
+            "compatibility",
+            "sdwan-xe-gs"
+        ],
+        "cloud express": [
+            "monitor-maintain"
+        ],
+        "cloud gateways": [
+            "hierarchical-sdwan"
+        ],
+        "cloud pro": [
+            "sdwan-ssp"
+        ],
+        "cloud provider": [
+            "cloud-onramp"
+        ],
+        "cloud routers": [
+            "compatibility"
+        ],
+        "cloud saas feeds": [
+            "policy-groups"
+        ],
+        "cloud service provider": [
+            "hierarchical-sdwan"
+        ],
+        "cloud services": [
+            "monitor-maintain"
+        ],
+        "cloud sourced applications": [
+            "policy-groups"
+        ],
+        "cluster information": [
+            "monitor-maintain"
+        ],
+        "clustering": [
+            "appqoe"
+        ],
+        "colo manager": [
+            "monitor-maintain"
+        ],
+        "colocation cluster": [
+            "monitor-maintain"
+        ],
+        "color group": [
+            "hierarchical-sdwan"
+        ],
+        "color groups": [
+            "hierarchical-sdwan"
+        ],
+        "color preference": [
+            "policy-groups"
+        ],
+        "command line interface": [
+            "configuration-group"
+        ],
+        "common source interface": [
+            "security"
+        ],
+        "compatibility matrix": [
+            "compatibility"
+        ],
+        "completed flows": [
+            "network-wide-path-insight"
+        ],
+        "compliance": [
+            "sdwan-ssp"
+        ],
+        "compliance check": [
+            "policy-groups"
+        ],
+        "computing resources": [
+            "compatibility"
+        ],
+        "conditional static nat": [
+            "nat"
+        ],
+        "config consistency": [
+            "monitor-maintain"
+        ],
+        "config conversion": [
+            "sdwan-ssp"
+        ],
+        "configuration catalog": [
+            "configuration-group"
+        ],
+        "configuration commit": [
+            "monitor-maintain"
+        ],
+        "configuration consistency": [
+            "monitor-maintain"
+        ],
+        "configuration conversion": [
+            "sdwan-ssp"
+        ],
+        "configuration export": [
+            "monitor-maintain"
+        ],
+        "configuration file": [
+            "sw-install-and-upgrade-guide-isr1100"
+        ],
+        "configuration import": [
+            "monitor-maintain"
+        ],
+        "configuration profile": [
+            "integrations"
+        ],
+        "configuration template": [
+            "monitor-maintain"
+        ],
+        "connectivity fault management": [
+            "monitor-maintain"
+        ],
+        "context sharing": [
+            "security"
+        ],
+        "control": [
+            "alarms"
+        ],
+        "control and provisioning of wireless access points": [
+            "rugged"
+        ],
+        "control component": [
+            "sdwan-ssp"
+        ],
+        "control components": [
+            "compatibility",
+            "high-availability",
+            "sdwan-ssp",
+            "sdwan-xe-gs"
+        ],
+        "control components upgrade": [
+            "monitor-maintain"
+        ],
+        "control connections": [
+            "high-availability",
+            "monitor-maintain"
+        ],
+        "control plane authentication": [
+            "security"
+        ],
+        "control plane encryption": [
+            "security"
+        ],
+        "control plane security": [
+            "security"
+        ],
+        "control policies": [
+            "hierarchical-sdwan"
+        ],
+        "control policy": [
+            "hierarchical-sdwan",
+            "policies",
+            "systems-interfaces"
+        ],
+        "control status": [
+            "monitor-maintain"
+        ],
+        "controller affinity": [
+            "high-availability"
+        ],
+        "controller certificate": [
+            "sdwan-xe-gs"
+        ],
+        "controller configuration": [
+            "monitor-maintain"
+        ],
+        "controller group": [
+            "high-availability"
+        ],
+        "controller group identifier": [
+            "high-availability"
+        ],
+        "controller redundancy": [
+            "high-availability"
+        ],
+        "controller status": [
+            "monitor-maintain"
+        ],
+        "controller upgrade": [
+            "monitor-maintain"
+        ],
+        "converged dashboard": [
+            "monitor-maintain"
+        ],
+        "conversion tool": [
+            "sdwan-ssp"
+        ],
+        "core region": [
+            "hierarchical-sdwan"
+        ],
+        "cpu": [
+            "alarms"
+        ],
+        "cross-site request forgery": [
+            "sdwan-xe-gs"
+        ],
+        "csp device": [
+            "cloud-onramp"
+        ],
+        "csrf": [
+            "sdwan-xe-gs"
+        ],
+        "custom applications": [
+            "policies",
+            "policy-groups"
+        ],
+        "custom signatures": [
+            "security"
+        ],
+        "customer cloud": [
+            "compatibility"
+        ],
+        "dashlet": [
+            "monitor-maintain"
+        ],
+        "data center": [
+            "high-availability",
+            "routing"
+        ],
+        "data collection": [
+            "monitor-maintain",
+            "vanalytics"
+        ],
+        "data packets": [
+            "qos"
+        ],
+        "data plane": [
+            "high-availability",
+            "systems-interfaces"
+        ],
+        "data plane authentication": [
+            "security"
+        ],
+        "data plane drops": [
+            "monitor-maintain"
+        ],
+        "data plane encryption": [
+            "security"
+        ],
+        "data plane security": [
+            "security"
+        ],
+        "data plane tunnel": [
+            "policies"
+        ],
+        "data policies": [
+            "hierarchical-sdwan",
+            "monitor-maintain"
+        ],
+        "data storage": [
+            "monitor-maintain"
+        ],
+        "dead peer detection": [
+            "security",
+            "systems-interfaces"
+        ],
+        "dead reckoning": [
+            "rugged"
+        ],
+        "debug condition": [
+            "monitor-maintain"
+        ],
+        "destination nat": [
+            "nat"
+        ],
+        "destination region": [
+            "hierarchical-sdwan"
+        ],
+        "device access policy": [
+            "policies"
+        ],
+        "device bringup": [
+            "monitor-maintain",
+            "systems-interfaces"
+        ],
+        "device certificate": [
+            "sdwan-xe-gs"
+        ],
+        "device configuration": [
+            "monitor-maintain",
+            "systems-interfaces"
+        ],
+        "device health": [
+            "monitor-maintain"
+        ],
+        "device information": [
+            "monitor-maintain"
+        ],
+        "device interfaces": [
+            "monitor-maintain"
+        ],
+        "device monitoring": [
+            "snmp"
+        ],
+        "device redundancy": [
+            "high-availability"
+        ],
+        "device replacement": [
+            "sdwan-xe-gs"
+        ],
+        "device status": [
+            "monitor-maintain"
+        ],
+        "device template": [
+            "cloud-onramp",
+            "configuration-group",
+            "gs-book",
+            "qos",
+            "routing",
+            "sdwan-xe-gs",
+            "systems-interfaces"
+        ],
+        "dhcpv6": [
+            "nat",
+            "systems-interfaces"
+        ],
+        "dhcpv6 prefix delegation": [
+            "nat"
+        ],
+        "dia": [
+            "nat"
+        ],
+        "diagnostic monitoring": [
+            "monitor-maintain"
+        ],
+        "dialer interface": [
+            "nat"
+        ],
+        "digicert": [
+            "sdwan-xe-gs"
+        ],
+        "digital input output": [
+            "rugged"
+        ],
+        "digital interface": [
+            "configuration-group"
+        ],
+        "digital io": [
+            "rugged"
+        ],
+        "digital signal processor": [
+            "configuration-group"
+        ],
+        "dio": [
+            "rugged"
+        ],
+        "direct internet access": [
+            "nat",
+            "security",
+            "systems-interfaces"
+        ],
+        "direct path": [
+            "hierarchical-sdwan"
+        ],
+        "direct paths": [
+            "hierarchical-sdwan"
+        ],
+        "disaster recovery alerts": [
+            "high-availability"
+        ],
+        "disaster recovery overlay": [
+            "high-availability"
+        ],
+        "disaster recovery user password": [
+            "high-availability"
+        ],
+        "disk": [
+            "alarms"
+        ],
+        "dnat": [
+            "nat"
+        ],
+        "dns domains": [
+            "network-wide-path-insight"
+        ],
+        "dns mapping": [
+            "segmentation"
+        ],
+        "dns redirect": [
+            "policies"
+        ],
+        "domain lists": [
+            "security"
+        ],
+        "domain trend": [
+            "network-wide-path-insight"
+        ],
+        "downstream": [
+            "network-wide-path-insight"
+        ],
+        "dpd": [
+            "security",
+            "systems-interfaces"
+        ],
+        "dr": [
+            "high-availability",
+            "systems-interfaces"
+        ],
+        "dsp farm": [
+            "configuration-group"
+        ],
+        "dtls": [
+            "security"
+        ],
+        "dual device site": [
+            "configuration-group"
+        ],
+        "dual router high availability": [
+            "configuration-group"
+        ],
+        "e1 controller": [
+            "configuration-group",
+            "systems-interfaces"
+        ],
+        "eaar": [
+            "policies"
+        ],
+        "edge computing": [
+            "integrations"
+        ],
+        "edge device": [
+            "sdwan-xe-gs",
+            "systems-interfaces"
+        ],
+        "edge router": [
+            "hierarchical-sdwan",
+            "systems-interfaces"
+        ],
+        "edge routers": [
+            "hierarchical-sdwan"
+        ],
+        "eigrp routing": [
+            "configuration-group"
+        ],
+        "elephant flow": [
+            "security"
+        ],
+        "email settings": [
+            "monitor-maintain"
+        ],
+        "encapsulation": [
+            "nat"
+        ],
+        "end of life": [
+            "monitor-maintain"
+        ],
+        "energy management": [
+            "monitor-maintain"
+        ],
+        "energy usage": [
+            "monitor-maintain"
+        ],
+        "enforcement": [
+            "security"
+        ],
+        "enhanced application aware routing": [
+            "policies"
+        ],
+        "enhanced application-aware routing": [
+            "policies"
+        ],
+        "enhanced interior gateway routing protocol": [
+            "configuration-group",
+            "routing"
+        ],
+        "enhanced policy based routing": [
+            "policies"
+        ],
+        "enterprise ca": [
+            "security"
+        ],
+        "enterprise certificate": [
+            "sdwan-xe-gs"
+        ],
+        "enterprise firewall": [
+            "security"
+        ],
+        "enterprise network": [
+            "high-availability"
+        ],
+        "eox": [
+            "monitor-maintain"
+        ],
+        "epbr": [
+            "policies"
+        ],
+        "equipment access": [
+            "integrations"
+        ],
+        "esim": [
+            "configuration-group"
+        ],
+        "esim controller": [
+            "configuration-group"
+        ],
+        "ethernet cfm": [
+            "monitor-maintain"
+        ],
+        "ethernet interface": [
+            "configuration-group",
+            "systems-interfaces"
+        ],
+        "ethernet oam": [
+            "monitor-maintain"
+        ],
+        "ethernet pppoe": [
+            "configuration-group"
+        ],
+        "event insight": [
+            "network-wide-path-insight"
+        ],
+        "event logs": [
+            "security"
+        ],
+        "event notifications": [
+            "monitor-maintain"
+        ],
+        "events": [
+            "monitor-maintain"
+        ],
+        "expanded community": [
+            "configuration-group"
+        ],
+        "expired certificate": [
+            "sdwan-xe-gs"
+        ],
+        "export alarms": [
+            "monitor-maintain"
+        ],
+        "export configuration": [
+            "monitor-maintain"
+        ],
+        "extended anti-replay": [
+            "qos"
+        ],
+        "extended community": [
+            "configuration-group"
+        ],
+        "fabric security": [
+            "configuration-group",
+            "security"
+        ],
+        "fabrics": [
+            "sdwan-ssp"
+        ],
+        "factory reset": [
+            "monitor-maintain"
+        ],
+        "failover": [
+            "high-availability"
+        ],
+        "feature profiles": [
+            "configuration-group"
+        ],
+        "feature template": [
+            "cloud-onramp",
+            "configuration-group",
+            "gs-book",
+            "hierarchical-sdwan",
+            "integrations",
+            "nat",
+            "qos",
+            "routing",
+            "sdwan-xe-gs",
+            "security",
+            "systems-interfaces"
+        ],
+        "feature templates": [
+            "hierarchical-sdwan",
+            "systems-interfaces"
+        ],
+        "fec": [
+            "policies"
+        ],
+        "fia statistics": [
+            "monitor-maintain"
+        ],
+        "field notices": [
+            "monitor-maintain"
+        ],
+        "filter alarms": [
+            "monitor-maintain"
+        ],
+        "firewall": [
+            "monitor-maintain",
+            "policy-groups",
+            "security"
+        ],
+        "firewall ha": [
+            "security"
+        ],
+        "firewall high availability": [
+            "security"
+        ],
+        "firewall rule counter": [
+            "monitor-maintain"
+        ],
+        "flexible port": [
+            "bridging"
+        ],
+        "flexible port speed": [
+            "configuration-group"
+        ],
+        "flow instance": [
+            "network-wide-path-insight"
+        ],
+        "flow metrics": [
+            "network-wide-path-insight"
+        ],
+        "flow path": [
+            "network-wide-path-insight"
+        ],
+        "flow simulation": [
+            "monitor-maintain"
+        ],
+        "flow trend": [
+            "network-wide-path-insight"
+        ],
+        "fnf": [
+            "policies"
+        ],
+        "forward error correction": [
+            "policies"
+        ],
+        "forwarding": [
+            "qos"
+        ],
+        "forwarding class": [
+            "policies",
+            "qos"
+        ],
+        "forwarding classes": [
+            "policies",
+            "qos"
+        ],
+        "generic routing encapsulation": [
+            "configuration-group",
+            "security",
+            "systems-interfaces"
+        ],
+        "geo firewall": [
+            "security"
+        ],
+        "geofence": [
+            "alarms"
+        ],
+        "geographic location": [
+            "monitor-maintain"
+        ],
+        "geography view": [
+            "network-wide-path-insight"
+        ],
+        "geolocation firewall": [
+            "security"
+        ],
+        "global navigation satellite system": [
+            "rugged"
+        ],
+        "global network view": [
+            "monitor-maintain"
+        ],
+        "global positioning system": [
+            "rugged"
+        ],
+        "gnss": [
+            "rugged"
+        ],
+        "goi": [
+            "policy-groups"
+        ],
+        "google cloud platform": [
+            "cloud-onramp"
+        ],
+        "gpio": [
+            "rugged"
+        ],
+        "gps": [
+            "configuration-group",
+            "rugged",
+            "systems-interfaces"
+        ],
+        "gps dead reckoning": [
+            "rugged"
+        ],
+        "gre": [
+            "configuration-group",
+            "security",
+            "systems-interfaces"
+        ],
+        "gre over ipsec": [
+            "security"
+        ],
+        "gre tunnel": [
+            "security"
+        ],
+        "group of interest": [
+            "policy-groups"
+        ],
+        "ha": [
+            "configuration-group",
+            "high-availability",
+            "systems-interfaces"
+        ],
+        "ha interconnect": [
+            "security"
+        ],
+        "heatmap": [
+            "monitor-maintain"
+        ],
+        "hierarchical path": [
+            "hierarchical-sdwan"
+        ],
+        "hierarchical paths": [
+            "hierarchical-sdwan"
+        ],
+        "hierarchical sd-wan": [
+            "hierarchical-sdwan"
+        ],
+        "hierarchical sdwan": [
+            "hierarchical-sdwan"
+        ],
+        "high availability": [
+            "configuration-group",
+            "high-availability",
+            "systems-interfaces"
+        ],
+        "high speed logging": [
+            "nat"
+        ],
+        "high-speed logging": [
+            "security"
+        ],
+        "hosted edge services": [
+            "monitor-maintain"
+        ],
+        "hostname mapping": [
+            "segmentation",
+            "systems-interfaces"
+        ],
+        "hub and spoke": [
+            "routing"
+        ],
+        "hub to spoke": [
+            "qos"
+        ],
+        "hub-and-spoke": [
+            "routing",
+            "systems-interfaces"
+        ],
+        "hub-to-spoke": [
+            "qos"
+        ],
+        "hypervisor": [
+            "compatibility"
+        ],
+        "hypervisor compatibility": [
+            "compatibility"
+        ],
+        "icmp endpoint tracker": [
+            "nat"
+        ],
+        "icmp tracker": [
+            "nat"
+        ],
+        "identity provider": [
+            "sdwan-ssp",
+            "security",
+            "systems-interfaces"
+        ],
+        "identity-based firewall": [
+            "security"
+        ],
+        "idp": [
+            "sdwan-ssp",
+            "security"
+        ],
+        "ids": [
+            "security"
+        ],
+        "ignition power": [
+            "rugged"
+        ],
+        "ignition power management": [
+            "configuration-group",
+            "rugged"
+        ],
+        "ike": [
+            "sd-wan-remote-access",
+            "security",
+            "systems-interfaces"
+        ],
+        "image upgrade": [
+            "monitor-maintain"
+        ],
+        "import configuration": [
+            "monitor-maintain"
+        ],
+        "inbound rules": [
+            "sdwan-ssp"
+        ],
+        "industrial router": [
+            "rugged"
+        ],
+        "industrial security": [
+            "integrations"
+        ],
+        "inline tagging": [
+            "security"
+        ],
+        "insight": [
+            "network-wide-path-insight"
+        ],
+        "insight summary": [
+            "network-wide-path-insight"
+        ],
+        "install": [
+            "sw-install-and-upgrade-guide-isr1100"
+        ],
+        "installation": [
+            "sw-install-and-upgrade-guide-isr1100"
+        ],
+        "integrated services router": [
+            "sw-install-and-upgrade-guide-isr1100"
+        ],
+        "interconnect": [
+            "cloud-onramp"
+        ],
+        "interface": [
+            "alarms"
+        ],
+        "interface functionality": [
+            "segmentation"
+        ],
+        "interface mtu": [
+            "monitor-maintain",
+            "systems-interfaces"
+        ],
+        "interface zones": [
+            "security"
+        ],
+        "internet group management protocol": [
+            "routing"
+        ],
+        "internet outages": [
+            "monitor-maintain"
+        ],
+        "intra-vpn nat": [
+            "nat"
+        ],
+        "intrusion detection": [
+            "security"
+        ],
+        "intrusion detection system": [
+            "security"
+        ],
+        "intrusion prevention": [
+            "monitor-maintain",
+            "security"
+        ],
+        "ios xe catalyst sd-wan device": [
+            "high-availability"
+        ],
+        "ios xe sd-wan": [
+            "hierarchical-sdwan",
+            "sw-install-and-upgrade-guide-isr1100"
+        ],
+        "ios xe sdwan": [
+            "hierarchical-sdwan"
+        ],
+        "iot security": [
+            "integrations"
+        ],
+        "iox integration": [
+            "integrations"
+        ],
+        "ip-sgt binding": [
+            "security"
+        ],
+        "ips signatures": [
+            "security"
+        ],
+        "ipsec authentication": [
+            "routing"
+        ],
+        "ipsec pairwise keys": [
+            "security"
+        ],
+        "ipv4 acl": [
+            "configuration-group"
+        ],
+        "ipv4 device access policy": [
+            "configuration-group"
+        ],
+        "ipv4 overlay": [
+            "security"
+        ],
+        "ipv4 to ipv6": [
+            "nat"
+        ],
+        "ipv4 underlay": [
+            "security"
+        ],
+        "ipv6 acl": [
+            "configuration-group"
+        ],
+        "ipv6 device access policy": [
+            "configuration-group"
+        ],
+        "ipv6 gre": [
+            "security"
+        ],
+        "ipv6 ipsec": [
+            "security"
+        ],
+        "ipv6 nat": [
+            "nat"
+        ],
+        "ipv6 overlay": [
+            "security"
+        ],
+        "ipv6 to ipv4": [
+            "nat"
+        ],
+        "ipv6 tracker": [
+            "configuration-group"
+        ],
+        "ipv6 tracker group": [
+            "configuration-group"
+        ],
+        "ipv6 underlay": [
+            "security"
+        ],
+        "ir1800": [
+            "rugged"
+        ],
+        "isr1100": [
+            "sw-install-and-upgrade-guide-isr1100"
+        ],
+        "isr1100x": [
+            "sw-install-and-upgrade-guide-isr1100"
+        ],
+        "java web token": [
+            "sdwan-xe-gs"
+        ],
+        "jitter": [
+            "monitor-maintain"
+        ],
+        "json web token": [
+            "sdwan-xe-gs"
+        ],
+        "jwt": [
+            "sdwan-xe-gs"
+        ],
+        "k8s": [
+            "policy-groups"
+        ],
+        "kubernetes clusters": [
+            "policy-groups"
+        ],
+        "kubernetes services": [
+            "policy-groups"
+        ],
+        "l2 port": [
+            "bridging"
+        ],
+        "l2 switching": [
+            "bridging"
+        ],
+        "l3 port": [
+            "bridging"
+        ],
+        "latency": [
+            "monitor-maintain"
+        ],
+        "lawful intercept": [
+            "policies"
+        ],
+        "lawful intercept 2.0": [
+            "policies"
+        ],
+        "layer 2 port": [
+            "bridging"
+        ],
+        "layer 2 switching": [
+            "bridging"
+        ],
+        "layer 3 port": [
+            "bridging"
+        ],
+        "layer 7 health check": [
+            "security"
+        ],
+        "li": [
+            "policies"
+        ],
+        "li 2.0": [
+            "policies"
+        ],
+        "license": [
+            "alarms"
+        ],
+        "license information": [
+            "monitor-maintain"
+        ],
+        "licensing": [
+            "monitor-maintain"
+        ],
+        "localized policies": [
+            "policies"
+        ],
+        "localized policy": [
+            "policies",
+            "qos"
+        ],
+        "location services": [
+            "rugged"
+        ],
+        "lockout policy": [
+            "monitor-maintain"
+        ],
+        "log capture": [
+            "monitor-maintain"
+        ],
+        "login-rate alarm": [
+            "monitor-maintain"
+        ],
+        "mac security": [
+            "security"
+        ],
+        "maintenance endpoint": [
+            "monitor-maintain"
+        ],
+        "management gateway": [
+            "hierarchical-sdwan"
+        ],
+        "management gateways": [
+            "hierarchical-sdwan"
+        ],
+        "management information base": [
+            "snmp"
+        ],
+        "management region": [
+            "hierarchical-sdwan"
+        ],
+        "management regions": [
+            "hierarchical-sdwan"
+        ],
+        "management vpn": [
+            "configuration-group",
+            "monitor-maintain",
+            "systems-interfaces"
+        ],
+        "manager cluster": [
+            "high-availability"
+        ],
+        "manager redundancy": [
+            "high-availability"
+        ],
+        "manual tunnels": [
+            "security"
+        ],
+        "map-e": [
+            "nat"
+        ],
+        "mapping of address and port": [
+            "nat"
+        ],
+        "media profile": [
+            "configuration-group"
+        ],
+        "memory": [
+            "alarms"
+        ],
+        "mep": [
+            "monitor-maintain"
+        ],
+        "metric translation": [
+            "routing"
+        ],
+        "mfa": [
+            "sdwan-ssp",
+            "systems-interfaces"
+        ],
+        "mib": [
+            "snmp"
+        ],
+        "mibs": [
+            "snmp"
+        ],
+        "migration mode": [
+            "hierarchical-sdwan"
+        ],
+        "mobility": [
+            "configuration-group"
+        ],
+        "modem firmware": [
+            "monitor-maintain"
+        ],
+        "modular": [
+            "sdwan-xe-gs"
+        ],
+        "monitoring": [
+            "monitor-maintain"
+        ],
+        "mrf": [
+            "hierarchical-sdwan"
+        ],
+        "mt": [
+            "compatibility"
+        ],
+        "multi-factor authentication": [
+            "sdwan-ssp"
+        ],
+        "multi-region fabric": [
+            "configuration-group",
+            "hierarchical-sdwan",
+            "routing"
+        ],
+        "multi-tenant": [
+            "compatibility",
+            "systems-interfaces"
+        ],
+        "multicast overlay routing": [
+            "routing"
+        ],
+        "multicast routing": [
+            "routing"
+        ],
+        "multicast source discovery protocol": [
+            "routing"
+        ],
+        "multifactor authentication": [
+            "sdwan-ssp",
+            "systems-interfaces"
+        ],
+        "multilink": [
+            "configuration-group",
+            "systems-interfaces"
+        ],
+        "multiregion fabric": [
+            "configuration-group"
+        ],
+        "nat dia": [
+            "monitor-maintain",
+            "nat",
+            "security",
+            "systems-interfaces"
+        ],
+        "nat dia tracker": [
+            "nat"
+        ],
+        "nat direct internet access": [
+            "nat"
+        ],
+        "nat failover": [
+            "nat"
+        ],
+        "nat fallback": [
+            "policies"
+        ],
+        "nat ipv4": [
+            "nat"
+        ],
+        "nat ipv6": [
+            "nat"
+        ],
+        "nat logging": [
+            "nat"
+        ],
+        "nat object tracker": [
+            "nat"
+        ],
+        "nat pool": [
+            "nat",
+            "security"
+        ],
+        "nat route": [
+            "nat"
+        ],
+        "nat routing": [
+            "nat"
+        ],
+        "nat security": [
+            "security"
+        ],
+        "nat tracker": [
+            "nat"
+        ],
+        "nat tracking": [
+            "nat"
+        ],
+        "nat tunnel": [
+            "nat"
+        ],
+        "nat64": [
+            "nat"
+        ],
+        "nat64 dia": [
+            "nat"
+        ],
+        "nat66": [
+            "nat"
+        ],
+        "neighbor": [
+            "alarms"
+        ],
+        "network function virtualization infrastructure software": [
+            "cloud-onramp"
+        ],
+        "network isolation": [
+            "segmentation"
+        ],
+        "network monitoring": [
+            "snmp"
+        ],
+        "network quality": [
+            "network-wide-path-insight"
+        ],
+        "network security group": [
+            "sdwan-xe-gs"
+        ],
+        "network segmentation": [
+            "segmentation"
+        ],
+        "network sites": [
+            "monitor-maintain"
+        ],
+        "network time protocol": [
+            "configuration-group",
+            "systems-interfaces"
+        ],
+        "network tracing": [
+            "network-wide-path-insight"
+        ],
+        "network-wide path insight": [
+            "network-wide-path-insight"
+        ],
+        "next generation firewall": [
+            "policy-groups"
+        ],
+        "ngfw": [
+            "policy-groups"
+        ],
+        "nms server": [
+            "monitor-maintain"
+        ],
+        "nsg": [
+            "sdwan-xe-gs"
+        ],
+        "ntp": [
+            "configuration-group",
+            "systems-interfaces"
+        ],
+        "nwpi": [
+            "network-wide-path-insight"
+        ],
+        "oam": [
+            "monitor-maintain"
+        ],
+        "oauth bearer token": [
+            "network-wide-path-insight"
+        ],
+        "object tracker": [
+            "configuration-group",
+            "systems-interfaces"
+        ],
+        "object tracker group": [
+            "configuration-group"
+        ],
+        "okta": [
+            "security",
+            "vanalytics"
+        ],
+        "omp metrics": [
+            "routing"
+        ],
+        "omp peers": [
+            "hierarchical-sdwan"
+        ],
+        "on-prem deployment": [
+            "compatibility"
+        ],
+        "on-premises": [
+            "compatibility"
+        ],
+        "operational technology": [
+            "integrations"
+        ],
+        "ospf metrics": [
+            "routing"
+        ],
+        "ospf routing": [
+            "configuration-group"
+        ],
+        "ospfv3 ipv4": [
+            "configuration-group"
+        ],
+        "ospfv3 ipv6": [
+            "configuration-group"
+        ],
+        "ot security": [
+            "integrations"
+        ],
+        "output queue": [
+            "qos"
+        ],
+        "overlay": [
+            "high-availability",
+            "sdwan-ssp",
+            "sdwan-xe-gs",
+            "systems-interfaces"
+        ],
+        "overlay network": [
+            "monitor-maintain",
+            "sdwan-ssp",
+            "systems-interfaces"
+        ],
+        "overlay networks": [
+            "sdwan-ssp"
+        ],
+        "packet capture replay": [
+            "network-wide-path-insight"
+        ],
+        "packet duplication": [
+            "policies"
+        ],
+        "packet trace": [
+            "monitor-maintain"
+        ],
+        "packet tracing": [
+            "monitor-maintain"
+        ],
+        "pairwise keys": [
+            "security"
+        ],
+        "password": [
+            "alarms"
+        ],
+        "path insight": [
+            "monitor-maintain",
+            "network-wide-path-insight"
+        ],
+        "path optimization": [
+            "security"
+        ],
+        "path preference": [
+            "hierarchical-sdwan",
+            "routing"
+        ],
+        "path preferences": [
+            "hierarchical-sdwan"
+        ],
+        "path tracing": [
+            "network-wide-path-insight"
+        ],
+        "path type": [
+            "hierarchical-sdwan"
+        ],
+        "path types": [
+            "hierarchical-sdwan"
+        ],
+        "pbr": [
+            "policies"
+        ],
+        "peer": [
+            "alarms"
+        ],
+        "peer diversion": [
+            "security"
+        ],
+        "per tunnel qos": [
+            "qos"
+        ],
+        "per vpn qos": [
+            "qos"
+        ],
+        "per-tunnel qos": [
+            "qos"
+        ],
+        "per-vpn qos": [
+            "qos"
+        ],
+        "performance monitoring": [
+            "configuration-group"
+        ],
+        "ping": [
+            "monitor-maintain"
+        ],
+        "pingid": [
+            "security"
+        ],
+        "pki trustpoint": [
+            "monitor-maintain"
+        ],
+        "plugin interface module": [
+            "rugged"
+        ],
+        "plugin module": [
+            "rugged"
+        ],
+        "policies": [
+            "policies"
+        ],
+        "policy": [
+            "alarms",
+            "policies"
+        ],
+        "policy based routing": [
+            "policies"
+        ],
+        "policy compliance": [
+            "policy-groups"
+        ],
+        "policy configuration tagging": [
+            "policies"
+        ],
+        "policy insight": [
+            "network-wide-path-insight"
+        ],
+        "policy map": [
+            "qos"
+        ],
+        "port forwarding": [
+            "nat"
+        ],
+        "port scanning detection": [
+            "security"
+        ],
+        "port security": [
+            "security"
+        ],
+        "portal": [
+            "sdwan-ssp"
+        ],
+        "positioning": [
+            "rugged"
+        ],
+        "power management": [
+            "rugged"
+        ],
+        "pppoe": [
+            "configuration-group",
+            "systems-interfaces"
+        ],
+        "predefined inbound rules": [
+            "sdwan-ssp"
+        ],
+        "preferred color group": [
+            "hierarchical-sdwan"
+        ],
+        "preferred color groups": [
+            "hierarchical-sdwan"
+        ],
+        "prefix": [
+            "configuration-group"
+        ],
+        "primary cluster": [
+            "high-availability"
+        ],
+        "primary data center": [
+            "high-availability"
+        ],
+        "primary region": [
+            "hierarchical-sdwan"
+        ],
+        "primary regions": [
+            "hierarchical-sdwan"
+        ],
+        "probe class": [
+            "policies"
+        ],
+        "probe endpoints": [
+            "cloud-onramp"
+        ],
+        "process": [
+            "alarms"
+        ],
+        "protocol pack": [
+            "monitor-maintain"
+        ],
+        "protocol pack compliance": [
+            "monitor-maintain"
+        ],
+        "proxy": [
+            "sdwan-xe-gs"
+        ],
+        "qos insight": [
+            "network-wide-path-insight"
+        ],
+        "qos maps": [
+            "qos"
+        ],
+        "qos on subinterface": [
+            "qos"
+        ],
+        "qos queue statistics": [
+            "monitor-maintain"
+        ],
+        "qos statistics": [
+            "monitor-maintain"
+        ],
+        "quarantine": [
+            "alarms",
+            "sdwan-xe-gs"
+        ],
+        "queue": [
+            "alarms",
+            "qos"
+        ],
+        "ra headend": [
+            "sd-wan-remote-access"
+        ],
+        "radio aware routing": [
+            "routing"
+        ],
+        "radkit": [
+            "monitor-maintain"
+        ],
+        "rar": [
+            "routing"
+        ],
+        "raw socket": [
+            "rugged"
+        ],
+        "raw sockets": [
+            "rugged"
+        ],
+        "reboot": [
+            "alarms",
+            "monitor-maintain"
+        ],
+        "redirect dns": [
+            "policies"
+        ],
+        "rediscover network": [
+            "monitor-maintain"
+        ],
+        "redundancy": [
+            "high-availability"
+        ],
+        "redundancy groups": [
+            "security"
+        ],
+        "redundant control connections": [
+            "high-availability"
+        ],
+        "region": [
+            "hierarchical-sdwan"
+        ],
+        "region id": [
+            "hierarchical-sdwan",
+            "systems-interfaces"
+        ],
+        "region ids": [
+            "hierarchical-sdwan"
+        ],
+        "region list": [
+            "hierarchical-sdwan"
+        ],
+        "region lists": [
+            "hierarchical-sdwan"
+        ],
+        "region match": [
+            "hierarchical-sdwan"
+        ],
+        "region matching": [
+            "hierarchical-sdwan"
+        ],
+        "regions": [
+            "hierarchical-sdwan",
+            "systems-interfaces"
+        ],
+        "rekey": [
+            "security"
+        ],
+        "rekeying": [
+            "security"
+        ],
+        "release compatibility": [
+            "compatibility"
+        ],
+        "remote server": [
+            "monitor-maintain"
+        ],
+        "replacement": [
+            "sdwan-xe-gs"
+        ],
+        "reports": [
+            "monitor-maintain",
+            "vanalytics"
+        ],
+        "resource monitoring": [
+            "monitor-maintain"
+        ],
+        "resource profiles": [
+            "security",
+            "systems-interfaces"
+        ],
+        "resource requirements": [
+            "compatibility"
+        ],
+        "resource utilization": [
+            "monitor-maintain"
+        ],
+        "restful api": [
+            "sdwan-xe-gs"
+        ],
+        "reverse proxy": [
+            "sdwan-xe-gs"
+        ],
+        "rewrite policy": [
+            "qos"
+        ],
+        "rewrite rule": [
+            "qos"
+        ],
+        "rib": [
+            "alarms",
+            "routing"
+        ],
+        "role based access": [
+            "sdwan-ssp"
+        ],
+        "role matching": [
+            "hierarchical-sdwan"
+        ],
+        "role-based access": [
+            "sdwan-ssp",
+            "systems-interfaces"
+        ],
+        "rollback": [
+            "alarms"
+        ],
+        "rom monitor": [
+            "sdwan-xe-gs"
+        ],
+        "rommon": [
+            "sdwan-xe-gs"
+        ],
+        "root ca": [
+            "alarms"
+        ],
+        "root certificate": [
+            "alarms",
+            "sdwan-xe-gs",
+            "systems-interfaces"
+        ],
+        "route attributes": [
+            "policies"
+        ],
+        "route policies": [
+            "policies"
+        ],
+        "route policy": [
+            "configuration-group",
+            "policies"
+        ],
+        "route re-origination": [
+            "hierarchical-sdwan"
+        ],
+        "route reorigination": [
+            "hierarchical-sdwan"
+        ],
+        "router affinity": [
+            "hierarchical-sdwan"
+        ],
+        "router replacement": [
+            "sdwan-xe-gs"
+        ],
+        "routing information": [
+            "monitor-maintain"
+        ],
+        "routing information base": [
+            "alarms",
+            "routing"
+        ],
+        "routing information protocol": [
+            "routing"
+        ],
+        "routing policy": [
+            "configuration-group"
+        ],
+        "routing protocols": [
+            "routing"
+        ],
+        "rp3": [
+            "sdwan-xe-gs"
+        ],
+        "rugged router": [
+            "rugged"
+        ],
+        "rugged series": [
+            "rugged"
+        ],
+        "sa": [
+            "security"
+        ],
+        "saas policy": [
+            "network-wide-path-insight"
+        ],
+        "safety barriers": [
+            "monitor-maintain"
+        ],
+        "saie": [
+            "monitor-maintain",
+            "policies"
+        ],
+        "saie flows": [
+            "monitor-maintain"
+        ],
+        "saml": [
+            "sdwan-ssp",
+            "security"
+        ],
+        "scheduler": [
+            "qos"
+        ],
+        "sd wan": [
+            "compatibility",
+            "sdwan-ssp"
+        ],
+        "sd wan remote access": [
+            "sd-wan-remote-access"
+        ],
+        "sd-wan application intelligence engine": [
+            "policies"
+        ],
+        "sd-wan controller": [
+            "high-availability"
+        ],
+        "sd-wan integration": [
+            "integrations"
+        ],
+        "sd-wan segmentation": [
+            "segmentation"
+        ],
+        "sd-wan validator": [
+            "high-availability"
+        ],
+        "sdci": [
+            "hierarchical-sdwan"
+        ],
+        "sdwan integration": [
+            "integrations"
+        ],
+        "sdwan segmentation": [
+            "segmentation"
+        ],
+        "sea application": [
+            "integrations"
+        ],
+        "sea integration": [
+            "integrations"
+        ],
+        "sea portal": [
+            "integrations"
+        ],
+        "secondary region": [
+            "hierarchical-sdwan"
+        ],
+        "secondary regions": [
+            "hierarchical-sdwan"
+        ],
+        "secure service edge": [
+            "monitor-maintain",
+            "policy-groups",
+            "security"
+        ],
+        "secure sockets layer": [
+            "alarms"
+        ],
+        "securex": [
+            "monitor-maintain"
+        ],
+        "security": [
+            "alarms",
+            "monitor-maintain",
+            "security"
+        ],
+        "security advisory": [
+            "monitor-maintain"
+        ],
+        "security analytics": [
+            "security"
+        ],
+        "security association": [
+            "security"
+        ],
+        "security cloud control": [
+            "security"
+        ],
+        "security events": [
+            "monitor-maintain"
+        ],
+        "security feature profile": [
+            "security"
+        ],
+        "security group access control list": [
+            "security"
+        ],
+        "security group tag": [
+            "security"
+        ],
+        "security monitoring": [
+            "monitor-maintain"
+        ],
+        "security policy": [
+            "policy-groups"
+        ],
+        "security virtual image": [
+            "security"
+        ],
+        "segmentation": [
+            "segmentation"
+        ],
+        "segmentation cli": [
+            "segmentation"
+        ],
+        "segmentation troubleshooting": [
+            "segmentation"
+        ],
+        "serial": [
+            "alarms"
+        ],
+        "serial communication": [
+            "rugged"
+        ],
+        "serial data": [
+            "rugged"
+        ],
+        "serial data processing": [
+            "rugged"
+        ],
+        "server group": [
+            "configuration-group"
+        ],
+        "server recommendations": [
+            "compatibility"
+        ],
+        "service chaining": [
+            "policies"
+        ],
+        "service chains": [
+            "policies"
+        ],
+        "service group": [
+            "cloud-onramp"
+        ],
+        "service insertion": [
+            "policies"
+        ],
+        "service route": [
+            "hierarchical-sdwan"
+        ],
+        "service routes": [
+            "hierarchical-sdwan"
+        ],
+        "service side nat": [
+            "nat"
+        ],
+        "service-side nat": [
+            "nat",
+            "security"
+        ],
+        "session": [
+            "alarms"
+        ],
+        "sgacl": [
+            "security"
+        ],
+        "sgt": [
+            "security"
+        ],
+        "sgt enforcement": [
+            "security"
+        ],
+        "sig": [
+            "cloud-onramp",
+            "monitor-maintain",
+            "policy-groups",
+            "security"
+        ],
+        "sig credentials": [
+            "security"
+        ],
+        "simple network management protocol": [
+            "configuration-group",
+            "snmp"
+        ],
+        "single sign on": [
+            "security",
+            "vanalytics"
+        ],
+        "single sign-on": [
+            "security"
+        ],
+        "single tenant": [
+            "compatibility"
+        ],
+        "site health": [
+            "monitor-maintain"
+        ],
+        "site local failover": [
+            "nat"
+        ],
+        "site monitoring": [
+            "monitor-maintain"
+        ],
+        "site topology": [
+            "monitor-maintain"
+        ],
+        "site type": [
+            "routing"
+        ],
+        "site-local failover": [
+            "nat"
+        ],
+        "sizing": [
+            "compatibility"
+        ],
+        "sla classes": [
+            "policies"
+        ],
+        "small form-factor pluggable": [
+            "alarms"
+        ],
+        "smart accounts": [
+            "sdwan-ssp"
+        ],
+        "smu": [
+            "monitor-maintain"
+        ],
+        "snapshot": [
+            "sdwan-ssp"
+        ],
+        "snapshots": [
+            "sdwan-ssp"
+        ],
+        "snmp": [
+            "configuration-group",
+            "policies",
+            "snmp"
+        ],
+        "snmp agent": [
+            "snmp"
+        ],
+        "snmp authentication": [
+            "snmp"
+        ],
+        "snmp community": [
+            "snmp"
+        ],
+        "snmp community string": [
+            "snmp"
+        ],
+        "snmp encryption": [
+            "snmp"
+        ],
+        "snmp get": [
+            "snmp"
+        ],
+        "snmp manager": [
+            "snmp"
+        ],
+        "snmp mib": [
+            "snmp"
+        ],
+        "snmp mibs": [
+            "snmp"
+        ],
+        "snmp monitoring": [
+            "snmp"
+        ],
+        "snmp notification": [
+            "snmp"
+        ],
+        "snmp notifications": [
+            "snmp"
+        ],
+        "snmp polling": [
+            "snmp"
+        ],
+        "snmp privacy": [
+            "snmp"
+        ],
+        "snmp set": [
+            "snmp"
+        ],
+        "snmp traps": [
+            "snmp"
+        ],
+        "snmp user": [
+            "snmp"
+        ],
+        "snmp v2": [
+            "snmp"
+        ],
+        "snmp v2c": [
+            "snmp"
+        ],
+        "snmp v3": [
+            "snmp"
+        ],
+        "snmp walk": [
+            "snmp"
+        ],
+        "snmpv2": [
+            "snmp"
+        ],
+        "snmpv2c": [
+            "snmp"
+        ],
+        "snmpv3": [
+            "snmp"
+        ],
+        "socket programming": [
+            "rugged"
+        ],
+        "software image": [
+            "monitor-maintain"
+        ],
+        "software installation": [
+            "sw-install-and-upgrade-guide-isr1100"
+        ],
+        "software maintenance": [
+            "monitor-maintain"
+        ],
+        "software maintenance upgrade": [
+            "monitor-maintain"
+        ],
+        "software repository": [
+            "monitor-maintain"
+        ],
+        "software upgrade": [
+            "monitor-maintain",
+            "sw-install-and-upgrade-guide-isr1100",
+            "systems-interfaces"
+        ],
+        "software versions": [
+            "monitor-maintain"
+        ],
+        "software-defined cloud interconnect": [
+            "hierarchical-sdwan"
+        ],
+        "source port preservation": [
+            "nat"
+        ],
+        "source-only load sharing": [
+            "security"
+        ],
+        "speed test": [
+            "monitor-maintain"
+        ],
+        "srst": [
+            "configuration-group",
+            "systems-interfaces"
+        ],
+        "ssh": [
+            "policies",
+            "security",
+            "systems-interfaces"
+        ],
+        "ssh encryption": [
+            "security"
+        ],
+        "ssl": [
+            "alarms"
+        ],
+        "ssl optimization": [
+            "appqoe"
+        ],
+        "ssl vpn": [
+            "sd-wan-remote-access"
+        ],
+        "sso": [
+            "security",
+            "vanalytics"
+        ],
+        "ssp": [
+            "sdwan-ssp"
+        ],
+        "st": [
+            "compatibility"
+        ],
+        "standard community": [
+            "configuration-group"
+        ],
+        "state synchronization": [
+            "security"
+        ],
+        "stateless dhcp": [
+            "nat"
+        ],
+        "static hostname": [
+            "segmentation",
+            "systems-interfaces"
+        ],
+        "static nat": [
+            "nat"
+        ],
+        "static network nat": [
+            "nat"
+        ],
+        "sub-locations": [
+            "security"
+        ],
+        "subinterface qos": [
+            "qos"
+        ],
+        "subordinate ca": [
+            "security"
+        ],
+        "subregion": [
+            "hierarchical-sdwan"
+        ],
+        "subregions": [
+            "hierarchical-sdwan",
+            "routing",
+            "systems-interfaces"
+        ],
+        "supervisory disconnect": [
+            "configuration-group"
+        ],
+        "survivable remote site telephony": [
+            "configuration-group"
+        ],
+        "svi configuration": [
+            "bridging"
+        ],
+        "svi interface": [
+            "configuration-group"
+        ],
+        "switchport configuration": [
+            "bridging"
+        ],
+        "sxp": [
+            "security"
+        ],
+        "synthetic traffic": [
+            "network-wide-path-insight"
+        ],
+        "system clock": [
+            "monitor-maintain"
+        ],
+        "system requirements": [
+            "compatibility"
+        ],
+        "system snapshot": [
+            "sdwan-ssp"
+        ],
+        "system snapshots": [
+            "sdwan-ssp"
+        ],
+        "system status": [
+            "monitor-maintain"
+        ],
+        "t1 controller": [
+            "configuration-group",
+            "systems-interfaces"
+        ],
+        "tac cases": [
+            "monitor-maintain"
+        ],
+        "tcp": [
+            "rugged"
+        ],
+        "tcp acceleration": [
+            "appqoe"
+        ],
+        "tcp accelerator": [
+            "appqoe"
+        ],
+        "tcp transport": [
+            "rugged"
+        ],
+        "teleworker": [
+            "configuration-group"
+        ],
+        "temperature": [
+            "monitor-maintain"
+        ],
+        "template": [
+            "alarms"
+        ],
+        "third party devices": [
+            "security"
+        ],
+        "thousandeyes": [
+            "configuration-group",
+            "network-wide-path-insight",
+            "systems-interfaces"
+        ],
+        "thousandeyes insight": [
+            "network-wide-path-insight"
+        ],
+        "thousandeyes integration": [
+            "network-wide-path-insight"
+        ],
+        "threat grid": [
+            "security"
+        ],
+        "threats": [
+            "monitor-maintain"
+        ],
+        "tloc attributes": [
+            "policies"
+        ],
+        "tloc route": [
+            "hierarchical-sdwan"
+        ],
+        "tloc routes": [
+            "hierarchical-sdwan"
+        ],
+        "tlocs": [
+            "hierarchical-sdwan"
+        ],
+        "tls decryption": [
+            "security"
+        ],
+        "tls proxy": [
+            "security"
+        ],
+        "token authentication": [
+            "sdwan-xe-gs"
+        ],
+        "topology": [
+            "monitor-maintain",
+            "policy-groups",
+            "systems-interfaces"
+        ],
+        "trace export": [
+            "network-wide-path-insight"
+        ],
+        "trace import": [
+            "network-wide-path-insight"
+        ],
+        "trace instances": [
+            "network-wide-path-insight"
+        ],
+        "trace views": [
+            "network-wide-path-insight"
+        ],
+        "traceroute": [
+            "monitor-maintain"
+        ],
+        "traces": [
+            "network-wide-path-insight"
+        ],
+        "tracing": [
+            "network-wide-path-insight"
+        ],
+        "tracing services": [
+            "monitor-maintain"
+        ],
+        "tracker group": [
+            "configuration-group"
+        ],
+        "traffic behavior": [
+            "qos"
+        ],
+        "traffic classification": [
+            "qos"
+        ],
+        "traffic flow monitoring": [
+            "policies"
+        ],
+        "traffic health": [
+            "monitor-maintain"
+        ],
+        "traffic information sharing": [
+            "security"
+        ],
+        "traffic isolation": [
+            "segmentation"
+        ],
+        "traffic logs": [
+            "monitor-maintain"
+        ],
+        "traffic policing": [
+            "qos"
+        ],
+        "traffic shaping": [
+            "qos"
+        ],
+        "traffic usage": [
+            "monitor-maintain"
+        ],
+        "traffic-to": [
+            "hierarchical-sdwan"
+        ],
+        "translation profile": [
+            "configuration-group"
+        ],
+        "translation rule": [
+            "configuration-group"
+        ],
+        "transmission control protocol": [
+            "rugged"
+        ],
+        "transport gateways": [
+            "hierarchical-sdwan"
+        ],
+        "transport health": [
+            "monitor-maintain"
+        ],
+        "transport interface": [
+            "monitor-maintain"
+        ],
+        "transport locations": [
+            "hierarchical-sdwan"
+        ],
+        "transport locator": [
+            "routing"
+        ],
+        "transport vpn": [
+            "configuration-group",
+            "security"
+        ],
+        "trunk group": [
+            "configuration-group"
+        ],
+        "trustsec": [
+            "configuration-group",
+            "security"
+        ],
+        "tunnel": [
+            "security"
+        ],
+        "tunnel connections": [
+            "monitor-maintain"
+        ],
+        "tunnel group": [
+            "hierarchical-sdwan"
+        ],
+        "tunnel groups": [
+            "hierarchical-sdwan"
+        ],
+        "tunnel health": [
+            "monitor-maintain"
+        ],
+        "tunnel interface": [
+            "segmentation",
+            "systems-interfaces"
+        ],
+        "tunnel loss": [
+            "monitor-maintain"
+        ],
+        "tunnel paths": [
+            "monitor-maintain"
+        ],
+        "tunnel performance": [
+            "policies"
+        ],
+        "tunnel qos": [
+            "monitor-maintain",
+            "qos"
+        ],
+        "tunneling": [
+            "security",
+            "segmentation"
+        ],
+        "type 6 encryption": [
+            "configuration-group"
+        ],
+        "ucse": [
+            "configuration-group",
+            "systems-interfaces"
+        ],
+        "udp": [
+            "rugged"
+        ],
+        "udp transport": [
+            "rugged"
+        ],
+        "umbrella credentials": [
+            "security"
+        ],
+        "umbrella dns": [
+            "security"
+        ],
+        "umbrella integration": [
+            "security"
+        ],
+        "umbrella registration": [
+            "security"
+        ],
+        "underlay alarms": [
+            "monitor-maintain"
+        ],
+        "underlay fragmentation": [
+            "policies",
+            "systems-interfaces"
+        ],
+        "underlay measurement": [
+            "monitor-maintain"
+        ],
+        "underlay paths": [
+            "monitor-maintain"
+        ],
+        "unicast routing": [
+            "routing"
+        ],
+        "unified computing system express": [
+            "configuration-group"
+        ],
+        "unified debug": [
+            "monitor-maintain"
+        ],
+        "unified logging": [
+            "security"
+        ],
+        "unified security policy": [
+            "security"
+        ],
+        "upgrade": [
+            "sw-install-and-upgrade-guide-isr1100",
+            "systems-interfaces"
+        ],
+        "upgrade disaster recovery": [
+            "high-availability"
+        ],
+        "upgrade workflow": [
+            "monitor-maintain"
+        ],
+        "upstream": [
+            "network-wide-path-insight"
+        ],
+        "user datagram protocol": [
+            "rugged"
+        ],
+        "utd health": [
+            "monitor-maintain"
+        ],
+        "validator": [
+            "monitor-maintain",
+            "systems-interfaces"
+        ],
+        "validator redundancy": [
+            "high-availability"
+        ],
+        "vedge router": [
+            "sdwan-xe-gs"
+        ],
+        "vedge software": [
+            "sw-install-and-upgrade-guide-isr1100"
+        ],
+        "vedgecloud": [
+            "compatibility"
+        ],
+        "version compatibility": [
+            "compatibility"
+        ],
+        "viptela": [
+            "compatibility"
+        ],
+        "virtual account": [
+            "sdwan-ssp"
+        ],
+        "virtual accounts": [
+            "sdwan-ssp"
+        ],
+        "virtual image": [
+            "monitor-maintain"
+        ],
+        "virtual machine": [
+            "sdwan-xe-gs"
+        ],
+        "virtual machine catalog": [
+            "cloud-onramp"
+        ],
+        "virtual router redundancy protocol": [
+            "routing",
+            "security",
+            "systems-interfaces"
+        ],
+        "vlan configuration": [
+            "bridging"
+        ],
+        "vm": [
+            "sdwan-xe-gs"
+        ],
+        "vnf images": [
+            "monitor-maintain"
+        ],
+        "vnf status": [
+            "monitor-maintain"
+        ],
+        "voice global": [
+            "configuration-group"
+        ],
+        "voice tenant": [
+            "configuration-group"
+        ],
+        "vpn 512": [
+            "monitor-maintain"
+        ],
+        "vpn configuration": [
+            "segmentation"
+        ],
+        "vpn homing": [
+            "security"
+        ],
+        "vpn interface ipsec": [
+            "security"
+        ],
+        "vpn interface multilink": [
+            "configuration-group"
+        ],
+        "vpn list": [
+            "qos"
+        ],
+        "vpn lists": [
+            "qos"
+        ],
+        "vpn membership": [
+            "policies"
+        ],
+        "vpn membership policy": [
+            "policies"
+        ],
+        "vpn qos": [
+            "qos"
+        ],
+        "vpn qos map": [
+            "configuration-group",
+            "qos"
+        ],
+        "vpn template": [
+            "nat",
+            "segmentation"
+        ],
+        "vpn troubleshooting": [
+            "segmentation"
+        ],
+        "vpns": [
+            "segmentation"
+        ],
+        "vrf aware sockets": [
+            "rugged"
+        ],
+        "vrf cli": [
+            "segmentation"
+        ],
+        "vrf configuration": [
+            "segmentation"
+        ],
+        "vrf template": [
+            "segmentation"
+        ],
+        "vrf troubleshooting": [
+            "segmentation"
+        ],
+        "vrf-aware raw sockets": [
+            "rugged"
+        ],
+        "vrfs": [
+            "segmentation"
+        ],
+        "vrrp": [
+            "monitor-maintain",
+            "routing",
+            "security",
+            "systems-interfaces"
+        ],
+        "vrrp tracker": [
+            "routing"
+        ],
+        "wan edge device": [
+            "sdwan-xe-gs",
+            "systems-interfaces"
+        ],
+        "wan edge health": [
+            "monitor-maintain"
+        ],
+        "wan edge inventory": [
+            "monitor-maintain"
+        ],
+        "wan edge management": [
+            "monitor-maintain"
+        ],
+        "wan insight": [
+            "policies"
+        ],
+        "wan interfaces": [
+            "monitor-maintain"
+        ],
+        "wani": [
+            "policies"
+        ],
+        "web server": [
+            "alarms"
+        ],
+        "web server certificate": [
+            "sdwan-xe-gs"
+        ],
+        "webhook": [
+            "sdwan-ssp"
+        ],
+        "webhooks": [
+            "sdwan-ssp"
+        ],
+        "webserver": [
+            "alarms"
+        ],
+        "website troubleshooting": [
+            "network-wide-path-insight"
+        ],
+        "wgb": [
+            "rugged"
+        ],
+        "wi-fi module": [
+            "monitor-maintain"
+        ],
+        "wifi configuration": [
+            "monitor-maintain"
+        ],
+        "wifi connections": [
+            "monitor-maintain"
+        ],
+        "wifi firmware": [
+            "monitor-maintain"
+        ],
+        "wifi module": [
+            "monitor-maintain",
+            "rugged"
+        ],
+        "wim": [
+            "rugged"
+        ],
+        "wireless bridge": [
+            "rugged"
+        ],
+        "wireless interface module": [
+            "rugged"
+        ],
+        "wireless module": [
+            "rugged"
+        ],
+        "wlan": [
+            "configuration-group",
+            "monitor-maintain"
+        ],
+        "workgroup bridge": [
+            "rugged"
+        ],
+        "zbf": [
+            "security"
+        ],
+        "zone pair": [
+            "security"
+        ],
+        "zone-based firewall": [
+            "security"
+        ],
+        "ztp upgrade": [
+            "monitor-maintain"
+        ],
+        "802.1x": [
+            "systems-interfaces"
+        ],
+        "8021x": [
+            "systems-interfaces"
+        ],
+        "access point": [
+            "systems-interfaces"
+        ],
+        "account lockout": [
+            "systems-interfaces"
+        ],
+        "address resolution protocol": [
+            "systems-interfaces"
+        ],
+        "anomaly detection": [
+            "vanalytics"
+        ],
+        "ap": [
+            "systems-interfaces"
+        ],
+        "api rate limit": [
+            "systems-interfaces"
+        ],
+        "application dashboard": [
+            "vanalytics"
+        ],
+        "arp": [
+            "systems-interfaces"
+        ],
+        "asynchronous transfer mode": [
+            "systems-interfaces"
+        ],
+        "atm": [
+            "systems-interfaces"
+        ],
+        "authentication order": [
+            "systems-interfaces"
+        ],
+        "automatic bandwidth detection": [
+            "systems-interfaces"
+        ],
+        "bandwidth": [
+            "systems-interfaces"
+        ],
+        "bandwidth forecasting": [
+            "vanalytics"
+        ],
+        "basic system": [
+            "systems-interfaces"
+        ],
+        "boost mode": [
+            "systems-interfaces"
+        ],
+        "bridge-domain": [
+            "systems-interfaces"
+        ],
+        "bulk api": [
+            "systems-interfaces"
+        ],
+        "caller id": [
+            "systems-interfaces"
+        ],
+        "carrier supporting carrier": [
+            "systems-interfaces"
+        ],
+        "catalyst sd-wan": [
+            "systems-interfaces"
+        ],
+        "catalyst sd-wan analytics": [
+            "vanalytics"
+        ],
+        "cellular gateway": [
+            "systems-interfaces"
+        ],
+        "certificate authorization": [
+            "systems-interfaces"
+        ],
+        "circuits dashboard": [
+            "vanalytics"
+        ],
+        "cisco 1000 series": [
+            "systems-interfaces"
+        ],
+        "ciscotac": [
+            "systems-interfaces"
+        ],
+        "client session": [
+            "systems-interfaces"
+        ],
+        "closed loop automation": [
+            "vanalytics"
+        ],
+        "cloud-delivered": [
+            "vanalytics"
+        ],
+        "cloud-hosted": [
+            "vanalytics"
+        ],
+        "collectors": [
+            "systems-interfaces"
+        ],
+        "configuration differences": [
+            "systems-interfaces"
+        ],
+        "configuration templates": [
+            "systems-interfaces"
+        ],
+        "controller replacement": [
+            "systems-interfaces"
+        ],
+        "controllers": [
+            "systems-interfaces"
+        ],
+        "csc": [
+            "systems-interfaces"
+        ],
+        "csv export": [
+            "systems-interfaces"
+        ],
+        "cube": [
+            "systems-interfaces"
+        ],
+        "customer-hosted": [
+            "vanalytics"
+        ],
+        "dashboard": [
+            "vanalytics"
+        ],
+        "data profile": [
+            "systems-interfaces"
+        ],
+        "deep packet inspection": [
+            "vanalytics"
+        ],
+        "device rollback": [
+            "systems-interfaces"
+        ],
+        "device statistics": [
+            "systems-interfaces"
+        ],
+        "device tagging": [
+            "systems-interfaces"
+        ],
+        "device templates": [
+            "systems-interfaces"
+        ],
+        "df bit": [
+            "systems-interfaces"
+        ],
+        "dhcp relay": [
+            "systems-interfaces"
+        ],
+        "dhcp smart relay": [
+            "systems-interfaces"
+        ],
+        "dhcp vendor option": [
+            "systems-interfaces"
+        ],
+        "dial peers": [
+            "systems-interfaces"
+        ],
+        "digital subscriber line": [
+            "systems-interfaces"
+        ],
+        "directed broadcast": [
+            "systems-interfaces"
+        ],
+        "dns": [
+            "systems-interfaces",
+            "security",
+            "policy-groups"
+        ],
+        "domain name system": [
+            "systems-interfaces"
+        ],
+        "dont fragment": [
+            "systems-interfaces"
+        ],
+        "dpi": [
+            "vanalytics"
+        ],
+        "dsl": [
+            "systems-interfaces"
+        ],
+        "dspfarm": [
+            "systems-interfaces"
+        ],
+        "dual stack": [
+            "systems-interfaces"
+        ],
+        "duo": [
+            "systems-interfaces"
+        ],
+        "dynamic interfaces": [
+            "systems-interfaces"
+        ],
+        "dynamic tunnels": [
+            "systems-interfaces"
+        ],
+        "e1": [
+            "systems-interfaces"
+        ],
+        "ecmp": [
+            "systems-interfaces"
+        ],
+        "enterprise agent": [
+            "systems-interfaces"
+        ],
+        "equal cost multipath": [
+            "systems-interfaces"
+        ],
+        "ewc": [
+            "systems-interfaces"
+        ],
+        "extended visibility": [
+            "systems-interfaces"
+        ],
+        "faulty controller": [
+            "systems-interfaces"
+        ],
+        "flexible tenant placement": [
+            "systems-interfaces"
+        ],
+        "flood list": [
+            "systems-interfaces"
+        ],
+        "flooding": [
+            "systems-interfaces"
+        ],
+        "fragmentation": [
+            "systems-interfaces"
+        ],
+        "fxo": [
+            "systems-interfaces"
+        ],
+        "fxs": [
+            "systems-interfaces"
+        ],
+        "g.shdsl": [
+            "systems-interfaces"
+        ],
+        "geofencing": [
+            "systems-interfaces"
+        ],
+        "global parameters": [
+            "systems-interfaces"
+        ],
+        "global settings": [
+            "systems-interfaces"
+        ],
+        "granular rbac": [
+            "systems-interfaces"
+        ],
+        "gre-in-udp": [
+            "systems-interfaces"
+        ],
+        "hardened passwords": [
+            "systems-interfaces"
+        ],
+        "hostname": [
+            "systems-interfaces"
+        ],
+        "hot standby router protocol": [
+            "systems-interfaces"
+        ],
+        "hsrp": [
+            "systems-interfaces"
+        ],
+        "https proxy": [
+            "systems-interfaces"
+        ],
+        "ieee 802.1x": [
+            "systems-interfaces"
+        ],
+        "integrated services routers": [
+            "systems-interfaces"
+        ],
+        "interface properties": [
+            "systems-interfaces"
+        ],
+        "interface speed": [
+            "systems-interfaces"
+        ],
+        "interface tracking": [
+            "systems-interfaces"
+        ],
+        "internet protocol security": [
+            "systems-interfaces"
+        ],
+        "internet protocol version 6": [
+            "systems-interfaces"
+        ],
+        "ip directed broadcast": [
+            "systems-interfaces"
+        ],
+        "ip over ethernet": [
+            "systems-interfaces"
+        ],
+        "ipoe": [
+            "systems-interfaces"
+        ],
+        "isr 1000": [
+            "systems-interfaces"
+        ],
+        "l2 control protocol": [
+            "systems-interfaces"
+        ],
+        "l2 vpn": [
+            "systems-interfaces"
+        ],
+        "layer 2 control protocol": [
+            "systems-interfaces"
+        ],
+        "layer 2 vpn": [
+            "systems-interfaces"
+        ],
+        "layer2 vpn": [
+            "systems-interfaces"
+        ],
+        "load balancing": [
+            "systems-interfaces"
+        ],
+        "login attempts": [
+            "systems-interfaces"
+        ],
+        "login banner": [
+            "systems-interfaces"
+        ],
+        "long term evolution": [
+            "systems-interfaces"
+        ],
+        "loopback interface": [
+            "systems-interfaces"
+        ],
+        "loopback interfaces": [
+            "systems-interfaces"
+        ],
+        "lte": [
+            "systems-interfaces"
+        ],
+        "maintenance window": [
+            "systems-interfaces"
+        ],
+        "maximum transmission unit": [
+            "systems-interfaces"
+        ],
+        "migration": [
+            "systems-interfaces"
+        ],
+        "mobility express": [
+            "systems-interfaces"
+        ],
+        "modem": [
+            "systems-interfaces"
+        ],
+        "mtu": [
+            "systems-interfaces"
+        ],
+        "multi tenant": [
+            "systems-interfaces"
+        ],
+        "multi-homing": [
+            "systems-interfaces"
+        ],
+        "multihoming": [
+            "systems-interfaces"
+        ],
+        "multitenant wan edge": [
+            "systems-interfaces"
+        ],
+        "mutual authentication": [
+            "systems-interfaces"
+        ],
+        "network interfaces": [
+            "systems-interfaces"
+        ],
+        "network slicing": [
+            "systems-interfaces"
+        ],
+        "network topology": [
+            "systems-interfaces"
+        ],
+        "omp statistics": [
+            "systems-interfaces"
+        ],
+        "on-demand tunnels": [
+            "systems-interfaces"
+        ],
+        "on-premise": [
+            "vanalytics"
+        ],
+        "open authentication": [
+            "systems-interfaces"
+        ],
+        "organization": [
+            "systems-interfaces"
+        ],
+        "overview dashboard": [
+            "vanalytics"
+        ],
+        "p-lte-450": [
+            "systems-interfaces"
+        ],
+        "p2mp": [
+            "systems-interfaces"
+        ],
+        "p2p": [
+            "systems-interfaces"
+        ],
+        "packet counters": [
+            "systems-interfaces"
+        ],
+        "packet forwarding": [
+            "systems-interfaces"
+        ],
+        "password policy": [
+            "systems-interfaces"
+        ],
+        "path recommendations": [
+            "vanalytics"
+        ],
+        "per-tenant aaa": [
+            "systems-interfaces"
+        ],
+        "point to point protocol over atm": [
+            "systems-interfaces"
+        ],
+        "point to point protocol over ethernet": [
+            "systems-interfaces"
+        ],
+        "point-to-multipoint": [
+            "systems-interfaces"
+        ],
+        "point-to-point": [
+            "systems-interfaces"
+        ],
+        "port channel": [
+            "systems-interfaces"
+        ],
+        "posture assessment": [
+            "systems-interfaces"
+        ],
+        "pots": [
+            "systems-interfaces"
+        ],
+        "pppoa": [
+            "systems-interfaces"
+        ],
+        "predictive networks": [
+            "vanalytics"
+        ],
+        "predictive path recommendations": [
+            "vanalytics"
+        ],
+        "prefix delegation": [
+            "systems-interfaces"
+        ],
+        "private lte": [
+            "systems-interfaces"
+        ],
+        "provider": [
+            "systems-interfaces"
+        ],
+        "provider aaa": [
+            "systems-interfaces"
+        ],
+        "provider level": [
+            "systems-interfaces"
+        ],
+        "proxy server": [
+            "systems-interfaces"
+        ],
+        "radius authentication": [
+            "systems-interfaces"
+        ],
+        "remote aaa": [
+            "systems-interfaces"
+        ],
+        "remote access pool": [
+            "systems-interfaces"
+        ],
+        "remote logging": [
+            "systems-interfaces"
+        ],
+        "reporting": [
+            "vanalytics"
+        ],
+        "resource groups": [
+            "systems-interfaces"
+        ],
+        "resource ids": [
+            "systems-interfaces"
+        ],
+        "resource management": [
+            "systems-interfaces"
+        ],
+        "resource tiers": [
+            "systems-interfaces"
+        ],
+        "route tracking": [
+            "systems-interfaces"
+        ],
+        "sd-wan": [
+            "systems-interfaces"
+        ],
+        "sdwan": [
+            "systems-interfaces"
+        ],
+        "security logging": [
+            "systems-interfaces"
+        ],
+        "serial number": [
+            "systems-interfaces"
+        ],
+        "server authentication": [
+            "systems-interfaces"
+        ],
+        "server session": [
+            "systems-interfaces"
+        ],
+        "session lifetime": [
+            "systems-interfaces"
+        ],
+        "session timeout": [
+            "systems-interfaces"
+        ],
+        "sig container": [
+            "systems-interfaces"
+        ],
+        "single-tenant": [
+            "systems-interfaces"
+        ],
+        "sip": [
+            "systems-interfaces"
+        ],
+        "site dashboard": [
+            "vanalytics"
+        ],
+        "sites": [
+            "systems-interfaces"
+        ],
+        "slaac": [
+            "systems-interfaces"
+        ],
+        "software version": [
+            "systems-interfaces"
+        ],
+        "srst phones": [
+            "systems-interfaces"
+        ],
+        "ssh authentication": [
+            "systems-interfaces"
+        ],
+        "ssh terminal": [
+            "systems-interfaces"
+        ],
+        "stateless address autoconfiguration": [
+            "systems-interfaces"
+        ],
+        "static route tracking": [
+            "systems-interfaces"
+        ],
+        "static routes": [
+            "systems-interfaces"
+        ],
+        "strong passwords": [
+            "systems-interfaces"
+        ],
+        "sub interface": [
+            "systems-interfaces"
+        ],
+        "subint": [
+            "systems-interfaces"
+        ],
+        "subinterfaces": [
+            "systems-interfaces"
+        ],
+        "system interface": [
+            "systems-interfaces"
+        ],
+        "system ip pool": [
+            "systems-interfaces"
+        ],
+        "system logging": [
+            "systems-interfaces"
+        ],
+        "system parameters": [
+            "systems-interfaces"
+        ],
+        "t1": [
+            "systems-interfaces"
+        ],
+        "tacacs+": [
+            "systems-interfaces"
+        ],
+        "tags": [
+            "systems-interfaces"
+        ],
+        "tcp logging": [
+            "systems-interfaces"
+        ],
+        "tcp maximum segment size": [
+            "systems-interfaces"
+        ],
+        "tcp mss": [
+            "systems-interfaces"
+        ],
+        "template permissions": [
+            "systems-interfaces"
+        ],
+        "template variables": [
+            "systems-interfaces"
+        ],
+        "tenant": [
+            "systems-interfaces"
+        ],
+        "tenant backup": [
+            "systems-interfaces"
+        ],
+        "tenant data": [
+            "systems-interfaces"
+        ],
+        "tenant management": [
+            "systems-interfaces"
+        ],
+        "tenant migration": [
+            "systems-interfaces"
+        ],
+        "tenant onboarding": [
+            "systems-interfaces"
+        ],
+        "tenant placement": [
+            "systems-interfaces"
+        ],
+        "tenant policies": [
+            "systems-interfaces"
+        ],
+        "tenant wan edge": [
+            "systems-interfaces"
+        ],
+        "tenants": [
+            "systems-interfaces"
+        ],
+        "thousandeyes agent": [
+            "systems-interfaces"
+        ],
+        "threat intelligence": [
+            "vanalytics"
+        ],
+        "tiers": [
+            "systems-interfaces"
+        ],
+        "time synchronization": [
+            "systems-interfaces"
+        ],
+        "tloc extension": [
+            "systems-interfaces"
+        ],
+        "traffic engineering": [
+            "systems-interfaces"
+        ],
+        "transport layer security": [
+            "systems-interfaces"
+        ],
+        "type 6 passwords": [
+            "systems-interfaces"
+        ],
+        "uc": [
+            "systems-interfaces"
+        ],
+        "unified communications": [
+            "systems-interfaces"
+        ],
+        "user access": [
+            "systems-interfaces"
+        ],
+        "user groups": [
+            "systems-interfaces"
+        ],
+        "user management": [
+            "systems-interfaces"
+        ],
+        "vanalytics": [
+            "vanalytics"
+        ],
+        "variable fragment retry": [
+            "systems-interfaces"
+        ],
+        "vdsl": [
+            "systems-interfaces"
+        ],
+        "very high speed digital subscriber line": [
+            "systems-interfaces"
+        ],
+        "vfr": [
+            "systems-interfaces"
+        ],
+        "virtual routers": [
+            "systems-interfaces"
+        ],
+        "visibility": [
+            "systems-interfaces"
+        ],
+        "voice card": [
+            "systems-interfaces"
+        ],
+        "voice policy": [
+            "systems-interfaces"
+        ],
+        "voice ports": [
+            "systems-interfaces"
+        ],
+        "voice services": [
+            "systems-interfaces"
+        ],
+        "vpn groups": [
+            "systems-interfaces"
+        ],
+        "vpn segments": [
+            "systems-interfaces"
+        ],
+        "vr": [
+            "systems-interfaces"
+        ],
+        "vrouters": [
+            "systems-interfaces"
+        ],
+        "vrrp tracking": [
+            "systems-interfaces"
+        ],
+        "wan region": [
+            "systems-interfaces"
+        ],
+        "wan transport": [
+            "systems-interfaces"
+        ],
+        "wireless": [
+            "systems-interfaces"
+        ],
+        "wireless management": [
+            "systems-interfaces"
+        ],
+        "template push": [
+            "configuration-group",
+            "gs-book",
+            "sdwan-xe-gs",
+            "systems-interfaces"
+        ],
+        "template deployment": [
+            "configuration-group",
+            "gs-book",
+            "sdwan-xe-gs",
+            "systems-interfaces"
+        ],
+        "template attachment": [
+            "configuration-group",
+            "gs-book",
+            "sdwan-xe-gs",
+            "systems-interfaces"
+        ],
+        "configuration attachment": [
+            "gs-book",
+            "sdwan-xe-gs",
+            "systems-interfaces"
+        ],
+        "negotiation": [
+            "gs-book",
+            "sdwan-xe-gs",
+            "systems-interfaces"
+        ],
+        "negotiation auto": [
+            "gs-book",
+            "sdwan-xe-gs",
+            "systems-interfaces"
+        ],
+        "auto-negotiation": [
+            "gs-book",
+            "sdwan-xe-gs",
+            "systems-interfaces"
+        ],
+        "cedge": [
+            "compatibility",
+            "getting-started",
+            "gs-book",
+            "sdwan-xe-gs",
+            "systems-interfaces"
+        ],
+        "c8500": [
+            "compatibility",
+            "gs-book",
+            "sdwan-xe-gs",
+            "systems-interfaces"
+        ],
+        "c8300": [
+            "compatibility",
+            "gs-book",
+            "sdwan-xe-gs",
+            "systems-interfaces"
+        ],
+        "c8200": [
+            "compatibility",
+            "gs-book",
+            "sdwan-xe-gs",
+            "systems-interfaces"
+        ],
+        "catalyst 8500": [
+            "compatibility",
+            "gs-book",
+            "sdwan-xe-gs",
+            "systems-interfaces"
+        ],
+        "catalyst 8300": [
+            "compatibility",
+            "gs-book",
+            "sdwan-xe-gs",
+            "systems-interfaces"
+        ],
+        "catalyst 8200": [
+            "compatibility",
+            "gs-book",
+            "sdwan-xe-gs",
+            "systems-interfaces"
+        ],
+        "confd": [
+            "gs-book",
+            "sdwan-xe-gs",
+            "systems-interfaces"
+        ],
+        "config-db": [
+            "gs-book",
+            "maintain",
+            "monitor",
+            "sdwan-xe-gs"
+        ],
+        "configuration database": [
+            "gs-book",
+            "maintain",
+            "monitor",
+            "sdwan-xe-gs"
+        ]
+    },
+    "product_noise": {
+        "_comment": "Product-specific terms to SKIP during guide matching. These terms appear in most/all filenames for a product and would match every guide. Keys are product folder codes.",
+        "sdwan": [
+            "sdwan",
+            "sd-wan",
+            "sd wan",
+            "cisco sd-wan",
+            "cisco sdwan",
+            "xe",
+            "catalyst"
+        ],
+        "ASR9000": [
+            "asr9000",
+            "asr9k",
+            "asr 9000",
+            "asr 9k"
+        ],
+        "Cisco8000": [
+            "cisco8000",
+            "cisco 8000",
+            "8000",
+            "cisco8k",
+            "8k"
+        ],
+        "9800": [
+            "9800",
+            "catalyst 9800"
+        ]
+    },
+    "filename_noise_words": {
+        "_comment": "Common words that appear in guide filenames. Any detected term that is a substring of these words gets skipped to avoid false matches (e.g. 'gui' inside 'guide').",
+        "words": [
+            "guide",
+            "configuration",
+            "troubleshooting",
+            "reference",
+            "overview"
+        ]
+    },
+    "stop_words": {
+        "_comment": "English stop words stripped from terms before filename matching. Filenames often drop these (e.g. 'monitor and maintain' becomes 'monitor-maintain' in the filename).",
+        "words": [
+            "and",
+            "or",
+            "the",
+            "for",
+            "of",
+            "to",
+            "a",
+            "an",
+            "in",
+            "on",
+            "with"
+        ]
+    }
+}

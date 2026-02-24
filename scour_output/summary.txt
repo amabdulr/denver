@@ -5,17 +5,17 @@ SCOUR BOOKS — SUMMARY
 Books processed:         1
   Successful:            1
   Failed (no TOC):       0
-Total headings found:    53
-LLM concepts extracted:  34
-Mechanical vocab matches:4
-Final merged concepts:   576
-New terms (gap report):  27
+Total headings found:    181
+LLM concepts extracted:  130
+Mechanical vocab matches:136
+Final merged concepts:   162
+New terms (gap report):  11
 
 ----------------------------------------------------------------------
 PER-BOOK BREAKDOWN
 ----------------------------------------------------------------------
 
-✅ compatibility-and-server-recommendations.pdf
-   Product: sdwan  |  TOC: bookmarks  |  Headings: 53  |  LLM concepts: 34  |  Vocab matches: 4
-   LLM samples: sd-wan, sdwan, catalyst sd-wan, sd wan, viptela, control components, vmanage, vsmart ... +26 more
+✅ configuration-group-guide.pdf
+   Product: sdwan  |  TOC: bookmarks  |  Headings: 181  |  LLM concepts: 130  |  Vocab matches: 136
+   LLM samples: configuration groups, config groups, feature profiles, dual device site, aaa, authentication authorization accounting, bfd, bidirectional forwarding detection ... +122 more
 

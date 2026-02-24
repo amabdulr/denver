@@ -1,0 +1,36 @@
+{
+  "_comment": "Maps product names to keyword lists for auto-detection. Order matters: first match wins. Keywords are matched case-insensitively against pasted bug/RCA content.",
+  "products": [
+    {
+      "name": "Cisco SD-WAN",
+      "keywords": [
+        "sd-wan", "sdwan", "sd wan", "vmanage", "vedge", "cedge",
+        "vbond", "vsmart", "cisco-sdwan"
+      ]
+    },
+    {
+      "name": "ASR 9000",
+      "keywords": [
+        "asr9k", "asr 9k", "asr9000", "asr 9000",
+        "iosxr-pi-docs", "iosxr", "ios-xr", "ios xr",
+        "ncs 5500", "ncs5500", "xr-docs", "cedge"
+      ]
+    },
+    {
+      "name": "Cisco 8000",
+      "keywords": [
+        "cisco 8000", "cisco8000", "8000-series",
+        "8000 series", "8200", "8800",
+        "8100", "8600", "8000-platform"
+      ]
+    },
+    {
+      "name": "Cisco 9800",
+      "keywords": [
+        "ewlc-docs", "ewlc", "9800", "catalyst 9800",
+        "c9800", "wireless controller",
+        "9800-cl", "9800-l", "9800-40", "9800-80"
+      ]
+    }
+  ]
+}

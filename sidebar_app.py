@@ -445,8 +445,24 @@ def render_analysis_summary_page():
                     st.session_state.uploaded_file_content = all_bugs_content
                     st.session_state.fetched_notes_summary = all_notes_summary  # Store notes summary
                     st.session_state.bug_fetched = True  # Flag to show success message
+                    st.session_state.analysis_fetched_bug_numbers = bug_numbers  # Track fetched bugs
                     # Set the text area value directly
                     st.session_state.analysis_rca_text_area = all_bugs_content
+                    
+                    # Fetch Submitter and Headline for the first bug (for email drafting)
+                    try:
+                        extra_fields = get_bug_field_values(bug_numbers[0], ["Submitter", "Headline"], auth)
+                        submitter_val = extra_fields.get('Submitter', '')
+                        headline_val = extra_fields.get('Headline', '')
+                        st.session_state.analysis_submitter_value = submitter_val
+                        st.session_state.analysis_bug_headline = headline_val
+                        # Also set widget keys directly so Streamlit picks them up
+                        st.session_state.analysis_email_recipient = submitter_val
+                        st.session_state.analysis_email_subject = f"Doc {', '.join(bug_numbers)}: {headline_val}" if headline_val else f"Doc {', '.join(bug_numbers)}"
+                    except Exception:
+                        st.session_state.analysis_submitter_value = ''
+                        st.session_state.analysis_bug_headline = ''
+                    
                     st.rerun()
                     
                 except Exception as e:
@@ -770,7 +786,13 @@ def render_analysis_summary_page():
                 _gm_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "guide_mappings.json")
                 try:
                     with open(_gm_path) as _f:
-                        _ref_patterns = [p.lower() for p in _json.load(_f).get('reference_guides', {}).get('patterns', [])]
+                        _ref_raw = _json.load(_f).get('reference_guides', {}).get('patterns', {})
+                    if isinstance(_ref_raw, dict):
+                        # Per-product patterns
+                        _ref_patterns = [p.lower() for p in _ref_raw.get(product_code, [])]
+                    else:
+                        # Legacy flat list
+                        _ref_patterns = [p.lower() for p in _ref_raw]
                 except Exception:
                     _ref_patterns = []
                 
@@ -991,9 +1013,185 @@ Instructions:
                         with st.expander("🐛 Error Details"):
                             st.exception(e)
         
+        # ===== STEP 5: DRAFT EMAIL TO SUBMITTER =====
+        st.markdown("---")
+        st.markdown("<h3 style='color: #1f77b4;'>Step 5: Draft Email to Submitter</h3>", unsafe_allow_html=True)
+        
+        # Determine if this was a Fetch Bug situation
+        is_fetch_bug = bool(st.session_state.get('analysis_fetched_bug_numbers'))
+        fetched_bugs = st.session_state.get('analysis_fetched_bug_numbers', [])
+        
+        # Show bug headline if available
+        headline = st.session_state.get('analysis_bug_headline', '')
+        if is_fetch_bug and headline:
+            st.info(f"📌 **{', '.join(fetched_bugs)}** — {headline}")
+        
+        # Subject line field
+        if is_fetch_bug:
+            default_subject = f"Doc {', '.join(fetched_bugs)}: {headline}" if headline else f"Doc {', '.join(fetched_bugs)}"
+        else:
+            default_subject = "Doc Bug Analysis"
+        
+        email_subject = st.text_input(
+            "Subject Line",
+            value=st.session_state.get('analysis_email_subject', default_subject),
+            placeholder="e.g., Doc CSCws27686: headline text",
+            help="Subject line for the email",
+            key="analysis_email_subject"
+        )
+        
+        # Recipient field
+        if is_fetch_bug:
+            # Auto-populate from CDETS Submitter field
+            default_recipient = st.session_state.get('analysis_submitter_value', '')
+            email_recipient = st.text_input(
+                "Recipient(s)",
+                value=default_recipient,
+                placeholder="e.g., manjosep or manjosep, annag",
+                help="Auto-populated from CDETS Submitter. Comma-separated usernames for multiple recipients (without @cisco.com).",
+                key="analysis_email_recipient"
+            )
+            defect_label = ", ".join(fetched_bugs)
+        else:
+            # Manual entry for pasted RCA
+            email_recipient = st.text_input(
+                "Recipient(s)",
+                value="",
+                placeholder="e.g., manjosep or manjosep, annag",
+                help="Enter one or more Cisco usernames, comma-separated (without @cisco.com)",
+                key="analysis_email_recipient"
+            )
+            defect_label = "the defect"
+        
+        # Sender name
+        saved_tester = get_saved_tester_name()
+        email_sender_name = st.text_input(
+            "Your Name (for signature)",
+            value=saved_tester,
+            placeholder="Enter your name",
+            help="This name will appear in the email signature",
+            key="analysis_email_sender_name"
+        )
+        
+        # Determine if we have analysis output to include
+        has_output = bool(st.session_state.get('conversation_history'))
+        
+        # Draft email button
+        draft_email_button = st.button(
+            "📝 Draft Email",
+            type="secondary",
+            use_container_width=True,
+            help="Generate a draft email with the analysis output",
+            key="analysis_draft_email",
+            disabled=not has_output
+        )
+        
+        if not has_output:
+            st.caption("⚠️ Run an analysis first to enable email drafting.")
+        
+        if draft_email_button and has_output:
+            # Get the latest analysis output
+            latest_output = st.session_state.conversation_history[-1]['answer']
+            
+            # Build the draft email
+            draft = f"""Hello,
+
+Please find my solution to the defect {defect_label}. Please let me know if the recommendation is accurate.
+
+{latest_output}
+
+Regards,
+{email_sender_name}"""
+            st.session_state.analysis_draft_email_body = draft
+        
+        # Show editable email preview if draft exists
+        if 'analysis_draft_email_body' in st.session_state and st.session_state.analysis_draft_email_body:
+            st.markdown("#### 📧 Email Preview")
+            edited_email = st.text_area(
+                "Review and edit the email below",
+                value=st.session_state.analysis_draft_email_body,
+                height=400,
+                help="Review the draft and make any edits before sending",
+                key="analysis_email_preview_edit"
+            )
+            
+            if email_recipient.strip():
+                recipients_display = ', '.join(f"{u.strip()}@cisco.com" for u in email_recipient.split(',') if u.strip())
+                st.info(f"📬 Will send to: **{recipients_display}**")
+            
+            # Email action buttons side by side
+            email_col1, email_col2 = st.columns(2)
+            
+            with email_col1:
+                # Open in Outlook desktop app button
+                if email_recipient.strip():
+                    import urllib.parse
+                    to_addresses = ','.join(f"{u.strip()}@cisco.com" for u in email_recipient.split(',') if u.strip())
+                    subject_text = st.session_state.get('analysis_email_subject', email_subject)
+                    body_text = st.session_state.get('analysis_email_preview_edit', edited_email)
+                    outlook_url = f"ms-outlook://compose?to={urllib.parse.quote(to_addresses)}&subject={urllib.parse.quote(subject_text)}&body={urllib.parse.quote(body_text)}"
+                    
+                    st.markdown(
+                        f'''<a href="{outlook_url}" target="_blank" style="
+                            display: inline-block;
+                            width: 100%;
+                            text-align: center;
+                            padding: 0.5rem 1rem;
+                            background-color: #0078d4;
+                            color: white !important;
+                            text-decoration: none;
+                            border-radius: 0.5rem;
+                            font-weight: 500;
+                            font-size: 0.875rem;
+                            box-sizing: border-box;
+                        ">📨 Open in Outlook</a>''',
+                        unsafe_allow_html=True
+                    )
+                else:
+                    st.button(
+                        "📨 Open in Outlook",
+                        disabled=True,
+                        use_container_width=True,
+                        help="Enter recipient(s) to enable",
+                        key="analysis_open_outlook_disabled"
+                    )
+            
+            with email_col2:
+                # Send Email button (via SMTP)
+                send_email_button = st.button(
+                    "📧 Send via SMTP",
+                    type="primary",
+                    use_container_width=True,
+                    help="Send the email directly via SMTP server",
+                    key="analysis_send_email"
+                )
+            
+            if send_email_button:
+                if not email_recipient.strip():
+                    st.error("⚠️ Please enter at least one recipient username.")
+                else:
+                    from sidebar_resolve_bug_page import send_resolution_email
+                    
+                    bug_label = ", ".join(fetched_bugs) if is_fetch_bug else "RCA Analysis"
+                    email_content_to_send = st.session_state.get('analysis_email_preview_edit', edited_email)
+                    recipients_display = ', '.join(f"{u.strip()}@cisco.com" for u in email_recipient.split(',') if u.strip())
+                    
+                    with st.spinner(f"📧 Sending email to {recipients_display}..."):
+                        success, message = send_resolution_email(
+                            email_recipient.strip(),
+                            bug_label,
+                            email_content_to_send,
+                            email_sender_name,
+                            subject=st.session_state.get('analysis_email_subject', '')
+                        )
+                        if success:
+                            st.success(f"📧 {message}")
+                        else:
+                            st.warning(f"⚠️ {message}")
+        
         # Test Section
         st.markdown("---")
-        st.markdown("<h3 style='color: #1f77b4;'>Step 5: Post your test results (Optional)</h3>", unsafe_allow_html=True)
+        st.markdown("<h3 style='color: #1f77b4;'>Step 6: Post your test results (Optional)</h3>", unsafe_allow_html=True)
         
         with st.expander("📝 Test Results", expanded=False):
             st.markdown("Capture test results for this analysis")

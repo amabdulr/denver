@@ -7,15 +7,17 @@ import streamlit as st
 from bug2 import create_auth, get_bug_summary, get_bug_field_values, create_note
 
 
-def send_resolution_email(recipient_username, bug_number, email_body_content, engineer_name=""):
+def send_resolution_email(recipient_username, bug_number, email_body_content, engineer_name="", subject=None):
     """
-    Send bug resolution email to submitter
+    Send bug resolution email to submitter(s)
     
     Args:
-        recipient_username: Username without @cisco.com (e.g., 'amabdulr')
+        recipient_username: Username(s) without @cisco.com. Can be a single username
+            (e.g., 'amabdulr') or comma-separated usernames (e.g., 'amabdulr, johndoe').
         bug_number: The bug number
         email_body_content: The complete email body content (already formatted)
         engineer_name: Name of the engineer resolving the bug
+        subject: Optional custom subject line. If None, defaults to 'Doc Bug {bug_number} Resolution'
     
     Returns:
         tuple: (success: bool, message: str)
@@ -25,15 +27,19 @@ def send_resolution_email(recipient_username, bug_number, email_body_content, en
         from email.mime.text import MIMEText
         from email.mime.multipart import MIMEMultipart
         
-        # Construct email addresses
-        recipient_email = f"{recipient_username}@cisco.com"
-        sender_email = f"{engineer_name.replace(' ', '.').lower()}@cisco.com" if engineer_name else recipient_email
+        # Support comma-separated recipient usernames
+        usernames = [u.strip() for u in recipient_username.split(',') if u.strip()]
+        if not usernames:
+            return (False, "No valid recipient usernames provided.")
+        
+        recipient_emails = [f"{u}@cisco.com" for u in usernames]
+        sender_email = f"{engineer_name.replace(' ', '.').lower()}@cisco.com" if engineer_name else recipient_emails[0]
         
         # Create message
         msg = MIMEMultipart()
         msg['From'] = sender_email
-        msg['To'] = recipient_email
-        msg['Subject'] = f"Doc Bug {bug_number} Resolution"
+        msg['To'] = ', '.join(recipient_emails)
+        msg['Subject'] = subject if subject else f"Doc Bug {bug_number} Resolution"
         
         # Use the email body content as-is (already formatted with greeting, resolution, and signature)
         msg.attach(MIMEText(email_body_content, 'plain'))
@@ -45,9 +51,9 @@ def send_resolution_email(recipient_username, bug_number, email_body_content, en
             try:
                 server = smtplib.SMTP(smtp_server, timeout=5)
                 text = msg.as_string()
-                server.sendmail(sender_email, recipient_email, text)
+                server.sendmail(sender_email, recipient_emails, text)
                 server.quit()
-                return (True, f"Email sent successfully to {recipient_email} via {smtp_server}")
+                return (True, f"Email sent successfully to {', '.join(recipient_emails)} via {smtp_server}")
             except Exception as server_error:
                 continue
         
