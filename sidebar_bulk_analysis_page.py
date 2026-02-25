@@ -6,9 +6,10 @@ Handles the Bulk Analysis workflow for sidebar navigation app
 import streamlit as st
 import pandas as pd
 import io
+import re
 import time
 from datetime import datetime
-from app_functions import run_agent_with_prompt_file
+from app_functions import run_agent_with_prompt_file, run_agent, match_terms_to_guides, extract_doc_clues_data, load_document_inventory
 
 
 def render_bulk_analysis_page():
@@ -17,7 +18,7 @@ def render_bulk_analysis_page():
     st.markdown("Process multiple RCAs at once through ChapterFinder and ContentWriter workflows")
     
     st.markdown("---")
-    st.warning("🧪 **Testing Mode Active:** Processing limited to first 40 rows only")
+    st.warning("🧪 **Testing Mode Active:** Processing limited to first 2 rows only")
     st.info("💡 Process multiple RCAs at once through ChapterFinder and ContentWriter workflows")
     
     # Step-by-step instructions
@@ -29,7 +30,7 @@ def render_bulk_analysis_page():
         3. **Select RCA Column**: Choose which column contains your RCA descriptions. A column is selected automatically.
         4. **Review Preview**: Check the preview to ensure correct column selection
         5. **Start Processing**: Click "🚀 Start Processing" to begin
-        6. **Download Results**: Once complete, download the processed Excel file with AI Analysis. 
+        6. **Download Results**: Once complete, download the processed Excel file with Top-3 Recommendations and AI Analysis.
         
         #### Bug Section (Right Column)
         1. **Select Product**: Use the same product selection from below
@@ -38,7 +39,7 @@ def render_bulk_analysis_page():
         4. **Select Bug Column**: The system will auto-detect columns with CSC-format bugs
         5. **Review Preview**: Verify the correct bug numbers are showing
         6. **Start Processing**: Click "🚀 Start Processing" to fetch bugs from CDETS and analyze them
-        7. **Download Results**: Once complete, download the processed Excel with Summarize and BugAnalyze outputs
+        7. **Download Results**: Once complete, download the processed Excel with Top-3 Recommendation and BugAnalyze outputs
         
         **Note**: You can pause processing anytime and resume later. Your progress is saved!
         """)
@@ -397,7 +398,7 @@ def render_rca_section(product_name: str):
                 
                 # Time estimate (for first 40 rows in testing mode)
                 if not st.session_state.get('bulk_processing', False):
-                    rows_to_process = min(40, len(df))
+                    rows_to_process = min(2, len(df))
                     estimated_time = calculate_processing_time(rows_to_process)
                     st.info(f"⏱️ Estimated processing time for first {rows_to_process} rows (testing mode): {estimated_time}")
                 
@@ -425,10 +426,9 @@ def render_rca_section(product_name: str):
 
 def calculate_processing_time(num_rows: int) -> str:
     """Calculate estimated processing time based on rate limiting"""
-    # Each row requires 2 API calls (ChapterFinder + ContentWriter)
-    # Rate limit: ~4.5 seconds per call
-    # So: 2 calls × 4.5s = 9 seconds per row
-    seconds_per_row = 9
+    # Each row: 1 run_agent call (top-3 recs + BugAnalyze combined)
+    # run_agent makes multiple internal tool calls, so ~20 seconds per row
+    seconds_per_row = 20
     total_seconds = num_rows * seconds_per_row
     
     if total_seconds < 60:
@@ -455,8 +455,8 @@ def process_bulk_rca(df: pd.DataFrame, rca_column: str, product_name: str):
     status_text = st.empty()
     results_container = st.container()
     
-    # **TESTING MODE: Limit to first 40 rows**
-    total_rows = min(40, len(df))
+    # **TESTING MODE: Limit to first 2 rows**
+    total_rows = min(2, len(df))
     st.info(f"🧪 **Testing Mode:** Processing limited to first {total_rows} rows (out of {len(df)} total)")
     
     # Determine starting point (for resume functionality)
@@ -481,38 +481,80 @@ def process_bulk_rca(df: pd.DataFrame, rca_column: str, product_name: str):
                 result = {
                     'row_number': idx + 1,
                     'rca_text_preview': "(empty)",
-                    'chapter_finder': "",
-                    'content_writer': "",
+                    'detected_bugs': "",
+                    'top3_recommendations': "",
+                    'analysis_output': "",
                     'status': 'Skipped - Empty cell'
                 }
             else:
-                # Process ChapterFinder
-                status_text.text(f"🔄 Row {idx + 1}/{total_rows} - Running ChapterFinder...")
-                chapter_output = run_agent_with_prompt_file(
-                    "ChapterFinder.md",
-                    rca_text,
-                    product_name
-                )
+                # Step 0: Detect bug IDs in RCA text (same as Page 1)
+                bug_ids = list(set(re.findall(r'CSC[a-z]{2}\d{5}', rca_text, re.IGNORECASE)))
+                if bug_ids:
+                    detected_bugs = ", ".join(
+                        f"{b.upper()} (https://cdetsng.cisco.com/webui/#view={b})"
+                        for b in sorted(bug_ids)
+                    )
+                else:
+                    detected_bugs = "None"
                 
-                # Rate limiting: Wait 10 seconds between API calls (conservative to avoid rate limits)
-                time.sleep(10)
+                # Step 1: Detect tech terms and score guides (mirrors Page 1 flow)
+                status_text.text(f"🔄 Row {idx + 1}/{total_rows} - Detecting terms and scoring guides...")
+                clues_data = extract_doc_clues_data(rca_text)
+                detected_terms = list(clues_data.get('term_frequencies', {}).keys())
+                term_freq = clues_data.get('term_frequencies', {})
                 
-                # Process ContentWriter
-                status_text.text(f"🔄 Row {idx + 1}/{total_rows} - Running ContentWriter...")
-                content_output = run_agent_with_prompt_file(
-                    "ContentWriter.md",
-                    rca_text,
-                    product_name
-                )
+                # Get selected guides from bulk UI (or empty = all)
+                bulk_guides = st.session_state.get('bulk_selected_guides', [])
                 
-                # Rate limiting: Wait 10 seconds after last call before next row
+                if detected_terms:
+                    matched, _ = match_terms_to_guides(detected_terms, product_name, term_freq)
+                    guide_scores = matched.pop('_guide_scores', {})
+                    st.session_state['_guide_scores'] = guide_scores
+                    st.session_state['_matched_term_guides'] = dict(matched)
+                else:
+                    st.session_state['_guide_scores'] = {}
+                    st.session_state['_matched_term_guides'] = {}
+                
+                # Step 2: Build Top-3 Recommendations text (deterministic, pre-LLM)
+                guide_scores = st.session_state.get('_guide_scores', {})
+                matched_term_guides = st.session_state.get('_matched_term_guides', {})
+                doc_inventory = load_document_inventory(product_name)
+                sorted_gs = sorted(guide_scores.items(), key=lambda x: -x[1]) if guide_scores else []
+                rec_lines = []
+                for rank, (g_name, g_score) in enumerate(sorted_gs[:3], start=1):
+                    tw = []
+                    for term, guides in matched_term_guides.items():
+                        if term.startswith('_'):
+                            continue
+                        if g_name in guides:
+                            tw.append((term, 1.0 / len(guides)))
+                    tw.sort(key=lambda x: -x[1])
+                    section_hints = ", ".join(t.title() for t, _ in tw[:5]) if tw else "(no section hints)"
+                    url = doc_inventory.get(g_name, {}).get('source_url', '')
+                    url_text = url if url else '(no URL)'
+                    rec_lines.append(f"#{rank}: {g_name} (score: {g_score})\n   Section hints: {section_hints}\n   URL: {url_text}")
+                top3_recommendations = "\n\n".join(rec_lines) if rec_lines else "No guide scores available"
+                
+                # Step 3: Run run_agent with BugAnalyze.md (same as Page 1)
+                status_text.text(f"🔄 Row {idx + 1}/{total_rows} - Running analysis...")
+                try:
+                    with open("BugAnalyze.md", "r") as f:
+                        question = f.read()
+                except FileNotFoundError:
+                    question = "Analyze the Bug/RCA content"
+                
+                rec_result = run_agent(product_name, question, rca_text, bulk_guides or None, detected_terms or None)
+                analysis_output = rec_result['output'] if isinstance(rec_result, dict) and 'output' in rec_result else str(rec_result)
+                
+                # Rate limiting: Wait 10 seconds after call before next row
                 time.sleep(10)
                 
                 result = {
                     'row_number': idx + 1,
                     'rca_text_preview': rca_text[:100] + "..." if len(rca_text) > 100 else rca_text,
-                    'chapter_finder': chapter_output,
-                    'content_writer': content_output,
+                    'detected_bugs': detected_bugs,
+                    'top3_recommendations': top3_recommendations,
+                    'analysis_output': analysis_output,
                     'status': 'Success ✅'
                 }
             
@@ -533,8 +575,9 @@ def process_bulk_rca(df: pd.DataFrame, rca_column: str, product_name: str):
             result = {
                 'row_number': idx + 1,
                 'rca_text_preview': str(row[rca_column])[:100] if pd.notna(row[rca_column]) else "(empty)",
-                'chapter_finder': "",
-                'content_writer': "",
+                'detected_bugs': "",
+                'top3_recommendations': "",
+                'analysis_output': "",
                 'status': error_msg
             }
             
@@ -669,17 +712,17 @@ def create_output_excel(results: list) -> pd.DataFrame:
         return text
     
     # Apply sanitization to output columns
-    if 'chapter_finder' in results_df.columns:
-        results_df['chapter_finder'] = results_df['chapter_finder'].apply(sanitize_text)
-    if 'content_writer' in results_df.columns:
-        results_df['content_writer'] = results_df['content_writer'].apply(sanitize_text)
+    if 'top3_recommendations' in results_df.columns:
+        results_df['top3_recommendations'] = results_df['top3_recommendations'].apply(sanitize_text)
+    if 'analysis_output' in results_df.columns:
+        results_df['analysis_output'] = results_df['analysis_output'].apply(sanitize_text)
     
     # Add new columns to original dataframe
     original_df['Row_Number'] = range(1, len(original_df) + 1)
     
     # Merge results (left join to keep all original rows)
     merged_df = original_df.merge(
-        results_df[['row_number', 'chapter_finder', 'content_writer', 'status']],
+        results_df[['row_number', 'detected_bugs', 'top3_recommendations', 'analysis_output', 'status']],
         left_on='Row_Number',
         right_on='row_number',
         how='left'
@@ -687,8 +730,8 @@ def create_output_excel(results: list) -> pd.DataFrame:
     
     # Rename columns
     merged_df = merged_df.rename(columns={
-        'chapter_finder': 'ChapterFinder_Output',
-        'content_writer': 'ContentWriter_Output',
+        'top3_recommendations': 'Top3_Recommendations',
+        'analysis_output': 'Analysis_Output',
         'status': 'Processing_Status'
     })
     
@@ -696,8 +739,8 @@ def create_output_excel(results: list) -> pd.DataFrame:
     merged_df = merged_df.drop(columns=['row_number', 'Row_Number'])
     
     # Fill NaN in new columns (for unprocessed rows)
-    merged_df['ChapterFinder_Output'] = merged_df['ChapterFinder_Output'].fillna('Not processed')
-    merged_df['ContentWriter_Output'] = merged_df['ContentWriter_Output'].fillna('Not processed')
+    merged_df['Top3_Recommendations'] = merged_df['Top3_Recommendations'].fillna('Not processed')
+    merged_df['Analysis_Output'] = merged_df['Analysis_Output'].fillna('Not processed')
     merged_df['Processing_Status'] = merged_df['Processing_Status'].fillna('Not processed')
     
     return merged_df
@@ -856,9 +899,9 @@ def render_bug_section(product_name: str):
                 
                 # Time estimate (for first 40 rows in testing mode)
                 if not st.session_state.get('bulk_bug_processing', False):
-                    rows_to_process = min(40, len(df))
-                    # Each bug: Fetch (no API call) + Summarize (1 call) + Analyze (1 call) = 2 API calls
-                    # With 10 second delays: 2 calls × 10s = 20 seconds per row
+                    rows_to_process = min(2, len(df))
+                    # Each bug: Fetch + 1 run_agent call (top-3 recs + BugAnalyze combined)
+                    # Estimated ~20 seconds per row with delays
                     estimated_time = calculate_bug_processing_time(rows_to_process)
                     st.info(f"⏱️ Estimated processing time for first {rows_to_process} rows (testing mode): {estimated_time}")
                 
@@ -886,8 +929,8 @@ def render_bug_section(product_name: str):
 
 def calculate_bug_processing_time(num_rows: int) -> str:
     """Calculate estimated processing time for bug analysis"""
-    # Each row: Summarize + Analyze = 2 API calls
-    # With 10 second delays: 20 seconds per row
+    # Each row: 1 run_agent call (top-3 recs + BugAnalyze combined)
+    # run_agent makes multiple internal tool calls, so ~20 seconds per row
     seconds_per_row = 20
     total_seconds = num_rows * seconds_per_row
     
@@ -904,7 +947,7 @@ def calculate_bug_processing_time(num_rows: int) -> str:
 def process_bulk_bugs(df: pd.DataFrame, bug_column: str, product_name: str, extract_all_notes: bool):
     """Process all bugs in the DataFrame (limited to first 10 rows for testing)"""
     from bug2 import create_auth, get_bug_summary, get_note_content, get_all_notes, get_bug_field_values, safe_parse_cdets_xml
-    from app_functions import run_agent_with_prompt_file
+    from app_functions import run_agent_with_prompt_file, run_agent, match_terms_to_guides, extract_doc_clues_data, load_document_inventory
     import xml.etree.ElementTree as ET
     
     # Initialize results if starting fresh
@@ -916,8 +959,8 @@ def process_bulk_bugs(df: pd.DataFrame, bug_column: str, product_name: str, extr
     progress_bar = st.progress(0)
     status_text = st.empty()
     
-    # **TESTING MODE: Limit to first 40 rows**
-    total_rows = min(40, len(df))
+    # **TESTING MODE: Limit to first 2 rows**
+    total_rows = min(2, len(df))
     st.info(f"🧪 **Testing Mode:** Processing limited to first {total_rows} rows (out of {len(df)} total)")
     
     # Determine starting point (for resume functionality)
@@ -942,7 +985,7 @@ def process_bulk_bugs(df: pd.DataFrame, bug_column: str, product_name: str, extr
                 result = {
                     'row_number': idx + 1,
                     'bug_number': "(empty)",
-                    'summary_output': "",
+                    'top3_recommendations': "",
                     'analysis_output': "",
                     'status': 'Skipped - Empty cell'
                 }
@@ -1011,24 +1054,57 @@ def process_bulk_bugs(df: pd.DataFrame, bug_column: str, product_name: str, extr
                         except Exception as e:
                             bug_content += f"*Note '{note_title}' not found*\n\n"
                 
-                # Step 2: Run Summarize
-                status_text.text(f"🔄 Row {idx + 1}/{total_rows} - Running Summarize...")
-                summary_output = run_agent_with_prompt_file(
-                    "summarize.md",
-                    bug_content,
-                    product_name
-                )
+                # Step 2: Run top-3 recommendation workflow (same as Page 1 Analysis)
+                status_text.text(f"🔄 Row {idx + 1}/{total_rows} - Running top-3 recommendation analysis...")
                 
-                # Rate limiting: Wait 10 seconds between API calls
-                time.sleep(10)
+                # Detect tech terms and score guides (mirrors Page 1 flow)
+                clues_data = extract_doc_clues_data(bug_content)
+                detected_terms = list(clues_data.get('term_frequencies', {}).keys())
+                term_freq = clues_data.get('term_frequencies', {})
                 
-                # Step 3: Run BugAnalyze
-                status_text.text(f"🔄 Row {idx + 1}/{total_rows} - Running BugAnalyze...")
-                analysis_output = run_agent_with_prompt_file(
-                    "BugAnalyze.md",
-                    bug_content,
-                    product_name
-                )
+                # Get selected guides from bulk UI (or empty = all)
+                bulk_guides = st.session_state.get('bulk_selected_guides', [])
+                
+                if detected_terms:
+                    matched, _ = match_terms_to_guides(detected_terms, product_name, term_freq)
+                    guide_scores = matched.pop('_guide_scores', {})
+                    st.session_state['_guide_scores'] = guide_scores
+                    st.session_state['_matched_term_guides'] = dict(matched)
+                else:
+                    st.session_state['_guide_scores'] = {}
+                    st.session_state['_matched_term_guides'] = {}
+                
+                # Build Top-3 Recommendations text (deterministic, pre-LLM)
+                guide_scores = st.session_state.get('_guide_scores', {})
+                matched_term_guides = st.session_state.get('_matched_term_guides', {})
+                doc_inventory = load_document_inventory(product_name)
+                sorted_gs = sorted(guide_scores.items(), key=lambda x: -x[1]) if guide_scores else []
+                rec_lines = []
+                for rank, (g_name, g_score) in enumerate(sorted_gs[:3], start=1):
+                    # Get section hints from matched terms
+                    tw = []
+                    for term, guides in matched_term_guides.items():
+                        if term.startswith('_'):
+                            continue
+                        if g_name in guides:
+                            tw.append((term, 1.0 / len(guides)))
+                    tw.sort(key=lambda x: -x[1])
+                    section_hints = ", ".join(t.title() for t, _ in tw[:5]) if tw else "(no section hints)"
+                    url = doc_inventory.get(g_name, {}).get('source_url', '')
+                    url_text = url if url else '(no URL)'
+                    rec_lines.append(f"#{rank}: {g_name} (score: {g_score})\n   Section hints: {section_hints}\n   URL: {url_text}")
+                top3_recommendations = "\n\n".join(rec_lines) if rec_lines else "No guide scores available"
+                
+                # Load BugAnalyze.md as the question (same prompt as Page 1)
+                try:
+                    with open("BugAnalyze.md", "r") as f:
+                        question = f.read()
+                except FileNotFoundError:
+                    question = "Analyze the Bug/RCA content"
+                
+                # Call run_agent with full top-3 recommendation workflow
+                rec_result = run_agent(product_name, question, bug_content, bulk_guides or None, detected_terms or None)
+                analysis_output = rec_result['output'] if isinstance(rec_result, dict) and 'output' in rec_result else str(rec_result)
                 
                 # Rate limiting: Wait 10 seconds after last call before next row
                 time.sleep(10)
@@ -1036,7 +1112,7 @@ def process_bulk_bugs(df: pd.DataFrame, bug_column: str, product_name: str, extr
                 result = {
                     'row_number': idx + 1,
                     'bug_number': bug_number,
-                    'summary_output': summary_output,
+                    'top3_recommendations': top3_recommendations,
                     'analysis_output': analysis_output,
                     'status': 'Success ✅'
                 }
@@ -1058,7 +1134,7 @@ def process_bulk_bugs(df: pd.DataFrame, bug_column: str, product_name: str, extr
             result = {
                 'row_number': idx + 1,
                 'bug_number': str(row[bug_column])[:50] if pd.notna(row[bug_column]) else "(empty)",
-                'summary_output': "",
+                'top3_recommendations': "",
                 'analysis_output': "",
                 'status': error_msg
             }
@@ -1194,8 +1270,8 @@ def create_bug_output_excel(results: list) -> pd.DataFrame:
         return text
     
     # Apply sanitization to output columns
-    if 'summary_output' in results_df.columns:
-        results_df['summary_output'] = results_df['summary_output'].apply(sanitize_text)
+    if 'top3_recommendations' in results_df.columns:
+        results_df['top3_recommendations'] = results_df['top3_recommendations'].apply(sanitize_text)
     if 'analysis_output' in results_df.columns:
         results_df['analysis_output'] = results_df['analysis_output'].apply(sanitize_text)
     
@@ -1204,7 +1280,7 @@ def create_bug_output_excel(results: list) -> pd.DataFrame:
     
     # Merge results (left join to keep all original rows)
     merged_df = original_df.merge(
-        results_df[['row_number', 'summary_output', 'analysis_output', 'status']],
+        results_df[['row_number', 'top3_recommendations', 'analysis_output', 'status']],
         left_on='Row_Number',
         right_on='row_number',
         how='left'
@@ -1212,8 +1288,8 @@ def create_bug_output_excel(results: list) -> pd.DataFrame:
     
     # Rename columns
     merged_df = merged_df.rename(columns={
-        'summary_output': 'Summary_Output',
-        'analysis_output': 'BugAnalyze_Output',
+        'top3_recommendations': 'Top3_Recommendations',
+        'analysis_output': 'Analysis_Output',
         'status': 'Processing_Status'
     })
     
@@ -1221,8 +1297,8 @@ def create_bug_output_excel(results: list) -> pd.DataFrame:
     merged_df = merged_df.drop(columns=['row_number', 'Row_Number'])
     
     # Fill NaN in new columns (for unprocessed rows)
-    merged_df['Summary_Output'] = merged_df['Summary_Output'].fillna('Not processed')
-    merged_df['BugAnalyze_Output'] = merged_df['BugAnalyze_Output'].fillna('Not processed')
+    merged_df['Top3_Recommendations'] = merged_df['Top3_Recommendations'].fillna('Not processed')
+    merged_df['Analysis_Output'] = merged_df['Analysis_Output'].fillna('Not processed')
     merged_df['Processing_Status'] = merged_df['Processing_Status'].fillna('Not processed')
     
     return merged_df
