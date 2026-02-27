@@ -1,0 +1,46 @@
+# ---- Python / venv ----
+myenv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# ---- IDE / Editor ----
+.vscode/
+.idea/
+*.code-workspace
+*.swp
+*.swo
+
+# ---- Docker (don't send Docker context into itself) ----
+docker/
+.dockerignore
+
+# ---- Git ----
+.git/
+.gitignore
+
+# ---- OS junk ----
+.DS_Store
+Thumbs.db
+
+# ---- Docs / markdown (not needed at runtime) ----
+*.md
+LICENSE
+
+# ---- Misc local files ----
+app_config-*.json
+auth_token_cache.json
+.env.example
+
+# ---- Large cached data (will be rebuilt inside container) ----
+# Uncomment the line below if you want to EXCLUDE the knowledge_docs
+# and instead mount them as a volume at runtime:
+# knowledge_docs/
+
+# ---- Test files (optional – uncomment to exclude) ----
+# test/
+# test_*.py
