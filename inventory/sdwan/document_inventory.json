@@ -1,0 +1,2005 @@
+{
+  "appqoe-book-xe.pdf": {
+    "title": "Cisco Catalyst SD-WAN AppQoE Configuration Guide, Cisco IOS XE Catalyst SD-WAN Release 17.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/appqoe/ios-xe-17/appqoe-book-xe.html",
+    "chapters": [
+      {
+        "chapter_slug": "read-me-first",
+        "chapter_title": "Read Me First",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/appqoe/ios-xe-17/appqoe-book-xe/read-me-first.html"
+      },
+      {
+        "chapter_slug": "m-whats-new-17x-20x",
+        "chapter_title": "What's New in Cisco IOS XE (Catalyst SD-WAN)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/appqoe/ios-xe-17/appqoe-book-xe/m-whats-new-17x-20x.html"
+      },
+      {
+        "chapter_slug": "m-appnav-xe-for-sd-wan",
+        "chapter_title": "AppNav-XE for Cisco Catalyst SD-WAN",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/appqoe/ios-xe-17/appqoe-book-xe/m-appnav-xe-for-sd-wan.html"
+      },
+      {
+        "chapter_slug": "m-tcp-optimization",
+        "chapter_title": "TCP Optimization",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/appqoe/ios-xe-17/appqoe-book-xe/m-tcp-optimization.html"
+      },
+      {
+        "chapter_slug": "m-support-for-multiple-appqoe-service-nodes",
+        "chapter_title": "External Service Nodes for AppQoE Services",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/appqoe/ios-xe-17/appqoe-book-xe/m-support-for-multiple-appqoe-service-nodes.html"
+      },
+      {
+        "chapter_slug": "m-integration-of-dre-with-cisco-sd-wan-tcp-optimization",
+        "chapter_title": "Traffic Optimization with DRE",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/appqoe/ios-xe-17/appqoe-book-xe/m-integration-of-dre-with-cisco-sd-wan-tcp-optimization.html"
+      },
+      {
+        "chapter_slug": "m-ssl-proxy-enhacements",
+        "chapter_title": "HTTP CONNECT",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/appqoe/ios-xe-17/appqoe-book-xe/m-ssl-proxy-enhacements.html"
+      },
+      {
+        "chapter_slug": "m-appqoe-verification-and-troubleshooting",
+        "chapter_title": "AppQoE Verification and Troubleshooting",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/appqoe/ios-xe-17/appqoe-book-xe/m-appqoe-verification-and-troubleshooting.html"
+      },
+      {
+        "chapter_slug": "troubleshooting-support-articles",
+        "chapter_title": "Troubleshoot Cisco Catalyst SD-WAN AppQoE",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/appqoe/ios-xe-17/appqoe-book-xe/troubleshooting-support-articles.html"
+      }
+    ]
+  },
+  "b-cisco-ios-xe-catalyst-sd-wan-alarms-guide.pdf": {
+    "title": "Cisco IOS XE Catalyst SD-WAN Alarms Guide",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/alarms-reference-guide/b-cisco-ios-xe-catalyst-sd-wan-alarms-guide.html",
+    "chapters": [
+      {
+        "chapter_slug": "chapters",
+        "chapter_title": "Alarms",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/alarms-reference-guide/b-cisco-ios-xe-catalyst-sd-wan-alarms-guide/chapters.html"
+      }
+    ]
+  },
+  "bridging-book-xe.pdf": {
+    "title": "Cisco Catalyst SD-WAN Bridging Configuration Guide, Cisco IOS XE Catalyst SD-WAN Release 17.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/bridging/ios-xe-17/bridging-book-xe.html",
+    "chapters": [
+      {
+        "chapter_slug": "read-me-first",
+        "chapter_title": "Read Me First",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/bridging/ios-xe-17/bridging-book-xe/read-me-first.html"
+      },
+      {
+        "chapter_slug": "m-whats-new-17x-20x",
+        "chapter_title": "What's New in Cisco IOS XE (Catalyst SD-WAN)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/bridging/ios-xe-17/bridging-book-xe/m-whats-new-17x-20x.html"
+      },
+      {
+        "chapter_slug": "m-bridging-xe-sd-wan",
+        "chapter_title": "Bridging",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/bridging/ios-xe-17/bridging-book-xe/m-bridging-xe-sd-wan.html"
+      },
+      {
+        "chapter_slug": "m-flex-support-on-layer-2-and-layer-3-ports",
+        "chapter_title": "Layer 2 and Layer 3 Flex Port Support",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/bridging/ios-xe-17/bridging-book-xe/m-flex-support-on-layer-2-and-layer-3-ports.html"
+      }
+    ]
+  },
+  "cisco-catalyst-sd-wan-integrations.pdf": {
+    "title": "Cisco Catalyst SD-WAN Integrations",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/integrations/cisco-catalyst-sd-wan-integrations.html",
+    "chapters": [
+      {
+        "chapter_slug": "readme",
+        "chapter_title": "Read Me First",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/integrations/cisco-catalyst-sd-wan-integrations/readme.html"
+      },
+      {
+        "chapter_slug": "whats-new",
+        "chapter_title": "What's New in Cisco IOS XE (SD-WAN) and Cisco Catalyst SD-WAN Releases",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/integrations/cisco-catalyst-sd-wan-integrations/whats-new.html"
+      },
+      {
+        "chapter_slug": "cyber-vision",
+        "chapter_title": "Cisco Cyber Vision Integration with Cisco Catalyst SD-WAN",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/integrations/cisco-catalyst-sd-wan-integrations/cyber-vision.html"
+      },
+      {
+        "chapter_slug": "sea",
+        "chapter_title": "Cisco Secure Equipment Access integration with Cisco Catalyst SD-WAN",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/integrations/cisco-catalyst-sd-wan-integrations/sea.html"
+      },
+      {
+        "chapter_slug": "third-party-app",
+        "chapter_title": "Third-Party Custom Application Integration with Cisco Catalyst SD-WAN",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/integrations/cisco-catalyst-sd-wan-integrations/third-party-app.html"
+      }
+    ]
+  },
+  "cisco-sd-wan-remote-access.pdf": {
+    "title": "Cisco Catalyst SD-WAN Remote Access",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-ra/cisco-sd-wan-remote-access.html",
+    "chapters": [
+      {
+        "chapter_slug": "read-me-first",
+        "chapter_title": "Read Me First",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-ra/cisco-sd-wan-remote-access/read-me-first.html"
+      },
+      {
+        "chapter_slug": "m-feature-history",
+        "chapter_title": "Cisco Catalyst SD-WAN Remote Access Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-ra/cisco-sd-wan-remote-access/m-feature-history.html"
+      },
+      {
+        "chapter_slug": "m-sdwan-remote-access1",
+        "chapter_title": "Cisco Catalyst SD-WAN Remote Access",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-ra/cisco-sd-wan-remote-access/m-sdwan-remote-access1.html"
+      },
+      {
+        "chapter_slug": "m-sdwan-ra-configuration",
+        "chapter_title": "Configure Cisco Catalyst SD-WAN Remote Access",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-ra/cisco-sd-wan-remote-access/m-sdwan-ra-configuration.html"
+      },
+      {
+        "chapter_slug": "m-sdwan-ra-verify-and-monitor",
+        "chapter_title": "Verify and Monitor Cisco Catalyst SD-WAN Remote Access",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-ra/cisco-sd-wan-remote-access/m-sdwan-ra-verify-and-monitor.html"
+      },
+      {
+        "chapter_slug": "troubleshooting-support-articles",
+        "chapter_title": "Troubleshoot Cisco Catalyst SD-WAN Remote Access",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-ra/cisco-sd-wan-remote-access/troubleshooting-support-articles.html"
+      },
+      {
+        "chapter_slug": "m-sdwan-ra-configuration-examples",
+        "chapter_title": "Example Configuration for Cisco Catalyst SD-WAN Remote Access, RADIUS, and AnyConnect",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-ra/cisco-sd-wan-remote-access/m-sdwan-ra-configuration-examples.html"
+      }
+    ]
+  },
+  "cloud-delivered-cisco-catalyst-sd-wan-getting-started-guide.pdf": {
+    "title": "Cisco SD-WAN Cloud Guide",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/cloud-delivered-cisco-catalyst-sd-wan-getting-started-guide.html",
+    "chapters": [
+      {
+        "chapter_slug": "readme",
+        "chapter_title": "Read Me First",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/cloud-delivered-cisco-catalyst-sd-wan-getting-started-guide/readme.html"
+      },
+      {
+        "chapter_slug": "getting-started",
+        "chapter_title": "Getting Started With Cisco SD-WAN Cloud",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/cloud-delivered-cisco-catalyst-sd-wan-getting-started-guide/getting-started.html"
+      },
+      {
+        "chapter_slug": "upgrade-devices",
+        "chapter_title": "Upgrade and Update Devices in a Cisco SD-WAN Cloud Fabric",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/cloud-delivered-cisco-catalyst-sd-wan-getting-started-guide/upgrade-devices.html"
+      },
+      {
+        "chapter_slug": "migrating",
+        "chapter_title": "Migration from Cisco SD-WAN Cloud-Pro to Cisco SD-WAN Cloud",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/cloud-delivered-cisco-catalyst-sd-wan-getting-started-guide/migrating.html"
+      },
+      {
+        "chapter_slug": "api",
+        "chapter_title": "Use Cisco APIs in Cisco SD-WAN Cloud",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/cloud-delivered-cisco-catalyst-sd-wan-getting-started-guide/api.html"
+      }
+    ]
+  },
+  "cloud-onramp-book-xe.pdf": {
+    "title": "Cisco Catalyst SD-WAN Cloud OnRamp Configuration Guide, Cisco IOS XE Catalyst SD-WAN Release 17.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/cloudonramp/ios-xe-17/cloud-onramp-book-xe.html",
+    "chapters": [
+      {
+        "chapter_slug": "read-me-first",
+        "chapter_title": "Read Me First",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/cloudonramp/ios-xe-17/cloud-onramp-book-xe/read-me-first.html"
+      },
+      {
+        "chapter_slug": "m-whats-new-17x-20x",
+        "chapter_title": "What's New in Cisco IOS XE (Catalyst SD-WAN)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/cloudonramp/ios-xe-17/cloud-onramp-book-xe/m-whats-new-17x-20x.html"
+      },
+      {
+        "chapter_slug": "m-cloud-onramp-iaas-wan",
+        "chapter_title": "Cloud OnRamp for IaaS",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/cloudonramp/ios-xe-17/cloud-onramp-book-xe/m-cloud-onramp-iaas-wan.html"
+      },
+      {
+        "chapter_slug": "m-cloud-onramp-for-colocation-solution",
+        "chapter_title": "Cloud OnRamp for Colocation",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/cloudonramp/ios-xe-17/cloud-onramp-book-xe/m-cloud-onramp-for-colocation-solution.html"
+      },
+      {
+        "chapter_slug": "cloud-onramp-saas",
+        "chapter_title": "Cloud OnRamp for SaaS, Cisco Catalyst SD-WAN Releases 20.15.1 and Later",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/cloudonramp/ios-xe-17/cloud-onramp-book-xe/cloud-onramp-saas.html"
+      },
+      {
+        "chapter_slug": "cor-saas",
+        "chapter_title": "Cloud OnRamp for SaaS, Cisco Catalyst SD-WAN Release 20.3.1 to Cisco Catalyst SD-WAN Release 20.14.x",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/cloudonramp/ios-xe-17/cloud-onramp-book-xe/cor-saas.html"
+      },
+      {
+        "chapter_slug": "application-lists",
+        "chapter_title": "Application Lists",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/cloudonramp/ios-xe-17/cloud-onramp-book-xe/application-lists.html"
+      },
+      {
+        "chapter_slug": "cor-saas-17-2-1r",
+        "chapter_title": "Cloud OnRamp for SaaS, Cisco IOS XE Catalyst SD-WAN Release 17.2.1r",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/cloudonramp/ios-xe-17/cloud-onramp-book-xe/cor-saas-17-2-1r.html"
+      },
+      {
+        "chapter_slug": "m-cloud-onramp-for-multicloud-20-16-and-later",
+        "chapter_title": "Cloud OnRamp for Multicloud - Cloud and Interconnect",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/cloudonramp/ios-xe-17/cloud-onramp-book-xe/m-cloud-onramp-for-multicloud-20-16-and-later.html"
+      },
+      {
+        "chapter_slug": "cloud-onramp-multi-cloud",
+        "chapter_title": "Cloud OnRamp for Multicloud",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/cloudonramp/ios-xe-17/cloud-onramp-book-xe/cloud-onramp-multi-cloud.html"
+      },
+      {
+        "chapter_slug": "cloud-onramp-multi-cloud-aws",
+        "chapter_title": "AWS Integration",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/cloudonramp/ios-xe-17/cloud-onramp-book-xe/cloud-onramp-multi-cloud-aws.html"
+      },
+      {
+        "chapter_slug": "cloud-onramp-multi-cloud-aws-govcloud",
+        "chapter_title": "Amazon GovCloud (US) Integration",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/cloudonramp/ios-xe-17/cloud-onramp-book-xe/cloud-onramp-multi-cloud-aws-govcloud.html"
+      },
+      {
+        "chapter_slug": "cloud-onramp-multi-cloud-azure",
+        "chapter_title": "Microsoft Azure Virtual WAN Integration",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/cloudonramp/ios-xe-17/cloud-onramp-book-xe/cloud-onramp-multi-cloud-azure.html"
+      },
+      {
+        "chapter_slug": "cloud-onramp-multi-cloud-azure-govcloud",
+        "chapter_title": "Microsoft Azure for US Government Integration",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/cloudonramp/ios-xe-17/cloud-onramp-book-xe/cloud-onramp-multi-cloud-azure-govcloud.html"
+      },
+      {
+        "chapter_slug": "cloud-onramp-multi-cloud-google-cloud",
+        "chapter_title": "Google Cloud Integration",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/cloudonramp/ios-xe-17/cloud-onramp-book-xe/cloud-onramp-multi-cloud-google-cloud.html"
+      },
+      {
+        "chapter_slug": "cloud-onramp-multi-cloud-monitor-multi-cloud-svcs",
+        "chapter_title": "Cisco Catalyst SD-WAN Manager Support for Monitoring Multicloud Services",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/cloudonramp/ios-xe-17/cloud-onramp-book-xe/cloud-onramp-multi-cloud-monitor-multi-cloud-svcs.html"
+      },
+      {
+        "chapter_slug": "sdwan-cloud-interconnect",
+        "chapter_title": "Cloud OnRamp for Multicloud: Cisco Catalyst SD-WAN Cloud Interconnect",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/cloudonramp/ios-xe-17/cloud-onramp-book-xe/sdwan-cloud-interconnect.html"
+      },
+      {
+        "chapter_slug": "license-mgmt-sdwan-megaport",
+        "chapter_title": "License Management for Cisco Catalyst SD-WAN Cloud Interconnect with Megaport",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/cloudonramp/ios-xe-17/cloud-onramp-book-xe/license-mgmt-sdwan-megaport.html"
+      },
+      {
+        "chapter_slug": "sdwan-cloud-interconnect-megaport",
+        "chapter_title": "Cisco Catalyst SD-WAN Cloud Interconnect with Megaport",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/cloudonramp/ios-xe-17/cloud-onramp-book-xe/sdwan-cloud-interconnect-megaport.html"
+      },
+      {
+        "chapter_slug": "sdwan-cloud-interconnect-equinix",
+        "chapter_title": "Cisco Catalyst SD-WAN Cloud Interconnect with Equinix",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/cloudonramp/ios-xe-17/cloud-onramp-book-xe/sdwan-cloud-interconnect-equinix.html"
+      },
+      {
+        "chapter_slug": "m-troubleshooting-cisco-sd-wan-cloud-onramp",
+        "chapter_title": "Troubleshoot \u200bCisco Catalyst SD-WAN  Cloud OnRamp",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/cloudonramp/ios-xe-17/cloud-onramp-book-xe/m-troubleshooting-cisco-sd-wan-cloud-onramp.html"
+      }
+    ]
+  },
+  "compatibility-and-server-recommendations.pdf": {
+    "title": "Cisco Catalyst SD-WAN Control Components Compatibility Matrix and Recommended Computing Resources",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/release/notes/compatibility-and-server-recommendations.html",
+    "chapters": [
+      {
+        "chapter_slug": "comp-matrix",
+        "chapter_title": "Compatibility Matrix",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/release/notes/compatibility-and-server-recommendations/comp-matrix.html"
+      },
+      {
+        "chapter_slug": "ch-hypervisor-comp-vb-vs-vm-vcloud",
+        "chapter_title": "Hypervisor Compatibility Matrix for Cisco Catalyst SD-WAN Control Components and vEdgeCloud",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/release/notes/compatibility-and-server-recommendations/ch-hypervisor-comp-vb-vs-vm-vcloud.html"
+      },
+      {
+        "chapter_slug": "ch-hypervisor-comp-csr1k-isrv-c8kv",
+        "chapter_title": "Hypervisor Compatibility Matrix for Cloud Routers",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/release/notes/compatibility-and-server-recommendations/ch-hypervisor-comp-csr1k-isrv-c8kv.html"
+      },
+      {
+        "chapter_slug": "server-requirements",
+        "chapter_title": "Recommended Computing Resources",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/release/notes/compatibility-and-server-recommendations/server-requirements.html"
+      },
+      {
+        "chapter_slug": "ch-server-recs-20-18-combined11",
+        "chapter_title": "Recommended Computing Resources for Cisco Catalyst SD-WAN Control Components Release 20.18.x",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/release/notes/compatibility-and-server-recommendations/ch-server-recs-20-18-combined11.html"
+      },
+      {
+        "chapter_slug": "ch-server-recs-20-16-combined1",
+        "chapter_title": "Recommended Computing Resources for Cisco Catalyst SD-WAN Control Components Release 20.16.x",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/release/notes/compatibility-and-server-recommendations/ch-server-recs-20-16-combined1.html"
+      },
+      {
+        "chapter_slug": "ch-server-recs-20-15-combined",
+        "chapter_title": "Recommended Computing Resources for Cisco Catalyst SD-WAN Control Components Release 20.15.x",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/release/notes/compatibility-and-server-recommendations/ch-server-recs-20-15-combined.html"
+      },
+      {
+        "chapter_slug": "ch-server-recs-20-14-combined",
+        "chapter_title": "Recommended Computing Resources for Cisco Catalyst SD-WAN Control Components Release 20.14.x",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/release/notes/compatibility-and-server-recommendations/ch-server-recs-20-14-combined.html"
+      },
+      {
+        "chapter_slug": "ch-server-recs-20-13-combined",
+        "chapter_title": "Recommended Computing Resources for Cisco Catalyst SD-WAN Control Components Release 20.13.x",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/release/notes/compatibility-and-server-recommendations/ch-server-recs-20-13-combined.html"
+      },
+      {
+        "chapter_slug": "ch-server-recs-20-12-combined",
+        "chapter_title": "Recommended Computing Resources for Cisco Catalyst SD-WAN Control Components Release 20.12.x",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/release/notes/compatibility-and-server-recommendations/ch-server-recs-20-12-combined.html"
+      },
+      {
+        "chapter_slug": "ch-server-recs-20-11-combined",
+        "chapter_title": "Recommended Computing Resources for Cisco Catalyst SD-WAN Control Components Release 20.11.x",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/release/notes/compatibility-and-server-recommendations/ch-server-recs-20-11-combined.html"
+      },
+      {
+        "chapter_slug": "ch-server-recs-20-10-combined",
+        "chapter_title": "Recommended Computing Resources for Cisco Catalyst SD-WAN Control Components Release 20.10.x",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/release/notes/compatibility-and-server-recommendations/ch-server-recs-20-10-combined.html"
+      },
+      {
+        "chapter_slug": "ch-server-recs-20-9-combined",
+        "chapter_title": "Recommended Computing Resources for Cisco Catalyst SD-WAN Control Components Release 20.9.x",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/release/notes/compatibility-and-server-recommendations/ch-server-recs-20-9-combined.html"
+      },
+      {
+        "chapter_slug": "ch-cloud-controllers-instance-types-20-8",
+        "chapter_title": "Recommended Computing Resources for Cisco SD-WAN Controller Release 20.8.x (Cisco Hosted Cloud Deployment)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/release/notes/compatibility-and-server-recommendations/ch-cloud-controllers-instance-types-20-8.html"
+      },
+      {
+        "chapter_slug": "ch-server-recs-20-8-azure",
+        "chapter_title": "Recommended Computing Resources for Cisco SD-WAN Controller Release 20.8.x (Customer Cloud Hosted on Azure Deployment)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/release/notes/compatibility-and-server-recommendations/ch-server-recs-20-8-azure.html"
+      },
+      {
+        "chapter_slug": "ch-server-recs-20-8",
+        "chapter_title": "Recommended Computing Resources for Cisco SD-WAN Controller Release 20.8.x (On-Prem Deployment)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/release/notes/compatibility-and-server-recommendations/ch-server-recs-20-8.html"
+      },
+      {
+        "chapter_slug": "ch-cloud-controllers-instance-types-20-7",
+        "chapter_title": "Recommended Computing Resources for Cisco SD-WAN Controller Release 20.7.x (Cisco Hosted Cloud Deployment)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/release/notes/compatibility-and-server-recommendations/ch-cloud-controllers-instance-types-20-7.html"
+      },
+      {
+        "chapter_slug": "ch-server-recs-20-7-azure",
+        "chapter_title": "Recommended Computing Resources for Cisco SD-WAN Controller Release 20.7.x (Customer Cloud Hosted on Azure Deployment)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/release/notes/compatibility-and-server-recommendations/ch-server-recs-20-7-azure.html"
+      },
+      {
+        "chapter_slug": "ch-server-recs-20-7",
+        "chapter_title": "Recommended Computing Resources for Cisco SD-WAN Controller Release 20.7.x (On-Prem Deployment)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/release/notes/compatibility-and-server-recommendations/ch-server-recs-20-7.html"
+      },
+      {
+        "chapter_slug": "ch-cloud-controllers-instance-types-20-6",
+        "chapter_title": "Recommended Computing Resources for Cisco Catalyst SD-WAN Control Components Release 20.6.x (Cisco Hosted Cloud Deployment)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/release/notes/compatibility-and-server-recommendations/ch-cloud-controllers-instance-types-20-6.html"
+      },
+      {
+        "chapter_slug": "ch-server-recs-20-6-azure",
+        "chapter_title": "Recommended Computing Resources for Cisco Catalyst SD-WAN Control Components Release 20.6.x (Customer Cloud Hosted on Azure Deployment)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/release/notes/compatibility-and-server-recommendations/ch-server-recs-20-6-azure.html"
+      },
+      {
+        "chapter_slug": "ch-server-recs-20-6",
+        "chapter_title": "Recommended Computing Resources for Cisco Catalyst SD-WAN Control Components Release 20.6.x (On-Prem Deployment)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/release/notes/compatibility-and-server-recommendations/ch-server-recs-20-6.html"
+      },
+      {
+        "chapter_slug": "ch-server-recs-20-5",
+        "chapter_title": "Recommended Computing Resources for Cisco SD-WAN Controller Release 20.5.x (On-Prem Deployment)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/release/notes/compatibility-and-server-recommendations/ch-server-recs-20-5.html"
+      },
+      {
+        "chapter_slug": "chapter-server-recs-20-4",
+        "chapter_title": "Recommended Computing Resources for Cisco SD-WAN Controller Release 20.4.x (On-Prem Deployment)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/release/notes/compatibility-and-server-recommendations/chapter-server-recs-20-4.html"
+      },
+      {
+        "chapter_slug": "ch-server-recs-20-3",
+        "chapter_title": "Recommended Computing Resources for Cisco SD-WAN Controller Release 20.3.x (On-Prem Deployment)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/release/notes/compatibility-and-server-recommendations/ch-server-recs-20-3.html"
+      },
+      {
+        "chapter_slug": "ch-server-recs-20-1-earlier",
+        "chapter_title": "Recommended Computing Resources for Cisco SD-WAN Controller Release 20.1.x and earlier releases",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/release/notes/compatibility-and-server-recommendations/ch-server-recs-20-1-earlier.html"
+      },
+      {
+        "chapter_slug": "related-docs",
+        "chapter_title": "Related Documents",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/release/notes/compatibility-and-server-recommendations/related-docs.html"
+      }
+    ]
+  },
+  "configuration-group-guide.pdf": {
+    "title": "Cisco Catalyst SD-WAN Configuration Groups, Cisco IOS XE Catalyst SD-WAN Release 17.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/config-groups/configuration-group-guide.html",
+    "chapters": [
+      {
+        "chapter_slug": "introduction",
+        "chapter_title": "Introduction",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/config-groups/configuration-group-guide/introduction.html"
+      },
+      {
+        "chapter_slug": "using-configuration-groups",
+        "chapter_title": "Using Configuration Groups, Cisco Catalyst SD-WAN Manager Release 20.15 and Later",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/config-groups/configuration-group-guide/using-configuration-groups.html"
+      },
+      {
+        "chapter_slug": "using-config-groups",
+        "chapter_title": "Using Configuration Groups",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/config-groups/configuration-group-guide/using-config-groups.html"
+      },
+      {
+        "chapter_slug": "config-group-workflows",
+        "chapter_title": "Configuration Group Workflows",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/config-groups/configuration-group-guide/config-group-workflows.html"
+      },
+      {
+        "chapter_slug": "m-system-profile-config-group",
+        "chapter_title": "System Profile",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/config-groups/configuration-group-guide/m-system-profile-config-group.html"
+      },
+      {
+        "chapter_slug": "m-transport-management-profile-config-group",
+        "chapter_title": "Transport and Management",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/config-groups/configuration-group-guide/m-transport-management-profile-config-group.html"
+      },
+      {
+        "chapter_slug": "m-service-profile-config-group",
+        "chapter_title": "Service Profile",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/config-groups/configuration-group-guide/m-service-profile-config-group.html"
+      },
+      {
+        "chapter_slug": "m-policy-object-profile-config-group",
+        "chapter_title": "Policy Object Profile",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/config-groups/configuration-group-guide/m-policy-object-profile-config-group.html"
+      },
+      {
+        "chapter_slug": "m-uc-voice-profile-config-group",
+        "chapter_title": "Cisco Unified Communications Voice Profile",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/config-groups/configuration-group-guide/m-uc-voice-profile-config-group.html"
+      },
+      {
+        "chapter_slug": "m-other-profile-config-group",
+        "chapter_title": "Other Profile",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/config-groups/configuration-group-guide/m-other-profile-config-group.html"
+      },
+      {
+        "chapter_slug": "m-CLI-profile-config-group",
+        "chapter_title": "CLI Add-On Profile",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/config-groups/configuration-group-guide/m-CLI-profile-config-group.html"
+      },
+      {
+        "chapter_slug": "m-global-profile-config-group",
+        "chapter_title": "Global Profile",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/config-groups/configuration-group-guide/m-global-profile-config-group.html"
+      },
+      {
+        "chapter_slug": "m-troubleshoot-configuration-groups",
+        "chapter_title": "Troubleshoot Configuration Groups",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/config-groups/configuration-group-guide/m-troubleshoot-configuration-groups.html"
+      },
+      {
+        "chapter_slug": "config-catalog",
+        "chapter_title": "Configuration Catalog",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/config-groups/configuration-group-guide/config-catalog.html"
+      },
+      {
+        "chapter_slug": "appendix",
+        "chapter_title": "Commands supported for Type 6 encryption",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/config-groups/configuration-group-guide/appendix.html"
+      }
+    ]
+  },
+  "hierarchical-sdwan-guide.pdf": {
+    "title": "Cisco Catalyst SD-WAN Multi-Region Fabric Configuration Guide, Cisco IOS XE Catalyst SD-WAN Release 17.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/hierarchical-sdwan/hierarchical-sdwan-guide.html",
+    "chapters": [
+      {
+        "chapter_slug": "read-me-first",
+        "chapter_title": "Read Me First",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/hierarchical-sdwan/hierarchical-sdwan-guide/read-me-first.html"
+      },
+      {
+        "chapter_slug": "whats-new",
+        "chapter_title": "What's New in Cisco IOS XE (SD-WAN) and Cisco Catalyst SD-WAN Releases",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/hierarchical-sdwan/hierarchical-sdwan-guide/whats-new.html"
+      },
+      {
+        "chapter_slug": "quick-start",
+        "chapter_title": "Quick Start: Multi-Region Fabric and Related Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/hierarchical-sdwan/hierarchical-sdwan-guide/quick-start.html"
+      },
+      {
+        "chapter_slug": "h-sd-wan-basics",
+        "chapter_title": "Cisco Catalyst SD-WAN Multi-Region Fabric",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/hierarchical-sdwan/hierarchical-sdwan-guide/h-sd-wan-basics.html"
+      },
+      {
+        "chapter_slug": "migrate",
+        "chapter_title": "Migrating to Multi-Region Fabric",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/hierarchical-sdwan/hierarchical-sdwan-guide/migrate.html"
+      },
+      {
+        "chapter_slug": "regions-controllers-workflow",
+        "chapter_title": "Create Regions and Assign Controllers Workflow",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/hierarchical-sdwan/hierarchical-sdwan-guide/regions-controllers-workflow.html"
+      },
+      {
+        "chapter_slug": "secondary-regions",
+        "chapter_title": "Multi-Region Fabric Secondary Regions",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/hierarchical-sdwan/hierarchical-sdwan-guide/secondary-regions.html"
+      },
+      {
+        "chapter_slug": "mgmt-region",
+        "chapter_title": "Multi-Region Fabric Management Region",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/hierarchical-sdwan/hierarchical-sdwan-guide/mgmt-region.html"
+      },
+      {
+        "chapter_slug": "transport-gateways",
+        "chapter_title": "Transport Gateways",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/hierarchical-sdwan/hierarchical-sdwan-guide/transport-gateways.html"
+      },
+      {
+        "chapter_slug": "router-affinity",
+        "chapter_title": "Router Affinity",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/hierarchical-sdwan/hierarchical-sdwan-guide/router-affinity.html"
+      },
+      {
+        "chapter_slug": "m-subregions",
+        "chapter_title": "Multi-Region Fabric Subregions",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/hierarchical-sdwan/hierarchical-sdwan-guide/m-subregions.html"
+      },
+      {
+        "chapter_slug": "mrf-for-cloud",
+        "chapter_title": "Multi-Region Fabric Using Multicloud and SDCI",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/hierarchical-sdwan/hierarchical-sdwan-guide/mrf-for-cloud.html"
+      },
+      {
+        "chapter_slug": "h-sdwan-policy",
+        "chapter_title": "Multi-Region Fabric Policy",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/hierarchical-sdwan/hierarchical-sdwan-guide/h-sdwan-policy.html"
+      },
+      {
+        "chapter_slug": "route-aggregation",
+        "chapter_title": "Route Aggregation on Border Routers and Transport Gateways",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/hierarchical-sdwan/hierarchical-sdwan-guide/route-aggregation.html"
+      },
+      {
+        "chapter_slug": "end-support-three-region-types",
+        "chapter_title": "End of support for three types of regions",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/hierarchical-sdwan/hierarchical-sdwan-guide/end-support-three-region-types.html"
+      }
+    ]
+  },
+  "high-availability-book-xe.pdf": {
+    "title": "Cisco Catalyst SD-WAN High Availability Configuration Guide, Cisco IOS XE Catalyst SD-WAN Release 17.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/ha-scaling/ios-xe-17/high-availability-book-xe.html",
+    "chapters": [
+      {
+        "chapter_slug": "read-me-first",
+        "chapter_title": "Read Me First",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/ha-scaling/ios-xe-17/high-availability-book-xe/read-me-first.html"
+      },
+      {
+        "chapter_slug": "m-whats-new-17x-20x",
+        "chapter_title": "What's New in Cisco IOS XE (Catalyst SD-WAN)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/ha-scaling/ios-xe-17/high-availability-book-xe/m-whats-new-17x-20x.html"
+      },
+      {
+        "chapter_slug": "m-high-availability-and-scaling",
+        "chapter_title": "High Availability",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/ha-scaling/ios-xe-17/high-availability-book-xe/m-high-availability-and-scaling.html"
+      },
+      {
+        "chapter_slug": "m-disaster-recovery",
+        "chapter_title": "Disaster Recovery",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/ha-scaling/ios-xe-17/high-availability-book-xe/m-disaster-recovery.html"
+      },
+      {
+        "chapter_slug": "m-troubleshoot-diaster-recovery",
+        "chapter_title": "Troubleshoot Disaster Recovery",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/ha-scaling/ios-xe-17/high-availability-book-xe/m-troubleshoot-diaster-recovery.html"
+      }
+    ]
+  },
+  "monitor-maintain-book.pdf": {
+    "title": "Cisco Catalyst SD-WAN Monitor and Maintain Configuration Guide",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Monitor-And-Maintain/monitor-maintain-book.html",
+    "chapters": [
+      {
+        "chapter_slug": "read-me-first",
+        "chapter_title": "Read Me First",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Monitor-And-Maintain/monitor-maintain-book/read-me-first.html"
+      },
+      {
+        "chapter_slug": "m-whats-new-combined-books",
+        "chapter_title": "What's New in Cisco IOS XE (SD-WAN) and Cisco Catalyst SD-WAN Releases",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Monitor-And-Maintain/monitor-maintain-book/m-whats-new-combined-books.html"
+      },
+      {
+        "chapter_slug": "vmanage-monitor-overview",
+        "chapter_title": "Cisco SD-WAN Manager Monitor Overview",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Monitor-And-Maintain/monitor-maintain-book/vmanage-monitor-overview.html"
+      },
+      {
+        "chapter_slug": "m-database",
+        "chapter_title": "Cisco SD-WAN Manager Data Storage",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Monitor-And-Maintain/monitor-maintain-book/m-database.html"
+      },
+      {
+        "chapter_slug": "m-applications-performance-and-site-monitor",
+        "chapter_title": "Application Performance and Site Monitoring",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Monitor-And-Maintain/monitor-maintain-book/m-applications-performance-and-site-monitor.html"
+      },
+      {
+        "chapter_slug": "m-device-and-controllers",
+        "chapter_title": "Devices and Controllers",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Monitor-And-Maintain/monitor-maintain-book/m-device-and-controllers.html"
+      },
+      {
+        "chapter_slug": "m-hosted-edge-services",
+        "chapter_title": "Hosted edge services",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Monitor-And-Maintain/monitor-maintain-book/m-hosted-edge-services.html"
+      },
+      {
+        "chapter_slug": "m-network",
+        "chapter_title": "Network",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Monitor-And-Maintain/monitor-maintain-book/m-network.html"
+      },
+      {
+        "chapter_slug": "m-alarms-events-logs",
+        "chapter_title": "Alarms, Events, and Logs",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Monitor-And-Maintain/monitor-maintain-book/m-alarms-events-logs.html"
+      },
+      {
+        "chapter_slug": "reports",
+        "chapter_title": "Reports",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Monitor-And-Maintain/monitor-maintain-book/reports.html"
+      },
+      {
+        "chapter_slug": "maintain",
+        "chapter_title": "Manage Software Upgrade and Repository",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Monitor-And-Maintain/monitor-maintain-book/maintain.html"
+      },
+      {
+        "chapter_slug": "sw-upgrade-workflow",
+        "chapter_title": "Software Upgrade Workflow",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Monitor-And-Maintain/monitor-maintain-book/sw-upgrade-workflow.html"
+      },
+      {
+        "chapter_slug": "smu",
+        "chapter_title": "Software Maintenance Upgrade",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Monitor-And-Maintain/monitor-maintain-book/smu.html"
+      },
+      {
+        "chapter_slug": "upgrade-control-components",
+        "chapter_title": "Cisco Catalyst SD-WAN Control Components Upgrade Workflow",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Monitor-And-Maintain/monitor-maintain-book/upgrade-control-components.html"
+      },
+      {
+        "chapter_slug": "configuration-consistency",
+        "chapter_title": "Configuration Consistency across Cisco Catalyst SD-WAN Controllers",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Monitor-And-Maintain/monitor-maintain-book/configuration-consistency.html"
+      },
+      {
+        "chapter_slug": "export-import-configurations-sd-wan-manager",
+        "chapter_title": "Export and Import Cisco SD-WAN Manager Configurations",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Monitor-And-Maintain/monitor-maintain-book/export-import-configurations-sd-wan-manager.html"
+      },
+      {
+        "chapter_slug": "cellular-modem-firmware-upgrade",
+        "chapter_title": "Cellular Modem Firmware Upgrade",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Monitor-And-Maintain/monitor-maintain-book/cellular-modem-firmware-upgrade.html"
+      },
+      {
+        "chapter_slug": "m-protocol-pack-mgmt",
+        "chapter_title": "Protocol Pack Management and Compliance",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Monitor-And-Maintain/monitor-maintain-book/m-protocol-pack-mgmt.html"
+      },
+      {
+        "chapter_slug": "remote-server-support-for-software-upgrades-using-ztp",
+        "chapter_title": "Remote Server Support for ZTP Software Upgrade",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Monitor-And-Maintain/monitor-maintain-book/remote-server-support-for-software-upgrades-using-ztp.html"
+      },
+      {
+        "chapter_slug": "ethernet-cfm-support-cedge",
+        "chapter_title": "Information About Connectivity Fault Management",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Monitor-And-Maintain/monitor-maintain-book/ethernet-cfm-support-cedge.html"
+      },
+      {
+        "chapter_slug": "m-troubleshooting",
+        "chapter_title": "Troubleshooting",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Monitor-And-Maintain/monitor-maintain-book/m-troubleshooting.html"
+      },
+      {
+        "chapter_slug": "debug-condition",
+        "chapter_title": "Unified Debug Condition to Match IPv4 and IPv6 Traffic Over MPLS",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Monitor-And-Maintain/monitor-maintain-book/debug-condition.html"
+      },
+      {
+        "chapter_slug": "packet-trace",
+        "chapter_title": "Packet Trace",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Monitor-And-Maintain/monitor-maintain-book/packet-trace.html"
+      },
+      {
+        "chapter_slug": "m-underlay-measurement-and-tracing-Services",
+        "chapter_title": "Underlay Measurement and Tracing Services",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Monitor-And-Maintain/monitor-maintain-book/m-underlay-measurement-and-tracing-Services.html"
+      },
+      {
+        "chapter_slug": "Analytics",
+        "chapter_title": "Analytics",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Monitor-And-Maintain/monitor-maintain-book/Analytics.html"
+      },
+      {
+        "chapter_slug": "troubleshooting-support-articles",
+        "chapter_title": "Troubleshoot Cisco Catalyst SD-WAN Solution",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Monitor-And-Maintain/monitor-maintain-book/troubleshooting-support-articles.html"
+      },
+      {
+        "chapter_slug": "m-vmanage-how-to",
+        "chapter_title": "Appendix",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Monitor-And-Maintain/monitor-maintain-book/m-vmanage-how-to.html"
+      }
+    ]
+  },
+  "nat-book-xe-sdwan.pdf": {
+    "title": "Cisco Catalyst SD-WAN NAT Configuration Guide, Cisco IOS XE Catalyst SD-WAN Release 17.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/nat/nat-book-xe-sdwan.html",
+    "chapters": [
+      {
+        "chapter_slug": "read-me-first",
+        "chapter_title": "Read Me First",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/nat/nat-book-xe-sdwan/read-me-first.html"
+      },
+      {
+        "chapter_slug": "m-whats-new-17x-20x",
+        "chapter_title": "What's New in Cisco IOS XE (Catalyst SD-WAN)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/nat/nat-book-xe-sdwan/m-whats-new-17x-20x.html"
+      },
+      {
+        "chapter_slug": "configure-nat",
+        "chapter_title": "Configure NAT",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/nat/nat-book-xe-sdwan/configure-nat.html"
+      },
+      {
+        "chapter_slug": "configure-nat64",
+        "chapter_title": "Configure NAT64",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/nat/nat-book-xe-sdwan/configure-nat64.html"
+      },
+      {
+        "chapter_slug": "configure-nat66",
+        "chapter_title": "Configure NAT66",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/nat/nat-book-xe-sdwan/configure-nat66.html"
+      },
+      {
+        "chapter_slug": "site-local-failover",
+        "chapter_title": "Site-Local Failover for NAT DIA",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/nat/nat-book-xe-sdwan/site-local-failover.html"
+      },
+      {
+        "chapter_slug": "troubleshooting-support-articles",
+        "chapter_title": "Troubleshoot NAT",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/nat/nat-book-xe-sdwan/troubleshooting-support-articles.html"
+      }
+    ]
+  },
+  "network-wide-path-insight-user-guide.pdf": {
+    "title": "Cisco Catalyst SD-WAN Network-Wide Path Insight User Guide",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/network-wide-path-insight/network-wide-path-insight-user-guide.html",
+    "chapters": [
+      {
+        "chapter_slug": "m-network-wide-path-insight",
+        "chapter_title": "Network-Wide Path Insight",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/network-wide-path-insight/network-wide-path-insight-user-guide/m-network-wide-path-insight.html"
+      },
+      {
+        "chapter_slug": "m-perform-network-wide-path-insight-tracing",
+        "chapter_title": "Perform Network-Wide Path Insight Tracing",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/network-wide-path-insight/network-wide-path-insight-user-guide/m-perform-network-wide-path-insight-tracing.html"
+      },
+      {
+        "chapter_slug": "m-traces",
+        "chapter_title": "Traces",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/network-wide-path-insight/network-wide-path-insight-user-guide/m-traces.html"
+      },
+      {
+        "chapter_slug": "m-insight-summary",
+        "chapter_title": "Insight Summary",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/network-wide-path-insight/network-wide-path-insight-user-guide/m-insight-summary.html"
+      },
+      {
+        "chapter_slug": "m-trace-views",
+        "chapter_title": "Trace Views",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/network-wide-path-insight/network-wide-path-insight-user-guide/m-trace-views.html"
+      },
+      {
+        "chapter_slug": "m-uses-cases",
+        "chapter_title": "Use Cases",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/network-wide-path-insight/network-wide-path-insight-user-guide/m-uses-cases.html"
+      },
+      {
+        "chapter_slug": "m-troubleshooting",
+        "chapter_title": "Troubleshooting",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/network-wide-path-insight/network-wide-path-insight-user-guide/m-troubleshooting.html"
+      }
+    ]
+  },
+  "policies-book-xe.pdf": {
+    "title": "Cisco Catalyst SD-WAN Policies Configuration Guide, Cisco IOS XE Catalyst SD-WAN Release 17.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/policies/ios-xe-17/policies-book-xe.html",
+    "chapters": [
+      {
+        "chapter_slug": "read-me-first",
+        "chapter_title": "Read Me First",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/policies/ios-xe-17/policies-book-xe/read-me-first.html"
+      },
+      {
+        "chapter_slug": "m-whats-new-17x-20x",
+        "chapter_title": "What's New in Cisco IOS XE (Catalyst SD-WAN)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/policies/ios-xe-17/policies-book-xe/m-whats-new-17x-20x.html"
+      },
+      {
+        "chapter_slug": "policy-overview",
+        "chapter_title": "Policy overview",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/policies/ios-xe-17/policies-book-xe/policy-overview.html"
+      },
+      {
+        "chapter_slug": "centralized-policy",
+        "chapter_title": "Centralized Policy",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/policies/ios-xe-17/policies-book-xe/centralized-policy.html"
+      },
+      {
+        "chapter_slug": "localized-policy",
+        "chapter_title": "Localized Policy",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/policies/ios-xe-17/policies-book-xe/localized-policy.html"
+      },
+      {
+        "chapter_slug": "redirect-dns",
+        "chapter_title": "Redirect DNS in Cisco Catalyst SD-WAN Service-Side VPNs",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/policies/ios-xe-17/policies-book-xe/redirect-dns.html"
+      },
+      {
+        "chapter_slug": "m-default-AAR-QoS",
+        "chapter_title": "Default AAR and QoS Policies",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/policies/ios-xe-17/policies-book-xe/m-default-AAR-QoS.html"
+      },
+      {
+        "chapter_slug": "device-access-policy",
+        "chapter_title": "Device Access Policy",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/policies/ios-xe-17/policies-book-xe/device-access-policy.html"
+      },
+      {
+        "chapter_slug": "SAIE-FLow",
+        "chapter_title": "Cisco Catalyst SD-WAN Application Intelligence Engine Flow",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/policies/ios-xe-17/policies-book-xe/SAIE-FLow.html"
+      },
+      {
+        "chapter_slug": "application-aware-routing",
+        "chapter_title": "Application-Aware Routing",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/policies/ios-xe-17/policies-book-xe/application-aware-routing.html"
+      },
+      {
+        "chapter_slug": "m-enhanced-application-aware-routing",
+        "chapter_title": "Enhanced application-aware routing",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/policies/ios-xe-17/policies-book-xe/m-enhanced-application-aware-routing.html"
+      },
+      {
+        "chapter_slug": "traffic-flow-monitor",
+        "chapter_title": "Traffic Flow Monitoring",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/policies/ios-xe-17/policies-book-xe/traffic-flow-monitor.html"
+      },
+      {
+        "chapter_slug": "m-application-performance-monitoring",
+        "chapter_title": "Application Performance Monitor",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/policies/ios-xe-17/policies-book-xe/m-application-performance-monitoring.html"
+      },
+      {
+        "chapter_slug": "epbr-cisco-sdwan",
+        "chapter_title": "Enhanced Policy Based Routing",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/policies/ios-xe-17/policies-book-xe/epbr-cisco-sdwan.html"
+      },
+      {
+        "chapter_slug": "forward-error-correction",
+        "chapter_title": "Forward Error Correction",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/policies/ios-xe-17/policies-book-xe/forward-error-correction.html"
+      },
+      {
+        "chapter_slug": "packet-duplication",
+        "chapter_title": "Feature history for packet duplication",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/policies/ios-xe-17/policies-book-xe/packet-duplication.html"
+      },
+      {
+        "chapter_slug": "policy-config-tagging",
+        "chapter_title": "Policy configuration tagging",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/policies/ios-xe-17/policies-book-xe/policy-config-tagging.html"
+      },
+      {
+        "chapter_slug": "integration-with-Cisco-ACI",
+        "chapter_title": "Integrate Cisco IOS XE Catalyst SD-WAN Device with Cisco Application Centric Infrastructure",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/policies/ios-xe-17/policies-book-xe/integration-with-Cisco-ACI.html"
+      },
+      {
+        "chapter_slug": "m-custom-applications",
+        "chapter_title": "Custom Applications",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/policies/ios-xe-17/policies-book-xe/m-custom-applications.html"
+      },
+      {
+        "chapter_slug": "m-service-Insertion-in-cisco-catalyst-sd-wan-manager-20-13-and-later",
+        "chapter_title": "Service Insertion",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/policies/ios-xe-17/policies-book-xe/m-service-Insertion-in-cisco-catalyst-sd-wan-manager-20-13-and-later.html"
+      },
+      {
+        "chapter_slug": "m-service-insertion-for-equinix",
+        "chapter_title": "Service Insertion for Equinix",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/policies/ios-xe-17/policies-book-xe/m-service-insertion-for-equinix.html"
+      },
+      {
+        "chapter_slug": "service-chaining",
+        "chapter_title": "Service chaining",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/policies/ios-xe-17/policies-book-xe/service-chaining.html"
+      },
+      {
+        "chapter_slug": "lawful-intercept",
+        "chapter_title": "Lawful Intercept",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/policies/ios-xe-17/policies-book-xe/lawful-intercept.html"
+      },
+      {
+        "chapter_slug": "m-lawful-intercept-cisco-ios-xe-release-17-9-and-later",
+        "chapter_title": "Lawful Intercept 2.0",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/policies/ios-xe-17/policies-book-xe/m-lawful-intercept-cisco-ios-xe-release-17-9-and-later.html"
+      },
+      {
+        "chapter_slug": "troubleshooting-support-articles",
+        "chapter_title": "Troubleshoot Cisco Catalyst SD-WAN Policies",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/policies/ios-xe-17/policies-book-xe/troubleshooting-support-articles.html"
+      }
+    ]
+  },
+  "policy-groups.pdf": {
+    "title": "Policy Groups Configuration Guide, Cisco IOS XE Catalyst SD-WAN Release 17.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Policy-Groups/policy-groups.html",
+    "chapters": [
+      {
+        "chapter_slug": "read-me-first",
+        "chapter_title": "Read Me First",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Policy-Groups/policy-groups/read-me-first.html"
+      },
+      {
+        "chapter_slug": "m-whats-new-17x-20x",
+        "chapter_title": "What's New in Cisco IOS XE (Catalyst SD-WAN)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Policy-Groups/policy-groups/m-whats-new-17x-20x.html"
+      },
+      {
+        "chapter_slug": "m-policy-groups",
+        "chapter_title": "Policy Groups",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Policy-Groups/policy-groups/m-policy-groups.html"
+      },
+      {
+        "chapter_slug": "m-security-policy",
+        "chapter_title": "Security Policy Using Policy Groups",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Policy-Groups/policy-groups/m-security-policy.html"
+      },
+      {
+        "chapter_slug": "m-application-catalog",
+        "chapter_title": "Application Catalog",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Policy-Groups/policy-groups/m-application-catalog.html"
+      },
+      {
+        "chapter_slug": "m-policy-compliance",
+        "chapter_title": "Application and Policy Compliance",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Policy-Groups/policy-groups/m-policy-compliance.html"
+      },
+      {
+        "chapter_slug": "m-topology",
+        "chapter_title": "Topology",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/Policy-Groups/policy-groups/m-topology.html"
+      }
+    ]
+  },
+  "qos-book-xe.pdf": {
+    "title": "Cisco Catalyst SD-WAN Forwarding and QoS Configuration Guide, Cisco IOS XE Catalyst SD-WAN Release 17.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/qos/ios-xe-17/qos-book-xe.html",
+    "chapters": [
+      {
+        "chapter_slug": "read-me-first",
+        "chapter_title": "Read Me First",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/qos/ios-xe-17/qos-book-xe/read-me-first.html"
+      },
+      {
+        "chapter_slug": "whats-new",
+        "chapter_title": "What's New in Cisco IOS XE (Catalyst SD-WAN)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/qos/ios-xe-17/qos-book-xe/whats-new.html"
+      },
+      {
+        "chapter_slug": "forwarding-qos",
+        "chapter_title": "Forwarding and QoS",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/qos/ios-xe-17/qos-book-xe/forwarding-qos.html"
+      },
+      {
+        "chapter_slug": "per-tunnel-qos",
+        "chapter_title": "Per-Tunnel QoS",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/qos/ios-xe-17/qos-book-xe/per-tunnel-qos.html"
+      },
+      {
+        "chapter_slug": "configure-qos-on-subinterfaces",
+        "chapter_title": "QoS on Subinterface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/qos/ios-xe-17/qos-book-xe/configure-qos-on-subinterfaces.html"
+      },
+      {
+        "chapter_slug": "m-adaptive-qos",
+        "chapter_title": "Adaptive QoS",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/qos/ios-xe-17/qos-book-xe/m-adaptive-qos.html"
+      },
+      {
+        "chapter_slug": "per-vpn-qos",
+        "chapter_title": "Per-VPN QoS",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/qos/ios-xe-17/qos-book-xe/per-vpn-qos.html"
+      },
+      {
+        "chapter_slug": "m-troubleshooting-qos-map",
+        "chapter_title": "Troubleshooting Cisco Catalyst SD-WAN Forwarding and QoS Configuration",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/qos/ios-xe-17/qos-book-xe/m-troubleshooting-qos-map.html"
+      }
+    ]
+  },
+  "routing-book-xe.pdf": {
+    "title": "Routing Configuration Guide, Cisco Catalyst SD-WAN Releases 17.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/routing/ios-xe-17/routing-book-xe.html",
+    "chapters": [
+      {
+        "chapter_slug": "about_this_document",
+        "chapter_title": "About This Document",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/routing/ios-xe-17/routing-protocols-configuration-guide/about_this_document.html"
+      },
+      {
+        "chapter_slug": "OMP-routing-protocol",
+        "chapter_title": "Overlay Management Protocol",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/routing/ios-xe-17/routing-protocols-configuration-guide/OMP-routing-protocol.html"
+      },
+      {
+        "chapter_slug": "bgp-protocol",
+        "chapter_title": "Border Gateway Protocol",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/routing/ios-xe-17/routing-protocols-configuration-guide/bgp-protocol.html"
+      },
+      {
+        "chapter_slug": "ospf-ospfv3-protocol",
+        "chapter_title": "Open Shortest Path First Routing Protocol",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/routing/ios-xe-17/routing-protocols-configuration-guide/ospf-ospfv3-protocol.html"
+      },
+      {
+        "chapter_slug": "eigrp",
+        "chapter_title": "Enhanced Interior Gateway Routing Protocol",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/routing/ios-xe-17/routing-protocols-configuration-guide/eigrp.html"
+      },
+      {
+        "chapter_slug": "routing-information-protocol",
+        "chapter_title": "Routing Information Protocol",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/routing/ios-xe-17/routing-protocols-configuration-guide/routing-information-protocol.html"
+      },
+      {
+        "chapter_slug": "multicast-overlay-routing",
+        "chapter_title": "Multicast Overlay Routing",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/routing/ios-xe-17/routing-protocols-configuration-guide/multicast-overlay-routing.html"
+      },
+      {
+        "chapter_slug": "radio-aware-routing",
+        "chapter_title": "Radio Aware Routing",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/routing/ios-xe-17/routing-protocols-configuration-guide/radio-aware-routing.html"
+      },
+      {
+        "chapter_slug": "route-leaking-between-vpns",
+        "chapter_title": "Route Leaking between VPNs",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/routing/ios-xe-17/routing-protocols-configuration-guide/route-leaking-between-vpns.html"
+      },
+      {
+        "chapter_slug": "bfd",
+        "chapter_title": "Bi-directional Forwarding Detection Protocol",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/routing/ios-xe-17/routing-protocols-configuration-guide/bfd.html"
+      },
+      {
+        "chapter_slug": "cisco-sd-wan-controller-route-filtering-by-tloc-color",
+        "chapter_title": "Cisco SD-WAN Controller Route Filtering by TLOC Color",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/routing/ios-xe-17/routing-protocols-configuration-guide/cisco-sd-wan-controller-route-filtering-by-tloc-color.html"
+      },
+      {
+        "chapter_slug": "rendezvous-point-selection-process-by-pim-bsr",
+        "chapter_title": "Rendezvous Point Selection Process by a PIM BSR",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/routing/ios-xe-17/routing-protocols-configuration-guide/rendezvous-point-selection-process-by-pim-bsr.html"
+      },
+      {
+        "chapter_slug": "multicast-source-discovery-protocol",
+        "chapter_title": "Multicast Source Discovery Protocol",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/routing/ios-xe-17/routing-protocols-configuration-guide/multicast-source-discovery-protocol.html"
+      },
+      {
+        "chapter_slug": "transport-gateway",
+        "chapter_title": "Transport Gateway",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/routing/ios-xe-17/routing-protocols-configuration-guide/transport-gateway.html"
+      },
+      {
+        "chapter_slug": "symmetric-routing-in-cisco-sd-wan",
+        "chapter_title": "Symmetric Routing",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/routing/ios-xe-17/routing-protocols-configuration-guide/symmetric-routing-in-cisco-sd-wan.html"
+      },
+      {
+        "chapter_slug": "hub-and-spoke",
+        "chapter_title": "Hub-and-Spoke",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/routing/ios-xe-17/routing-protocols-configuration-guide/hub-and-spoke.html"
+      }
+    ]
+  },
+  "rugged-series-router-config.pdf": {
+    "title": "Cisco Catalyst SD-WAN Rugged Series Router Configuration Guide, Cisco IOS XE Catalyst SD-WAN Release 17.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/rugged/rugged-series-router-config.html",
+    "chapters": [
+      {
+        "chapter_slug": "read-me",
+        "chapter_title": "Read Me First",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/rugged/rugged-series-router-config/read-me.html"
+      },
+      {
+        "chapter_slug": "whats-new",
+        "chapter_title": "What's New in Cisco IOS XE (SD-WAN) and Cisco Catalyst SD-WAN Releases",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/rugged/rugged-series-router-config/whats-new.html"
+      },
+      {
+        "chapter_slug": "ignition-power-mgmt",
+        "chapter_title": "Ignition Power Management",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/rugged/rugged-series-router-config/ignition-power-mgmt.html"
+      },
+      {
+        "chapter_slug": "digital-io",
+        "chapter_title": "Digital IO",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/rugged/rugged-series-router-config/digital-io.html"
+      },
+      {
+        "chapter_slug": "gps-dead-reckoning",
+        "chapter_title": "GPS Dead Reckoning",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/rugged/rugged-series-router-config/gps-dead-reckoning.html"
+      },
+      {
+        "chapter_slug": "configure-wim-ir-1800-rugged-routers",
+        "chapter_title": "Configure WIM on Cisco Catalyst IR1800 Rugged Series Routers",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/rugged/rugged-series-router-config/configure-wim-ir-1800-rugged-routers.html"
+      },
+      {
+        "chapter_slug": "m-configuring-the-global-navigation-satellite-system",
+        "chapter_title": "Global Navigation Satellite System Support on PIMs",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/rugged/rugged-series-router-config/m-configuring-the-global-navigation-satellite-system.html"
+      },
+      {
+        "chapter_slug": "raw-socket",
+        "chapter_title": "Raw socket",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/rugged/rugged-series-router-config/raw-socket.html"
+      }
+    ]
+  },
+  "sdwan-for-gov.pdf": {
+    "title": "Cisco Catalyst SD-WAN for Government Configuration Guide",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/government/sdwan-for-gov.html",
+    "chapters": [
+      {
+        "chapter_slug": "read-me-first",
+        "chapter_title": "Read Me First",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/government/sdwan-for-gov/read-me-first.html"
+      },
+      {
+        "chapter_slug": "whats-new",
+        "chapter_title": "What's New in Cisco IOS XE (Catalyst SD-WAN)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/government/sdwan-for-gov/whats-new.html"
+      },
+      {
+        "chapter_slug": "introduction-sd-wan-government",
+        "chapter_title": "Introduction to Cisco Catalyst SD-WAN for Government",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/government/sdwan-for-gov/introduction-sd-wan-government.html"
+      },
+      {
+        "chapter_slug": "self-service-portal",
+        "chapter_title": "Cisco Catalyst SD-WAN Portal",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/government/sdwan-for-gov/self-service-portal.html"
+      },
+      {
+        "chapter_slug": "portal-access",
+        "chapter_title": "Access the Cisco Catalyst SD-WAN Portal",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/government/sdwan-for-gov/portal-access.html"
+      },
+      {
+        "chapter_slug": "idp",
+        "chapter_title": "Configure an Identity Provider for the Cisco Catalyst SD-WAN Portal",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/government/sdwan-for-gov/idp.html"
+      },
+      {
+        "chapter_slug": "rbac",
+        "chapter_title": "Manage Role-Based Access",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/government/sdwan-for-gov/rbac.html"
+      },
+      {
+        "chapter_slug": "overlay-mgmt",
+        "chapter_title": "Manage fabrics",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/government/sdwan-for-gov/overlay-mgmt.html"
+      },
+      {
+        "chapter_slug": "m-c8kv-as-vpn-gateway",
+        "chapter_title": "Use Cisco Catalyst 8000V as a Cloud Gateway for a fabric",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/government/sdwan-for-gov/m-c8kv-as-vpn-gateway.html"
+      },
+      {
+        "chapter_slug": "overlay-monitor",
+        "chapter_title": "Monitor fabrics",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/government/sdwan-for-gov/overlay-monitor.html"
+      },
+      {
+        "chapter_slug": "m-manage-account-settings",
+        "chapter_title": "Manage account settings",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/government/sdwan-for-gov/m-manage-account-settings.html"
+      },
+      {
+        "chapter_slug": "m-snapshots",
+        "chapter_title": "Configuring system snapshots",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/government/sdwan-for-gov/m-snapshots.html"
+      },
+      {
+        "chapter_slug": "m-webhooks",
+        "chapter_title": "Configure webhooks",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/government/sdwan-for-gov/m-webhooks.html"
+      },
+      {
+        "chapter_slug": "m-frequently-asked-questions",
+        "chapter_title": "Frequently Asked Questions",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/government/sdwan-for-gov/m-frequently-asked-questions.html"
+      },
+      {
+        "chapter_slug": "m-config-conversion-tool",
+        "chapter_title": "Configuration Conversion Tool",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/government/sdwan-for-gov/m-config-conversion-tool.html"
+      },
+      {
+        "chapter_slug": "troubleshooting",
+        "chapter_title": "Troubleshooting the Cisco Catalyst SD-WAN Portal",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/government/sdwan-for-gov/troubleshooting.html"
+      },
+      {
+        "chapter_slug": "configure-vmanage-for-government",
+        "chapter_title": "Set Up and Configure Cisco Catalyst SD-WAN Manager",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/government/sdwan-for-gov/configure-vmanage-for-government.html"
+      },
+      {
+        "chapter_slug": "security-features",
+        "chapter_title": "Security Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/government/sdwan-for-gov/security-features.html"
+      },
+      {
+        "chapter_slug": "software-development-life-cycle",
+        "chapter_title": "Software Development Life Cycle (SDLC)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/government/sdwan-for-gov/software-development-life-cycle.html"
+      }
+    ]
+  },
+  "sdwan-ssp.pdf": {
+    "title": "Cisco Catalyst SD-WAN Portal Configuration Guide",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/self-serv-por/sdwan-ssp.html",
+    "chapters": [
+      {
+        "chapter_slug": "read-me-first",
+        "chapter_title": "Read Me First",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/self-serv-por/sdwan-ssp/read-me-first.html"
+      },
+      {
+        "chapter_slug": "features",
+        "chapter_title": "Cisco Catalyst SD-WAN Portal Feature History",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/self-serv-por/sdwan-ssp/features.html"
+      },
+      {
+        "chapter_slug": "intro-sdwan-portal",
+        "chapter_title": "Cisco Catalyst SD-WAN Portal",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/self-serv-por/sdwan-ssp/intro-sdwan-portal.html"
+      },
+      {
+        "chapter_slug": "access-sdwan-portal",
+        "chapter_title": "Access the Cisco Catalyst SD-WAN Portal",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/self-serv-por/sdwan-ssp/access-sdwan-portal.html"
+      },
+      {
+        "chapter_slug": "configure-idp",
+        "chapter_title": "Configure an Identity Provider for the Cisco Catalyst SD-WAN Portal",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/self-serv-por/sdwan-ssp/configure-idp.html"
+      },
+      {
+        "chapter_slug": "manage-role-based-access",
+        "chapter_title": "Manage Role-based Access",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/self-serv-por/sdwan-ssp/manage-role-based-access.html"
+      },
+      {
+        "chapter_slug": "manage-fabrics",
+        "chapter_title": "Manage Fabrics",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/self-serv-por/sdwan-ssp/manage-fabrics.html"
+      },
+      {
+        "chapter_slug": "catalyst-8000v-vpn-gateway",
+        "chapter_title": "Use Cisco Catalyst 8000V as a Cloud Gateway for a fabric",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/self-serv-por/sdwan-ssp/catalyst-8000v-vpn-gateway.html"
+      },
+      {
+        "chapter_slug": "monitor-overlay-networks",
+        "chapter_title": "Monitor Fabrics",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/self-serv-por/sdwan-ssp/monitor-overlay-networks.html"
+      },
+      {
+        "chapter_slug": "manage-account-settings",
+        "chapter_title": "Manage Account Settings",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/self-serv-por/sdwan-ssp/manage-account-settings.html"
+      },
+      {
+        "chapter_slug": "cert",
+        "chapter_title": "Configure Certification Compliance",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/self-serv-por/sdwan-ssp/cert.html"
+      },
+      {
+        "chapter_slug": "snapshots",
+        "chapter_title": "Configure System Snapshots",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/self-serv-por/sdwan-ssp/snapshots.html"
+      },
+      {
+        "chapter_slug": "webhooks",
+        "chapter_title": "Configure Webhooks",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/self-serv-por/sdwan-ssp/webhooks.html"
+      },
+      {
+        "chapter_slug": "config-conversion-tool",
+        "chapter_title": "Configuration Conversion Tool",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/self-serv-por/sdwan-ssp/config-conversion-tool.html"
+      },
+      {
+        "chapter_slug": "faq",
+        "chapter_title": "Frequently Asked Questions",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/self-serv-por/sdwan-ssp/faq.html"
+      },
+      {
+        "chapter_slug": "troubleshooting",
+        "chapter_title": "Troubleshoot the Cisco Catalyst SD-WAN Portal",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/self-serv-por/sdwan-ssp/troubleshooting.html"
+      }
+    ]
+  },
+  "sdwan-xe-gs-book.pdf": {
+    "title": "Cisco Catalyst SD-WAN Getting Started Guide",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-xe-gs-book.html",
+    "chapters": [
+      {
+        "chapter_slug": "read-me-first",
+        "chapter_title": "Read Me First",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-xe-gs-book/read-me-first.html"
+      },
+      {
+        "chapter_slug": "whats-new-for-and-cisco-ios-xe",
+        "chapter_title": "What's New in Cisco IOS XE (SD-WAN) and Cisco Catalyst SD-WAN Releases",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-xe-gs-book/whats-new-for-and-cisco-ios-xe.html"
+      },
+      {
+        "chapter_slug": "system-overview",
+        "chapter_title": "The Cisco Catalyst SD-WAN Solution",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-xe-gs-book/system-overview.html"
+      },
+      {
+        "chapter_slug": "hardware-and-software-installation",
+        "chapter_title": "Hardware and Software Installation",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-xe-gs-book/hardware-and-software-installation.html"
+      },
+      {
+        "chapter_slug": "sdavc",
+        "chapter_title": "Cisco SD-AVC",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-xe-gs-book/sdavc.html"
+      },
+      {
+        "chapter_slug": "cloud",
+        "chapter_title": "Cisco SD-AVC Cloud Connector",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-xe-gs-book/cloud.html"
+      },
+      {
+        "chapter_slug": "install-upgrade-17-2-later",
+        "chapter_title": "Install and Upgrade for Cisco Cisco IOS XE Catalyst SD-WAN Release 17.2.1r and Later",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-xe-gs-book/install-upgrade-17-2-later.html"
+      },
+      {
+        "chapter_slug": "cisco-sd-wan-overlay-network-bringup",
+        "chapter_title": "Cisco Catalyst SD-WAN Overlay Network Bring-Up Process",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-xe-gs-book/cisco-sd-wan-overlay-network-bringup.html"
+      },
+      {
+        "chapter_slug": "add-ctrl-val",
+        "chapter_title": "Add SD-WAN Controller and SD-WAN Validator Components",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-xe-gs-book/add-ctrl-val.html"
+      },
+      {
+        "chapter_slug": "first-time-settings-on-manager",
+        "chapter_title": "First Time Settings on Cisco SD-WAN Manager",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-xe-gs-book/first-time-settings-on-manager.html"
+      },
+      {
+        "chapter_slug": "control-components-settings",
+        "chapter_title": "Control Components Settings on Cisco SD-WAN Manager",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-xe-gs-book/control-components-settings.html"
+      },
+      {
+        "chapter_slug": "sdwan-manager-tools",
+        "chapter_title": "Cisco SD-WAN Manager Tools",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-xe-gs-book/sdwan-manager-tools.html"
+      },
+      {
+        "chapter_slug": "cisco-services-registration",
+        "chapter_title": "Cisco services registration",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-xe-gs-book/cisco-services-registration.html"
+      },
+      {
+        "chapter_slug": "m-quick-connect-workflow",
+        "chapter_title": "Quick Connect Workflow",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-xe-gs-book/m-quick-connect-workflow.html"
+      },
+      {
+        "chapter_slug": "manage-cluster",
+        "chapter_title": "Cluster Management",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-xe-gs-book/manage-cluster.html"
+      },
+      {
+        "chapter_slug": "automated-certificate-management",
+        "chapter_title": "Automated Certificate Management",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-xe-gs-book/automated-certificate-management.html"
+      },
+      {
+        "chapter_slug": "manage-certificates",
+        "chapter_title": "Certificate Management",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-xe-gs-book/manage-certificates.html"
+      },
+      {
+        "chapter_slug": "cert-cc",
+        "chapter_title": "Cisco SD-WAN Control Components Certificate Management",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-xe-gs-book/cert-cc.html"
+      },
+      {
+        "chapter_slug": "cert-edge",
+        "chapter_title": "Edge device certificate management",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-xe-gs-book/cert-edge.html"
+      },
+      {
+        "chapter_slug": "m-cisco-sd-wan-manager-jwt-based-authentication-for-apis",
+        "chapter_title": "Cisco SD-WAN Manager JWT Based Authentication for APIs",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-xe-gs-book/m-cisco-sd-wan-manager-jwt-based-authentication-for-apis.html"
+      },
+      {
+        "chapter_slug": "expired-cert-quarantine",
+        "chapter_title": "Expired Enterprise Certificate Indication and Quarantine",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-xe-gs-book/expired-cert-quarantine.html"
+      },
+      {
+        "chapter_slug": "rev-proxy",
+        "chapter_title": "Reverse Proxy",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-xe-gs-book/rev-proxy.html"
+      },
+      {
+        "chapter_slug": "device-info",
+        "chapter_title": "Onboarding Modular Cisco ASR 1000 Series Platforms",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-xe-gs-book/device-info.html"
+      },
+      {
+        "chapter_slug": "cisco-sd-wan-api-cross-site-request-forgery-prevention",
+        "chapter_title": "API Cross-Site Request Forgery Prevention",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-xe-gs-book/cisco-sd-wan-api-cross-site-request-forgery-prevention.html"
+      },
+      {
+        "chapter_slug": "controllers-azure",
+        "chapter_title": "Deploy Cisco SD-WAN Controller in Microsoft Azure",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-xe-gs-book/controllers-azure.html"
+      },
+      {
+        "chapter_slug": "controller-aws",
+        "chapter_title": "Deploy Cisco SD-WAN Controllers in the AWS Cloud",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-xe-gs-book/controller-aws.html"
+      },
+      {
+        "chapter_slug": "m-troubleshoot-cisco-sd-wan-solution",
+        "chapter_title": "Troubleshoot Cisco Catalyst SD-WAN Solution",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-xe-gs-book/m-troubleshoot-cisco-sd-wan-solution.html"
+      },
+      {
+        "chapter_slug": "appendix-vmanage-how-tos",
+        "chapter_title": "Appendix: Cisco Catalyst SD-WAN Manager How-Tos",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/sdwan-xe-gs-book/appendix-vmanage-how-tos.html"
+      }
+    ]
+  },
+  "security-book-xe.pdf": {
+    "title": "Cisco Catalyst SD-WAN Security Configuration Guide, Cisco IOS XE Catalyst SD-WAN Release 17.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/security/ios-xe-17/security-book-xe.html",
+    "chapters": [
+      {
+        "chapter_slug": "read-me-first",
+        "chapter_title": "Read Me First",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/security/ios-xe-17/security-book-xe/read-me-first.html"
+      },
+      {
+        "chapter_slug": "m-whats-new-17x-20x",
+        "chapter_title": "What's New in Cisco IOS XE (Catalyst SD-WAN)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/security/ios-xe-17/security-book-xe/m-whats-new-17x-20x.html"
+      },
+      {
+        "chapter_slug": "security-overview",
+        "chapter_title": "Security Overview",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/security/ios-xe-17/security-book-xe/security-overview.html"
+      },
+      {
+        "chapter_slug": "configure-security-param",
+        "chapter_title": "Configure Security Parameters",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/security/ios-xe-17/security-book-xe/configure-security-param.html"
+      },
+      {
+        "chapter_slug": "m-firewall-17",
+        "chapter_title": "Enterprise Firewall with Application Awareness",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/security/ios-xe-17/security-book-xe/m-firewall-17.html"
+      },
+      {
+        "chapter_slug": "m-config-geo",
+        "chapter_title": "Configure Geolocation-Based Firewall Rules for Network Access",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/security/ios-xe-17/security-book-xe/m-config-geo.html"
+      },
+      {
+        "chapter_slug": "intrusion-prevention",
+        "chapter_title": "Intrusion Prevention System",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/security/ios-xe-17/security-book-xe/intrusion-prevention.html"
+      },
+      {
+        "chapter_slug": "url-filtering",
+        "chapter_title": "URL Filtering",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/security/ios-xe-17/security-book-xe/url-filtering.html"
+      },
+      {
+        "chapter_slug": "malware-protection",
+        "chapter_title": "Advanced Malware Protection",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/security/ios-xe-17/security-book-xe/malware-protection.html"
+      },
+      {
+        "chapter_slug": "m-ssl-proxy",
+        "chapter_title": "SSL/TLS Proxy for Decryption of TLS Traffic",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/security/ios-xe-17/security-book-xe/m-ssl-proxy.html"
+      },
+      {
+        "chapter_slug": "umbrella-integration",
+        "chapter_title": "Cisco Umbrella Integration",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/security/ios-xe-17/security-book-xe/umbrella-integration.html"
+      },
+      {
+        "chapter_slug": "m-secure-internet-gateway",
+        "chapter_title": "Integrate Your Devices With Secure Internet Gateways",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/security/ios-xe-17/security-book-xe/m-secure-internet-gateway.html"
+      },
+      {
+        "chapter_slug": "m-cisco-secure-access-integration",
+        "chapter_title": "Integrate Your Devices with Secure Service Edge",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/security/ios-xe-17/security-book-xe/m-cisco-secure-access-integration.html"
+      },
+      {
+        "chapter_slug": "private-app-access",
+        "chapter_title": "Private Application Access",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/security/ios-xe-17/security-book-xe/private-app-access.html"
+      },
+      {
+        "chapter_slug": "m-managing-cisco-catalyst-sd-wan-firewall-policies-using-security-cloud-control",
+        "chapter_title": "Security Cloud Control Integration",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/security/ios-xe-17/security-book-xe/m-managing-cisco-catalyst-sd-wan-firewall-policies-using-security-cloud-control.html"
+      },
+      {
+        "chapter_slug": "m-gre-over-ipsec-tunnels",
+        "chapter_title": "GRE Over IPsec Tunnels",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/security/ios-xe-17/security-book-xe/m-gre-over-ipsec-tunnels.html"
+      },
+      {
+        "chapter_slug": "m-gre-ipsec-tunnels-to-third-party-devices",
+        "chapter_title": "IPv6 GRE or IPsec Tunnels Between Cisco IOS XE Catalyst SD-WAN Devices and Third Party Devices",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/security/ios-xe-17/security-book-xe/m-gre-ipsec-tunnels-to-third-party-devices.html"
+      },
+      {
+        "chapter_slug": "security-virtual-image",
+        "chapter_title": "Security Virtual Image",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/security/ios-xe-17/security-book-xe/security-virtual-image.html"
+      },
+      {
+        "chapter_slug": "ipsec-pairwise-keys",
+        "chapter_title": "IPsec Pairwise Keys",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/security/ios-xe-17/security-book-xe/ipsec-pairwise-keys.html"
+      },
+      {
+        "chapter_slug": "configure-sso",
+        "chapter_title": "Configure Single Sign-On",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/security/ios-xe-17/security-book-xe/configure-sso.html"
+      },
+      {
+        "chapter_slug": "m-configure-port-security",
+        "chapter_title": "Configure Port Security",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/security/ios-xe-17/security-book-xe/m-configure-port-security.html"
+      },
+      {
+        "chapter_slug": "cisco-trustsec-integration",
+        "chapter_title": "Cisco TrustSec Integration",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/security/ios-xe-17/security-book-xe/cisco-trustsec-integration.html"
+      },
+      {
+        "chapter_slug": "omp-prefixes",
+        "chapter_title": "OMP Prefixes for IP-SGT Binding",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/security/ios-xe-17/security-book-xe/omp-prefixes.html"
+      },
+      {
+        "chapter_slug": "m-security-resources-profile",
+        "chapter_title": "Unified Threat Defense Resource Profiles",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/security/ios-xe-17/security-book-xe/m-security-resources-profile.html"
+      },
+      {
+        "chapter_slug": "m-macsec-in-cisco-sd-wan",
+        "chapter_title": "Enable MACsec Using Cisco Catalyst SD-WAN Manager",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/security/ios-xe-17/security-book-xe/m-macsec-in-cisco-sd-wan.html"
+      },
+      {
+        "chapter_slug": "cisco-catalyst-sd-wan-dhcp-high-availability",
+        "chapter_title": "DHCP Server high availability for Cisco IOS XE Catalyst SD-WAN devices",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/security/ios-xe-17/security-book-xe/cisco-catalyst-sd-wan-dhcp-high-availability.html"
+      },
+      {
+        "chapter_slug": "m-cisco-catalyst-sd-wan-firewall-high-availability",
+        "chapter_title": "Cisco Catalyst SD-WAN Firewall High Availability",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/security/ios-xe-17/security-book-xe/m-cisco-catalyst-sd-wan-firewall-high-availability.html"
+      },
+      {
+        "chapter_slug": "security-cli",
+        "chapter_title": "Security CLI Reference",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/security/ios-xe-17/security-book-xe/security-cli.html"
+      },
+      {
+        "chapter_slug": "m-regular-expression",
+        "chapter_title": "Regular Expression for URL Filtering and DNS Security",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/security/ios-xe-17/security-book-xe/m-regular-expression.html"
+      },
+      {
+        "chapter_slug": "m-troubleshooting-cisco-sd-wan-security",
+        "chapter_title": "Troubleshoot Cisco Catalyst SD-WAN Security",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/security/ios-xe-17/security-book-xe/m-troubleshooting-cisco-sd-wan-security.html"
+      }
+    ]
+  },
+  "segmentation-book-xe.pdf": {
+    "title": "Cisco Catalyst SD-WAN Segmentation Configuration Guide, Cisco IOS XE Catalyst SD-WAN Release 17.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/segmentation/ios-xe-17/segmentation-book-xe.html",
+    "chapters": [
+      {
+        "chapter_slug": "read-me-first",
+        "chapter_title": "Read Me First",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/segmentation/ios-xe-17/segmentation-book-xe/read-me-first.html"
+      },
+      {
+        "chapter_slug": "m-whats-new-17x-20x",
+        "chapter_title": "What's New in Cisco IOS XE (Catalyst SD-WAN)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/segmentation/ios-xe-17/segmentation-book-xe/m-whats-new-17x-20x.html"
+      },
+      {
+        "chapter_slug": "segmentation",
+        "chapter_title": "Segmentation",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/segmentation/ios-xe-17/segmentation-book-xe/segmentation.html"
+      },
+      {
+        "chapter_slug": "troubleshooting-support-articles",
+        "chapter_title": "Troubleshoot Cisco Catalyst SD-WAN Segmentation",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/segmentation/ios-xe-17/segmentation-book-xe/troubleshooting-support-articles.html"
+      }
+    ]
+  },
+  "snmp-book.pdf": {
+    "title": "Cisco SD-WAN SNMP",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/snmp/snmp-book.html",
+    "chapters": [
+      {
+        "chapter_slug": "m-snmp",
+        "chapter_title": "Cisco Catalyst SD-WAN SNMP Configuration Guide",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/snmp/snmp-book/m-snmp.html"
+      }
+    ]
+  },
+  "sw-install-and-upgrade-guide-isr1100-series.pdf": {
+    "title": "Cisco Catalyst SD-WAN Software Installation and Upgrade Guide for Cisco ISR1100 and ISR1100X Series Integrated Services Routers",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/isr1100series-migration/sw-install-and-upgrade-guide-isr1100-series.html",
+    "chapters": [
+      {
+        "chapter_slug": "read-me-first",
+        "chapter_title": "Read Me First",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/isr1100series-migration/sw-install-and-upgrade-guide-isr1100-series/read-me-first.html"
+      },
+      {
+        "chapter_slug": "whatsnew",
+        "chapter_title": "What's New in Cisco IOS XE (SD-WAN) and Cisco Catalyst SD-WAN Releases",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/isr1100series-migration/sw-install-and-upgrade-guide-isr1100-series/whatsnew.html"
+      },
+      {
+        "chapter_slug": "isr1100-sw-install-upgrade",
+        "chapter_title": "Software Installation and Upgrade for Cisco ISR1100 and ISR1100X Series Integrated Services Routers",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/isr1100series-migration/sw-install-and-upgrade-guide-isr1100-series/isr1100-sw-install-upgrade.html"
+      },
+      {
+        "chapter_slug": "troubleshooting-support-articles",
+        "chapter_title": "Troubleshoot Cisco ISR1100 and ISR1100X Series Integrated Services Routers",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/isr1100series-migration/sw-install-and-upgrade-guide-isr1100-series/troubleshooting-support-articles.html"
+      }
+    ]
+  },
+  "systems-interfaces-book-xe-sdwan.pdf": {
+    "title": "Systems and Interfaces Configuration Guide, Cisco IOS XE SD-WAN Releases 17.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan.html",
+    "chapters": [
+      {
+        "chapter_slug": "read-me-first",
+        "chapter_title": "Read Me First",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/read-me-first.html"
+      },
+      {
+        "chapter_slug": "new-for-cisco-sd-wan",
+        "chapter_title": "What's New in Cisco IOS XE (Catalyst SD-WAN)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/new-for-cisco-sd-wan.html"
+      },
+      {
+        "chapter_slug": "systems-interfaces",
+        "chapter_title": "Cisco Catalyst SD-WAN Basic System Overview",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/systems-interfaces.html"
+      },
+      {
+        "chapter_slug": "configure-system-logging",
+        "chapter_title": "Configure System Logging",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/configure-system-logging.html"
+      },
+      {
+        "chapter_slug": "user-access-authentication",
+        "chapter_title": "Configure User Access and Authentication",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/user-access-authentication.html"
+      },
+      {
+        "chapter_slug": "m-rbac-17-13",
+        "chapter_title": "Role Based Access Control",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/m-rbac-17-13.html"
+      },
+      {
+        "chapter_slug": "rbac",
+        "chapter_title": "Role-Based Access Control (Cisco IOS XE Catalyst SD-WAN Release 17.12.x and Earlier)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/rbac.html"
+      },
+      {
+        "chapter_slug": "configure-devices",
+        "chapter_title": "Configure Devices",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/configure-devices.html"
+      },
+      {
+        "chapter_slug": "device-tagging",
+        "chapter_title": "Device Tagging",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/device-tagging.html"
+      },
+      {
+        "chapter_slug": "network-hierarchy-and-resource-management",
+        "chapter_title": "Network Hierarchy and Resource Management",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/network-hierarchy-and-resource-management.html"
+      },
+      {
+        "chapter_slug": "configure-unified-communications",
+        "chapter_title": "Cisco Unified Communications Voice Services",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/configure-unified-communications.html"
+      },
+      {
+        "chapter_slug": "m-configure-cisco-unified-border-element",
+        "chapter_title": "CUBE Configuration",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/m-configure-cisco-unified-border-element.html"
+      },
+      {
+        "chapter_slug": "configure-interfaces",
+        "chapter_title": "Configure Network Interfaces",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/configure-interfaces.html"
+      },
+      {
+        "chapter_slug": "m-cellular-interfaces",
+        "chapter_title": "Cellular Interfaces",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/m-cellular-interfaces.html"
+      },
+      {
+        "chapter_slug": "m-hot-standby-router-protocol",
+        "chapter_title": "Hot Standby Router Protocol (HSRP)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/m-hot-standby-router-protocol.html"
+      },
+      {
+        "chapter_slug": "m-configuring-cellular-gateway",
+        "chapter_title": "Configure a Cellular Gateway",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/m-configuring-cellular-gateway.html"
+      },
+      {
+        "chapter_slug": "m-network-slicing",
+        "chapter_title": "Network Slicing",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/m-network-slicing.html"
+      },
+      {
+        "chapter_slug": "m-config-geofencing",
+        "chapter_title": "Configure Geofencing",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/m-config-geofencing.html"
+      },
+      {
+        "chapter_slug": "configuration-and-monitoring-of-p-lte-450-mhz-modules",
+        "chapter_title": "Configuring and Monitoring P-LTE-450 MHz Modules",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/configuration-and-monitoring-of-p-lte-450-mhz-modules.html"
+      },
+      {
+        "chapter_slug": "m-vrrp-tracking",
+        "chapter_title": "VRRP Interface Tracking",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/m-vrrp-tracking.html"
+      },
+      {
+        "chapter_slug": "configure-vdsl-gshdsl",
+        "chapter_title": "Configure VDSL and G.SHDSL",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/configure-vdsl-gshdsl.html"
+      },
+      {
+        "chapter_slug": "dynamic-on-demand-tunnels",
+        "chapter_title": "Dynamic On-Demand Tunnels",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/dynamic-on-demand-tunnels.html"
+      },
+      {
+        "chapter_slug": "track-static-route-ios-xe",
+        "chapter_title": "Track Static Routes for Service VPNs",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/track-static-route-ios-xe.html"
+      },
+      {
+        "chapter_slug": "dia-tracker-ios-xe",
+        "chapter_title": "NAT DIA Tracker for Cisco IOS XE Catalyst SD-WAN Devices",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/dia-tracker-ios-xe.html"
+      },
+      {
+        "chapter_slug": "service-side-nat-ios-xe",
+        "chapter_title": "Service-Side NAT on Cisco IOS XE Catalyst SD-WAN Devices",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/service-side-nat-ios-xe.html"
+      },
+      {
+        "chapter_slug": "m-dhcp-client-functionality",
+        "chapter_title": "DHCP Vendor Option Support",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/m-dhcp-client-functionality.html"
+      },
+      {
+        "chapter_slug": "m-ip-dhcp-smart-relay",
+        "chapter_title": "IP DHCP Smart-Relay",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/m-ip-dhcp-smart-relay.html"
+      },
+      {
+        "chapter_slug": "ipv6-functionality",
+        "chapter_title": "IPv6 Functionality",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/ipv6-functionality.html"
+      },
+      {
+        "chapter_slug": "ip-directed-broadcast",
+        "chapter_title": "IP Directed Broadcast",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/ip-directed-broadcast.html"
+      },
+      {
+        "chapter_slug": "ios-xe-sd-wan-templates",
+        "chapter_title": "Migrate Shared Templates to Cisco IOS XE Catalyst SD-WAN Templates",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/ios-xe-sd-wan-templates.html"
+      },
+      {
+        "chapter_slug": "cli-template",
+        "chapter_title": "CLI Templates for Cisco IOS XE Catalyst SD-WAN Devices",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/cli-template.html"
+      },
+      {
+        "chapter_slug": "cli-add-on-feature-template",
+        "chapter_title": "CLI Add-On Feature Templates",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/cli-add-on-feature-template.html"
+      },
+      {
+        "chapter_slug": "m-cisco-sd-wan-etherchannel",
+        "chapter_title": "Cisco Catalyst SD-WAN EtherChannel",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/m-cisco-sd-wan-etherchannel.html"
+      },
+      {
+        "chapter_slug": "sdwan-multitenancy",
+        "chapter_title": "Cisco Catalyst SD-WAN Multitenancy",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/sdwan-multitenancy.html"
+      },
+      {
+        "chapter_slug": "flexible-tenant-placement",
+        "chapter_title": "Flexible Tenant Placement on Multitenant Cisco Catalyst SD-WAN Controllers",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/flexible-tenant-placement.html"
+      },
+      {
+        "chapter_slug": "multitenant-wan-edge-devices",
+        "chapter_title": "Multitenant WAN Edge Devices",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/multitenant-wan-edge-devices.html"
+      },
+      {
+        "chapter_slug": "m-multitenancy",
+        "chapter_title": "Cisco Catalyst SD-WAN\n            Multitenancy (Cisco IOS XE Releases 17.4.x and\n                17.5.x)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/m-multitenancy.html"
+      },
+      {
+        "chapter_slug": "csc",
+        "chapter_title": "Cisco Catalyst SD-WAN Carrier Supporting Carrier",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/csc.html"
+      },
+      {
+        "chapter_slug": "wireless-management",
+        "chapter_title": "Wireless Management on Cisco 1000 Series Integrated Services Routers",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/wireless-management.html"
+      },
+      {
+        "chapter_slug": "thousandeyes",
+        "chapter_title": "Simplified Workflow for Onboarding Cisco ThousandEyes Agent and Configuring Tests",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/thousandeyes.html"
+      },
+      {
+        "chapter_slug": "sdwan-thousandeyes",
+        "chapter_title": "Extended Visibility with Cisco SD-WAN and Cisco ThousandEyes",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/sdwan-thousandeyes.html"
+      },
+      {
+        "chapter_slug": "m-configure-l2vpn-services-for-cisco-catalyst-sdwan-using-cli",
+        "chapter_title": "Layer 2 VPN",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/m-configure-l2vpn-services-for-cisco-catalyst-sdwan-using-cli.html"
+      },
+      {
+        "chapter_slug": "troubleshooting-support-articles",
+        "chapter_title": "Troubleshoot Cisco Catalyst SD-WAN Systems and Interfaces",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/troubleshooting-support-articles.html"
+      },
+      {
+        "chapter_slug": "vmanage-hot-tos",
+        "chapter_title": "Appendix: Cisco SD-WAN Manager How-Tos",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/system-interface/ios-xe-17/systems-interfaces-book-xe-sdwan/vmanage-hot-tos.html"
+      }
+    ]
+  },
+  "vAnalytics-book.pdf": {
+    "title": "Cisco Catalyst SD-WAN Analytics",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/vAnalytics/vAnalytics-book.html",
+    "chapters": [
+      {
+        "chapter_slug": "read-me-first",
+        "chapter_title": "Read Me First",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/vAnalytics/vAnalytics-book/read-me-first.html"
+      },
+      {
+        "chapter_slug": "vAnalytics",
+        "chapter_title": "Cisco Catalyst SD-WAN Analytics",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/vAnalytics/vAnalytics-book/vAnalytics.html"
+      }
+    ]
+  }
+}

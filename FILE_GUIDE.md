@@ -134,6 +134,7 @@
 
 | Folder | Description |
 |--------|-------------|
+| `inventory/` | **Guide inventory per product** — contains `document_inventory.json` for each product (e.g. `inventory/sdwan/`). Powers the "📚 Guide Links" feature in the UI. See details below. |
 | `knowledge_docs/` | Source PDF and text documents organized by product (`9800/`, `ASR9000/`, `Cisco8000/`, `iot/`, `sdwan/`, `cisco_generic/`, `test/`) — the raw knowledge base that gets ingested into ChromaDB. |
 | `data/` | Runtime data — contains the ChromaDB SQLite databases (`cisco_products_custom_loader/`), heading caches (`heading_cache.json`), and ingestion metadata (`ingestion_metadata.json`). |
 | `prompts/` | LLM prompt templates for generating short descriptions and reviewing documentation chunks (see table above). |
@@ -143,6 +144,83 @@
 | `myenv/` | Python virtual environment (venv) for the project. |
 | `__pycache__/` | Python bytecode cache (auto-generated). |
 | `test/` | Test-related files and data. |
+
+---
+
+## 🔗 Guide Links & Document Inventory
+
+### What is `document_inventory.json`?
+
+Each product can have a `document_inventory.json` file inside `inventory/<product_code>/`. This file maps every PDF guide filename to its **title**, **Cisco.com URL**, and **chapter list**. It powers two features in the app:
+
+1. **📚 Guide Links expander** — the clickable table of top-3 scored guides shown above the analysis output, with direct links to Cisco.com.
+2. **🔗 Inline guide links** — clickable URLs appended next to "Document name: xxx.pdf" lines in the LLM output.
+
+Without this file for a product, the analysis still works — you just won't get clickable links to the online guides.
+
+### Current status
+
+| Product | Inventory exists? | Path |
+|---------|-------------------|------|
+| Cisco SD-WAN | ✅ Yes (28 guides) | `inventory/sdwan/document_inventory.json` |
+| ASR 9000 | ❌ Not yet | `inventory/ASR9000/document_inventory.json` |
+| Cisco 8000 | ❌ Not yet | `inventory/Cisco8000/document_inventory.json` |
+| Cisco 9800 | ❌ Not yet | `inventory/9800/document_inventory.json` |
+
+### Structure of `document_inventory.json`
+
+```json
+{
+  "appqoe-book-xe.pdf": {
+    "title": "Cisco Catalyst SD-WAN AppQoE Configuration Guide, ...",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/.../appqoe-book-xe.html",
+    "chapters": [
+      {
+        "chapter_slug": "m-tcp-optimization",
+        "chapter_title": "TCP Optimization",
+        "chapter_url": "https://www.cisco.com/.../m-tcp-optimization.html"
+      }
+    ]
+  }
+}
+```
+
+### How to create one for a new product
+
+**Step 1 — Create the seed inventory (manual).** Create `inventory/<product_code>/document_inventory.json` with an entry for each PDF. You need the PDF filename and its Cisco.com book landing page URL:
+
+```json
+{
+  "b-routing-cg-asr9000-25xx.pdf": {
+    "title": "Routing Configuration Guide for Cisco ASR 9000 Series Routers",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/routing/configuration/guide/b-routing-cg-asr9000-25xx.html",
+    "chapters": []
+  }
+}
+```
+
+> **Tip:** You can find the Cisco.com URL by searching for the PDF filename on cisco.com — the book landing page is the HTML version of the same guide.
+
+**Step 2 — Enrich with chapters (automated).** Run `extract_chapters.py` to scrape chapter names/URLs from each book's Cisco.com landing page. Currently this script has the SD-WAN path hardcoded, so either:
+
+- **Option A:** Edit `INVENTORY_FILE` and `OUTPUT_FILE` in `extract_chapters.py` to point to your product's path, then run:
+  ```bash
+  python extract_chapters.py
+  ```
+- **Option B:** (Future) Add `--product` CLI support to `extract_chapters.py` so you can run:
+  ```bash
+  python extract_chapters.py --product ASR9000
+  ```
+
+**Step 3 — Verify.** Run debug analysis and confirm guide links appear:
+
+```bash
+python debug_analysis.py --rca <your_test_rca> --no-llm 2>&1 | grep "📚\|🔗"
+```
+
+### Code that reads the inventory
+
+`app_functions.py` → `load_document_inventory(product_name)` is the single function that loads the inventory. It maps the UI product name (e.g. "ASR 9000") to the folder name (e.g. "ASR9000") and looks for `inventory/<product_code>/document_inventory.json`. All other files (`sidebar_app.py`, `debug_analysis.py`, `sidebar_bulk_analysis_page.py`) call this function — no hardcoded paths elsewhere.
 
 ---
 

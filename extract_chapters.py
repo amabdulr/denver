@@ -6,8 +6,8 @@ from urllib.parse import urljoin
 from concurrent.futures import ThreadPoolExecutor
 
 # --- CONFIGURATION ---
-INVENTORY_FILE = "knowledge_docs/sdwan/document_inventory.json"
-OUTPUT_FILE = "knowledge_docs/sdwan/document_inventory.json"  # Overwrites with enriched data
+INVENTORY_FILE = "inventory/sdwan/document_inventory.json"
+OUTPUT_FILE = "inventory/sdwan/document_inventory.json"  # Overwrites with enriched data
 MAX_WORKERS = 5
 BASE_URL = "https://www.cisco.com"
 # ---------------------

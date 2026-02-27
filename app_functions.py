@@ -159,7 +159,7 @@ def load_document_inventory(product_name: str) -> dict:
     }
     product_code = product_mapping.get(product_name, product_name)
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    inv_path = os.path.join(base_dir, "knowledge_docs", product_code, "document_inventory.json")
+    inv_path = os.path.join(base_dir, "inventory", product_code, "document_inventory.json")
     if os.path.isfile(inv_path):
         try:
             with open(inv_path, 'r') as f:
@@ -167,6 +167,197 @@ def load_document_inventory(product_name: str) -> dict:
         except Exception as e:
             print(f"⚠️ Could not load document_inventory.json for {product_code}: {e}")
     return {}
+
+
+# ── Heading cache for chapter suggestions ──────────────────────────
+_HEADING_CACHE: dict | None = None
+_HEADING_CACHE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "heading_cache.json")
+
+# Generic headings to skip (not useful as chapter suggestions)
+_SKIP_HEADINGS = {
+    'contents', 'preface', 'audience', 'documentation conventions',
+    'communications, services, and additional information', 'related documentation',
+    'obtaining documentation and submitting a service request', 'document change history',
+    'changes to this document', 'new and changed information',
+    'introduction', 'overview', 'glossary', 'index', 'appendix',
+}
+
+
+def _load_heading_cache() -> dict:
+    """Load the heading cache lazily (once per process)."""
+    global _HEADING_CACHE
+    if _HEADING_CACHE is not None:
+        return _HEADING_CACHE
+    try:
+        with open(_HEADING_CACHE_FILE, 'r') as f:
+            _HEADING_CACHE = json.load(f)
+    except Exception as e:
+        print(f"⚠️ Could not load heading_cache.json: {e}")
+        _HEADING_CACHE = {}
+    return _HEADING_CACHE
+
+
+def find_inventory_chapter(
+    heading_text: str,
+    guide_filename: str,
+    product_name: str,
+) -> dict | None:
+    """Map a sub-section heading (from suggest_chapters) to its parent
+    inventory chapter entry.
+
+    Walks the heading_cache to find where *heading_text* sits, then looks
+    backwards to the nearest heading that matches an inventory chapter title.
+
+    Returns the matching inventory chapter dict
+    ``{"chapter_slug", "chapter_title", "chapter_url"}`` or *None*.
+    """
+    product_mapping = {
+        "Cisco SD-WAN": "sdwan",
+        "Cisco 9800": "9800",
+        "ASR 9000": "ASR9000",
+        "Cisco 8000": "Cisco8000",
+        "cisco_generic": "cisco_generic",
+    }
+    product_code = product_mapping.get(product_name, product_name)
+
+    cache = _load_heading_cache()
+    all_headings = cache.get(product_code, {}).get(guide_filename, {}).get('headings', [])
+
+    inv = load_document_inventory(product_name)
+    inv_chapters = inv.get(guide_filename, {}).get('chapters', [])
+
+    if not all_headings or not inv_chapters:
+        return None
+
+    # Build a lookup from normalised chapter title → chapter dict,
+    # and record the index within the heading list where each chapter appears.
+    inv_title_map = {ch['chapter_title'].lower().strip(): ch for ch in inv_chapters}
+    chapter_indices: list[tuple[int, dict]] = []
+    for idx, h in enumerate(all_headings):
+        h_lower = h.lower().strip()
+        if h_lower in inv_title_map:
+            chapter_indices.append((idx, inv_title_map[h_lower]))
+
+    if not chapter_indices:
+        return None
+
+    # Locate the heading in the cache
+    h_target = heading_text.lower().strip()
+    heading_idx = None
+    for idx, h in enumerate(all_headings):
+        if h.lower().strip() == h_target:
+            heading_idx = idx
+            break
+
+    if heading_idx is None:
+        return None
+
+    # Walk backwards: the last chapter index ≤ heading_idx is the parent.
+    best = None
+    for ch_idx, ch_info in chapter_indices:
+        if ch_idx <= heading_idx:
+            best = ch_info
+        else:
+            break
+    return best
+
+
+def suggest_chapters(
+    guide_filename: str,
+    product_name: str,
+    matched_terms: list[str],
+    max_results: int = 5,
+) -> list[dict]:
+    """Suggest likely chapters within a guide based on matched terms.
+
+    Scores each TOC heading by counting how many matched terms appear as
+    substrings in the heading text.  Returns the top headings sorted by
+    relevance.
+
+    Returns a list of dicts:
+        [{"heading": str, "score": int, "matched": [str, ...]}, ...]
+    """
+    product_mapping = {
+        "Cisco SD-WAN": "sdwan",
+        "Cisco 9800": "9800",
+        "ASR 9000": "ASR9000",
+        "Cisco 8000": "Cisco8000",
+        "cisco_generic": "cisco_generic",
+    }
+    product_code = product_mapping.get(product_name, product_name)
+
+    cache = _load_heading_cache()
+    product_cache = cache.get(product_code, {})
+    book_data = product_cache.get(guide_filename, {})
+    headings = book_data.get('headings', [])
+
+    if not headings or not matched_terms:
+        return []
+
+    # Normalise terms for substring matching
+    norm_terms = [t.lower().strip() for t in matched_terms if t and not t.startswith('_')]
+
+    # Identify "title terms" — terms that appear in the very first heading
+    # (the book title).  These are ubiquitous and less discriminating,
+    # so they're down-weighted (not excluded) from scoring.
+    title_heading = headings[0].lower() if headings else ''
+    title_terms = {t for t in norm_terms if t in title_heading}
+
+    # Also treat terms appearing in more than 60% of headings as low-value
+    if len(headings) > 10:
+        term_counts = {}
+        for h in headings:
+            h_l = h.lower()
+            for t in norm_terms:
+                if t in h_l:
+                    term_counts[t] = term_counts.get(t, 0) + 1
+        threshold = len(headings) * 0.6
+        for t, cnt in term_counts.items():
+            if cnt >= threshold:
+                title_terms.add(t)
+
+    results = []
+    for heading in headings:
+        h_lower = heading.lower().strip()
+
+        # Skip generic / boilerplate headings
+        if h_lower in _SKIP_HEADINGS:
+            continue
+        # Skip very short headings (single word ≤ 4 chars) that are too generic
+        if len(h_lower) <= 4:
+            continue
+
+        # Score: weight each matching term by its specificity
+        #   multi-word terms score 2.0 each  (they're more diagnostic)
+        #   single-word terms score 0.5 each (often generic: "interface", "vpn")
+        #   title/noise terms get 0.25× of their normal weight (reduced, not excluded)
+        hits = [t for t in norm_terms if t in h_lower]
+        if hits:
+            score = 0.0
+            for t in hits:
+                base = 2.0 if (' ' in t or '-' in t) else 0.5
+                if t in title_terms:
+                    base *= 0.25          # down-weight, don't exclude
+                score += base
+            results.append({
+                'heading': heading,
+                'score': round(score, 2),
+                'matched': hits,
+            })
+
+    # Sort by score desc, then by heading length asc (prefer concise headings)
+    results.sort(key=lambda r: (-r['score'], len(r['heading'])))
+
+    # Deduplicate near-identical headings (e.g. "Configure BGP" vs "Configure BGP Routing")
+    seen = set()
+    deduped = []
+    for r in results:
+        key = r['heading'].lower()
+        if key not in seen:
+            seen.add(key)
+            deduped.append(r)
+
+    return deduped[:max_results]
 
 
 def match_terms_to_guides(detected_terms: list, product_name: str, term_frequencies: dict = None) -> tuple:
