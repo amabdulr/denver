@@ -1,6 +1,7 @@
 import os
 import re
 from typing import List, Set, Dict, Optional
+from paths import KNOWLEDGE_DOCS_DIR
 
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_text_splitters import CharacterTextSplitter
@@ -155,16 +156,19 @@ def extract_sections_from_content(content: str) -> str:
     return ""
 
 
-def load_documents(base_directory: str = "knowledge_docs") -> List[Document]:
+def load_documents(base_directory: str = None) -> List[Document]:
     """
     Load and process all documents from the knowledge base directory.
     
     Args:
-        base_directory: Path to the directory containing product subdirectories
+        base_directory: Path to the directory containing product subdirectories.
+                        Defaults to KNOWLEDGE_DOCS_DIR.
         
     Returns:
         List of processed Document objects ready for embedding
     """
+    if base_directory is None:
+        base_directory = KNOWLEDGE_DOCS_DIR
     print(f"📚 Loading documents from {base_directory}...")
     total_docs = 0
     total_files = 0
@@ -228,7 +232,9 @@ def load_documents(base_directory: str = "knowledge_docs") -> List[Document]:
     return documents
 
 
-def get_all_document_paths(base_directory: str = "knowledge_docs") -> Set[str]:
+def get_all_document_paths(base_directory: str = None) -> Set[str]:
+    if base_directory is None:
+        base_directory = KNOWLEDGE_DOCS_DIR
     """
     Get all document file paths without loading them
     
@@ -321,7 +327,7 @@ if __name__ == "__main__":
     print("   SQLite 3.26.0 compatibility mode (ChromaDB requires 3.35+)")
     print("   Use start.py or vector_store_manager.py for proper initialization\n")
     
-    base_directory = "knowledge_docs"
+    base_directory = KNOWLEDGE_DOCS_DIR
     
     # Initialize embeddings
     embeddings = HuggingFaceEmbeddings(

@@ -24,7 +24,7 @@ from ingestion import load_documents_from_path, get_all_document_paths
 
 # Metadata file to track ingested files
 METADATA_FILE = "data/ingestion_metadata.json"
-PERSIST_DIRECTORY = "data/cisco_products_custom_loader"
+PERSIST_DIRECTORY = os.path.expanduser("~/.denver_vectorstore")
 
 
 def load_ingestion_metadata() -> Dict[str, dict]:

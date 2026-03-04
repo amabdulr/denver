@@ -4,7 +4,9 @@ Handles the First Draft workflow for sidebar navigation app
 """
 
 import streamlit as st
+import os
 import io
+from paths import PROJECT_ROOT, PROMPTS_DIR
 from app_functions import apply_prompt_file, format_output
 
 
@@ -247,7 +249,7 @@ def render_first_draft_page():
                     st.session_state.initial_analysis_done = True
                     
                     # Use the apply_prompt_file function with SFSExplainer.md
-                    explanation = apply_prompt_file("SFSExplainer.md", extracted_text, product_name_draft)
+                    explanation = apply_prompt_file(os.path.join(PROMPTS_DIR, "SFSExplainer.md"), extracted_text, product_name_draft)
                     
                     # Add to conversation history
                     st.session_state.conversation_history.append({
@@ -289,7 +291,7 @@ def render_first_draft_page():
                     st.session_state.initial_analysis_done = True
                     
                     # Use the apply_prompt_file function with InternalAnalysis.md
-                    internal_info = apply_prompt_file("InternalAnalysis.md", extracted_text, product_name_draft)
+                    internal_info = apply_prompt_file(os.path.join(PROMPTS_DIR, "InternalAnalysis.md"), extracted_text, product_name_draft)
                     
                     # Add to conversation history
                     st.session_state.conversation_history.append({
@@ -365,7 +367,7 @@ def render_first_draft_page():
                         context += "5. Remove implementation details, internal architecture, debug information, and any proprietary technical details\n\n"
                     
                     # Use the apply_prompt_file function with FirstDraftCTWG.md
-                    first_draft = apply_prompt_file("FirstDraftCTWG.md", context, product_name_draft)
+                    first_draft = apply_prompt_file(os.path.join(PROMPTS_DIR, "FirstDraftCTWG.md"), context, product_name_draft)
                     
                     # Add to conversation history
                     st.session_state.conversation_history.append({
@@ -503,7 +505,7 @@ def render_first_draft_page():
                 
                 # Provide download link
                 try:
-                    with open("testresults.xlsx", "rb") as file:
+                    with open(os.path.join(PROJECT_ROOT, "tests", "testresults.xlsx"), "rb") as file:
                         st.download_button(
                             label="📥 Download testresults.xlsx",
                             data=file,

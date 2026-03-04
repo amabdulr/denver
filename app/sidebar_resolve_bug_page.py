@@ -4,6 +4,8 @@ Handles the Bug Resolution workflow for sidebar navigation app
 """
 
 import streamlit as st
+import os
+from paths import PROJECT_ROOT
 from bug2 import create_auth, get_bug_summary, get_bug_field_values, create_note
 
 
@@ -375,7 +377,45 @@ Thanks and Regards,
             
             # Editable email preview
             st.markdown("---")
-            st.subheader("📧 Email Preview (Editable)")
+            st.subheader("📧 Email to Submitter")
+            
+            # Subject line (smart default like Tab 1)
+            default_subject = f"Doc Bug {resolve_bug_number} Resolution"
+            resolve_email_subject = st.text_input(
+                "Subject Line",
+                value=st.session_state.get('resolve_email_subject', default_subject),
+                placeholder="e.g., Doc Bug CSCws27686 Resolution",
+                help="Subject line for the email",
+                key="resolve_email_subject"
+            )
+            
+            # Recipient (auto-populated from Submitter, editable)
+            default_recipient = st.session_state.get('submitter_value', '')
+            resolve_email_recipient = st.text_input(
+                "Recipient(s)",
+                value=default_recipient,
+                placeholder="e.g., johndoe or johndoe, janedoe",
+                help="Auto-populated from CDETS Submitter. Comma-separated usernames (without @cisco.com).",
+                key="resolve_email_recipient"
+            )
+            
+            # Sender name (persisted via saved tester name like Tab 1)
+            from sidebar_app import get_saved_tester_name
+            saved_name = get_saved_tester_name()
+            fallback_name = saved_name if saved_name else st.session_state.get('engineer_value', '')
+            resolve_email_sender = st.text_input(
+                "Your Name (for signature)",
+                value=fallback_name,
+                placeholder="Enter your name",
+                help="This name will appear in the email signature",
+                key="resolve_email_sender_name"
+            )
+            
+            # Recipient preview
+            if resolve_email_recipient.strip():
+                recipients_display = ', '.join(f"{u.strip()}@cisco.com" for u in resolve_email_recipient.split(',') if u.strip())
+                st.info(f"📬 Will send to: **{recipients_display}**")
+            
             email_content = st.text_area(
                 "Email Content",
                 value=st.session_state.get('email_body', ''),
@@ -388,7 +428,7 @@ Thanks and Regards,
         send_email = st.checkbox(
             "📧 Send email to submitter",
             value=False,
-            help="Send resolution email to bug submitter with engineer as sender. Currently set to amabdulr@cisco.com (test mode).",
+            help="Send resolution email to the bug submitter",
             key="sidebar_send_email"
         )
         
@@ -426,24 +466,29 @@ Thanks and Regards,
                         
                         # Send email if checkbox is selected
                         if send_email:
-                            # Hardcoded for testing - always send to amabdulr@cisco.com
-                            test_recipient = "amabdulr"
-                            engineer_name = st.session_state.get('engineer_value', '')
+                            recipient = st.session_state.get('resolve_email_recipient', st.session_state.get('submitter_value', ''))
+                            sender_name = st.session_state.get('resolve_email_sender_name', st.session_state.get('engineer_value', ''))
+                            custom_subject = st.session_state.get('resolve_email_subject', '')
                             
-                            # Use edited email content if available
-                            email_content_to_send = st.session_state.get('sidebar_email_content_edit', st.session_state.get('email_body', ''))
-                            
-                            with st.spinner("📧 Sending email to amabdulr@cisco.com (test mode)..."):
-                                success, message = send_resolution_email(
-                                    test_recipient,
-                                    resolve_bug_number,
-                                    email_content_to_send,
-                                    engineer_name
-                                )
-                                if success:
-                                    st.success(f"📧 {message}")
-                                else:
-                                    st.warning(f"⚠️ {message}")
+                            if not recipient.strip():
+                                st.error("⚠️ Please enter at least one recipient username.")
+                            else:
+                                # Use edited email content if available
+                                email_content_to_send = st.session_state.get('sidebar_email_content_edit', st.session_state.get('email_body', ''))
+                                recipients_display = ', '.join(f"{u.strip()}@cisco.com" for u in recipient.split(',') if u.strip())
+                                
+                                with st.spinner(f"📧 Sending email to {recipients_display}..."):
+                                    success, message = send_resolution_email(
+                                        recipient.strip(),
+                                        resolve_bug_number,
+                                        email_content_to_send,
+                                        sender_name,
+                                        subject=custom_subject
+                                    )
+                                    if success:
+                                        st.success(f"📧 {message}")
+                                    else:
+                                        st.warning(f"⚠️ {message}")
                         
                         # Clear the created comment after posting
                         del st.session_state.resolution_comment
@@ -546,7 +591,7 @@ Thanks and Regards,
                 
                 # Provide download link
                 try:
-                    with open("testresults.xlsx", "rb") as file:
+                    with open(os.path.join(PROJECT_ROOT, "tests", "testresults.xlsx"), "rb") as file:
                         st.download_button(
                             label="📥 Download testresults.xlsx",
                             data=file,

@@ -1,0 +1,45 @@
+# Virtual environments
+myenv/
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Docker files (no need to copy themselves)
+docker/
+.dockerignore
+
+# IDE / editor
+.vscode/
+*.code-workspace
+
+# Git
+.git/
+
+# Large output directories (mounted as volumes instead)
+scour_output/
+scour_output_sdwan/
+knowledge_docs/
+data/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Auth tokens / secrets
+.env
+auth_token_cache.json
+*.bak
+
+# Test files
+test/
+test_*.py
+
+# Markdown docs (not needed in container)
+*.md
+# But keep prompt files the app loads at runtime
+!BugAnalyze.md

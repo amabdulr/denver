@@ -5,7 +5,7 @@ without loading the full embeddings model
 import chromadb
 import os
 
-PERSIST_DIRECTORY = "./data/cisco_products_custom_loader"
+PERSIST_DIRECTORY = os.path.expanduser("~/.denver_vectorstore")
 
 print("=" * 80)
 print("QUICK PAGE NUMBER CHECK")

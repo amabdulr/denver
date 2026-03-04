@@ -30,6 +30,7 @@ import re
 import json
 import os
 from urllib.parse import urlparse
+from paths import PROJECT_ROOT, CONFIG_DIR, INVENTORY_DIR, KNOWLEDGE_DOCS_DIR, DATA_DIR
 from langchain.agents import (
     AgentExecutor,
     create_tool_calling_agent,
@@ -52,7 +53,7 @@ def _load_networking_terms() -> dict:
     """
     global _networking_terms_cache, _networking_terms_mtime
     
-    terms_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "networking_terms.json")
+    terms_file = os.path.join(CONFIG_DIR, "networking_terms.json")
     
     # Check file modification time to auto-refresh cache
     try:
@@ -133,7 +134,7 @@ def _scan_for_networking_terms(text: str) -> tuple:
 
 
     # ── Load guide mappings from JSON (editable without touching code) ──
-_GUIDE_MAPPINGS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "guide_mappings.json")
+_GUIDE_MAPPINGS_FILE = os.path.join(CONFIG_DIR, "guide_mappings.json")
 
 def _load_guide_mappings():
     """Load guide matching configuration from guide_mappings.json"""
@@ -158,8 +159,7 @@ def load_document_inventory(product_name: str) -> dict:
         "cisco_generic": "cisco_generic"
     }
     product_code = product_mapping.get(product_name, product_name)
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    inv_path = os.path.join(base_dir, "inventory", product_code, "document_inventory.json")
+    inv_path = os.path.join(INVENTORY_DIR, product_code, "document_inventory.json")
     if os.path.isfile(inv_path):
         try:
             with open(inv_path, 'r') as f:
@@ -171,7 +171,7 @@ def load_document_inventory(product_name: str) -> dict:
 
 # ── Heading cache for chapter suggestions ──────────────────────────
 _HEADING_CACHE: dict | None = None
-_HEADING_CACHE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "heading_cache.json")
+_HEADING_CACHE_FILE = os.path.join(DATA_DIR, "heading_cache.json")
 
 # Generic headings to skip (not useful as chapter suggestions)
 _SKIP_HEADINGS = {
@@ -392,8 +392,7 @@ def match_terms_to_guides(detected_terms: list, product_name: str, term_frequenc
     }
     product_code = product_mapping.get(product_name, product_name)
     
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    knowledge_dir = os.path.join(base_dir, "knowledge_docs", product_code)
+    knowledge_dir = os.path.join(KNOWLEDGE_DOCS_DIR, product_code)
     
     if not os.path.isdir(knowledge_dir):
         return {}, []

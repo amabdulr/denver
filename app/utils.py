@@ -1,7 +1,7 @@
 import os
 import base64
 import requests
-from typing import Optional
+from typing import Optional, Union
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI, AzureChatOpenAI
 import json
@@ -89,7 +89,7 @@ def get_azure_auth_token() -> Optional[str]:
 
 def get_llm(
     model_name: str = "gpt-4o", temperature=0
-) -> ChatOpenAI | AzureChatOpenAI:
+) -> Union[ChatOpenAI, AzureChatOpenAI]:
     """Initialize the LLM based on the configured API type."""
     load_dotenv()
 

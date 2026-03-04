@@ -4,6 +4,8 @@ Handles the Hallucination Check workflow for sidebar navigation app
 """
 
 import streamlit as st
+import os
+from paths import PROMPTS_DIR
 from app_functions import apply_prompt_file
 from utils import get_llm
 
@@ -244,7 +246,7 @@ def handle_hallucination_check(original_text: str, modified_text: str, output_co
                 st.session_state.hal_analysis_context = context
                 
                 # Use the apply_prompt_file function with HallucinationCheck.md
-                analysis = apply_prompt_file("HallucinationCheck.md", context, "")
+                analysis = apply_prompt_file(os.path.join(PROMPTS_DIR, "HallucinationCheck.md"), context, "")
                 
                 # Add to conversation history
                 st.session_state.hal_conversation_history.append({

@@ -50,7 +50,12 @@ knowledge_docs/
 *.ipynb
 
 # Test results
-testresults.xlsx
+testresults*.xlsx
+tests/testresults*.xlsx
+
+# Scour output
+scour_output/
+scour_output_sdwan/
 
 # Logs
 *.log

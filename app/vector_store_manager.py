@@ -21,6 +21,7 @@ import sqlite3
 from typing import Optional, Tuple
 from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
+from paths import PROJECT_ROOT, DATA_DIR
 
 # Global singleton instance
 _vector_store: Optional[Chroma] = None
@@ -28,8 +29,37 @@ _embeddings: Optional[HuggingFaceEmbeddings] = None
 _persistence_mode: Optional[str] = None  # 'persistent' or 'in-memory'
 
 # Configuration
-PERSIST_DIRECTORY = "data/cisco_products_custom_loader"
+# Store vector DB outside OneDrive to prevent sync-conflict corruption.
+# OneDrive renames locked SQLite files (chroma.sqlite3 -> chroma-<HOSTNAME>.sqlite3)
+# which makes ChromaDB create a brand-new empty database on next startup.
+PERSIST_DIRECTORY = os.path.expanduser("~/.denver_vectorstore")
+_OLD_PERSIST_DIRECTORY = os.path.join(DATA_DIR, "cisco_products_custom_loader")
 MIN_SQLITE_VERSION = (3, 35, 0)
+
+
+def _migrate_from_onedrive():
+    """One-time migration: copy vector store from the old OneDrive location."""
+    if os.path.exists(os.path.join(PERSIST_DIRECTORY, "chroma.sqlite3")):
+        return  # already migrated
+    old_db = os.path.join(_OLD_PERSIST_DIRECTORY, "chroma.sqlite3")
+    if not os.path.exists(old_db):
+        return  # nothing to migrate
+    import shutil
+    print(f"📦 Migrating vector store from OneDrive to {PERSIST_DIRECTORY} ...")
+    os.makedirs(PERSIST_DIRECTORY, exist_ok=True)
+    for item in os.listdir(_OLD_PERSIST_DIRECTORY):
+        # Skip OneDrive conflict copies and backups
+        if "-" in item and item.endswith(".sqlite3"):
+            continue
+        if item.endswith(".bak"):
+            continue
+        src = os.path.join(_OLD_PERSIST_DIRECTORY, item)
+        dst = os.path.join(PERSIST_DIRECTORY, item)
+        if os.path.isdir(src):
+            shutil.copytree(src, dst, dirs_exist_ok=True)
+        else:
+            shutil.copy2(src, dst)
+    print(f"✅ Migration complete")
 
 
 def get_sqlite_version() -> Tuple[int, int, int]:
@@ -74,7 +104,10 @@ def get_embeddings() -> HuggingFaceEmbeddings:
     if _embeddings is None:
         _embeddings = HuggingFaceEmbeddings(
             model_name="sentence-transformers/all-MiniLM-L6-v2",
-            model_kwargs={'device': 'cpu'},
+            model_kwargs={
+                'device': 'cpu',
+                'model_kwargs': {'low_cpu_mem_usage': False},
+            },
             encode_kwargs={'normalize_embeddings': True}
         )
     return _embeddings
@@ -94,6 +127,9 @@ def initialize_vector_store() -> Chroma:
     if _vector_store is not None:
         print("⚠️  Vector store already initialized, skipping re-initialization")
         return _vector_store
+    
+    # Auto-migrate from old OneDrive location if needed
+    _migrate_from_onedrive()
     
     # Check SQLite version and determine mode
     sqlite_version = get_sqlite_version()

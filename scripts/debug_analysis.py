@@ -554,6 +554,65 @@ The root cause was that the configuration group deployment process in Cisco SD-W
 The underlying behavior is documented in Cisco bug CSCwf67010, which describes the condition where deployment states can remain locked in "Deploying," requiring manual database intervention to reset the state.
 """,
     },
+
+    "qos_shaping": {
+        "product": "Cisco SD-WAN",
+        "description": "QoS Shaping Rate configuration guidance on C8200",
+        "content": """\
+Executive Summary:
+This Service Request (SR: 699861131) was opened by SEIKO SOLUTIONS INC to clarify the correct method for configuring the Shaping Rate in QoS settings on Cisco Catalyst C8200-1N-4T routers running IOS-XE SD-WAN (cEdge) in controller mode. The customer specifically asked whether the Shaping Rate should be set to the contracted line maximum, a throughput measurement, or another value. The issue impacted the customer's ability to properly configure traffic shaping and bandwidth allocation for WAN interfaces, which is critical for ensuring predictable application performance. The root cause was a lack of clear documentation and guidance on what value to use for Shaping Rate in SD-WAN QoS configurations.
+
+Steps to Reproduce:
+1. Access the Cisco SD-WAN controller and select a WAN interface on a C8200-1N-4T router.
+2. Attempt to configure QoS policies, specifically the Shaping Rate parameter.
+3. Review available documentation and configuration guides for guidance on what value to use for Shaping Rate.
+4. Observe ambiguity or lack of explicit instructions regarding whether to use contracted bandwidth, measured throughput, or another value.
+
+Condition:
+- Device: Cisco Catalyst C8200-1N-4T Router
+- Software: IOS-XE SD-WAN (cEdge) in controller mode (exact version not specified)
+- Feature: QoS configuration for WAN interfaces, specifically the Shaping Rate parameter
+- Customer environment: WAN circuits with varying bandwidth, including best-effort lines
+- Configuration context: Need to allocate bandwidth for specific traffic types (e.g., RDP) using percentage-based QoS policies
+- Customer queries included scenarios for both maximum contracted bandwidth and actual measured throughput, seeking clarification on which to use for Shaping Rate.
+
+Workarounds:
+- Temporarily set the Shaping Rate to the contracted maximum bandwidth of the WAN circuit, as this is generally recommended for traffic shaping.
+- For best-effort lines where bandwidth fluctuates, monitor actual throughput and adjust the Shaping Rate periodically if necessary to avoid over-provisioning and potential packet drops.
+- Reference Cisco documentation on SD-WAN QoS, but note that explicit guidance may be lacking.
+
+Procedure (Solution):
+1. Identify the contracted bandwidth for each WAN circuit connected to the SD-WAN router.
+2. In the SD-WAN controller, navigate to the QoS policy configuration for the relevant WAN interface.
+3. Set the Shaping Rate parameter to the contracted maximum bandwidth value (e.g., if the circuit is 1Gbps, set Shaping Rate to 1,000,000 kbps).
+   - Example configuration snippet:
+     policy-map WAN-QoS
+       class class-default
+         shape average 1000000000
+   - For SD-WAN, this is typically done via the vManage GUI or CLI template.
+4. If using percentage-based allocation for specific traffic types (e.g., RDP at 60%), the bandwidth for that class will be dynamically allocated based on the overall Shaping Rate and available bandwidth.
+5. For best-effort circuits, understand that actual available bandwidth may be lower than the contracted rate; the router will shape traffic to the configured rate, but actual throughput may be less.
+6. Periodically review WAN circuit performance and adjust Shaping Rate if persistent under-utilization or congestion is observed.
+7. Reference official Cisco documentation:
+   - https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/qos/ios-xe-17/qos-book-xe/forwarding-qos.html
+   - https://www.cisco.com/c/ja_jp/support/docs/routers/sd-wan/221615-configure-and-verify-qos-in-sd-wan-route.html
+
+Root Cause:
+The root cause of the issue was a lack of explicit documentation and guidance regarding the correct value to use for the Shaping Rate parameter in SD-WAN QoS configurations. The customer was unsure whether to use the contracted line maximum, measured throughput, or another value. Cisco TAC investigation confirmed that the Shaping Rate should be set to the contracted maximum bandwidth of the WAN circuit, as shaping controls the maximum rate of outbound traffic. This ensures that QoS policies are enforced correctly and prevents over-subscription of the WAN link. For best-effort circuits, actual throughput may vary, but the shaping configuration should still be based on the contracted rate to avoid exceeding the physical link capacity. No technical errors, logs, or misconfigurations were found; the issue was purely informational and related to configuration best practices.
+
+Affected Devices/Versions:
+- Cisco Catalyst C8200-1N-4T Router
+- IOS-XE SD-WAN (cEdge) in controller mode
+- All software versions supporting SD-WAN QoS shaping (exact version not specified in case notes)
+
+Bugs:
+- No software bugs (CSC*) were identified or referenced in this case.
+
+Fixed Versions, Patches:
+- Not applicable; this was a configuration guidance issue, not a software defect.
+- No patches required. The solution is to follow the recommended configuration practice as described above.
+""",
+    },
 }
 
 # ═══════════════════════════════════════════════════════════════════
@@ -716,6 +775,24 @@ if not section_label:
 print(f"\n--- FINAL REPLACEMENTS ---")
 print(f"  {{{{RECOMMENDED_GUIDE}}}}   => {recommended_label}")
 print(f"  {{{{RECOMMENDED_SECTION}}}} => {section_label}")
+
+# ── Guide Links (matches sidebar_app.py logic) ──
+_inv = load_document_inventory(PRODUCT_NAME)
+if _inv and guide_scores:
+    _sorted_gs = sorted(guide_scores.items(), key=lambda x: -x[1])[:3]
+    if _sorted_gs:
+        print(f"\n📚 Guide Links (top 3):")
+        print(f"  {'#':>2s}  {'Score':>5s}  Guide")
+        print(f"  {'—'*2}  {'—'*5}  {'—'*60}")
+        for _rank, (_g, _s) in enumerate(_sorted_gs, 1):
+            _entry = _inv.get(_g, {})
+            _book_url = _entry.get('source_url', '')
+            _book_title = _entry.get('title', _g)
+            print(f"  {_rank:>2d}  {_s:5.1f}  {_book_title}")
+            if _book_url:
+                print(f"{'':>10s}🔗 {_book_url}")
+else:
+    print(f"\n📚 No Guide Links (missing inventory or scores)")
 
 # Apply replacements
 question = question.replace('{{RECOMMENDED_GUIDE}}', recommended_label)

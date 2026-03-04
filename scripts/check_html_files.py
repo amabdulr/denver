@@ -2,8 +2,9 @@
 Check if there are HTML files in the vector store
 """
 import chromadb
+import os
 
-PERSIST_DIRECTORY = "./data/cisco_products_custom_loader"
+PERSIST_DIRECTORY = os.path.expanduser("~/.denver_vectorstore")
 
 print("Checking for HTML files in vector store...\n")
 

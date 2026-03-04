@@ -59,8 +59,8 @@ def create_auth():
         OAuth1 authentication object
     """
     return OAuth1(
-        client_key="a1fc1249-d5a8-4731-b6fd-45bac72dd354",
-        client_secret="c0X7F9peBe3SZrzeltZmG8nAnm6eHCd6",
+        client_key="48b1e1df-f259-464f-bae4-6d90181e4008",
+        client_secret="x6tE8rZBZE0WfEKZR6OU7beLw5q7xr8J",
         signature_method="HMAC-SHA1"
     )
 

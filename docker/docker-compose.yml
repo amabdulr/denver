@@ -16,14 +16,14 @@ services:
     ports:
       - "8501:8501"
     env_file:
-      - ../.env                         # secrets live in the project root
+      - .env                            # secrets live in the docker/ folder
     environment:
       - PYTHONUNBUFFERED=1              # real-time log output
     volumes:
       # Persist the vector store across container restarts
       - vectorstore_data:/root/.denver_vectorstore
       # Persist app config (saved product, tester name, etc.)
-      - ../app_config.json:/app/app_config.json
+      - ../config/app_config.json:/app/config/app_config.json
       # Mount knowledge_docs so you can update docs without rebuilding
       - ../knowledge_docs:/app/knowledge_docs
       # Mount data directory for ingestion metadata / heading cache

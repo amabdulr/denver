@@ -19,8 +19,10 @@ Note: The streamlit_app.py will also auto-initialize the vector store
 import sys
 import os
 
-# Add current directory to path
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+# Add current directory and app directory to path
+_project_root = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, _project_root)
+sys.path.insert(0, os.path.join(_project_root, "app"))
 
 def main():
     print("="*70)
@@ -55,7 +57,7 @@ def main():
     sys.argv = [
         "streamlit",
         "run",
-        "sidebar_app.py",
+        "app/sidebar_app.py",
         "--server.headless=true",
         "--browser.gatherUsageStats=false",
     ]

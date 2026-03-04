@@ -12,6 +12,7 @@ import requests
 import json
 import os
 import re
+from paths import PROJECT_ROOT, CONFIG_DIR, PROMPTS_DIR
 import hashlib
 import pandas as pd
 from datetime import datetime
@@ -29,7 +30,7 @@ from sidebar_hallucination_check_page import render_hallucination_check_page
 load_dotenv()
 
 # Config file for persistent settings
-CONFIG_FILE = "app_config.json"
+CONFIG_FILE = os.path.join(CONFIG_DIR, "app_config.json")
 
 # Set page config FIRST - must be the first Streamlit command
 st.set_page_config(
@@ -79,7 +80,7 @@ def save_tester_name(tester_name):
     config['tester_name'] = tester_name
     save_config(config)
 
-PRODUCT_KEYWORDS_FILE = "product_keywords.json"
+PRODUCT_KEYWORDS_FILE = os.path.join(CONFIG_DIR, "product_keywords.json")
 
 def _load_product_keywords():
     """Load product keyword mappings from JSON file."""
@@ -112,10 +113,9 @@ def detect_product_from_content(content):
     
     return None
 
-
 def _enrich_output_with_guide_links(text: str, product_name: str) -> str:
     """Post-process LLM output to add clickable links next to 'Document name: xxx.pdf' lines.
-    
+
     Looks up each mentioned guide in document_inventory.json and appends a
     clickable link on the next line so users can jump straight to the online guide.
     Only applies when an inventory exists for the product (currently sdwan).
@@ -123,7 +123,7 @@ def _enrich_output_with_guide_links(text: str, product_name: str) -> str:
     doc_inventory = load_document_inventory(product_name)
     if not doc_inventory:
         return text
-    
+
     lines = text.split('\n')
     enriched = []
     for line in lines:
@@ -137,7 +137,7 @@ def _enrich_output_with_guide_links(text: str, product_name: str) -> str:
             title = inv_entry.get('title', '')
             if url:
                 enriched.append(f"  🔗 **Online:** [{title or guide_name}]({url})")
-    
+
     return '\n'.join(enriched)
 
 def get_available_guides(product_name):
@@ -286,7 +286,7 @@ def save_test_results_to_excel(page_name, feature, tester_name, bug_number, outp
         wishlist: User wishlist/feature requests
         usefulness: Usefulness rating of the feature
     """
-    excel_file = "testresults.xlsx"
+    excel_file = os.path.join(PROJECT_ROOT, "tests", "testresults.xlsx")
     
     # Create data row with timestamp
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -788,9 +788,6 @@ def render_analysis_summary_page():
                         top_msg += f" — **#{1}: {top_guide}** (score={guide_scores.get(top_guide, 0)})"
                     st.info(top_msg)
                 
-                # Load document inventory for source URLs (currently available for sdwan)
-                doc_inventory = load_document_inventory(product_name)
-                
                 # Build a hash that changes when content/terms change, to reset checkbox defaults
                 terms_sig = str(sorted(current_selected_terms)).encode() if current_selected_terms else b"none"
                 guide_state_hash = hashlib.md5(
@@ -814,7 +811,7 @@ def render_analysis_summary_page():
                 # Reference guides (e.g. alarms) are excluded from auto-selection
                 # but still shown so users can manually check them.
                 import json as _json
-                _gm_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "guide_mappings.json")
+                _gm_path = os.path.join(CONFIG_DIR, "guide_mappings.json")
                 try:
                     with open(_gm_path) as _f:
                         _ref_raw = _json.load(_f).get('reference_guides', {}).get('patterns', {})
@@ -872,7 +869,7 @@ def render_analysis_summary_page():
         
         # Load default prompt from BugAnalyze.md (always read fresh from disk)
         try:
-            with open("BugAnalyze.md", "r") as f:
+            with open(os.path.join(PROMPTS_DIR, "BugAnalyze.md"), "r") as f:
                 default_prompt = f.read()
         except FileNotFoundError:
             default_prompt = "Analyze the Bug/RCA content"
@@ -924,24 +921,23 @@ def render_analysis_summary_page():
         # Display conversation: latest follow-up first so the user sees the newest answer without scrolling
         if st.session_state.conversation_history:
             with output_container:
-                # Show a guide links box above the output (for sdwan with document inventory)
+                # Show a chapter-level links box above the output
                 _inv = load_document_inventory(product_name)
                 _gs = st.session_state.get('_guide_scores', {})
                 if _inv and _gs:
                     _sorted_gs = sorted(_gs.items(), key=lambda x: -x[1])[:3]
                     if _sorted_gs:
-                        _link_rows = ["| # | Guide | Score |", "|---|-------|-------|"]
+                        _link_rows = ["| # | Guide | Score |",
+                                      "|---|-------|-------|"]
                         for _rank, (_g, _s) in enumerate(_sorted_gs, 1):
                             _entry = _inv.get(_g, {})
-                            _url = _entry.get('source_url', '')
-                            _title = _entry.get('title', _g)
-                            if _url:
-                                _link_rows.append(f"| {_rank} | [{_title}]({_url}) | {_s} |")
-                            else:
-                                _link_rows.append(f"| {_rank} | {_title} | {_s} |")
-                        with st.expander("📚 **Guide Links** — click to open online guides", expanded=True):
+                            _book_url = _entry.get('source_url', '')
+                            _book_title = _entry.get('title', _g)
+                            _guide_col = f"[{_book_title}]({_book_url})" if _book_url else _book_title
+                            _link_rows.append(f"| {_rank} | {_guide_col} | {_s} |")
+                        with st.expander("📚 **Guide Links** — click to open online", expanded=True):
                             st.markdown("\n".join(_link_rows))
-                
+
                 followups = st.session_state.conversation_history[1:]
                 if followups:
                     # Show the most recent follow-up at the top
@@ -1096,7 +1092,7 @@ Instructions:
             email_recipient = st.text_input(
                 "Recipient(s)",
                 value=default_recipient,
-                placeholder="e.g., manjosep or manjosep, annag",
+                placeholder="e.g., johndoe or johndoe, janedoe",
                 help="Auto-populated from CDETS Submitter. Comma-separated usernames for multiple recipients (without @cisco.com).",
                 key="analysis_email_recipient"
             )
@@ -1106,7 +1102,7 @@ Instructions:
             email_recipient = st.text_input(
                 "Recipient(s)",
                 value="",
-                placeholder="e.g., manjosep or manjosep, annag",
+                placeholder="e.g., johndoe or johndoe, janedoe",
                 help="Enter one or more Cisco usernames, comma-separated (without @cisco.com)",
                 key="analysis_email_recipient"
             )
@@ -1168,52 +1164,14 @@ Regards,
                 recipients_display = ', '.join(f"{u.strip()}@cisco.com" for u in email_recipient.split(',') if u.strip())
                 st.info(f"📬 Will send to: **{recipients_display}**")
             
-            # Email action buttons side by side
-            email_col1, email_col2 = st.columns(2)
-            
-            with email_col1:
-                # Open in Outlook button
-                if email_recipient.strip():
-                    import urllib.parse
-                    to_addresses = ','.join(f"{u.strip()}@cisco.com" for u in email_recipient.split(',') if u.strip())
-                    subject_text = st.session_state.get('analysis_email_subject', email_subject)
-                    body_text = st.session_state.get('analysis_email_preview_edit', edited_email)
-                    outlook_url = f"https://outlook.office.com/mail/deeplink/compose?to={urllib.parse.quote(to_addresses)}&subject={urllib.parse.quote(subject_text)}&body={urllib.parse.quote(body_text)}"
-                    
-                    st.markdown(
-                        f'''<a href="{outlook_url}" target="_blank" style="
-                            display: inline-block;
-                            width: 100%;
-                            text-align: center;
-                            padding: 0.5rem 1rem;
-                            background-color: #0078d4;
-                            color: white !important;
-                            text-decoration: none;
-                            border-radius: 0.5rem;
-                            font-weight: 500;
-                            font-size: 0.875rem;
-                            box-sizing: border-box;
-                        ">📨 Open in Outlook</a>''',
-                        unsafe_allow_html=True
-                    )
-                else:
-                    st.button(
-                        "📨 Open in Outlook",
-                        disabled=True,
-                        use_container_width=True,
-                        help="Enter recipient(s) to enable",
-                        key="analysis_open_outlook_disabled"
-                    )
-            
-            with email_col2:
-                # Send Email button (via SMTP)
-                send_email_button = st.button(
-                    "📧 Send via SMTP",
-                    type="primary",
-                    use_container_width=True,
-                    help="Send the email directly via SMTP server",
-                    key="analysis_send_email"
-                )
+            # Send Email button
+            send_email_button = st.button(
+                "📧 Send Email",
+                type="primary",
+                use_container_width=True,
+                help="Send the email to the recipient(s)",
+                key="analysis_send_email"
+            )
             
             if send_email_button:
                 if not email_recipient.strip():
@@ -1351,7 +1309,7 @@ Regards,
                         
                         # Provide download link
                         try:
-                            with open("testresults.xlsx", "rb") as file:
+                            with open(os.path.join(PROJECT_ROOT, "tests", "testresults.xlsx"), "rb") as file:
                                 st.download_button(
                                     label="📥 Download testresults.xlsx",
                                     data=file,
@@ -1474,7 +1432,7 @@ Regards,
                     st.session_state.initial_analysis_done = True
                     
                     # Use the apply_prompt_file function with summarize.md
-                    summary = apply_prompt_file("summarize.md", rca_content, product_name)
+                    summary = apply_prompt_file(os.path.join(PROMPTS_DIR, "summarize.md"), rca_content, product_name)
                     
                     # Add to conversation history
                     st.session_state.conversation_history.append({

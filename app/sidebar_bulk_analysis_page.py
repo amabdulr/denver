@@ -7,8 +7,10 @@ import streamlit as st
 import pandas as pd
 import io
 import re
+import os
 import time
 from datetime import datetime
+from paths import PROJECT_ROOT, PROMPTS_DIR
 from app_functions import run_agent_with_prompt_file, run_agent, match_terms_to_guides, extract_doc_clues_data, load_document_inventory
 
 
@@ -18,7 +20,7 @@ def render_bulk_analysis_page():
     st.markdown("Process multiple RCAs at once through ChapterFinder and ContentWriter workflows")
     
     st.markdown("---")
-    st.warning("🧪 **Testing Mode Active:** Processing limited to first 2 rows only")
+    st.checkbox("🧪 Enable Test Mode (process only 5 rows)", value=False, key="bulk_test_mode")
     st.info("💡 Process multiple RCAs at once through ChapterFinder and ContentWriter workflows")
     
     # Step-by-step instructions
@@ -275,7 +277,7 @@ def render_bulk_analysis_content(product_name: str):
                 
                 # Provide download link
                 try:
-                    with open("testresults.xlsx", "rb") as file:
+                    with open(os.path.join(PROJECT_ROOT, "tests", "testresults.xlsx"), "rb") as file:
                         st.download_button(
                             label="📥 Download testresults.xlsx",
                             data=file,
@@ -396,11 +398,16 @@ def render_rca_section(product_name: str):
                         clear_bulk_session_state()
                         st.rerun()
                 
-                # Time estimate (for first 40 rows in testing mode)
+                # Time estimate
                 if not st.session_state.get('bulk_processing', False):
-                    rows_to_process = min(2, len(df))
-                    estimated_time = calculate_processing_time(rows_to_process)
-                    st.info(f"⏱️ Estimated processing time for first {rows_to_process} rows (testing mode): {estimated_time}")
+                    if st.session_state.get('bulk_test_mode', False):
+                        rows_to_process = min(5, len(df))
+                        estimated_time = calculate_processing_time(rows_to_process)
+                        st.info(f"⏱️ Estimated processing time for first {rows_to_process} rows (test mode): {estimated_time}")
+                    else:
+                        rows_to_process = len(df)
+                        estimated_time = calculate_processing_time(rows_to_process)
+                        st.info(f"⏱️ Estimated processing time for {rows_to_process} rows: {estimated_time}")
                 
                 # Process the data
                 if process_button:
@@ -442,7 +449,7 @@ def calculate_processing_time(num_rows: int) -> str:
 
 
 def process_bulk_rca(df: pd.DataFrame, rca_column: str, product_name: str):
-    """Process all RCAs in the DataFrame (limited to first 10 rows for testing)"""
+    """Process all RCAs in the DataFrame (optionally limited by test mode)"""
     # Note: bulk_processing flag is set by caller before this function
     
     # Initialize results if starting fresh
@@ -455,9 +462,12 @@ def process_bulk_rca(df: pd.DataFrame, rca_column: str, product_name: str):
     status_text = st.empty()
     results_container = st.container()
     
-    # **TESTING MODE: Limit to first 2 rows**
-    total_rows = min(2, len(df))
-    st.info(f"🧪 **Testing Mode:** Processing limited to first {total_rows} rows (out of {len(df)} total)")
+    # Determine row limit based on test mode checkbox
+    if st.session_state.get('bulk_test_mode', False):
+        total_rows = min(5, len(df))
+        st.info(f"🧪 **Test Mode:** Processing first {total_rows} rows (out of {len(df)} total)")
+    else:
+        total_rows = len(df)
     
     # Determine starting point (for resume functionality)
     start_idx = len(st.session_state.bulk_processed_rows)
@@ -538,7 +548,7 @@ def process_bulk_rca(df: pd.DataFrame, rca_column: str, product_name: str):
                 # Step 3: Run run_agent with BugAnalyze.md (same as Page 1)
                 status_text.text(f"🔄 Row {idx + 1}/{total_rows} - Running analysis...")
                 try:
-                    with open("BugAnalyze.md", "r") as f:
+                    with open(os.path.join(PROMPTS_DIR, "BugAnalyze.md"), "r") as f:
                         question = f.read()
                 except FileNotFoundError:
                     question = "Analyze the Bug/RCA content"
@@ -897,13 +907,16 @@ def render_bug_section(product_name: str):
                         clear_bulk_bug_session_state()
                         st.rerun()
                 
-                # Time estimate (for first 40 rows in testing mode)
+                # Time estimate
                 if not st.session_state.get('bulk_bug_processing', False):
-                    rows_to_process = min(2, len(df))
-                    # Each bug: Fetch + 1 run_agent call (top-3 recs + BugAnalyze combined)
-                    # Estimated ~20 seconds per row with delays
-                    estimated_time = calculate_bug_processing_time(rows_to_process)
-                    st.info(f"⏱️ Estimated processing time for first {rows_to_process} rows (testing mode): {estimated_time}")
+                    if st.session_state.get('bulk_test_mode', False):
+                        rows_to_process = min(5, len(df))
+                        estimated_time = calculate_bug_processing_time(rows_to_process)
+                        st.info(f"⏱️ Estimated processing time for first {rows_to_process} rows (test mode): {estimated_time}")
+                    else:
+                        rows_to_process = len(df)
+                        estimated_time = calculate_bug_processing_time(rows_to_process)
+                        st.info(f"⏱️ Estimated processing time for {rows_to_process} rows: {estimated_time}")
                 
                 # Process the data
                 if process_button:
@@ -945,7 +958,7 @@ def calculate_bug_processing_time(num_rows: int) -> str:
 
 
 def process_bulk_bugs(df: pd.DataFrame, bug_column: str, product_name: str, extract_all_notes: bool):
-    """Process all bugs in the DataFrame (limited to first 10 rows for testing)"""
+    """Process all bugs in the DataFrame (optionally limited by test mode)"""
     from bug2 import create_auth, get_bug_summary, get_note_content, get_all_notes, get_bug_field_values, safe_parse_cdets_xml
     from app_functions import run_agent_with_prompt_file, run_agent, match_terms_to_guides, extract_doc_clues_data, load_document_inventory
     import xml.etree.ElementTree as ET
@@ -959,9 +972,12 @@ def process_bulk_bugs(df: pd.DataFrame, bug_column: str, product_name: str, extr
     progress_bar = st.progress(0)
     status_text = st.empty()
     
-    # **TESTING MODE: Limit to first 2 rows**
-    total_rows = min(2, len(df))
-    st.info(f"🧪 **Testing Mode:** Processing limited to first {total_rows} rows (out of {len(df)} total)")
+    # Determine row limit based on test mode checkbox
+    if st.session_state.get('bulk_test_mode', False):
+        total_rows = min(5, len(df))
+        st.info(f"🧪 **Test Mode:** Processing first {total_rows} rows (out of {len(df)} total)")
+    else:
+        total_rows = len(df)
     
     # Determine starting point (for resume functionality)
     start_idx = len(st.session_state.bulk_bug_processed_rows)
@@ -1097,7 +1113,7 @@ def process_bulk_bugs(df: pd.DataFrame, bug_column: str, product_name: str, extr
                 
                 # Load BugAnalyze.md as the question (same prompt as Page 1)
                 try:
-                    with open("BugAnalyze.md", "r") as f:
+                    with open(os.path.join(PROMPTS_DIR, "BugAnalyze.md"), "r") as f:
                         question = f.read()
                 except FileNotFoundError:
                     question = "Analyze the Bug/RCA content"
