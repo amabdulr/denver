@@ -7,6 +7,7 @@ from langchain_openai import ChatOpenAI, AzureChatOpenAI
 import json
 from datetime import datetime, timedelta
 from pathlib import Path
+from paths import DATA_DIR
 
 
 class ConfigurationError(Exception):
@@ -39,7 +40,7 @@ def validate_environment(api_type: str) -> None:
 
 def get_azure_auth_token() -> Optional[str]:
     """Get Azure authentication token for BridgeIt with local file caching"""
-    cache_file = Path("auth_token_cache.json")
+    cache_file = Path(DATA_DIR) / "auth_token_cache.json"
 
     # Try to load cached token
     if cache_file.exists():
