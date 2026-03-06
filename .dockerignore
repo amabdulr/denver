@@ -26,6 +26,12 @@ scour_output_sdwan/
 knowledge_docs/
 data/
 
+# Directories not needed at runtime
+legacy/
+tests/
+docs/
+scripts/
+
 # OS files
 .DS_Store
 Thumbs.db
@@ -42,4 +48,4 @@ test_*.py
 # Markdown docs (not needed in container)
 *.md
 # But keep prompt files the app loads at runtime
-!BugAnalyze.md
+!prompts/*.md

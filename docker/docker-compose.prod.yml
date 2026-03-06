@@ -1,0 +1,58 @@
+# =============================================================
+# Denver App – Production / Portable Docker Compose
+#
+# Simulates a real remote-server deployment:
+#   - knowledge_docs are mounted from a configurable host path
+#   - ChromaDB vector store lives in its own Docker volume
+#   - No other host files leak into the container
+#   - Ingestion MUST run inside the container (nothing pre-built)
+#
+# Usage (from the project root):
+#
+#   1. Set the path to your knowledge docs:
+#      export KNOWLEDGE_DOCS_PATH=/path/to/your/knowledge_docs
+#
+#   2. Wipe any old vector store so ingestion is forced:
+#      docker compose -f docker/docker-compose.prod.yml down -v
+#
+#   3. Build and run:
+#      docker compose -f docker/docker-compose.prod.yml up --build
+#
+# On a NEW laptop, all you need is:
+#   - This repo (git clone)
+#   - A folder of knowledge docs somewhere on disk
+#   - A filled-in docker/.env file with your API keys
+# =============================================================
+version: "3.9"
+
+services:
+  denver-app:
+    build:
+      context: ..                       # project root is the build context
+      dockerfile: docker/Dockerfile     # path to Dockerfile relative to context
+    container_name: denver-app-prod
+    restart: unless-stopped
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env                            # secrets live in the docker/ folder
+    environment:
+      - PYTHONUNBUFFERED=1              # real-time log output
+    volumes:
+      # Persist the vector store across container restarts
+      - vectorstore_data:/root/.denver_vectorstore
+      # Mount knowledge_docs from wherever they live on the HOST.
+      # Set KNOWLEDGE_DOCS_PATH env var before running, e.g.:
+      #   export KNOWLEDGE_DOCS_PATH=/Users/you/Documents/denver_docs
+      # Falls back to ../knowledge_docs (same as dev) if not set.
+      - ${KNOWLEDGE_DOCS_PATH:-../knowledge_docs}:/app/knowledge_docs:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      start_period: 60s
+      retries: 3
+
+volumes:
+  vectorstore_data:
+    driver: local
