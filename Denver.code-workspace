@@ -1,10 +1,8 @@
 {
 	"folders": [
 		{
-			"path": "."
+			"path": ".."
 		}
 	],
-	"settings": {
-		"github.copilot.chat.edits.suggestRelatedFilesForTests": false
-	}
+	"settings": {}
 }

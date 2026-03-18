@@ -1,0 +1,19 @@
+# Set which API to use: 'cxai' or 'bridgeit'
+
+CISCO_API_TYPE=bridgeit
+# CX AI Playground authentication (required if CISCO_API_TYPE=cxai)
+
+OPENAI_API_BASE="https://cxai-playground.cisco.com/"
+OPENAI_API_KEY=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHAiOiJHZW5BSS1Cb290Y2FtcC1EYXkyLTEiLCJvd25lciI6Impncm9ldHppQGNpc2NvLmNvbSIsImlzc3VlZF9ieSI6Im1oYW16ZWhAY2lzY28uY29tIiwiamlyYSI6Ik5BIiwiaXNzdWVfZGF0ZSI6IjIwMjUtMTItMDUgMTU6NTA6NDguMDkwNzk4IiwiZXhwIjoxNzY3NTQxODQ4fQ.NPSECK3kNqmZHK8l2-eKofPmIePHYo5mOWOtJ7YxuuzbBilBDEEA_KoEHArImFPwEv33mW_bNdnP11d5kB4-1ysYwbKMDADJ5Fz5MDyHbzeeBaB4pgtyahe8M-O609L02KU4nw7184Gk3uqPQPHFPJMbqq3GPRQBB4QB0I7X8h2R_lBHxpuT-xOOY787GgwV-aRs_Sl5cjWRY3BkeURNbBFBhwXs1xDYUJfBcu7BWKbnuy5RO_01EQ8VrzEx1bwiz12aixFOyE3fa6PI8uifQjiYvi7jNHTWgVs-Kl76qoGkPFlbDkXxUtQM2iReF61joJU55we121-kHuSzAgz-BA
+#BridgeIt authentication (required if CISCO_API_TYPE=bridgeit)
+
+BRIDGEIT_CLIENT_ID=0oao51bpy8kiSkuNI5d7
+BRIDGEIT_CLIENT_SECRET=BBzuvEpw9PdAlpoFgl8J-eUeAFS61V3-h4pufDwFBYsQ7WV2gHakcvWTQ2JiTLsC
+BRIDGEIT_APP_KEY=egai-prd-ther-020027405-newcontent-1743694688777
+BRIDGEIT_BRAIN_USER_ID=amabdulr
+# LangSmith tracing configuration
+
+LANGCHAIN_TRACING_V2=false
+LANGSMITH_ENDPOINT="https://ai-insights.cisco.com/api/v1"
+LANGSMITH_API_KEY="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"
+LANGSMITH_PROJECT="amel-testing"

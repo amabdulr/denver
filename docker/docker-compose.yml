@@ -14,7 +14,7 @@ services:
     container_name: denver-app
     restart: unless-stopped
     ports:
-      - "8501:8501"
+      - "8503:8501"
     env_file:
       - .env                            # secrets live in the docker/ folder
     environment:

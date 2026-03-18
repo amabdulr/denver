@@ -1,0 +1,1879 @@
+{
+  "cloud-scale-operational-enhancement.pdf": {
+    "title": "Introduction to Operational Enhancements in Cisco IOS XR",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/readme/cloud-scale-operational-enhancement.html",
+    "chapters": []
+  },
+  "b-application-hosting-configuration-guide-asr9000.pdf": {
+    "title": "Application Hosting Configuration Guide for Cisco ASR 9000 Series Routers, Cisco IOS XR Releases",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/app-hosting/b-application-hosting-configuration-guide-asr9000.html",
+    "chapters": [
+      {
+        "chapter_slug": "new-and-changed-feature-information",
+        "chapter_title": "New and Changed\n\t Feature Information",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/app-hosting/b-application-hosting-configuration-guide-asr9000/new-and-changed-feature-information.html"
+      },
+      {
+        "chapter_slug": "linux-for-application-hosting",
+        "chapter_title": "Getting Started with Application Hosting",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/app-hosting/b-application-hosting-configuration-guide-asr9000/linux-for-application-hosting.html"
+      },
+      {
+        "chapter_slug": "access-the-networking-stack",
+        "chapter_title": "Accessing the Networking Stack",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/app-hosting/b-application-hosting-configuration-guide-asr9000/access-the-networking-stack.html"
+      },
+      {
+        "chapter_slug": "host-a-simple-application-on-ios-xr",
+        "chapter_title": "Hosting Applications on IOS XR",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/app-hosting/b-application-hosting-configuration-guide-asr9000/host-a-simple-application-on-ios-xr.html"
+      },
+      {
+        "chapter_slug": "host-applications-using-configuration-management-tools",
+        "chapter_title": "Hosting Applications Using Configuration Management Tools",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/app-hosting/b-application-hosting-configuration-guide-asr9000/host-applications-using-configuration-management-tools.html"
+      },
+      {
+        "chapter_slug": "use-cases-container-application-hosting",
+        "chapter_title": "Use Cases: Application Hosting",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/app-hosting/b-application-hosting-configuration-guide-asr9000/use-cases-container-application-hosting.html"
+      },
+      {
+        "chapter_slug": "cisco-secure-ddos-edge-protection",
+        "chapter_title": "Cisco secure DDoS edge protection",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/app-hosting/b-application-hosting-configuration-guide-asr9000/cisco-secure-ddos-edge-protection.html"
+      }
+    ]
+  },
+  "b-data-models-config-guide-asr9000.pdf": {
+    "title": "Cisco IOS XR Programmability Configuration Guide for ASR 9000 Series Router",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/data-models/guide/b-data-models-config-guide-asr9000.html",
+    "chapters": [
+      {
+        "chapter_slug": "b-data-odels-config-guide-asr9000_chapter_00",
+        "chapter_title": "Programmatic\n\t Configuration Using Data Models",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/data-models/guide/b-data-models-config-guide-asr9000/b-data-odels-config-guide-asr9000_chapter_00.html"
+      },
+      {
+        "chapter_slug": "b-data-odels-config-guide-asr9000_chapter_01",
+        "chapter_title": "Using Data\n\t Models",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/data-models/guide/b-data-models-config-guide-asr9000/b-data-odels-config-guide-asr9000_chapter_01.html"
+      },
+      {
+        "chapter_slug": "b-data-odels-config-guide-asr9000_chapter_010",
+        "chapter_title": "Components to Use\n\t Data Models",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/data-models/guide/b-data-models-config-guide-asr9000/b-data-odels-config-guide-asr9000_chapter_010.html"
+      },
+      {
+        "chapter_slug": "b-data-odels-config-guide-asr9000_chapter_011",
+        "chapter_title": "Use Cases with Data\n\t Models",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/data-models/guide/b-data-models-config-guide-asr9000/b-data-odels-config-guide-asr9000_chapter_011.html"
+      }
+    ]
+  },
+  "b-migration-to-ios-xr-64-bit.pdf": {
+    "title": "Migration Guide for Cisco ASR 9000 Series Routers",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/migration/guide/b-migration-to-ios-xr-64-bit.html",
+    "chapters": [
+      {
+        "chapter_slug": "m-new-and-changed",
+        "chapter_title": "New and Changed Feature Description",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/migration/guide/b-migration-to-ios-xr-64-bit/m-new-and-changed.html"
+      },
+      {
+        "chapter_slug": "m-migration-overview",
+        "chapter_title": "Migrating from Cisco IOS XR 32-bit to 64-bit OS",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/migration/guide/b-migration-to-ios-xr-64-bit/m-migration-overview.html"
+      },
+      {
+        "chapter_slug": "m-rollback-iosxr-64bit-to-iosxr",
+        "chapter_title": "Rolling Back from Cisco IOS XR 64-bit to 32-bit OS",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/migration/guide/b-migration-to-ios-xr-64-bit/m-rollback-iosxr-64bit-to-iosxr.html"
+      },
+      {
+        "chapter_slug": "m-difference-32-bit-and-64-bit-os",
+        "chapter_title": "Difference Between Cisco IOS XR 32-bit and 64-bit OS",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/migration/guide/b-migration-to-ios-xr-64-bit/m-difference-32-bit-and-64-bit-os.html"
+      }
+    ]
+  },
+  "b-system-setup-cg-asr9000-26xx.pdf": {
+    "title": "System Setup and Software Installation Guide for Cisco ASR 9000 Series Routers, IOS XR Release 26.1.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-setup/configuration/guide/b-system-setup-cg-asr9000-26xx.html",
+    "chapters": [
+      {
+        "chapter_slug": "system-features",
+        "chapter_title": "Cisco ASR 9000 System Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-setup/configuration/guide/b-system-setup-cg-asr9000-26xx/system-features.html"
+      },
+      {
+        "chapter_slug": "bring-up-the-router",
+        "chapter_title": "Bring-up the Router",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-setup/configuration/guide/b-system-setup-cg-asr9000-26xx/bring-up-the-router.html"
+      },
+      {
+        "chapter_slug": "perform-preliminary-checks",
+        "chapter_title": "Perform Preliminary\n\t Checks",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-setup/configuration/guide/b-system-setup-cg-asr9000-26xx/perform-preliminary-checks.html"
+      },
+      {
+        "chapter_slug": "create-user-profiles-and-assign-privileges",
+        "chapter_title": "Create User Profiles\n\t and Assign Privileges",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-setup/configuration/guide/b-system-setup-cg-asr9000-26xx/create-user-profiles-and-assign-privileges.html"
+      },
+      {
+        "chapter_slug": "perform-system-upgrade-and-install-feature-packages",
+        "chapter_title": "Perform System\n\t Upgrade and Install Feature Packages",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-setup/configuration/guide/b-system-setup-cg-asr9000-26xx/perform-system-upgrade-and-install-feature-packages.html"
+      },
+      {
+        "chapter_slug": "manage-automatic-dependency",
+        "chapter_title": "Manage Automatic\n\t Dependency",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-setup/configuration/guide/b-system-setup-cg-asr9000-26xx/manage-automatic-dependency.html"
+      },
+      {
+        "chapter_slug": "customize-install-using-giso",
+        "chapter_title": "Customize\n\t Installation using Golden ISO",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-setup/configuration/guide/b-system-setup-cg-asr9000-26xx/customize-install-using-giso.html"
+      },
+      {
+        "chapter_slug": "provision-ztp",
+        "chapter_title": "Deploy Router Using Classic ZTP",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-setup/configuration/guide/b-system-setup-cg-asr9000-26xx/provision-ztp.html"
+      },
+      {
+        "chapter_slug": "m-caveats-asr9000",
+        "chapter_title": "Release-specific Caveats and Workarounds",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-setup/configuration/guide/b-system-setup-cg-asr9000-26xx/m-caveats-asr9000.html"
+      },
+      {
+        "chapter_slug": "m_upgrading_and_managing_cisco_ios_xr_software",
+        "chapter_title": "Upgrading and\n\t Managing Cisco IOS XR Software",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-setup/configuration/guide/b-system-setup-cg-asr9000-26xx/m_upgrading_and_managing_cisco_ios_xr_software.html"
+      },
+      {
+        "chapter_slug": "m_upgrading_fpd_on_cisco_ios_xr_software",
+        "chapter_title": "Upgrading Field-Programmable Devices",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-setup/configuration/guide/b-system-setup-cg-asr9000-26xx/m_upgrading_fpd_on_cisco_ios_xr_software.html"
+      },
+      {
+        "chapter_slug": "m-troubleshooting",
+        "chapter_title": "Troubleshoot IOS XR Setup and Upgrade",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-setup/configuration/guide/b-system-setup-cg-asr9000-26xx/m-troubleshooting.html"
+      }
+    ]
+  },
+  "b-telemetry-cg-asr9000-26xx.pdf": {
+    "title": "Telemetry Configuration Guide for Cisco ASR 9000 Series Routers, IOS XR Release 26.1.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/programmability/configuration/guide/b-telemetry-cg-asr9000-26xx.html",
+    "chapters": [
+      {
+        "chapter_slug": "new-and-changed-telemetry-features",
+        "chapter_title": "New and Changed\n\t Feature Information",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/programmability/configuration/guide/b-telemetry-cg-asr9000-26xx/new-and-changed-telemetry-features.html"
+      },
+      {
+        "chapter_slug": "yang-data-models-telemetry",
+        "chapter_title": "YANG Data Models for Telemetry Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/programmability/configuration/guide/b-telemetry-cg-asr9000-26xx/yang-data-models-telemetry.html"
+      },
+      {
+        "chapter_slug": "scale-up-your-network-monitoring-strategy-using-telemetry",
+        "chapter_title": "Scale-Up Your Network Monitoring Strategy Using Telemetry",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/programmability/configuration/guide/b-telemetry-cg-asr9000-26xx/scale-up-your-network-monitoring-strategy-using-telemetry.html"
+      },
+      {
+        "chapter_slug": "dial-out-telemetry-session-from-router-to-destination",
+        "chapter_title": "Establish a Model-Driven Telemetry Session from a Router to a Collector",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/programmability/configuration/guide/b-telemetry-cg-asr9000-26xx/dial-out-telemetry-session-from-router-to-destination.html"
+      },
+      {
+        "chapter_slug": "dial-in-telemetry-session-from-destination-to-router",
+        "chapter_title": "Establish a Model-Driven Telemetry Session from a Collector to a Router",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/programmability/configuration/guide/b-telemetry-cg-asr9000-26xx/dial-in-telemetry-session-from-destination-to-router.html"
+      },
+      {
+        "chapter_slug": "enhancememts-to-telemetry",
+        "chapter_title": "Enhancements to Streaming Telemetry",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/programmability/configuration/guide/b-telemetry-cg-asr9000-26xx/enhancememts-to-telemetry.html"
+      }
+    ]
+  },
+  "b-programmability-cg-asr9000-26xx.pdf": {
+    "title": "Programmability Configuration Guide for Cisco ASR 9000 Series Routers, IOS XR Release 26.1.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/programmability/configuration/guide/b-programmability-cg-asr9000-26xx.html",
+    "chapters": [
+      {
+        "chapter_slug": "new-and-changed-features",
+        "chapter_title": "New and Changed Feature Information",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/programmability/configuration/guide/b-programmability-cg-asr9000-26xx/new-and-changed-features.html"
+      },
+      {
+        "chapter_slug": "yang-data-models-for-programmability-features",
+        "chapter_title": "YANG Data Models for Programmability Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/programmability/configuration/guide/b-programmability-cg-asr9000-26xx/yang-data-models-for-programmability-features.html"
+      },
+      {
+        "chapter_slug": "drive-network-automation-using-programmable-yang-data-models",
+        "chapter_title": "Drive Network Automation Using Programmable YANG Data Models",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/programmability/configuration/guide/b-programmability-cg-asr9000-26xx/drive-network-automation-using-programmable-yang-data-models.html"
+      },
+      {
+        "chapter_slug": "use-netconf-protocol-to-define-network-operation-with-data-models",
+        "chapter_title": "Use NETCONF Protocol to Define Network Operations with Data Models",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/programmability/configuration/guide/b-programmability-cg-asr9000-26xx/use-netconf-protocol-to-define-network-operation-with-data-models.html"
+      },
+      {
+        "chapter_slug": "use-grpc-protocol-to-define-network-operation-with-data-models",
+        "chapter_title": "Use gRPC Protocol to Define Network  Operations with Data Models",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/programmability/configuration/guide/b-programmability-cg-asr9000-26xx/use-grpc-protocol-to-define-network-operation-with-data-models.html"
+      },
+      {
+        "chapter_slug": "enhancements-to-data-models-enhancements",
+        "chapter_title": "Enhancements to Data Models",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/programmability/configuration/guide/b-programmability-cg-asr9000-26xx/enhancements-to-data-models-enhancements.html"
+      },
+      {
+        "chapter_slug": "unified-data-models",
+        "chapter_title": "Unified Data Models",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/programmability/configuration/guide/b-programmability-cg-asr9000-26xx/unified-data-models.html"
+      },
+      {
+        "chapter_slug": "automation-scripts",
+        "chapter_title": "Achieve Network Operational Simplicity Using Automation Scripts",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/programmability/configuration/guide/b-programmability-cg-asr9000-26xx/automation-scripts.html"
+      },
+      {
+        "chapter_slug": "precommit-scripts",
+        "chapter_title": "Precommit Scripts",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/programmability/configuration/guide/b-programmability-cg-asr9000-26xx/precommit-scripts.html"
+      },
+      {
+        "chapter_slug": "config-scripts",
+        "chapter_title": "Config Scripts",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/programmability/configuration/guide/b-programmability-cg-asr9000-26xx/config-scripts.html"
+      },
+      {
+        "chapter_slug": "exec-scripts",
+        "chapter_title": "Exec Scripts",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/programmability/configuration/guide/b-programmability-cg-asr9000-26xx/exec-scripts.html"
+      },
+      {
+        "chapter_slug": "process-scripts",
+        "chapter_title": "Process Scripts",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/programmability/configuration/guide/b-programmability-cg-asr9000-26xx/process-scripts.html"
+      },
+      {
+        "chapter_slug": "event-scripts",
+        "chapter_title": "EEM Scripts",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/programmability/configuration/guide/b-programmability-cg-asr9000-26xx/event-scripts.html"
+      },
+      {
+        "chapter_slug": "model-sriven-cli-commands",
+        "chapter_title": "Model-Driven Command-Line Interface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/programmability/configuration/guide/b-programmability-cg-asr9000-26xx/model-sriven-cli-commands.html"
+      },
+      {
+        "chapter_slug": "manage-scripts-using-rpc",
+        "chapter_title": "Manage Automation Scripts Using YANG RPCs",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/programmability/configuration/guide/b-programmability-cg-asr9000-26xx/manage-scripts-using-rpc.html"
+      },
+      {
+        "chapter_slug": "script-infrastructure-sample-templates",
+        "chapter_title": "Script Infrastructure and Sample Templates",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/programmability/configuration/guide/b-programmability-cg-asr9000-26xx/script-infrastructure-sample-templates.html"
+      },
+      {
+        "chapter_slug": "troubleshoot-automation-scripts",
+        "chapter_title": "Troubleshoot Automation Scripts",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/programmability/configuration/guide/b-programmability-cg-asr9000-26xx/troubleshoot-automation-scripts.html"
+      }
+    ]
+  },
+  "b-cnbng-user-plane-cg-asr9000-26xx.pdf": {
+    "title": "Cloud Native BNG User Plane Configuration Guide for Cisco ASR 9000 Series Routers, IOS XR Release 26.1.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/cloud-native-bng/configuration/guide/b-cnbng-user-plane-cg-asr9000-26xx.html",
+    "chapters": [
+      {
+        "chapter_slug": "preface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/cloud-native-bng/configuration/guide/b-cnbng-user-plane-cg-asr9000-26xx/preface.html"
+      },
+      {
+        "chapter_slug": "new-and-changed-feature-information",
+        "chapter_title": "New and Changed Cloud Native BNG User Plane Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/cloud-native-bng/configuration/guide/b-cnbng-user-plane-cg-asr9000-26xx/new-and-changed-feature-information.html"
+      },
+      {
+        "chapter_slug": "yang-data-models",
+        "chapter_title": "YANG Data Models for Cloud Native BNG User Plane Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/cloud-native-bng/configuration/guide/b-cnbng-user-plane-cg-asr9000-26xx/yang-data-models.html"
+      },
+      {
+        "chapter_slug": "cloud-native-bng-overview",
+        "chapter_title": "Cloud Native BNG Overview",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/cloud-native-bng/configuration/guide/b-cnbng-user-plane-cg-asr9000-26xx/cloud-native-bng-overview.html"
+      },
+      {
+        "chapter_slug": "cloud-native-bng-user-plane-overview",
+        "chapter_title": "Cloud Native BNG User Plane Overview",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/cloud-native-bng/configuration/guide/b-cnbng-user-plane-cg-asr9000-26xx/cloud-native-bng-user-plane-overview.html"
+      },
+      {
+        "chapter_slug": "installing-cloud-native-bng-user-plane-packages",
+        "chapter_title": "Installing Cloud Native BNG User Plane Packages",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/cloud-native-bng/configuration/guide/b-cnbng-user-plane-cg-asr9000-26xx/installing-cloud-native-bng-user-plane-packages.html"
+      },
+      {
+        "chapter_slug": "configuring-cloud-native-bng-user-plane",
+        "chapter_title": "Configuring Cloud Native BNG User Plane and Key Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/cloud-native-bng/configuration/guide/b-cnbng-user-plane-cg-asr9000-26xx/configuring-cloud-native-bng-user-plane.html"
+      },
+      {
+        "chapter_slug": "subscriber-management",
+        "chapter_title": "Subscriber Management",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/cloud-native-bng/configuration/guide/b-cnbng-user-plane-cg-asr9000-26xx/subscriber-management.html"
+      },
+      {
+        "chapter_slug": "Geo-redundancy",
+        "chapter_title": "Geo Redundancy (Subscriber Redundancy Group)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/cloud-native-bng/configuration/guide/b-cnbng-user-plane-cg-asr9000-26xx/Geo-redundancy.html"
+      },
+      {
+        "chapter_slug": "ipv6-neighbour-discovery",
+        "chapter_title": "IPV6 Neighbor Discovery",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/cloud-native-bng/configuration/guide/b-cnbng-user-plane-cg-asr9000-26xx/ipv6-neighbour-discovery.html"
+      }
+    ]
+  },
+  "b-mpls-cg-asr9000-26xx.pdf": {
+    "title": "MPLS Configuration Guide for Cisco ASR 9000 Series Routers, IOS XR Release 26.x.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/mpls/configuration/guide/b-mpls-cg-asr9000-26xx.html",
+    "chapters": [
+      {
+        "chapter_slug": "mpls-preface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/mpls/configuration/guide/b-mpls-cg-asr9000-26xx/mpls-preface.html"
+      },
+      {
+        "chapter_slug": "new-and-changed-mpls-features",
+        "chapter_title": "New and Changed MPLS Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/mpls/configuration/guide/b-mpls-cg-asr9000-26xx/new-and-changed-mpls-features.html"
+      },
+      {
+        "chapter_slug": "yang-data-models-for-mpls-features",
+        "chapter_title": "YANG Data Models for MPLS Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/mpls/configuration/guide/b-mpls-cg-asr9000-26xx/yang-data-models-for-mpls-features.html"
+      },
+      {
+        "chapter_slug": "implementing-mpls-ldp",
+        "chapter_title": "Implementing MPLS\n\t Label Distribution Protocol",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/mpls/configuration/guide/b-mpls-cg-asr9000-26xx/implementing-mpls-ldp.html"
+      },
+      {
+        "chapter_slug": "implementing-mpls-static-labeling",
+        "chapter_title": "Implementing MPLS Static Labeling",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/mpls/configuration/guide/b-mpls-cg-asr9000-26xx/implementing-mpls-static-labeling.html"
+      },
+      {
+        "chapter_slug": "implementing-rsvp",
+        "chapter_title": "Implementing RSVP for MPLS-TE",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/mpls/configuration/guide/b-mpls-cg-asr9000-26xx/implementing-rsvp.html"
+      },
+      {
+        "chapter_slug": "implementing-mpls-forwarding",
+        "chapter_title": "Implementing MPLS\n\t Forwarding",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/mpls/configuration/guide/b-mpls-cg-asr9000-26xx/implementing-mpls-forwarding.html"
+      },
+      {
+        "chapter_slug": "implementing-mpls-te",
+        "chapter_title": "Implementing MPLS\n\t Traffic Engineering",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/mpls/configuration/guide/b-mpls-cg-asr9000-26xx/implementing-mpls-te.html"
+      },
+      {
+        "chapter_slug": "implementing-gmpls-uni",
+        "chapter_title": "GMPLS UNI",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/mpls/configuration/guide/b-mpls-cg-asr9000-26xx/implementing-gmpls-uni.html"
+      },
+      {
+        "chapter_slug": "implementing-mpls-oam",
+        "chapter_title": "Implementing MPLS\n\t OAM",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/mpls/configuration/guide/b-mpls-cg-asr9000-26xx/implementing-mpls-oam.html"
+      },
+      {
+        "chapter_slug": "implementing-mpls-transport-profile",
+        "chapter_title": "Implementing MPLS Transport Profile",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/mpls/configuration/guide/b-mpls-cg-asr9000-26xx/implementing-mpls-transport-profile.html"
+      }
+    ]
+  },
+  "b-segment-routing-cg-asr9000-26xx.pdf": {
+    "title": "Segment Routing Configuration Guide for Cisco ASR 9000 Series Routers, IOS XR Release 26.1.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/segment-routing/configuration/guide/b-segment-routing-cg-asr9000-26xx.html",
+    "chapters": [
+      {
+        "chapter_slug": "preface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/segment-routing/configuration/guide/b-segment-routing-cg-asr9000-26xx/preface.html"
+      },
+      {
+        "chapter_slug": "new-and-changed-segment-routing-features-information",
+        "chapter_title": "New and Changed Information for Segment Routing Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/segment-routing/configuration/guide/b-segment-routing-cg-asr9000-26xx/new-and-changed-segment-routing-features-information.html"
+      },
+      {
+        "chapter_slug": "yang-data-models-for-segment-routing-features",
+        "chapter_title": "YANG Data Models for Segment Routing Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/segment-routing/configuration/guide/b-segment-routing-cg-asr9000-26xx/yang-data-models-for-segment-routing-features.html"
+      },
+      {
+        "chapter_slug": "about-segment-routing",
+        "chapter_title": "About Segment Routing",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/segment-routing/configuration/guide/b-segment-routing-cg-asr9000-26xx/about-segment-routing.html"
+      },
+      {
+        "chapter_slug": "configure-srv6-micro-sid",
+        "chapter_title": "Configure Segment Routing over IPv6 (SRv6) with Micro-SIDs",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/segment-routing/configuration/guide/b-segment-routing-cg-asr9000-26xx/configure-srv6-micro-sid.html"
+      },
+      {
+        "chapter_slug": "configure-srv6-full-length-sid",
+        "chapter_title": "Configure Segment Routing over IPv6 (SRv6) with Full-Length SIDs",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/segment-routing/configuration/guide/b-segment-routing-cg-asr9000-26xx/configure-srv6-full-length-sid.html"
+      },
+      {
+        "chapter_slug": "configure-srv6-traffic-engineering",
+        "chapter_title": "Configure SRv6 Traffic Engineering",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/segment-routing/configuration/guide/b-segment-routing-cg-asr9000-26xx/configure-srv6-traffic-engineering.html"
+      },
+      {
+        "chapter_slug": "configure-srgb-srlb",
+        "chapter_title": "Configure Segment Routing Global Block and Segment Routing Local Block",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/segment-routing/configuration/guide/b-segment-routing-cg-asr9000-26xx/configure-srgb-srlb.html"
+      },
+      {
+        "chapter_slug": "configure-sr-for-is-is-protocol",
+        "chapter_title": "Configure Segment\n\t Routing for IS-IS Protocol",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/segment-routing/configuration/guide/b-segment-routing-cg-asr9000-26xx/configure-sr-for-is-is-protocol.html"
+      },
+      {
+        "chapter_slug": "configure-sr-for-ospf-protocol",
+        "chapter_title": "Configure Segment\n\t Routing for OSPF Protocol",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/segment-routing/configuration/guide/b-segment-routing-cg-asr9000-26xx/configure-sr-for-ospf-protocol.html"
+      },
+      {
+        "chapter_slug": "configure-sr-for-bgp",
+        "chapter_title": "Configure Segment Routing for BGP",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/segment-routing/configuration/guide/b-segment-routing-cg-asr9000-26xx/configure-sr-for-bgp.html"
+      },
+      {
+        "chapter_slug": "configure-sr-te-policies",
+        "chapter_title": "Configure SR-TE Policies",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/segment-routing/configuration/guide/b-segment-routing-cg-asr9000-26xx/configure-sr-te-policies.html"
+      },
+      {
+        "chapter_slug": "configure-sr-tree-sid",
+        "chapter_title": "Segment Routing Tree Segment Identifier",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/segment-routing/configuration/guide/b-segment-routing-cg-asr9000-26xx/configure-sr-tree-sid.html"
+      },
+      {
+        "chapter_slug": "enabling-sr-flexible-algorithm",
+        "chapter_title": "Enabling Segment Routing Flexible Algorithm",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/segment-routing/configuration/guide/b-segment-routing-cg-asr9000-26xx/enabling-sr-flexible-algorithm.html"
+      },
+      {
+        "chapter_slug": "configure-sr-pce",
+        "chapter_title": "Configure Segment Routing Path Computation Element",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/segment-routing/configuration/guide/b-segment-routing-cg-asr9000-26xx/configure-sr-pce.html"
+      },
+      {
+        "chapter_slug": "configure-performance-measurement",
+        "chapter_title": "Configure Performance Measurement",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/segment-routing/configuration/guide/b-segment-routing-cg-asr9000-26xx/configure-performance-measurement.html"
+      },
+      {
+        "chapter_slug": "configure-ti-lfa",
+        "chapter_title": "Configure Topology-Independent Loop-Free Alternate (TI-LFA)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/segment-routing/configuration/guide/b-segment-routing-cg-asr9000-26xx/configure-ti-lfa.html"
+      },
+      {
+        "chapter_slug": "configure-sr-microloop-avoidance",
+        "chapter_title": "Configure Segment Routing Microloop Avoidance",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/segment-routing/configuration/guide/b-segment-routing-cg-asr9000-26xx/configure-sr-microloop-avoidance.html"
+      },
+      {
+        "chapter_slug": "configure-sr-mapping-server",
+        "chapter_title": "Configure Segment\n\t Routing Mapping Server",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/segment-routing/configuration/guide/b-segment-routing-cg-asr9000-26xx/configure-sr-mapping-server.html"
+      },
+      {
+        "chapter_slug": "using-sr-traffic-matrix",
+        "chapter_title": "Using Segment Routing Traffic Matrix",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/segment-routing/configuration/guide/b-segment-routing-cg-asr9000-26xx/using-sr-traffic-matrix.html"
+      },
+      {
+        "chapter_slug": "using-sr-oam",
+        "chapter_title": "Using Segment Routing OAM",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/segment-routing/configuration/guide/b-segment-routing-cg-asr9000-26xx/using-sr-oam.html"
+      }
+    ]
+  },
+  "b-bng-cg-asr9000-26xx.pdf": {
+    "title": "Broadband Network Gateway Configuration Guide for Cisco ASR 9000 Series Routers, IOS XR Release 26.1.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/bng/configuration/guide/b-bng-cg-asr9000-26xx.html",
+    "chapters": [
+      {
+        "chapter_slug": "preface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/bng/configuration/guide/b-bng-cg-asr9000-26xx/preface.html"
+      },
+      {
+        "chapter_slug": "new-and-changed",
+        "chapter_title": "New and Changed BNG\n\t Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/bng/configuration/guide/b-bng-cg-asr9000-26xx/new-and-changed.html"
+      },
+      {
+        "chapter_slug": "yang-data-models-for-bng-features",
+        "chapter_title": "YANG Data Models for BNG Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/bng/configuration/guide/b-bng-cg-asr9000-26xx/yang-data-models-for-bng-features.html"
+      },
+      {
+        "chapter_slug": "bng-overview",
+        "chapter_title": "Broadband Network\n\t Gateway Overview",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/bng/configuration/guide/b-bng-cg-asr9000-26xx/bng-overview.html"
+      },
+      {
+        "chapter_slug": "configuring-aaa-functions",
+        "chapter_title": "Configuring\n\t Authentication, Authorization, and Accounting Functions",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/bng/configuration/guide/b-bng-cg-asr9000-26xx/configuring-aaa-functions.html"
+      },
+      {
+        "chapter_slug": "activating-control-policy",
+        "chapter_title": "Activating Control Policy",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/bng/configuration/guide/b-bng-cg-asr9000-26xx/activating-control-policy.html"
+      },
+      {
+        "chapter_slug": "establishing-subscriber-sessions",
+        "chapter_title": "Establishing\n\t Subscriber Sessions",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/bng/configuration/guide/b-bng-cg-asr9000-26xx/establishing-subscriber-sessions.html"
+      },
+      {
+        "chapter_slug": "deploying-qos",
+        "chapter_title": "Deploying the Quality of Service (QoS)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/bng/configuration/guide/b-bng-cg-asr9000-26xx/deploying-qos.html"
+      },
+      {
+        "chapter_slug": "configuring-subscriber-features",
+        "chapter_title": "Configuring\n\t Subscriber Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/bng/configuration/guide/b-bng-cg-asr9000-26xx/configuring-subscriber-features.html"
+      },
+      {
+        "chapter_slug": "bng-geo-redundancy",
+        "chapter_title": "BNG Geo\n\t Redundancy",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/bng/configuration/guide/b-bng-cg-asr9000-26xx/bng-geo-redundancy.html"
+      },
+      {
+        "chapter_slug": "diameter-support-in-bng",
+        "chapter_title": "DIAMETER Support in\n\t BNG",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/bng/configuration/guide/b-bng-cg-asr9000-26xx/diameter-support-in-bng.html"
+      },
+      {
+        "chapter_slug": "ush-support-in-bng",
+        "chapter_title": "USH Support in BNG",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/bng/configuration/guide/b-bng-cg-asr9000-26xx/ush-support-in-bng.html"
+      },
+      {
+        "chapter_slug": "xml-support-for-bng-features",
+        "chapter_title": "XML Support for BNG Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/bng/configuration/guide/b-bng-cg-asr9000-26xx/xml-support-for-bng-features.html"
+      },
+      {
+        "chapter_slug": "radius-attributes",
+        "chapter_title": "RADIUS Attributes",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/bng/configuration/guide/b-bng-cg-asr9000-26xx/radius-attributes.html"
+      },
+      {
+        "chapter_slug": "action-handlers",
+        "chapter_title": "Action Handlers",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/bng/configuration/guide/b-bng-cg-asr9000-26xx/action-handlers.html"
+      },
+      {
+        "chapter_slug": "bng-use-cases-and-sample-configurations",
+        "chapter_title": "BNG Use Cases and\n\t Sample Configurations",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/bng/configuration/guide/b-bng-cg-asr9000-26xx/bng-use-cases-and-sample-configurations.html"
+      },
+      {
+        "chapter_slug": "diameter-attributes",
+        "chapter_title": "DIAMETER\n\t Attributes",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/bng/configuration/guide/b-bng-cg-asr9000-26xx/diameter-attributes.html"
+      },
+      {
+        "chapter_slug": "b-bng-cg-asr9000-26xx_index",
+        "chapter_title": "Index",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/bng/configuration/guide/b-bng-cg-asr9000-26xx/b-bng-cg-asr9000-26xx_index.html"
+      }
+    ]
+  },
+  "b-interfaces-hardware-component-cg-asr9000-26xx.pdf": {
+    "title": "Interface and Hardware Component Configuration Guide for Cisco ASR 9000 Series Routers, IOS XR Release 26.1.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/interfaces/configuration/guide/b-interfaces-hardware-component-cg-asr9000-26xx.html",
+    "chapters": [
+      {
+        "chapter_slug": "preface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/interfaces/configuration/guide/b-interfaces-hardware-component-cg-asr9000-26xx/preface.html"
+      },
+      {
+        "chapter_slug": "new-and-changed-interface-hardware-component-features",
+        "chapter_title": "New and Changed Feature Information",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/interfaces/configuration/guide/b-interfaces-hardware-component-cg-asr9000-26xx/new-and-changed-interface-hardware-component-features.html"
+      },
+      {
+        "chapter_slug": "yang-data-models-interfaces-hardware",
+        "chapter_title": "YANG Data Models for Interfaces and Hardware Component Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/interfaces/configuration/guide/b-interfaces-hardware-component-cg-asr9000-26xx/yang-data-models-interfaces-hardware.html"
+      },
+      {
+        "chapter_slug": "preconfiguring-physical-interfaces",
+        "chapter_title": "Preconfiguring\n\t Physical Interfaces",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/interfaces/configuration/guide/b-interfaces-hardware-component-cg-asr9000-26xx/preconfiguring-physical-interfaces.html"
+      },
+      {
+        "chapter_slug": "advanced-configuration-modification-of-management-ethernet-interface",
+        "chapter_title": "Advanced Configuration and Modification of the Management Ethernet\n\t Interface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/interfaces/configuration/guide/b-interfaces-hardware-component-cg-asr9000-26xx/advanced-configuration-modification-of-management-ethernet-interface.html"
+      },
+      {
+        "chapter_slug": "configuring-ethernet-interfaces",
+        "chapter_title": "Configuring Ethernet\n\t Interfaces",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/interfaces/configuration/guide/b-interfaces-hardware-component-cg-asr9000-26xx/configuring-ethernet-interfaces.html"
+      },
+      {
+        "chapter_slug": "configuring-ethernet-oam",
+        "chapter_title": "Configuring Ethernet\n\t OAM",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/interfaces/configuration/guide/b-interfaces-hardware-component-cg-asr9000-26xx/configuring-ethernet-oam.html"
+      },
+      {
+        "chapter_slug": "configuring-integrated-routing-and-bridging",
+        "chapter_title": "Configuring\n\t Integrated Routing and Bridging",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/interfaces/configuration/guide/b-interfaces-hardware-component-cg-asr9000-26xx/configuring-integrated-routing-and-bridging.html"
+      },
+      {
+        "chapter_slug": "configuring-link-bundling",
+        "chapter_title": "Configuring Link Bundling",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/interfaces/configuration/guide/b-interfaces-hardware-component-cg-asr9000-26xx/configuring-link-bundling.html"
+      },
+      {
+        "chapter_slug": "configuring-traffic-mirroring",
+        "chapter_title": "Configuring Traffic\n\t Mirroring",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/interfaces/configuration/guide/b-interfaces-hardware-component-cg-asr9000-26xx/configuring-traffic-mirroring.html"
+      },
+      {
+        "chapter_slug": "configuring-virtual-loopback-and-null-interfaces",
+        "chapter_title": "Configuring Virtual Loopback and Null Interfaces",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/interfaces/configuration/guide/b-interfaces-hardware-component-cg-asr9000-26xx/configuring-virtual-loopback-and-null-interfaces.html"
+      },
+      {
+        "chapter_slug": "configuring-dense-wavelength-division-multiplexing-controllers",
+        "chapter_title": "Configuring Dense Wavelength Division Multiplexing Controllers",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/interfaces/configuration/guide/b-interfaces-hardware-component-cg-asr9000-26xx/configuring-dense-wavelength-division-multiplexing-controllers.html"
+      },
+      {
+        "chapter_slug": "configuring-400G-digital-coherent-optics",
+        "chapter_title": "Configuring 400G Digital Coherent Optics",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/interfaces/configuration/guide/b-interfaces-hardware-component-cg-asr9000-26xx/configuring-400G-digital-coherent-optics.html"
+      },
+      {
+        "chapter_slug": "configuring-802-1q-vlan-interfaces",
+        "chapter_title": "Configuring 802.1Q VLAN Interfaces",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/interfaces/configuration/guide/b-interfaces-hardware-component-cg-asr9000-26xx/configuring-802-1q-vlan-interfaces.html"
+      },
+      {
+        "chapter_slug": "m-configuring-qdd-optical-line-system",
+        "chapter_title": "Configure QDD optical line system",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/interfaces/configuration/guide/b-interfaces-hardware-component-cg-asr9000-26xx/m-configuring-qdd-optical-line-system.html"
+      },
+      {
+        "chapter_slug": "m_managing_the_router_hardware",
+        "chapter_title": "Managing Router Hardware",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/interfaces/configuration/guide/b-interfaces-hardware-component-cg-asr9000-26xx/m_managing_the_router_hardware.html"
+      },
+      {
+        "chapter_slug": "b-interfaces-hardware-component-cg-asr9000-26xx_index",
+        "chapter_title": "Index",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/interfaces/configuration/guide/b-interfaces-hardware-component-cg-asr9000-26xx/b-interfaces-hardware-component-cg-asr9000-26xx_index.html"
+      }
+    ]
+  },
+  "b-ip-addresses-cg-asr9000-26xx.pdf": {
+    "title": "IP Addresses and Services Configuration Guide for Cisco ASR 9000 Series Routers, IOS XR Release 26.1.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/ip-addresses/configuration/guide/b-ip-addresses-cg-asr9000-26xx.html",
+    "chapters": [
+      {
+        "chapter_slug": "preface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/ip-addresses/configuration/guide/b-ip-addresses-cg-asr9000-26xx/preface.html"
+      },
+      {
+        "chapter_slug": "new-and-changed",
+        "chapter_title": "New and Changed IP Addresses and Services Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/ip-addresses/configuration/guide/b-ip-addresses-cg-asr9000-26xx/new-and-changed.html"
+      },
+      {
+        "chapter_slug": "yang-data-models-for-ip-addressing-features",
+        "chapter_title": "YANG Data Models for IP Addressing Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/ip-addresses/configuration/guide/b-ip-addresses-cg-asr9000-26xx/yang-data-models-for-ip-addressing-features.html"
+      },
+      {
+        "chapter_slug": "implementing-network-stack-ipv4-and-ipv6",
+        "chapter_title": "Implementing Network\n\t Stack IPv4 and IPv6",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/ip-addresses/configuration/guide/b-ip-addresses-cg-asr9000-26xx/implementing-network-stack-ipv4-and-ipv6.html"
+      },
+      {
+        "chapter_slug": "configuring-arp",
+        "chapter_title": "Implementing ARP",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/ip-addresses/configuration/guide/b-ip-addresses-cg-asr9000-26xx/configuring-arp.html"
+      },
+      {
+        "chapter_slug": "implementing-the-dynamic-host-configuration-protocol",
+        "chapter_title": "Implementing the Dynamic Host Configuration Protocol",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/ip-addresses/configuration/guide/b-ip-addresses-cg-asr9000-26xx/implementing-the-dynamic-host-configuration-protocol.html"
+      },
+      {
+        "chapter_slug": "Implementing-host-services-and-applications",
+        "chapter_title": "Implementing Host Services and Applications",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/ip-addresses/configuration/guide/b-ip-addresses-cg-asr9000-26xx/Implementing-host-services-and-applications.html"
+      },
+      {
+        "chapter_slug": "Implementing-access-lists-and-prefix-lists",
+        "chapter_title": "Implementing Access\n\t Lists and Prefix Lists",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/ip-addresses/configuration/guide/b-ip-addresses-cg-asr9000-26xx/Implementing-access-lists-and-prefix-lists.html"
+      },
+      {
+        "chapter_slug": "Implementing-policy-based-routing",
+        "chapter_title": "Implementing Enhanced Policy Based Routing",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/ip-addresses/configuration/guide/b-ip-addresses-cg-asr9000-26xx/Implementing-policy-based-routing.html"
+      },
+      {
+        "chapter_slug": "Implementing-video-monitoring",
+        "chapter_title": "Implementing Video Monitoring",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/ip-addresses/configuration/guide/b-ip-addresses-cg-asr9000-26xx/Implementing-video-monitoring.html"
+      },
+      {
+        "chapter_slug": "Implementing-cisco-express-forwarding",
+        "chapter_title": "Implementing Cisco\n\t Express Forwarding",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/ip-addresses/configuration/guide/b-ip-addresses-cg-asr9000-26xx/Implementing-cisco-express-forwarding.html"
+      },
+      {
+        "chapter_slug": "implementing-hsrp",
+        "chapter_title": "Implementing HSRP",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/ip-addresses/configuration/guide/b-ip-addresses-cg-asr9000-26xx/implementing-hsrp.html"
+      },
+      {
+        "chapter_slug": "implementing-lpts",
+        "chapter_title": "Implementing LPTS",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/ip-addresses/configuration/guide/b-ip-addresses-cg-asr9000-26xx/implementing-lpts.html"
+      },
+      {
+        "chapter_slug": "implementing-vrrp",
+        "chapter_title": "Implementing VRRP",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/ip-addresses/configuration/guide/b-ip-addresses-cg-asr9000-26xx/implementing-vrrp.html"
+      },
+      {
+        "chapter_slug": "configuring-proxy-mobile-ipv6-local-mobility-anchor",
+        "chapter_title": "Configuring Proxy\n\t Mobile IPv6 Local Mobility Anchor",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/ip-addresses/configuration/guide/b-ip-addresses-cg-asr9000-26xx/configuring-proxy-mobile-ipv6-local-mobility-anchor.html"
+      },
+      {
+        "chapter_slug": "configuring-transports",
+        "chapter_title": "Configuring\n\t Transports",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/ip-addresses/configuration/guide/b-ip-addresses-cg-asr9000-26xx/configuring-transports.html"
+      }
+    ]
+  },
+  "b-l2vpn-cg-asr9000-26xx.pdf": {
+    "title": "L2VPN and Ethernet Services Configuration Guide for Cisco ASR 9000 Series Routers, IOS XR Release 26.1.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/l2vpn/configuration/guide/b-l2vpn-cg-asr9000-26xx.html",
+    "chapters": [
+      {
+        "chapter_slug": "preface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/l2vpn/configuration/guide/b-l2vpn-cg-asr9000-26xx/preface.html"
+      },
+      {
+        "chapter_slug": "new-and-changed-vpn-feature",
+        "chapter_title": "New and Changed VPN\n\t Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/l2vpn/configuration/guide/b-l2vpn-cg-asr9000-26xx/new-and-changed-vpn-feature.html"
+      },
+      {
+        "chapter_slug": "YANG-data-models-for-VPN-features",
+        "chapter_title": "YANG Data Models for VPN Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/l2vpn/configuration/guide/b-l2vpn-cg-asr9000-26xx/YANG-data-models-for-VPN-features.html"
+      },
+      {
+        "chapter_slug": "carrier-ethernet-model",
+        "chapter_title": "The Carrier Ethernet\n\t Model",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/l2vpn/configuration/guide/b-l2vpn-cg-asr9000-26xx/carrier-ethernet-model.html"
+      },
+      {
+        "chapter_slug": "ethernet-features",
+        "chapter_title": "Ethernet\n\t Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/l2vpn/configuration/guide/b-l2vpn-cg-asr9000-26xx/ethernet-features.html"
+      },
+      {
+        "chapter_slug": "configuring-link-bundles",
+        "chapter_title": "Configuring Link\n\t Bundles",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/l2vpn/configuration/guide/b-l2vpn-cg-asr9000-26xx/configuring-link-bundles.html"
+      },
+      {
+        "chapter_slug": "m-implement-point-to-point-layer-2-services",
+        "chapter_title": "Implementing Point\n\t to Point Layer 2 Services",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/l2vpn/configuration/guide/b-l2vpn-cg-asr9000-26xx/m-implement-point-to-point-layer-2-services.html"
+      },
+      {
+        "chapter_slug": "implementing-multipoint-layer-2-services",
+        "chapter_title": "Implementing\n\t Multipoint Layer 2 Services",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/l2vpn/configuration/guide/b-l2vpn-cg-asr9000-26xx/implementing-multipoint-layer-2-services.html"
+      },
+      {
+        "chapter_slug": "m-implement-provider-backbone-bridge",
+        "chapter_title": "Implementing IEEE 802.1ah Provider Backbone Bridge",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/l2vpn/configuration/guide/b-l2vpn-cg-asr9000-26xx/m-implement-provider-backbone-bridge.html"
+      },
+      {
+        "chapter_slug": "implementing-multiple-spanning-tree-protocol",
+        "chapter_title": "Implementing Multiple Spanning Tree Protocol",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/l2vpn/configuration/guide/b-l2vpn-cg-asr9000-26xx/implementing-multiple-spanning-tree-protocol.html"
+      },
+      {
+        "chapter_slug": "implementing-of-layer-2-access-lists",
+        "chapter_title": "Implementing of\n\t Layer 2 Access Lists",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/l2vpn/configuration/guide/b-l2vpn-cg-asr9000-26xx/implementing-of-layer-2-access-lists.html"
+      },
+      {
+        "chapter_slug": "implementing-VxLAN",
+        "chapter_title": "Implementing\n\t VXLAN",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/l2vpn/configuration/guide/b-l2vpn-cg-asr9000-26xx/implementing-VxLAN.html"
+      },
+      {
+        "chapter_slug": "evpn-features",
+        "chapter_title": "EVPN\n\t Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/l2vpn/configuration/guide/b-l2vpn-cg-asr9000-26xx/evpn-features.html"
+      },
+      {
+        "chapter_slug": "configure-evpn-irb",
+        "chapter_title": "Configure EVPN\n\t IRB",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/l2vpn/configuration/guide/b-l2vpn-cg-asr9000-26xx/configure-evpn-irb.html"
+      },
+      {
+        "chapter_slug": "evpn-virtual-private-wire-service",
+        "chapter_title": "EVPN Virtual Private Wire Service (VPWS)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/l2vpn/configuration/guide/b-l2vpn-cg-asr9000-26xx/evpn-virtual-private-wire-service.html"
+      },
+      {
+        "chapter_slug": "l2vpn-services-over-segment-routing-for-traffic-engineering-policy",
+        "chapter_title": "L2VPN Services over\n\t Segment Routing for Traffic Engineering Policy",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/l2vpn/configuration/guide/b-l2vpn-cg-asr9000-26xx/l2vpn-services-over-segment-routing-for-traffic-engineering-policy.html"
+      }
+    ]
+  },
+  "b-l3vpn-cg-asr9000-26xx.pdf": {
+    "title": "MPLS Layer 3 VPN Configuration Guide for Cisco ASR 9000 Series Routers, IOS XR 26.1.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/l3vpn/configuration/guide/b-l3vpn-cg-asr9000-26xx.html",
+    "chapters": [
+      {
+        "chapter_slug": "preface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/l3vpn/configuration/guide/b-l3vpn-cg-asr9000-26xx/preface.html"
+      },
+      {
+        "chapter_slug": "new-and-changed-vpn-feature-information",
+        "chapter_title": "New and Changed\n\t L3VPN Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/l3vpn/configuration/guide/b-l3vpn-cg-asr9000-26xx/new-and-changed-vpn-feature-information.html"
+      },
+      {
+        "chapter_slug": "YANG-data-models-for-L3VPN-features",
+        "chapter_title": "YANG Data Models for L3VPN Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/l3vpn/configuration/guide/b-l3vpn-cg-asr9000-26xx/YANG-data-models-for-L3VPN-features.html"
+      },
+      {
+        "chapter_slug": "implementing-mpls-layer-3-VPNs",
+        "chapter_title": "Implementing MPLS\n\t Layer 3 VPNs",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/l3vpn/configuration/guide/b-l3vpn-cg-asr9000-26xx/implementing-mpls-layer-3-VPNs.html"
+      },
+      {
+        "chapter_slug": "implementing-ipv6-VPN-provider-edge-transport-over-mpls",
+        "chapter_title": "Implementing IPv6\n\t VPN Provider Edge Transport over MPLS",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/l3vpn/configuration/guide/b-l3vpn-cg-asr9000-26xx/implementing-ipv6-VPN-provider-edge-transport-over-mpls.html"
+      },
+      {
+        "chapter_slug": "implementing-generic-routing-encapsulation",
+        "chapter_title": "Implementing Generic\n\t Routing Encapsulation",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/l3vpn/configuration/guide/b-l3vpn-cg-asr9000-26xx/implementing-generic-routing-encapsulation.html"
+      },
+      {
+        "chapter_slug": "implementing-vxlan",
+        "chapter_title": "Implementing\n\t VXLAN",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/l3vpn/configuration/guide/b-l3vpn-cg-asr9000-26xx/implementing-vxlan.html"
+      },
+      {
+        "chapter_slug": "implementing-IP-in-IP-tunnel",
+        "chapter_title": "Implementing IP in\n\t IP Tunnel",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/l3vpn/configuration/guide/b-l3vpn-cg-asr9000-26xx/implementing-IP-in-IP-tunnel.html"
+      },
+      {
+        "chapter_slug": "implementing-dci-vxlan-layer-3-gateway",
+        "chapter_title": "Implementing DCI Layer 3 Gateway between MPLS-VPN and EVPN Data Center",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/l3vpn/configuration/guide/b-l3vpn-cg-asr9000-26xx/implementing-dci-vxlan-layer-3-gateway.html"
+      }
+    ]
+  },
+  "b-qos-cg-asr9k-26xx.pdf": {
+    "title": "Modular QoS Configuration Guide for Cisco ASR 9000 Series Routers, IOS XR Release 26.1.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/qos/configuration/b-qos-cg-asr9k-26xx.html",
+    "chapters": [
+      {
+        "chapter_slug": "preface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/qos/configuration/b-qos-cg-asr9k-26xx/preface.html"
+      },
+      {
+        "chapter_slug": "new-and-changed-qos-features",
+        "chapter_title": "New and Changed QoS\n\t Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/qos/configuration/b-qos-cg-asr9k-26xx/new-and-changed-qos-features.html"
+      },
+      {
+        "chapter_slug": "yang-data-models-for-qos",
+        "chapter_title": "YANG Data Models for QoS Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/qos/configuration/b-qos-cg-asr9k-26xx/yang-data-models-for-qos.html"
+      },
+      {
+        "chapter_slug": "modular-qos-overview",
+        "chapter_title": "Modular QoS Overview",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/qos/configuration/b-qos-cg-asr9k-26xx/modular-qos-overview.html"
+      },
+      {
+        "chapter_slug": "config-access-node-control-protocol",
+        "chapter_title": "Configuring Access Node Control Protocol",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/qos/configuration/b-qos-cg-asr9k-26xx/config-access-node-control-protocol.html"
+      },
+      {
+        "chapter_slug": "config-modular-qos-congestion-avoidance",
+        "chapter_title": "Configuring Modular QoS Congestion Avoidance",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/qos/configuration/b-qos-cg-asr9k-26xx/config-modular-qos-congestion-avoidance.html"
+      },
+      {
+        "chapter_slug": "config-mod-qos-congestion-management",
+        "chapter_title": "Configuring Modular QoS Congestion Management",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/qos/configuration/b-qos-cg-asr9k-26xx/config-mod-qos-congestion-management.html"
+      },
+      {
+        "chapter_slug": "config-mod-qos-service-packet-classification",
+        "chapter_title": "Configuring Modular QoS Service Packet Classification",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/qos/configuration/b-qos-cg-asr9k-26xx/config-mod-qos-service-packet-classification.html"
+      },
+      {
+        "chapter_slug": "modular-qos-deployment-scenarios",
+        "chapter_title": "Modular QoS Deployment Scenarios",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/qos/configuration/b-qos-cg-asr9k-26xx/modular-qos-deployment-scenarios.html"
+      },
+      {
+        "chapter_slug": "config-hierarchical-mod-qos",
+        "chapter_title": "Configuring Hierarchical Modular QoS",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/qos/configuration/b-qos-cg-asr9k-26xx/config-hierarchical-mod-qos.html"
+      },
+      {
+        "chapter_slug": "config-mod-qos-on-link-bundles",
+        "chapter_title": "Configuring Modular QoS on Link Bundles",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/qos/configuration/b-qos-cg-asr9k-26xx/config-mod-qos-on-link-bundles.html"
+      },
+      {
+        "chapter_slug": "config-flow-aware-qos",
+        "chapter_title": "Configuring Flow\n\t Aware QoS",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/qos/configuration/b-qos-cg-asr9k-26xx/config-flow-aware-qos.html"
+      },
+      {
+        "chapter_slug": "config-qos-on-satellite-system",
+        "chapter_title": "Configuring QoS on\n\t the Satellite System",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/qos/configuration/b-qos-cg-asr9k-26xx/config-qos-on-satellite-system.html"
+      },
+      {
+        "chapter_slug": "b-qos-cg-asr9k-26xx_index",
+        "chapter_title": "Index",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/qos/configuration/b-qos-cg-asr9k-26xx/b-qos-cg-asr9k-26xx_index.html"
+      }
+    ]
+  },
+  "b-multicast-cg-asr9k-26xx.pdf": {
+    "title": "Multicast Configuration Guide for Cisco ASR 9000 Series Routers, IOS XR Release 26.1.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/multicast/configuration/guide/b-multicast-cg-asr9k-26xx.html",
+    "chapters": [
+      {
+        "chapter_slug": "multicast-preface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/multicast/configuration/guide/b-multicast-cg-asr9k-26xx/multicast-preface.html"
+      },
+      {
+        "chapter_slug": "new-changed-multicast",
+        "chapter_title": "New and Changed Multicast Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/multicast/configuration/guide/b-multicast-cg-asr9k-26xx/new-changed-multicast.html"
+      },
+      {
+        "chapter_slug": "Implementing-layer2-multicast-igmp",
+        "chapter_title": "Implementing Layer-2 Multicast with IGMP Snooping",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/multicast/configuration/guide/b-multicast-cg-asr9k-26xx/Implementing-layer2-multicast-igmp.html"
+      },
+      {
+        "chapter_slug": "Implementing-mld-snooping",
+        "chapter_title": "Implementing MLD Snooping",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/multicast/configuration/guide/b-multicast-cg-asr9k-26xx/Implementing-mld-snooping.html"
+      },
+      {
+        "chapter_slug": "Implementing-layer3-multicast",
+        "chapter_title": "Implementing \n\t Layer-3 \n\t Multicast Routing on Cisco IOS XR Software",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/multicast/configuration/guide/b-multicast-cg-asr9k-26xx/Implementing-layer3-multicast.html"
+      }
+    ]
+  },
+  "b-system-management-cg-asr9000-26xx.pdf": {
+    "title": "System Management Configuration Guide for Cisco ASR 9000 Series Routers, IOS XR Release 26.1.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/system-management/configuration/guide/b-system-management-cg-asr9000-26xx.html",
+    "chapters": [
+      {
+        "chapter_slug": "preface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/system-management/configuration/guide/b-system-management-cg-asr9000-26xx/preface.html"
+      },
+      {
+        "chapter_slug": "new-and-changed",
+        "chapter_title": "New and Changed\n\t System Management Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/system-management/configuration/guide/b-system-management-cg-asr9000-26xx/new-and-changed.html"
+      },
+      {
+        "chapter_slug": "m-yang-data-models-for-system-management-features",
+        "chapter_title": "YANG Data Models for System Management Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/system-management/configuration/guide/b-system-management-cg-asr9000-26xx/m-yang-data-models-for-system-management-features.html"
+      },
+      {
+        "chapter_slug": "configuring-ntp",
+        "chapter_title": "Configuring Network Time Protocol",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/system-management/configuration/guide/b-system-management-cg-asr9000-26xx/configuring-ntp.html"
+      },
+      {
+        "chapter_slug": "configuring-netconf",
+        "chapter_title": "Configuring Network Configuration Protocol",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/system-management/configuration/guide/b-system-management-cg-asr9000-26xx/configuring-netconf.html"
+      },
+      {
+        "chapter_slug": "configuring-synce",
+        "chapter_title": "Configuring Frequency Synchronization",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/system-management/configuration/guide/b-system-management-cg-asr9000-26xx/configuring-synce.html"
+      },
+      {
+        "chapter_slug": "configuring-ptp",
+        "chapter_title": "Configuring Precision Time Protocol",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/system-management/configuration/guide/b-system-management-cg-asr9000-26xx/configuring-ptp.html"
+      },
+      {
+        "chapter_slug": "timing-design-best-practices",
+        "chapter_title": "Network Synchronization Design Best Practices",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/system-management/configuration/guide/b-system-management-cg-asr9000-26xx/timing-design-best-practices.html"
+      }
+    ]
+  },
+  "b-system-security-cg-asr9000-26xx.pdf": {
+    "title": "System Security Configuration Guide for Cisco ASR 9000 Series Routers, IOS XR Release 26.1.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-security/configuration/guide/b-system-security-cg-asr9000-26xx.html",
+    "chapters": [
+      {
+        "chapter_slug": "preface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-security/configuration/guide/b-system-security-cg-asr9000-26xx/preface.html"
+      },
+      {
+        "chapter_slug": "new-and-changed-feature-information",
+        "chapter_title": "New and Changed\n\t Feature Information",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-security/configuration/guide/b-system-security-cg-asr9000-26xx/new-and-changed-feature-information.html"
+      },
+      {
+        "chapter_slug": "yang-data-models-for-system-security-features",
+        "chapter_title": "YANG Data Models for System Security Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-security/configuration/guide/b-system-security-cg-asr9000-26xx/yang-data-models-for-system-security-features.html"
+      },
+      {
+        "chapter_slug": "configuring-aaa-services",
+        "chapter_title": "Configuring AAA Services",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-security/configuration/guide/b-system-security-cg-asr9000-26xx/configuring-aaa-services.html"
+      },
+      {
+        "chapter_slug": "implementing-certification-authority-interoperability",
+        "chapter_title": "Implementing\n\t Certification Authority Interoperability",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-security/configuration/guide/b-system-security-cg-asr9000-26xx/implementing-certification-authority-interoperability.html"
+      },
+      {
+        "chapter_slug": "implementing-keychain-management",
+        "chapter_title": "Implementing Keychain Management",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-security/configuration/guide/b-system-security-cg-asr9000-26xx/implementing-keychain-management.html"
+      },
+      {
+        "chapter_slug": "implementing-macsec-encryption",
+        "chapter_title": "Configure MACSec",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-security/configuration/guide/b-system-security-cg-asr9000-26xx/implementing-macsec-encryption.html"
+      },
+      {
+        "chapter_slug": "implementing-type-6-password-encryption",
+        "chapter_title": "Implementing Type 6 Password Encryption",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-security/configuration/guide/b-system-security-cg-asr9000-26xx/implementing-type-6-password-encryption.html"
+      },
+      {
+        "chapter_slug": "implementing-lawful-intercept",
+        "chapter_title": "Implementing Lawful\n\t Intercept",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-security/configuration/guide/b-system-security-cg-asr9000-26xx/implementing-lawful-intercept.html"
+      },
+      {
+        "chapter_slug": "implementing-management-plane-protection",
+        "chapter_title": "Implementing Management Plane Protection",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-security/configuration/guide/b-system-security-cg-asr9000-26xx/implementing-management-plane-protection.html"
+      },
+      {
+        "chapter_slug": "mpp-for-third-party-applications",
+        "chapter_title": "Traffic Protection for Third-Party Applications",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-security/configuration/guide/b-system-security-cg-asr9000-26xx/mpp-for-third-party-applications.html"
+      },
+      {
+        "chapter_slug": "configuring-software-authentication-manager",
+        "chapter_title": "Configuring Software Authentication Manager",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-security/configuration/guide/b-system-security-cg-asr9000-26xx/configuring-software-authentication-manager.html"
+      },
+      {
+        "chapter_slug": "implementing-secure-shell",
+        "chapter_title": "Implementing Secure\n\t Shell",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-security/configuration/guide/b-system-security-cg-asr9000-26xx/implementing-secure-shell.html"
+      },
+      {
+        "chapter_slug": "layer2-security-features",
+        "chapter_title": "Layer 2 Security Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-security/configuration/guide/b-system-security-cg-asr9000-26xx/layer2-security-features.html"
+      },
+      {
+        "chapter_slug": "implementing-traffic-storm-control-under-a-vpls-bridge",
+        "chapter_title": "Implementing Traffic Storm Control under a VPLS Bridge",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-security/configuration/guide/b-system-security-cg-asr9000-26xx/implementing-traffic-storm-control-under-a-vpls-bridge.html"
+      },
+      {
+        "chapter_slug": "configuring-fips-mode",
+        "chapter_title": "Configuring FIPS\n\t Mode",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-security/configuration/guide/b-system-security-cg-asr9000-26xx/configuring-fips-mode.html"
+      },
+      {
+        "chapter_slug": "implementing-asr9000-vddos-mitigation",
+        "chapter_title": "Implementing Cisco\n\t ASR 9000 vDDoS Mitigation",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-security/configuration/guide/b-system-security-cg-asr9000-26xx/implementing-asr9000-vddos-mitigation.html"
+      },
+      {
+        "chapter_slug": "implementing-secure-logging",
+        "chapter_title": "Implementing Secure Logging",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-security/configuration/guide/b-system-security-cg-asr9000-26xx/implementing-secure-logging.html"
+      },
+      {
+        "chapter_slug": "ssd-encryption",
+        "chapter_title": "SSD Encryption",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-security/configuration/guide/b-system-security-cg-asr9000-26xx/ssd-encryption.html"
+      },
+      {
+        "chapter_slug": "m-masa",
+        "chapter_title": "Cisco MASA Service",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-security/configuration/guide/b-system-security-cg-asr9000-26xx/m-masa.html"
+      }
+    ]
+  },
+  "b-system-monitoring-cg-asr9000-26xx.pdf": {
+    "title": "System Monitoring Configuration Guide for Cisco ASR 9000 Series Routers, IOS XR Release 26.1.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-monitoring/configuration/guide/b-system-monitoring-cg-asr9000-26xx.html",
+    "chapters": [
+      {
+        "chapter_slug": "preface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-monitoring/configuration/guide/b-system-monitoring-cg-asr9000-26xx/preface.html"
+      },
+      {
+        "chapter_slug": "new-and-changed",
+        "chapter_title": "New and Changed System Monitoring Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-monitoring/configuration/guide/b-system-monitoring-cg-asr9000-26xx/new-and-changed.html"
+      },
+      {
+        "chapter_slug": "yang-data-models-for-system-monitoring-features",
+        "chapter_title": "YANG Data Models for System Monitoring Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-monitoring/configuration/guide/b-system-monitoring-cg-asr9000-26xx/yang-data-models-for-system-monitoring-features.html"
+      },
+      {
+        "chapter_slug": "implementing-and-monitoring-alarms-and-alarm-log-correlation",
+        "chapter_title": "Monitoring Alarms and Alarm Log Correlation",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-monitoring/configuration/guide/b-system-monitoring-cg-asr9000-26xx/implementing-and-monitoring-alarms-and-alarm-log-correlation.html"
+      },
+      {
+        "chapter_slug": "configuring-and-managing-embedded-event-manager-policies",
+        "chapter_title": "Configuring and Managing Embedded Event Manager Policies",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-monitoring/configuration/guide/b-system-monitoring-cg-asr9000-26xx/configuring-and-managing-embedded-event-manager-policies.html"
+      },
+      {
+        "chapter_slug": "implementing-ip-service-level-agreements",
+        "chapter_title": "Implementing IP\n\t Service Level Agreements",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-monitoring/configuration/guide/b-system-monitoring-cg-asr9000-26xx/implementing-ip-service-level-agreements.html"
+      },
+      {
+        "chapter_slug": "implementing-logging-services",
+        "chapter_title": "Implementing Logging\n\t Services",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-monitoring/configuration/guide/b-system-monitoring-cg-asr9000-26xx/implementing-logging-services.html"
+      },
+      {
+        "chapter_slug": "onboard-failure-logging",
+        "chapter_title": "Onboard Failure\n\t Logging",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-monitoring/configuration/guide/b-system-monitoring-cg-asr9000-26xx/onboard-failure-logging.html"
+      },
+      {
+        "chapter_slug": "implementing-performance-management",
+        "chapter_title": "Implementing Performance Management",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-monitoring/configuration/guide/b-system-monitoring-cg-asr9000-26xx/implementing-performance-management.html"
+      },
+      {
+        "chapter_slug": "testing-throughput-using-test-tcp",
+        "chapter_title": "Testing Throughput Using Test TCP (TTCP)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-monitoring/configuration/guide/b-system-monitoring-cg-asr9000-26xx/testing-throughput-using-test-tcp.html"
+      },
+      {
+        "chapter_slug": "b-system-monitoring-cg-asr9000-26xx_index",
+        "chapter_title": "Index",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/system-monitoring/configuration/guide/b-system-monitoring-cg-asr9000-26xx/b-system-monitoring-cg-asr9000-26xx_index.html"
+      }
+    ]
+  },
+  "b-cgnat-cg-asr9k-26xx.pdf": {
+    "title": "CGv6 Configuration Guide for Cisco ASR 9000 Series Routers, IOS XR Release 26.1.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/cgnat/configuration/guide/b-cgnat-cg-asr9k-26xx.html",
+    "chapters": [
+      {
+        "chapter_slug": "preface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/cgnat/configuration/guide/b-cgnat-cg-asr9k-26xx/preface.html"
+      },
+      {
+        "chapter_slug": "new-and-changed-features",
+        "chapter_title": "New and Changed Carrier Grade NAT Feature",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/cgnat/configuration/guide/b-cgnat-cg-asr9k-26xx/new-and-changed-features.html"
+      },
+      {
+        "chapter_slug": "introduction",
+        "chapter_title": "Introduction",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/cgnat/configuration/guide/b-cgnat-cg-asr9k-26xx/introduction.html"
+      },
+      {
+        "chapter_slug": "cgipv6-over-vsm",
+        "chapter_title": "Carrier Grade IPv6\n\t over Virtualized Services Module (VSM)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/cgnat/configuration/guide/b-cgnat-cg-asr9k-26xx/cgipv6-over-vsm.html"
+      },
+      {
+        "chapter_slug": "cgipv6-without-service-modules",
+        "chapter_title": "Carrier Grade IPv6\n\t without Service Modules",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/cgnat/configuration/guide/b-cgnat-cg-asr9k-26xx/cgipv6-without-service-modules.html"
+      },
+      {
+        "chapter_slug": "carrier-grade-map-t-exception-handling-with-vsm",
+        "chapter_title": "Understanding MAP-T Exception Handling",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/cgnat/configuration/guide/b-cgnat-cg-asr9k-26xx/carrier-grade-map-t-exception-handling-with-vsm.html"
+      },
+      {
+        "chapter_slug": "external-logging",
+        "chapter_title": "External Logging",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/cgnat/configuration/guide/b-cgnat-cg-asr9k-26xx/external-logging.html"
+      },
+      {
+        "chapter_slug": "b-cgnat-cg-asr9k-26xx_index",
+        "chapter_title": "Index",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/cgnat/configuration/guide/b-cgnat-cg-asr9k-26xx/b-cgnat-cg-asr9k-26xx_index.html"
+      }
+    ]
+  },
+  "b-general-administration-configuration-ios-xr-asr9000.pdf": {
+    "title": "General Administration Guide on Cisco ASR 9000 Series Routers, Cisco IOS XR Releases",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/general-administration/configuration/b-general-administration-configuration-ios-xr-asr9000.html",
+    "chapters": [
+      {
+        "chapter_slug": "about-general-administration-documentation",
+        "chapter_title": "About General Administration Documentation",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/general-administration/configuration/b-general-administration-configuration-ios-xr-asr9000/about-general-administration-documentation.html"
+      },
+      {
+        "chapter_slug": "features-introduced-in-cisco-IOS-XR-products-and-releases",
+        "chapter_title": "Features Introduced in Cisco IOS XR Products and Releases",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/general-administration/configuration/b-general-administration-configuration-ios-xr-asr9000/features-introduced-in-cisco-IOS-XR-products-and-releases.html"
+      },
+      {
+        "chapter_slug": "scale-profiles-and-feature-profiles",
+        "chapter_title": "Scale Profiles and Feature Profiles",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/general-administration/configuration/b-general-administration-configuration-ios-xr-asr9000/scale-profiles-and-feature-profiles.html"
+      },
+      {
+        "chapter_slug": "XML-Manageability",
+        "chapter_title": "XML Manageability",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/general-administration/configuration/b-general-administration-configuration-ios-xr-asr9000/XML-Manageability.html"
+      },
+      {
+        "chapter_slug": "physical-and-virtual-terminals",
+        "chapter_title": "Physical and Virtual Terminals",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/general-administration/configuration/b-general-administration-configuration-ios-xr-asr9000/physical-and-virtual-terminals.html"
+      },
+      {
+        "chapter_slug": "cisco-discovery-protocol",
+        "chapter_title": "Cisco Discovery Protocol",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/general-administration/configuration/b-general-administration-configuration-ios-xr-asr9000/cisco-discovery-protocol.html"
+      },
+      {
+        "chapter_slug": "disk-mirroring",
+        "chapter_title": "Disk Mirroring",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/general-administration/configuration/b-general-administration-configuration-ios-xr-asr9000/disk-mirroring.html"
+      },
+      {
+        "chapter_slug": "call-home",
+        "chapter_title": "Call Home",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/general-administration/configuration/b-general-administration-configuration-ios-xr-asr9000/call-home.html"
+      },
+      {
+        "chapter_slug": "m-configuration-groups",
+        "chapter_title": "Configuration Groups",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/general-administration/configuration/b-general-administration-configuration-ios-xr-asr9000/m-configuration-groups.html"
+      },
+      {
+        "chapter_slug": "secure-file-transfer-and-auto-save-configuration",
+        "chapter_title": "File System",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/general-administration/configuration/b-general-administration-configuration-ios-xr-asr9000/secure-file-transfer-and-auto-save-configuration.html"
+      },
+      {
+        "chapter_slug": "m-configuration-management",
+        "chapter_title": "Configuration Management",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/general-administration/configuration/b-general-administration-configuration-ios-xr-asr9000/m-configuration-management.html"
+      },
+      {
+        "chapter_slug": "m-simple-network-management-protocol-1",
+        "chapter_title": "Simple Network Management Protocol",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/general-administration/configuration/b-general-administration-configuration-ios-xr-asr9000/m-simple-network-management-protocol-1.html"
+      },
+      {
+        "chapter_slug": "m-periodic-mib-data-collection-and-transfer",
+        "chapter_title": "Periodic MIB Data Collection and Transfer",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/general-administration/configuration/b-general-administration-configuration-ios-xr-asr9000/m-periodic-mib-data-collection-and-transfer.html"
+      },
+      {
+        "chapter_slug": "m-configuring-object-tracking",
+        "chapter_title": "Configure object tracking",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/general-administration/configuration/b-general-administration-configuration-ios-xr-asr9000/m-configuring-object-tracking.html"
+      },
+      {
+        "chapter_slug": "m-configure-open-flow-agent",
+        "chapter_title": "Configure OpenFlow Agent",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/general-administration/configuration/b-general-administration-configuration-ios-xr-asr9000/m-configure-open-flow-agent.html"
+      },
+      {
+        "chapter_slug": "general-administration-commands",
+        "chapter_title": "General Administration Commands",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/general-administration/configuration/b-general-administration-configuration-ios-xr-asr9000/general-administration-commands.html"
+      },
+      {
+        "chapter_slug": "yang-data-models-for-netflow-and-sflow",
+        "chapter_title": "YANG Data Models for General Administration",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/general-administration/configuration/b-general-administration-configuration-ios-xr-asr9000/yang-data-models-for-netflow-and-sflow.html"
+      }
+    ]
+  },
+  "b-netflow-cg-asr9k-26xx.pdf": {
+    "title": "Netflow Configuration Guide for Cisco ASR 9000 Series Routers, IOS XR Release 25.1.x, 25.2.x, 25.3.x, 25.4.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/netflow/configuration/guide/b-netflow-cg-asr9k-26xx.html",
+    "chapters": [
+      {
+        "chapter_slug": "preface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/netflow/configuration/guide/b-netflow-cg-asr9k-26xx/preface.html"
+      },
+      {
+        "chapter_slug": "new-and-changed",
+        "chapter_title": "New and Changed Feature Information in Cisco IOS XR",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/netflow/configuration/guide/b-netflow-cg-asr9k-26xx/new-and-changed.html"
+      },
+      {
+        "chapter_slug": "configuring-netflow",
+        "chapter_title": "Configuring\n\t NetFlow",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/netflow/configuration/guide/b-netflow-cg-asr9k-26xx/configuring-netflow.html"
+      },
+      {
+        "chapter_slug": "ipfix",
+        "chapter_title": "IPFIX",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/netflow/configuration/guide/b-netflow-cg-asr9k-26xx/ipfix.html"
+      },
+      {
+        "chapter_slug": "configuring-sflow",
+        "chapter_title": "Configuring sFlow",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/netflow/configuration/guide/b-netflow-cg-asr9k-26xx/configuring-sflow.html"
+      }
+    ]
+  },
+  "b-routing-cg-asr9000-26xx.pdf": {
+    "title": "Routing Configuration Guide for Cisco ASR 9000 Series Routers, IOS XR Release 26.1.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/routing/configuration/guide/b-routing-cg-asr9000-26xx.html",
+    "chapters": [
+      {
+        "chapter_slug": "preface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/routing/configuration/guide/b-routing-cg-asr9000-26xx/preface.html"
+      },
+      {
+        "chapter_slug": "new-and-changed-feature-information",
+        "chapter_title": "New and Changed Routing\n\t\tFeatures",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/routing/configuration/guide/b-routing-cg-asr9000-26xx/new-and-changed-feature-information.html"
+      },
+      {
+        "chapter_slug": "m-yang-data-models-for-routing-features",
+        "chapter_title": "YANG Data Models for Routing Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/routing/configuration/guide/b-routing-cg-asr9000-26xx/m-yang-data-models-for-routing-features.html"
+      },
+      {
+        "chapter_slug": "implementing-bgp",
+        "chapter_title": "Implementing\n\t BGP",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/routing/configuration/guide/b-routing-cg-asr9000-26xx/implementing-bgp.html"
+      },
+      {
+        "chapter_slug": "implementing-bgp-flowspec",
+        "chapter_title": "Implementing BGP\n\t Flowspec",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/routing/configuration/guide/b-routing-cg-asr9000-26xx/implementing-bgp-flowspec.html"
+      },
+      {
+        "chapter_slug": "implementing-bfd",
+        "chapter_title": "Implementing BFD",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/routing/configuration/guide/b-routing-cg-asr9000-26xx/implementing-bfd.html"
+      },
+      {
+        "chapter_slug": "implementing-eigrp",
+        "chapter_title": "Implementing\n\t EIGRP",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/routing/configuration/guide/b-routing-cg-asr9000-26xx/implementing-eigrp.html"
+      },
+      {
+        "chapter_slug": "implementing-is-is",
+        "chapter_title": "Implementing IS-IS",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/routing/configuration/guide/b-routing-cg-asr9000-26xx/implementing-is-is.html"
+      },
+      {
+        "chapter_slug": "implementing-ospf",
+        "chapter_title": "Implementing\n\t OSPF",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/routing/configuration/guide/b-routing-cg-asr9000-26xx/implementing-ospf.html"
+      },
+      {
+        "chapter_slug": "ipv4-ipv6-loop-free-alternate-fast-reroute",
+        "chapter_title": "Implementing IP\n\t Fast Reroute Loop-Free Alternate",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/routing/configuration/guide/b-routing-cg-asr9000-26xx/ipv4-ipv6-loop-free-alternate-fast-reroute.html"
+      },
+      {
+        "chapter_slug": "implementing-and-monitoring-rib",
+        "chapter_title": "Implementing and\n\t Monitoring RIB",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/routing/configuration/guide/b-routing-cg-asr9000-26xx/implementing-and-monitoring-rib.html"
+      },
+      {
+        "chapter_slug": "implementing-rip",
+        "chapter_title": "Implementing\n\t RIP",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/routing/configuration/guide/b-routing-cg-asr9000-26xx/implementing-rip.html"
+      },
+      {
+        "chapter_slug": "implementing-routing-policy",
+        "chapter_title": "Implementing Routing\n\t Policy",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/routing/configuration/guide/b-routing-cg-asr9000-26xx/implementing-routing-policy.html"
+      },
+      {
+        "chapter_slug": "implementing-static-routes",
+        "chapter_title": "Implementing Static\n\t Routes",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/routing/configuration/guide/b-routing-cg-asr9000-26xx/implementing-static-routes.html"
+      },
+      {
+        "chapter_slug": "implementing-rcmd",
+        "chapter_title": "Implementing RCMD",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/routing/configuration/guide/b-routing-cg-asr9000-26xx/implementing-rcmd.html"
+      },
+      {
+        "chapter_slug": "implementing-ucmp",
+        "chapter_title": "Implementing UCMP",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/routing/configuration/guide/b-routing-cg-asr9000-26xx/implementing-ucmp.html"
+      },
+      {
+        "chapter_slug": "implementing-data-plane-security",
+        "chapter_title": "Implementing Data\n\t Plane Security",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/routing/configuration/guide/b-routing-cg-asr9000-26xx/implementing-data-plane-security.html"
+      },
+      {
+        "chapter_slug": "enabling-flexible-algorithm-ip-networks",
+        "chapter_title": "Enabling Flexible Algorithm in IP Networks",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/routing/configuration/guide/b-routing-cg-asr9000-26xx/enabling-flexible-algorithm-ip-networks.html"
+      },
+      {
+        "chapter_slug": "b-routing-cg-asr9000-26xx_index",
+        "chapter_title": "Index",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/26xx/routing/configuration/guide/b-routing-cg-asr9000-26xx/b-routing-cg-asr9000-26xx_index.html"
+      }
+    ]
+  },
+  "b-asr9k-hardware-installation-guide.pdf": {
+    "title": "Cisco ASR 9000 Series Aggregation Services Router Hardware Installation Guide",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/hig/b-asr9k-hardware-installation-guide.html",
+    "chapters": [
+      {
+        "chapter_slug": "b-asr9k-hardware-installation-guide_preface_01",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/hig/b-asr9k-hardware-installation-guide/b-asr9k-hardware-installation-guide_preface_01.html"
+      },
+      {
+        "chapter_slug": "b-asr9k-hardware-installation-guide_chapter_01",
+        "chapter_title": "Preparing for Installation",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/hig/b-asr9k-hardware-installation-guide/b-asr9k-hardware-installation-guide_chapter_01.html"
+      },
+      {
+        "chapter_slug": "b-asr9k-hardware-installation-guide_chapter_010",
+        "chapter_title": "Unpacking and Installing the Chassis",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/hig/b-asr9k-hardware-installation-guide/b-asr9k-hardware-installation-guide_chapter_010.html"
+      },
+      {
+        "chapter_slug": "b-asr9k-hardware-installation-guide_chapter_011",
+        "chapter_title": "Installing Cards and Modules in the Chassis",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/hig/b-asr9k-hardware-installation-guide/b-asr9k-hardware-installation-guide_chapter_011.html"
+      },
+      {
+        "chapter_slug": "b-asr9k-hardware-installation-guide_chapter_0100",
+        "chapter_title": "Troubleshooting the Installation",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/hig/b-asr9k-hardware-installation-guide/b-asr9k-hardware-installation-guide_chapter_0100.html"
+      },
+      {
+        "chapter_slug": "b-asr9k-hardware-installation-guide_chapter_0101",
+        "chapter_title": "Replacing Cisco ASR 9000 Series Router Components",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/hig/b-asr9k-hardware-installation-guide/b-asr9k-hardware-installation-guide_chapter_0101.html"
+      },
+      {
+        "chapter_slug": "b-asr9k-hardware-installation-guide_appendix_0111",
+        "chapter_title": "Technical Specifications",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/hig/b-asr9k-hardware-installation-guide/b-asr9k-hardware-installation-guide_appendix_0111.html"
+      },
+      {
+        "chapter_slug": "b-asr9k-hardware-installation-guide_chapter_0111",
+        "chapter_title": "Site Log",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/hig/b-asr9k-hardware-installation-guide/b-asr9k-hardware-installation-guide_chapter_0111.html"
+      }
+    ]
+  },
+  "b-asr9000-sip-and-spa-hardware-installation-guide.pdf": {
+    "title": "Cisco ASR 9000 Series Aggregation Services Router SIP and SPA Hardware Installation Guide",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/sip-spa-hig/b-asr9000-sip-and-spa-hardware-installation-guide.html",
+    "chapters": [
+      {
+        "chapter_slug": "b-asr9000-sip-and-spa-hardware-installation-guide_preface_00",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/sip-spa-hig/b-asr9000-sip-and-spa-hardware-installation-guide/b-asr9000-sip-and-spa-hardware-installation-guide_preface_00.html"
+      },
+      {
+        "chapter_slug": "b-asr9000-sip-and-spa-hardware-installation-guide_chapter_01",
+        "chapter_title": "Overview: Cisco ASR 9000 Series Router SPA Interface Processors",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/sip-spa-hig/b-asr9000-sip-and-spa-hardware-installation-guide/b-asr9000-sip-and-spa-hardware-installation-guide_chapter_01.html"
+      },
+      {
+        "chapter_slug": "b-asr9000-sip-and-spa-hardware-installation-guide_chapter_010",
+        "chapter_title": "Overview: Cisco ASR 9000 Series Router Shared Port Adapters",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/sip-spa-hig/b-asr9000-sip-and-spa-hardware-installation-guide/b-asr9000-sip-and-spa-hardware-installation-guide_chapter_010.html"
+      },
+      {
+        "chapter_slug": "b-asr9000-sip-and-spa-hardware-installation-guide_chapter_011",
+        "chapter_title": "Preparing to Install a Shared Port Adapter or a SPA Interface Processor",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/sip-spa-hig/b-asr9000-sip-and-spa-hardware-installation-guide/b-asr9000-sip-and-spa-hardware-installation-guide_chapter_011.html"
+      },
+      {
+        "chapter_slug": "b-asr9000-sip-and-spa-hardware-installation-guide_chapter_0100",
+        "chapter_title": "Installing and Removing a SPA Interface Processor",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/sip-spa-hig/b-asr9000-sip-and-spa-hardware-installation-guide/b-asr9000-sip-and-spa-hardware-installation-guide_chapter_0100.html"
+      },
+      {
+        "chapter_slug": "b-asr9000-sip-and-spa-hardware-installation-guide_chapter_0101",
+        "chapter_title": "Installing and Removing a Shared Port Adapter",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/sip-spa-hig/b-asr9000-sip-and-spa-hardware-installation-guide/b-asr9000-sip-and-spa-hardware-installation-guide_chapter_0101.html"
+      },
+      {
+        "chapter_slug": "b-asr9000-sip-and-spa-hardware-installation-guide_chapter_0110",
+        "chapter_title": "Troubleshooting the Installation",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/sip-spa-hig/b-asr9000-sip-and-spa-hardware-installation-guide/b-asr9000-sip-and-spa-hardware-installation-guide_chapter_0110.html"
+      }
+    ]
+  },
+  "b-asr9000-satellite-hig.pdf": {
+    "title": "Cisco ASR 9000 Series Aggregation Services Router Satellite Systems Installation Guide",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/hardware/satellite/installation/guide/b-asr9000-satellite-hig.html",
+    "chapters": [
+      {
+        "chapter_slug": "m-preface-asr9k-sat-hig",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/hardware/satellite/installation/guide/b-asr9000-satellite-hig/m-preface-asr9k-sat-hig.html"
+      },
+      {
+        "chapter_slug": "asr9kvsatovr",
+        "chapter_title": "Overview",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/hardware/satellite/installation/guide/b-asr9000-satellite-hig/asr9kvsatovr.html"
+      },
+      {
+        "chapter_slug": "asr9kvsat9000v",
+        "chapter_title": "Installing and Maintaining the Cisco ASR 9000v Satellite Shelf",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/hardware/satellite/installation/guide/b-asr9000-satellite-hig/asr9kvsat9000v.html"
+      },
+      {
+        "chapter_slug": "asr9kvsatasr901",
+        "chapter_title": "Installing the Cisco ASR 901 Mobile Wireless Router as a\nSatellite Shelf",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/hardware/satellite/installation/guide/b-asr9000-satellite-hig/asr9kvsatasr901.html"
+      },
+      {
+        "chapter_slug": "asr9kvsatasr903",
+        "chapter_title": "Installing the Cisco\n\t ASR 903 Router as a Satellite Shelf",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/hardware/satellite/installation/guide/b-asr9000-satellite-hig/asr9kvsatasr903.html"
+      },
+      {
+        "chapter_slug": "asr9kvasatapp_optional",
+        "chapter_title": "Installing Optional\n\t Chassis Accessories",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/hardware/satellite/installation/guide/b-asr9000-satellite-hig/asr9kvasatapp_optional.html"
+      },
+      {
+        "chapter_slug": "asr9kvsatapp_specs",
+        "chapter_title": "Technical Specifications and Product IDs",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/hardware/satellite/installation/guide/b-asr9000-satellite-hig/asr9kvsatapp_specs.html"
+      },
+      {
+        "chapter_slug": "asr9kvasatapp_sitelog",
+        "chapter_title": "Site Log",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/hardware/satellite/installation/guide/b-asr9000-satellite-hig/asr9kvasatapp_sitelog.html"
+      }
+    ]
+  },
+  "b-asr9001-hardware-installation-guide.pdf": {
+    "title": "Cisco ASR 9000 Series Fixed-Port Routers Hardware Installation Guide",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/9001-hig/b-asr9001-hardware-installation-guide.html",
+    "chapters": [
+      {
+        "chapter_slug": "b-asr9001-hardware-installation-guide_chapter_01",
+        "chapter_title": "Preparing for\n\t Installation",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/9001-hig/b-asr9001-hardware-installation-guide/b-asr9001-hardware-installation-guide_chapter_01.html"
+      },
+      {
+        "chapter_slug": "b-asr9001-hardware-installation-guide_chapter_010",
+        "chapter_title": "Unpacking and Installing the Chassis",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/9001-hig/b-asr9001-hardware-installation-guide/b-asr9001-hardware-installation-guide_chapter_010.html"
+      },
+      {
+        "chapter_slug": "b-asr9001-hardware-installation-guide_chapter_011",
+        "chapter_title": "Installing Modules and Cables in the Chassis",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/9001-hig/b-asr9001-hardware-installation-guide/b-asr9001-hardware-installation-guide_chapter_011.html"
+      },
+      {
+        "chapter_slug": "b-asr9001-hardware-installation-guide_chapter_0111",
+        "chapter_title": "Troubleshooting the Installation",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/9001-hig/b-asr9001-hardware-installation-guide/b-asr9001-hardware-installation-guide_chapter_0111.html"
+      },
+      {
+        "chapter_slug": "b-asr9001-hardware-installation-guide_chapter_0101",
+        "chapter_title": "Replacing Router Components",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/9001-hig/b-asr9001-hardware-installation-guide/b-asr9001-hardware-installation-guide_chapter_0101.html"
+      },
+      {
+        "chapter_slug": "b-asr9001-hardware-installation-guide_appendix_0110",
+        "chapter_title": "Technical Specifications",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/9001-hig/b-asr9001-hardware-installation-guide/b-asr9001-hardware-installation-guide_appendix_0110.html"
+      },
+      {
+        "chapter_slug": "b-asr9001-hardware-installation-guide_appendix_0111",
+        "chapter_title": "Site Log",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/9001-hig/b-asr9001-hardware-installation-guide/b-asr9001-hardware-installation-guide_appendix_0111.html"
+      }
+    ]
+  },
+  "ismig.pdf": {
+    "title": "Cisco ASR 9000 Series  Aggregation Services Router ISM Line Card Installation Guide",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/hardware/ism_line_card/installation/guide/ismig.html",
+    "chapters": [
+      {
+        "chapter_slug": "ismigpreface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/hardware/ism_line_card/installation/guide/ismig/ismigpreface.html"
+      },
+      {
+        "chapter_slug": "ismiginstalling",
+        "chapter_title": "Installing ISM (Integrated Service Module) Line Cards in the Cisco ASR 9000 Series Router",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/hardware/ism_line_card/installation/guide/ismig/ismiginstalling.html"
+      },
+      {
+        "chapter_slug": "ismigtroubleshooting",
+        "chapter_title": "Verifying and Troubleshooting the Line Card Installation",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/hardware/ism_line_card/installation/guide/ismig/ismigtroubleshooting.html"
+      },
+      {
+        "chapter_slug": "ismigspecs",
+        "chapter_title": "Technical Specifications",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/hardware/ism_line_card/installation/guide/ismig/ismigspecs.html"
+      },
+      {
+        "chapter_slug": "ismappb",
+        "chapter_title": "ISM (Integrated Service Module) Line Card Software Installation Overview",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/hardware/ism_line_card/installation/guide/ismig/ismappb.html"
+      }
+    ]
+  },
+  "b-asr9k-ethernt-line-card-install-guide.pdf": {
+    "title": "Cisco ASR 9000 Series Aggregation Services Router Ethernet Line Card Installation Guide",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/ethernet-line-card-installation-guide/b-asr9k-ethernt-line-card-install-guide.html",
+    "chapters": [
+      {
+        "chapter_slug": "b-asr9k-ethernt-line-card-install-guide_preface_011",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/ethernet-line-card-installation-guide/b-asr9k-ethernt-line-card-install-guide/b-asr9k-ethernt-line-card-install-guide_preface_011.html"
+      },
+      {
+        "chapter_slug": "b-asr9k-ethernt-line-card-install-guide_chapter_00",
+        "chapter_title": "Overview",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/ethernet-line-card-installation-guide/b-asr9k-ethernt-line-card-install-guide/b-asr9k-ethernt-line-card-install-guide_chapter_00.html"
+      },
+      {
+        "chapter_slug": "b-asr9k-ethernt-line-card-install-guide_chapter_01",
+        "chapter_title": "Installing and\n\t Removing Line Cards and Transceiver Modules",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/ethernet-line-card-installation-guide/b-asr9k-ethernt-line-card-install-guide/b-asr9k-ethernt-line-card-install-guide_chapter_01.html"
+      },
+      {
+        "chapter_slug": "b-asr9k-ethernt-line-card-install-guide_chapter_010",
+        "chapter_title": "Verifying and Troubleshooting the Line Card Installation",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/ethernet-line-card-installation-guide/b-asr9k-ethernt-line-card-install-guide/b-asr9k-ethernt-line-card-install-guide_chapter_010.html"
+      },
+      {
+        "chapter_slug": "b-asr9k-ethernt-line-card-install-guide_appendix_0100",
+        "chapter_title": "Technical Specifications",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/ethernet-line-card-installation-guide/b-asr9k-ethernt-line-card-install-guide/b-asr9k-ethernt-line-card-install-guide_appendix_0100.html"
+      }
+    ]
+  },
+  "vsmig.pdf": {
+    "title": "Cisco ASR 9000 Series Aggregated Services Router VSM (Virtualized Services Module) Card Installation Guide",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/hardware/vsm_line_card/installation/guide/vsmig.html",
+    "chapters": [
+      {
+        "chapter_slug": "vsmigpreface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/hardware/vsm_line_card/installation/guide/vsmig/vsmigpreface.html"
+      },
+      {
+        "chapter_slug": "vsmig_install",
+        "chapter_title": "Installing VSM Line Cards in the Cisco ASR 9000 Series Router",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/hardware/vsm_line_card/installation/guide/vsmig/vsmig_install.html"
+      },
+      {
+        "chapter_slug": "vsmig_trouble",
+        "chapter_title": "Verifying and Troubleshooting the VSM Card Installation",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/hardware/vsm_line_card/installation/guide/vsmig/vsmig_trouble.html"
+      },
+      {
+        "chapter_slug": "vsmigspecs",
+        "chapter_title": "Technical Specifications",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/hardware/vsm_line_card/installation/guide/vsmig/vsmigspecs.html"
+      },
+      {
+        "chapter_slug": "vsmigacronyms",
+        "chapter_title": "Acronyms",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/hardware/vsm_line_card/installation/guide/vsmig/vsmigacronyms.html"
+      }
+    ]
+  },
+  "b-asr9k-overview-reference-guide.pdf": {
+    "title": "Cisco ASR 9000 Series Aggregation Services Router Overview and Reference Guide",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/overview-reference/b-asr9k-overview-reference-guide.html",
+    "chapters": [
+      {
+        "chapter_slug": "b-asr9k-overview-reference-guide_chapter_01",
+        "chapter_title": "Overview and\n\t Physical Description",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/overview-reference/b-asr9k-overview-reference-guide/b-asr9k-overview-reference-guide_chapter_01.html"
+      },
+      {
+        "chapter_slug": "b-asr9k-overview-reference-guide_chapter_010",
+        "chapter_title": "Functional\n\t Description",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/overview-reference/b-asr9k-overview-reference-guide/b-asr9k-overview-reference-guide_chapter_010.html"
+      },
+      {
+        "chapter_slug": "b-asr9k-overview-reference-guide_chapter_011",
+        "chapter_title": "High Availability and Redundant Operation",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/overview-reference/b-asr9k-overview-reference-guide/b-asr9k-overview-reference-guide_chapter_011.html"
+      },
+      {
+        "chapter_slug": "b-asr9k-hardware-installation-guide_chapter_011",
+        "chapter_title": "Technical\n\t Specifications",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/overview-reference/b-asr9k-overview-reference-guide/b-asr9k-hardware-installation-guide_chapter_011.html"
+      }
+    ]
+  },
+  "b-increase-memory-of-rsp5-rp3-tr.pdf": {
+    "title": "Increase Memory Capacity of ASR 9000 RSP5-TR or ASR 9900 RP3-TR",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/asr9000/hardware-install/peripherals/b-increase-memory-of-rsp5-rp3-tr.html",
+    "chapters": []
+  },
+  "asr9kdimmreadme.pdf": {
+    "title": "Read Me First: DIMM Upgrade Procedure",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/general/asr9kdimmreadme.html",
+    "chapters": [
+      {
+        "chapter_slug": "asr9kdimmreadme#25563",
+        "chapter_title": "Ethernet Line Card Product Numbers",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/general/asr9kdimmreadme.html#25563"
+      },
+      {
+        "chapter_slug": "asr9kdimmreadme#83153",
+        "chapter_title": "Removing a DIMM",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/general/asr9kdimmreadme.html#83153"
+      },
+      {
+        "chapter_slug": "asr9kdimmreadme#85659",
+        "chapter_title": "Installing the DIMMs",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/general/asr9kdimmreadme.html#85659"
+      },
+      {
+        "chapter_slug": "asr9kdimmreadme#92273",
+        "chapter_title": "Checking the DIMM Installation",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/general/asr9kdimmreadme.html#92273"
+      },
+      {
+        "chapter_slug": "asr9kdimmreadme#84670",
+        "chapter_title": "Table 1",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/general/asr9kdimmreadme.html#84670"
+      },
+      {
+        "chapter_slug": "asr9kdimmreadme#11963",
+        "chapter_title": "Figure 1",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/general/asr9kdimmreadme.html#11963"
+      },
+      {
+        "chapter_slug": "asr9kdimmreadme#96519",
+        "chapter_title": "Figure 2",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/general/asr9kdimmreadme.html#96519"
+      },
+      {
+        "chapter_slug": "asr9kdimmreadme#54004",
+        "chapter_title": "Figure 3",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/general/asr9kdimmreadme.html#54004"
+      },
+      {
+        "chapter_slug": "asr9kdimmreadme#49695",
+        "chapter_title": "Step 3",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/general/asr9kdimmreadme.html#49695"
+      },
+      {
+        "chapter_slug": "asr9kdimmreadme#68987",
+        "chapter_title": "Step 7",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/general/asr9kdimmreadme.html#68987"
+      }
+    ]
+  },
+  "ios-xr-smart-licensing-using-policy.pdf": {
+    "title": "Smart Licensing Using Policy  for IOS XR",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/licensing/article/ios-xr-smart-licensing-using-policy.html",
+    "chapters": []
+  }
+}

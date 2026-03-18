@@ -25,6 +25,8 @@ from sidebar_first_draft_page import render_first_draft_page
 from sidebar_bulk_analysis_page import render_bulk_analysis_page
 from sidebar_resolve_bug_page import render_resolve_bug_page
 from sidebar_hallucination_check_page import render_hallucination_check_page
+from sidebar_admin_page import render_admin_page
+from sidebar_ontology_page import render_ontology_page
 
 # Load the .env file
 load_dotenv()
@@ -113,44 +115,119 @@ def detect_product_from_content(content):
     
     return None
 
-def _enrich_output_with_guide_links(text: str, product_name: str) -> str:
-    """Post-process LLM output to add clickable links next to 'Document name: xxx.pdf' lines.
+# Books whose inventory chapter URLs are JS-rendered (broken).
+# Map book slug → static base URL so we can construct working chapter links.
+_STATIC_CHAPTER_BASES = {
+    "systems-interfaces-book-xe-sdwan": (
+        "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/17-x/"
+        "systems-interfaces/systems-interfaces-guide-17-x"
+    ),
+}
 
-    Looks up each mentioned guide in document_inventory.json and appends a
-    clickable link on the next line so users can jump straight to the online guide.
+def _enrich_output_with_guide_links(text: str, product_name: str) -> str:
+    """Post-process LLM output to add clickable links next to Document name / Chapter lines.
+
+    Looks up each mentioned guide in document_inventory.json and appends
+    clickable links so users can jump straight to the online guide or chapter.
     Only applies when an inventory exists for the product (currently sdwan).
+
+    Also ensures proper Markdown line-break spacing so fields render on
+    separate lines instead of collapsing into a single paragraph.
     """
     doc_inventory = load_document_inventory(product_name)
     if not doc_inventory:
         return text
 
+    # --- Pass 0: downgrade Markdown headers to bold text ---
+    # Some models (especially Claude) emit ## headers for section titles,
+    # which st.markdown() renders as giant headings.  Convert to bold.
+    text = re.sub(r'^#{1,4}\s+', '**', text, flags=re.MULTILINE)
+    # Close the bold marker at end-of-line if not already closed
+    # e.g. "**Warning: some text" → "**Warning: some text**"
+    _lines_tmp = []
+    for _l in text.split('\n'):
+        if _l.startswith('**') and not _l.endswith('**') and _l.count('**') % 2 == 1:
+            _l += '**'
+        _lines_tmp.append(_l)
+    text = '\n'.join(_lines_tmp)
+
+    # --- Pass 1: ensure Markdown line breaks between recommendation fields ---
+    # The LLM often emits single-newline-separated fields which Markdown
+    # treats as one paragraph.  Insert a blank line before each field label
+    # so that st.markdown() renders them on separate lines.
+    _FIELD_RE = re.compile(
+        r'^(\s*(?:\*\*)?(?:Document name|Chapter(?:/Section)?|Part/Section hierarchy'
+        r'|Page number|Actual content location indicator|Detailed reasoning'
+        r'|Online guide URL|Likely section topics):)',
+        re.IGNORECASE,
+    )
+    spaced_lines: list[str] = []
+    for line in text.split('\n'):
+        # Add a blank line before a field label unless the previous line is
+        # already blank (or this is the very first line).
+        if _FIELD_RE.match(line) and spaced_lines and spaced_lines[-1].strip():
+            spaced_lines.append('')
+        spaced_lines.append(line)
+    text = '\n'.join(spaced_lines)
+
+    # --- Pass 2: inject clickable links ---
     lines = text.split('\n')
     enriched = []
+    current_guide_name = None  # track most recent Document name for chapter lookups
+
     for line in lines:
         enriched.append(line)
-        # Match lines like "Document name: some-guide.pdf" or "**Document name:** some-guide.pdf"
-        match = re.search(r'[Dd]ocument\s+name:?\s*\**\s*([^\s*]+\.pdf)', line)
-        if match:
-            guide_name = match.group(1)
+
+        # Match "Document name: some-guide.pdf" or "Document name: some-guide" (no .pdf)
+        doc_match = re.search(r'[Dd]ocument\s+name:?\s*\**\s*([^\s*]+)', line)
+        if doc_match:
+            guide_name = doc_match.group(1).rstrip('*').rstrip()
+            current_guide_name = guide_name
             inv_entry = doc_inventory.get(guide_name, {})
             url = inv_entry.get('source_url', '')
             title = inv_entry.get('title', '')
             if url:
-                enriched.append(f"  🔗 **Online:** [{title or guide_name}]({url})")
+                enriched.append(f"🔗 **Online guide:** [{title or guide_name}]({url})")
+                enriched.append('')  # blank line for Markdown paragraph break
+            continue
+
+        # Match "Chapter: chapter-slug" and look up chapter URL
+        ch_match = re.search(r'[Cc]hapter:?\s*\**\s*([^\s*]+)', line)
+        if ch_match and current_guide_name:
+            ch_slug = ch_match.group(1).rstrip('*').rstrip()
+            # Normalise guide name (strip .pdf) for static override lookup
+            bare_guide = current_guide_name.replace('.pdf', '') if current_guide_name.endswith('.pdf') else current_guide_name
+            ch_url = ''
+            ch_title = ch_slug
+
+            # Prefer static base URL for books with broken inventory URLs
+            if bare_guide in _STATIC_CHAPTER_BASES:
+                ch_url = f"{_STATIC_CHAPTER_BASES[bare_guide]}/{ch_slug}.html"
+            else:
+                inv_entry = doc_inventory.get(current_guide_name, {})
+                for ch in inv_entry.get('chapters', []):
+                    if ch.get('chapter_slug') == ch_slug:
+                        ch_url = ch.get('chapter_url', '')
+                        ch_title = ch.get('chapter_title', ch_slug)
+                        break
+
+            if ch_url:
+                enriched.append(f"🔗 **Chapter link:** [{ch_title}]({ch_url})")
+                enriched.append('')  # blank line for Markdown paragraph break
 
     return '\n'.join(enriched)
 
 def get_available_guides(product_name):
-    """Get list of available PDF guides for a product from the vector store"""
+    """Get list of available guides for a product.
+    
+    Discovers guides from two sources (union):
+    1. Vector store 'book' metadata (already-ingested sources)
+    2. Filesystem — both .pdf files and book subdirectories in knowledge_docs/<product>/
+    
+    Guides are identified by book slug (e.g. 'appqoe-book-xe').
+    For directories, the folder name is used; for PDFs, the filename without extension.
+    """
     try:
-        # Check if vector store is initialized in session state
-        if 'vector_store' not in st.session_state or st.session_state.vector_store is None:
-            # Vector store not initialized yet, return empty list
-            return []
-        
-        vectorstore = st.session_state.vector_store
-        
-        # Map UI product names to internal product codes
         product_mapping = {
             "Cisco SD-WAN": "sdwan",
             "Cisco 9800": "9800",
@@ -158,24 +235,43 @@ def get_available_guides(product_name):
             "Cisco 8000": "Cisco8000",
             "cisco_generic": "cisco_generic"
         }
-        
         product_code = product_mapping.get(product_name, product_name)
-        
-        # Query vector store to get unique sources for this product
-        results = vectorstore.get(
-            where={"product": product_code},
-            include=["metadatas"]
-        )
-        
-        # Extract unique guide names (PDF filenames only)
         guides = set()
-        for metadata in results.get('metadatas', []):
-            source = metadata.get('source', '')
-            if source and source.endswith('.pdf'):
-                # Extract just the filename
-                guide_name = source.split('/')[-1]
-                guides.add(guide_name)
-        
+
+        # Source 1: Vector store 'book' metadata (covers already-ingested content)
+        if 'vector_store' in st.session_state and st.session_state.vector_store is not None:
+            vectorstore = st.session_state.vector_store
+            results = vectorstore.get(
+                where={"product": product_code},
+                include=["metadatas"]
+            )
+            for metadata in results.get('metadatas', []):
+                # Prefer 'book' metadata (set during ingestion)
+                book = metadata.get('book', '')
+                if book:
+                    guides.add(book)
+                else:
+                    # Fallback: derive from source path
+                    source = metadata.get('source', '')
+                    if source:
+                        parts = source.replace('\\', '/').split('/')
+                        fname = parts[-1]
+                        if fname.endswith('.pdf'):
+                            guides.add(os.path.splitext(fname)[0])
+                        elif fname.endswith('.txt') and len(parts) >= 3:
+                            guides.add(parts[-2])
+
+        # Source 2: Filesystem (catches content not yet ingested)
+        from paths import KNOWLEDGE_DOCS_DIR
+        knowledge_dir = os.path.join(KNOWLEDGE_DOCS_DIR, product_code)
+        if os.path.isdir(knowledge_dir):
+            for entry in os.listdir(knowledge_dir):
+                full = os.path.join(knowledge_dir, entry)
+                if entry.lower().endswith('.pdf') and os.path.isfile(full):
+                    guides.add(os.path.splitext(entry)[0])
+                elif os.path.isdir(full) and not entry.startswith('.'):
+                    guides.add(entry)
+
         return sorted(list(guides))
     except Exception as e:
         st.error(f"Error retrieving guides: {str(e)}")
@@ -328,7 +424,7 @@ def render_analysis_summary_page():
     st.header("🔍 Analysis & Summary")
     
     # Add model recommendation note
-    st.info("💡 **Recommended Models:** This page works best with **gpt-4.1** or **gpt-4o** for intelligent query parsing. Other models use a simpler search method but work reliably.")
+    st.info("💡 **Recommended Models:** This page works best with **Claude Sonnet 4**, **GPT-4.1**, or **GPT-4o** for intelligent query parsing. Other models use a simpler search method but work reliably.")
     
     st.markdown("---")
     
@@ -610,7 +706,7 @@ def render_analysis_summary_page():
                 if url_clues:
                     for clue in url_clues:
                         chapter_str = ', '.join(c.upper() for c in clue['chapter_clues']) if clue['chapter_clues'] else 'none'
-                        st.info(f"📎 **Book:** {clue['book_pdf']}  ·  **Chapter clues:** {chapter_str}")
+                        st.info(f"📎 **Book:** {clue['book_slug']}  ·  **Chapter clues:** {chapter_str}")
                 
                 # Show technology terms as multiselect
                 if all_detected_terms:
@@ -686,14 +782,14 @@ def render_analysis_summary_page():
         if available_guides:
             # Define priority guides for Cisco SD-WAN (curated subset)
             sdwan_priority_guides = [
-                "systems-interfaces-book-xe-sdwan.pdf",
-                "security-book-xe.pdf",
-                "sdwan-xe-gs-book.pdf",
-                "policies-book-xe.pdf",
-                "appqoe-book-xe.pdf",
-                "cloud-onramp-book-xe.pdf",
-                "monitor-maintain-book.pdf",
-                "compatibility-and-server-recommendations.pdf"
+                "systems-interfaces-book-xe-sdwan",
+                "security-book-xe",
+                "sdwan-xe-gs-book",
+                "policies-book-xe",
+                "appqoe-book-xe",
+                "cloud-onramp-book-xe",
+                "monitor-maintain-book",
+                "compatibility-and-server-recommendations"
             ]
             
             # Initialize session state for selected guides if not exists
@@ -1040,7 +1136,7 @@ Instructions:
 """
                         
                         # Direct LLM call for fast, focused follow-ups
-                        _model = st.session_state.get('selected_model', 'gpt-4o')
+                        _model = st.session_state.get('selected_model', 'claude-sonnet-4')
                         llm = get_llm(model_name=_model)
                         llm_result = llm.invoke(followup_prompt)
                         answer = llm_result.content if hasattr(llm_result, 'content') else str(llm_result)
@@ -1546,7 +1642,7 @@ def main():
     if 'context_window_size' not in st.session_state:
         st.session_state.context_window_size = 3  # Default: last 3 exchanges
     if 'selected_model' not in st.session_state:
-        st.session_state.selected_model = 'gpt-4o'  # Default to gpt-4o
+        st.session_state.selected_model = 'gpt-4.1'  # Default to GPT-4.1
     
     # Initialize vector store in session state (only once)
     if 'vector_store_initialized' not in st.session_state:
@@ -1603,18 +1699,37 @@ def main():
         st.markdown("---")
         
         # Navigation menu
+        # Maps URL-friendly keys to nav labels (supports ?nav=admin, etc.)
+        # NOTE: 'page' is reserved by Streamlit — use 'nav' instead.
+        _NAV_ITEMS = [
+            ("analysis",    "🔍 Analysis & Summary"),
+            ("resolve",     "🔧 Resolve Bug"),
+            ("bulk",        "📊 Bulk Analysis"),
+            ("hal-check",   "🎯 Hallucination Check"),
+            ("first-draft", "✍️ First Draft"),
+            ("settings",    "⚙️ Settings"),
+            ("ontology",    "🧠 Ontology"),
+            ("admin",       "🛠️ Admin"),
+        ]
+        _key_to_idx = {k: i for i, (k, _) in enumerate(_NAV_ITEMS)}
+        _label_to_key = {label: key for key, label in _NAV_ITEMS}
+        _nav_labels = [label for _, label in _NAV_ITEMS]
+
+        # Read ?nav= from URL and pick the matching default index
+        _url_nav = st.query_params.get("nav", "analysis")
+        _default_idx = _key_to_idx.get(_url_nav, 0)
+
         page = st.radio(
             "Navigation",
-            [
-                "🔍 Analysis & Summary",
-                "✍️ First Draft",
-                "📊 Bulk Analysis",
-                "🔧 Resolve Bug",
-                "🎯 Hallucination Check",
-                "⚙️ Settings"
-            ],
+            _nav_labels,
+            index=_default_idx,
             label_visibility="collapsed"
         )
+
+        # Keep URL in sync with the selected tab
+        _selected_key = _label_to_key.get(page, "analysis")
+        if st.query_params.get("nav") != _selected_key:
+            st.query_params["nav"] = _selected_key
         
         st.markdown("---")
         
@@ -1641,6 +1756,7 @@ def main():
         st.markdown("### 🤖 Model Selection")
         
         all_models = [
+            "claude-sonnet-4",
             "gpt-4.1",
             "gpt-4o",
             "gpt-5",
@@ -1649,7 +1765,6 @@ def main():
             "gpt-5-mini",
             "gpt-4o-mini",
             "gpt-5-nano",
-            "claude-sonnet-4",
             "gemini-2.5-pro",
             "gemini-2.5-flash"
         ]
@@ -1663,7 +1778,7 @@ def main():
             "gpt-5-mini": "GPT-5 Mini (Fast) ⚠️",
             "gpt-4o-mini": "GPT-4o Mini (Very Fast) ⚠️",
             "gpt-5-nano": "GPT-5 Nano (Cheapest) ⚠️",
-            "claude-sonnet-4": "Claude Sonnet 4 (Anthropic) ⚠️",
+            "claude-sonnet-4": "Claude Sonnet 4 (Anthropic) ✅",
             "gemini-2.5-pro": "Gemini 2.5 Pro (Google) ⚠️",
             "gemini-2.5-flash": "Gemini 2.5 Flash (Google) ⚠️"
         }
@@ -1680,7 +1795,7 @@ def main():
         st.session_state.selected_model = selected_model
         
         # Show info about the selected model's capabilities
-        if selected_model in ['gpt-4.1', 'gpt-4o']:
+        if selected_model in ['claude-sonnet-4', 'gpt-4.1', 'gpt-4o']:
             st.caption("✅ Smart query parsing enabled")
         else:
             st.caption("⚠️ Using fallback search mode")
@@ -1701,6 +1816,10 @@ def main():
         render_hallucination_check_page()
     elif page == "⚙️ Settings":
         render_settings_page()
+    elif page == "🛠️ Admin":
+        render_admin_page()
+    elif page == "🧠 Ontology":
+        render_ontology_page()
 
 if __name__ == "__main__":
     main()

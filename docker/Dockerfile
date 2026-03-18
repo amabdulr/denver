@@ -18,7 +18,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy only requirements first to leverage Docker layer caching
-COPY requirements.txt .
+COPY app/requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir --prefix=/install -r requirements.txt
 
 
@@ -41,7 +41,15 @@ COPY --from=builder /install /usr/local
 COPY . .
 
 # Create directories the app may need at runtime
-RUN mkdir -p /app/data /app/scour_output /root/.denver_vectorstore
+# knowledge_docs subfolders are empty — the Admin tab downloads PDFs at runtime
+RUN mkdir -p /app/data /app/scour_output /root/.denver_vectorstore \
+    /app/knowledge_docs/sdwan \
+    /app/knowledge_docs/ASR9000 \
+    /app/knowledge_docs/Cisco8000 \
+    /app/knowledge_docs/9800 \
+    /app/knowledge_docs/iot \
+    /app/knowledge_docs/cisco_generic \
+    /app/knowledge_docs/test
 
 # Streamlit config – headless mode, CORS disabled for container use
 RUN mkdir -p /root/.streamlit && \

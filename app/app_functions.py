@@ -23,7 +23,7 @@ This module handles:
 - Template-based prompt generation
 """
 
-from typing import List
+from typing import List, Optional
 import math
 import time
 import re
@@ -135,9 +135,42 @@ def _scan_for_networking_terms(text: str) -> tuple:
 
     # ── Load guide mappings from JSON (editable without touching code) ──
 _GUIDE_MAPPINGS_FILE = os.path.join(CONFIG_DIR, "guide_mappings.json")
+_ONTOLOGY_DIR = os.path.join(PROJECT_ROOT, "ontology")
 
-def _load_guide_mappings():
-    """Load guide matching configuration from guide_mappings.json"""
+def _load_guide_mappings(product_code: str = None):
+    """Load guide matching configuration.
+
+    When *product_code* is given the loader merges:
+      ontology/_shared/guide_mappings.json   (shared sections)
+    + ontology/<product>/guide_mappings.json  (product-specific)
+    into the same shape the old monolithic file had, so downstream code is
+    unchanged.  Falls back to the legacy config/guide_mappings.json when the
+    per-product files don't exist yet.
+    """
+    if product_code:
+        shared_file = os.path.join(_ONTOLOGY_DIR, "_shared", "guide_mappings.json")
+        prod_file = os.path.join(_ONTOLOGY_DIR, product_code, "guide_mappings.json")
+        if os.path.isfile(prod_file):
+            try:
+                shared = {}
+                if os.path.isfile(shared_file):
+                    with open(shared_file, 'r') as f:
+                        shared = json.load(f)
+                with open(prod_file, 'r') as f:
+                    prod = json.load(f)
+                # Reassemble in the shape the rest of the code expects
+                merged = {
+                    "reference_guides": prod.get("reference_guides", {}),
+                    "install_upgrade_terms": shared.get("install_upgrade_terms", {}),
+                    "concept_to_guide": {product_code: prod.get("concept_to_guide", {})},
+                    "product_noise": {product_code: prod.get("product_noise", [])},
+                    "filename_noise_words": shared.get("filename_noise_words", {}),
+                    "stop_words": shared.get("stop_words", {}),
+                }
+                return merged
+            except Exception as e:
+                print(f"⚠️ Could not load per-product ontology files for {product_code}: {e}")
+    # Fallback: legacy monolithic file
     try:
         with open(_GUIDE_MAPPINGS_FILE, 'r') as f:
             return json.load(f)
@@ -148,7 +181,8 @@ def _load_guide_mappings():
 def load_document_inventory(product_name: str) -> dict:
     """Load document_inventory.json for a product if it exists.
     
-    Returns a dict mapping PDF filenames to {"title": ..., "source_url": ...}.
+    Returns a dict mapping book slugs (without .pdf) to {"title": ..., "source_url": ...}.
+    Keys are normalised so lookups work whether the caller uses 'qos-book-xe' or 'qos-book-xe.pdf'.
     Returns empty dict if not available for this product.
     """
     product_mapping = {
@@ -163,14 +197,22 @@ def load_document_inventory(product_name: str) -> dict:
     if os.path.isfile(inv_path):
         try:
             with open(inv_path, 'r') as f:
-                return json.load(f)
+                raw = json.load(f)
+            # Normalise keys: add both 'slug' and 'slug.pdf' so lookups work either way
+            normalised = {}
+            for key, val in raw.items():
+                normalised[key] = val
+                bare = key.replace('.pdf', '') if key.endswith('.pdf') else key
+                if bare != key:
+                    normalised[bare] = val
+            return normalised
         except Exception as e:
             print(f"⚠️ Could not load document_inventory.json for {product_code}: {e}")
     return {}
 
 
 # ── Heading cache for chapter suggestions ──────────────────────────
-_HEADING_CACHE: dict | None = None
+_HEADING_CACHE: Optional[dict] = None
 _HEADING_CACHE_FILE = os.path.join(DATA_DIR, "heading_cache.json")
 
 # Generic headings to skip (not useful as chapter suggestions)
@@ -201,7 +243,7 @@ def find_inventory_chapter(
     heading_text: str,
     guide_filename: str,
     product_name: str,
-) -> dict | None:
+) -> Optional[dict]:
     """Map a sub-section heading (from suggest_chapters) to its parent
     inventory chapter entry.
 
@@ -397,12 +439,22 @@ def match_terms_to_guides(detected_terms: list, product_name: str, term_frequenc
     if not os.path.isdir(knowledge_dir):
         return {}, []
     
-    guide_files = sorted([f for f in os.listdir(knowledge_dir) if f.lower().endswith('.pdf')])
+    # Discover guides from PDF files and book subdirectories (txt-based layout).
+    # PDF files keep their full filename (e.g. 'b-bgp-config-cisco8000.pdf').
+    # Directories use the folder name as-is (e.g. 'appqoe-book-xe').
+    guide_set = set()
+    for entry in os.listdir(knowledge_dir):
+        full = os.path.join(knowledge_dir, entry)
+        if entry.lower().endswith('.pdf') and os.path.isfile(full):
+            guide_set.add(entry)
+        elif os.path.isdir(full) and not entry.startswith('.'):
+            guide_set.add(entry)  # folder name, no .pdf suffix
+    guide_files = sorted(guide_set)
     if not guide_files:
         return {}, []
     
     # ── Load all configuration from guide_mappings.json ──
-    mappings = _load_guide_mappings()
+    mappings = _load_guide_mappings(product_code)
     
     install_cfg = mappings.get('install_upgrade_terms', {})
     install_terms = set(install_cfg.get('terms', []))
@@ -552,7 +604,7 @@ def match_terms_to_guides(detected_terms: list, product_name: str, term_frequenc
     # manually check them in the UI.
     # Supports per-product patterns: {"sdwan": ["alarms-guide"], "ASR9000": [...]}
     # Falls back to flat patterns list for backward compatibility.
-    ref_cfg = _load_guide_mappings().get('reference_guides', {})
+    ref_cfg = _load_guide_mappings(product_code).get('reference_guides', {})
     ref_patterns_raw = ref_cfg.get('patterns', {})
     if isinstance(ref_patterns_raw, dict):
         # Per-product reference guides
@@ -809,7 +861,7 @@ def extract_doc_clues_data(text: str) -> dict:
     
     Returns:
         {
-            'url_clues': [{'url': str, 'book_pdf': str, 'book_id': str, 'chapter_clues': [str]}],
+            'url_clues': [{'url': str, 'book_slug': str, 'book_id': str, 'chapter_clues': [str]}],
             'tech_terms': [(category, term), ...],   # all detected terms
             'tech_terms_by_category': {category: [term, ...]}  # grouped
             'search_hints': {                        # from Description mining
@@ -849,10 +901,10 @@ def extract_doc_clues_data(text: str) -> dict:
             if not html_filename.endswith(('.html', '.htm')):
                 book_identifier = html_filename
                 html_filename = ""
-            book_pdf = f"{book_identifier}.pdf"
-            if book_pdf in seen_books:
+            book_slug = book_identifier
+            if book_slug in seen_books:
                 continue
-            seen_books.add(book_pdf)
+            seen_books.add(book_slug)
             chapter_clues = []
             if html_filename:
                 name_no_ext = re.sub(r'\.html?$', '', html_filename, flags=re.IGNORECASE)
@@ -865,7 +917,7 @@ def extract_doc_clues_data(text: str) -> dict:
                         continue
                     chapter_clues.append(t)
             result['url_clues'].append({
-                'url': url, 'book_pdf': book_pdf,
+                'url': url, 'book_slug': book_slug,
                 'book_id': book_identifier, 'chapter_clues': chapter_clues
             })
         except Exception:
@@ -906,7 +958,7 @@ def format_doc_clues_for_prompt(clues_data: dict, selected_terms: List[str] = No
     # ── URL clues ───────────────────────────────────────────────────
     for clue in clues_data.get('url_clues', []):
         entry = f"  📎 URL found: {clue['url']}\n"
-        entry += f"     Book PDF: {clue['book_pdf']}\n"
+        entry += f"     Book: {clue['book_slug']}\n"
         entry += f"     Book identifier (for source filter): {clue['book_id']}\n"
         if clue['chapter_clues']:
             entry += f"     Chapter clue keywords: {', '.join(clue['chapter_clues'])}\n"
@@ -1034,7 +1086,7 @@ def format_doc_clues_for_prompt(clues_data: dict, selected_terms: List[str] = No
 
 # Rate limiting: Track last call time to avoid API throttling
 _last_tool_call_time = 0
-_min_call_interval = 4.5  # Minimum 4.5 seconds between calls (15 calls per 60 seconds = ~4s each)
+_min_call_interval = 0.5  # Minimum 0.5 seconds between calls (local vector search, not API)
 
 
 @tool
@@ -1081,7 +1133,7 @@ def get_product_info(product: str, query: str) -> str:
         ),
     ]
     document_content_description = "Cisco Product information"
-    _model = st.session_state.get('selected_model', 'gpt-4o')
+    _model = st.session_state.get('selected_model', 'claude-sonnet-4')
     llm = get_llm(model_name=_model)
     
     # IMPORTANT: Using shared in-memory ChromaDB due to SQLite 3.26.0 constraint
@@ -1119,9 +1171,6 @@ def get_product_info(product: str, query: str) -> str:
     # SelfQueryRetriever doesn't work well with source file filtering
     if guides and len(guides) > 0:
         # Build filter for selected guides
-        guide_paths = [f"knowledge_docs/{product.lower()}/{guide}" if '/' not in guide else guide 
-                      for guide in guides]
-        
         # Map UI product names to internal codes if needed
         product_mapping = {
             "Cisco SD-WAN": "sdwan",
@@ -1132,8 +1181,8 @@ def get_product_info(product: str, query: str) -> str:
         }
         product_code = product_mapping.get(product, product)
         
-        # Update paths with correct product code
-        guide_paths = [f"knowledge_docs/{product_code}/{guide}" for guide in guides]
+        # Build guide identifiers (book names without .pdf extension)
+        guide_books = [g.replace('.pdf', '') if g.endswith('.pdf') else g for g in guides]
         
         # ── Priority-weighted search: top guides get more search slots ──
         # Get guide scores from session state (set by match_terms_to_guides)
@@ -1148,20 +1197,20 @@ def get_product_info(product: str, query: str) -> str:
         scored_guides = sorted(guides, key=lambda g: guide_scores.get(g, 0), reverse=True)
         top_guides = [g for g in scored_guides if guide_scores.get(g, 0) > 0][:3]
         
-        # For single guide, use direct filter
-        if len(guides) == 1:
+        # Filter by 'book' metadata field (set during ingestion)
+        if len(guide_books) == 1:
             search_filter = {
                 "$and": [
                     {"product": product_code},
-                    {"source": guide_paths[0]}
+                    {"book": guide_books[0]}
                 ]
             }
         else:
-            # For multiple guides, use $or
+            # For multiple guides, use $or on book names
             search_filter = {
                 "$and": [
                     {"product": product_code},
-                    {"$or": [{"source": path} for path in guide_paths]}
+                    {"$or": [{"book": b} for b in guide_books]}
                 ]
             }
         
@@ -1171,17 +1220,17 @@ def get_product_info(product: str, query: str) -> str:
         # PHASE 1: Dedicated search on top-ranked guides (5 results each for top 2)
         if top_guides and len(guides) > 1:
             for i, tg in enumerate(top_guides[:2]):
-                tg_path = f"knowledge_docs/{product_code}/{tg}"
+                tg_book = tg.replace('.pdf', '') if tg.endswith('.pdf') else tg
                 tg_filter = {
                     "$and": [
                         {"product": product_code},
-                        {"source": tg_path}
+                        {"book": tg_book}
                     ]
                 }
                 try:
                     tg_results = vectorstore.similarity_search(
                         query=query,
-                        k=5,
+                        k=3,
                         filter=tg_filter
                     )
                     for doc in tg_results:
@@ -1198,7 +1247,7 @@ def get_product_info(product: str, query: str) -> str:
         # PHASE 2: Broad search across ALL selected guides (fills remaining slots)
         broad_results = vectorstore.similarity_search(
             query=query,
-            k=10,
+            k=5,
             filter=search_filter
         )
         for doc in broad_results:
@@ -1284,13 +1333,18 @@ You MUST tell the user that no documents were found and cannot provide recommend
     formatted_chunks = []
     for i, doc in enumerate(result, 1):
         chunk_info = f"\n--- CHUNK {i} ---"
-        chunk_info += f"\nSource: {doc.metadata.get('source', 'Unknown')}"
+        source = doc.metadata.get('source', 'Unknown')
+        chunk_info += f"\nSource: {source}"
         
-        # Prefer page_label (printed page number) over page (file index)
-        page_num = doc.metadata.get('page_label') or doc.metadata.get('page')
-        chunk_info += f"\nPage: {page_num if page_num is not None else 'Not available'}"
+        # Book (parent guide folder) and Chapter (filename without extension)
+        book = doc.metadata.get('book', 'Not available')
+        chunk_info += f"\nBook: {book}"
+        chapter_name = doc.metadata.get('chapter', '')
+        if not chapter_name:
+            # Fallback: derive from source path (for chunks ingested before chapter metadata was added)
+            chapter_name = os.path.splitext(os.path.basename(source))[0] if source != 'Unknown' else 'Not available'
+        chunk_info += f"\nChapter: {chapter_name}"
         
-        chunk_info += f"\nSection: {doc.metadata.get('section', 'Not available')}"
         chunk_info += f"\n\nCONTENT:\n{doc.page_content}\n"
         formatted_chunks.append(chunk_info)
     
@@ -1329,7 +1383,7 @@ def run_agent(product_name: str, question: str, rca_content: str, selected_guide
     
     # HIGHEST PRIORITY: URL clue in the RCA — deterministic, most specific
     if url_clues:
-        url_book = url_clues[0]['book_pdf']  # e.g. systems-interfaces-book-xe-sdwan.pdf
+        url_book = url_clues[0]['book_slug']  # e.g. systems-interfaces-book-xe-sdwan
         chapter_tokens = url_clues[0].get('chapter_clues', [])  # e.g. ['configure', 'interfaces']
         url_score = guide_scores.get(url_book, 'n/a')
         recommended_label = f"{url_book} (from URL reference, score: {url_score})"
@@ -1347,7 +1401,7 @@ def run_agent(product_name: str, question: str, rca_content: str, selected_guide
             top_guide = None
             recommended_label = "(no guide scores available — use your best judgment from search results)"
     else:
-        top_guide = url_clues[0]['book_pdf'] if url_clues else None
+        top_guide = url_clues[0]['book_slug'] if url_clues else None
     
     # Section fallback: term-based hints if URL didn't provide chapter clues
     if not section_label:
@@ -1409,7 +1463,7 @@ def run_agent(product_name: str, question: str, rca_content: str, selected_guide
     
     if url_clues and section_label and section_label != "(see location recommendations above)":
         # Strong signal: URL gave us both guide and chapter
-        rec1_guide = url_clues[0]['book_pdf']
+        rec1_guide = url_clues[0]['book_slug']
         chapter_query = ' '.join(url_clues[0].get('chapter_clues', []))
         rec1_url = _get_guide_url(rec1_guide)
         rec1_url_line = f"\n    Online guide URL: {rec1_url}" if rec1_url else ""
@@ -1419,7 +1473,7 @@ def run_agent(product_name: str, question: str, rca_content: str, selected_guide
     ══════════════════════════════════════════════════════════════════════
     Document name: {rec1_guide}{rec1_url_line}
     Chapter/Section: {section_label}
-    Page number: <SEARCH THIS GUIDE and fill in>
+    Chapter: <SEARCH THIS GUIDE — copy from Chapter: field in results>
     Actual content location indicator: <SEARCH THIS GUIDE and quote 8-15 words>
     Detailed reasoning: The bug/RCA explicitly references this document and chapter via URL.
     ══════════════════════════════════════════════════════════════════════
@@ -1436,7 +1490,7 @@ def run_agent(product_name: str, question: str, rca_content: str, selected_guide
     ══════════════════════════════════════════════════════════════════════
     Document name: {rec1_guide}{rec1_url_line}
     Likely section topics: {section_label}
-    Page number: <SEARCH THIS GUIDE and fill in>
+    Chapter: <SEARCH THIS GUIDE — copy from Chapter: field in results>
     Actual content location indicator: <SEARCH THIS GUIDE and quote 8-15 words>
     Detailed reasoning: This guide scored highest ({guide_scores.get(rec1_guide, 'n/a')}) based on detected technology terms.
     ══════════════════════════════════════════════════════════════════════
@@ -1456,7 +1510,7 @@ def run_agent(product_name: str, question: str, rca_content: str, selected_guide
     ══════════════════════════════════════════════════════════════════════
     Document name: {guide_name}{guide_url_line}
     Likely section topics: {hint_text}
-    Page number: <SEARCH THIS GUIDE and fill in>
+    Chapter: <SEARCH THIS GUIDE — copy from Chapter: field in results>
     Actual content location indicator: <SEARCH THIS GUIDE and quote 8-15 words>
     Detailed reasoning: This guide scored #{rank} ({score}) based on detected technology terms matching: {hint_text}
     ══════════════════════════════════════════════════════════════════════
@@ -1551,7 +1605,7 @@ def run_agent(product_name: str, question: str, rca_content: str, selected_guide
     )
 
     # Use the user-selected model (from sidebar dropdown)
-    _model = st.session_state.get('selected_model', 'gpt-4o')
+    _model = st.session_state.get('selected_model', 'claude-sonnet-4')
     llm = get_llm(model_name=_model)
 
     # Model-agnostic agent: works with GPT, Claude, Gemini — any model
@@ -1566,7 +1620,8 @@ def run_agent(product_name: str, question: str, rca_content: str, selected_guide
     )
 
     agent_executor = AgentExecutor(
-        agent=agent, tools=[get_product_info], verbose=False, stream_runnable=False
+        agent=agent, tools=[get_product_info], verbose=False, stream_runnable=False,
+        max_iterations=6,
     )
     
     res = agent_executor.invoke(
@@ -1630,7 +1685,7 @@ def apply_prompt_file(prompt_file_path: str, rca_content: str, product_name: str
     full_prompt = full_prompt.replace("{product}", product_name)
     
     # Get LLM and invoke (use selected model)
-    _model = st.session_state.get('selected_model', 'gpt-4o')
+    _model = st.session_state.get('selected_model', 'claude-sonnet-4')
     llm = get_llm(model_name=_model)
     result = llm.invoke(full_prompt)
     
@@ -1710,10 +1765,10 @@ Cisco Product: {product_name}
     ⚠️ CRITICAL ANTI-HALLUCINATION RULES:
     1. ONLY use information that the get_product_info tool actually returned
     2. If the tool returns "❌ NO DOCUMENTS FOUND ❌", you MUST tell the user no documentation was found
-    3. DO NOT invent document names, page numbers, sections, or quotes
+    3. DO NOT invent document names, chapter names, or quotes
     4. DO NOT make up plausible-sounding information
     5. When referencing content, quote EXACT text from the retrieved chunks
-    6. When stating page numbers or sections, copy EXACTLY from the chunk metadata
+    6. When stating Book or Chapter, copy EXACTLY from the chunk metadata
     7. If metadata is "Not available", say so - don't guess or invent
     
     ⚠️ IMPORTANT: Be efficient with tool calls to avoid rate limiting (max 15 calls per minute)
@@ -1730,7 +1785,7 @@ Cisco Product: {product_name}
     )
     
     # Use the user-selected model (from sidebar dropdown)
-    _model = st.session_state.get('selected_model', 'gpt-4o')
+    _model = st.session_state.get('selected_model', 'claude-sonnet-4')
     llm = get_llm(model_name=_model)
     
     # Model-agnostic agent: works with GPT, Claude, Gemini
@@ -1744,7 +1799,8 @@ Cisco Product: {product_name}
     )
     
     agent_executor = AgentExecutor(
-        agent=agent, tools=[get_product_info], verbose=False, stream_runnable=False
+        agent=agent, tools=[get_product_info], verbose=False, stream_runnable=False,
+        max_iterations=6,
     )
     
     res = agent_executor.invoke(

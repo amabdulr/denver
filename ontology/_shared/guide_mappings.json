@@ -1,0 +1,62 @@
+{
+    "_comment": "Shared knowledge-graph settings used by all products.",
+    "install_upgrade_terms": {
+        "_comment": "Terms that trigger auto-selection of install/upgrade guides. When any of these terms are detected in bug/RCA content, guides matching 'install_guide_patterns' filenames are auto-checked.",
+        "terms": [
+            "upgrade",
+            "install",
+            "installation",
+            "firmware",
+            "image",
+            "boot",
+            "rommon",
+            "rom monitor",
+            "rom-monitor",
+            "software install",
+            "software upgrade",
+            "software image",
+            "sw install",
+            "setup and upgrade",
+            "install and upgrade",
+            "smu",
+            "pie",
+            "issu",
+            "fpd",
+            "downgrade",
+            "hardware installation"
+        ],
+        "guide_patterns": [
+            "install",
+            "upgrade",
+            "setup",
+            "-hig",
+            "gs-book"
+        ]
+    },
+    "filename_noise_words": {
+        "_comment": "Common words that appear in guide filenames. Any detected term that is a substring of these words gets skipped to avoid false matches (e.g. 'gui' inside 'guide').",
+        "words": [
+            "guide",
+            "configuration",
+            "troubleshooting",
+            "reference",
+            "overview"
+        ]
+    },
+    "stop_words": {
+        "_comment": "English stop words stripped from terms before filename matching. Filenames often drop these (e.g. 'monitor and maintain' becomes 'monitor-maintain' in the filename).",
+        "words": [
+            "and",
+            "or",
+            "the",
+            "for",
+            "of",
+            "to",
+            "a",
+            "an",
+            "in",
+            "on",
+            "with"
+        ]
+    }
+}

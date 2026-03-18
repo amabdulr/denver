@@ -1,27 +1,17 @@
 # =============================================================
-# Denver App – Production / Portable Docker Compose
+# Denver App – Production Docker Compose (self-contained)
 #
-# Simulates a real remote-server deployment:
-#   - knowledge_docs are mounted from a configurable host path
-#   - ChromaDB vector store lives in its own Docker volume
-#   - No other host files leak into the container
-#   - Ingestion MUST run inside the container (nothing pre-built)
+# Fully self-contained deployment:
+#   - Image ships with empty knowledge_docs/ subfolders
+#   - ontology/ is baked into the image
+#   - Admin tab downloads product PDFs at runtime
+#   - All runtime data persists in Docker volumes
 #
-# Usage (from the project root):
-#
-#   1. Set the path to your knowledge docs:
-#      export KNOWLEDGE_DOCS_PATH=/path/to/your/knowledge_docs
-#
-#   2. Wipe any old vector store so ingestion is forced:
-#      docker compose -f docker/docker-compose.prod.yml down -v
-#
-#   3. Build and run:
-#      docker compose -f docker/docker-compose.prod.yml up --build
-#
-# On a NEW laptop, all you need is:
+# On a NEW server, all you need is:
 #   - This repo (git clone)
-#   - A folder of knowledge docs somewhere on disk
 #   - A filled-in docker/.env file with your API keys
+#   - Run: docker compose -f docker/docker-compose.prod.yml up --build
+#   - Use the Admin tab to download product documentation
 # =============================================================
 version: "3.9"
 
@@ -41,11 +31,12 @@ services:
     volumes:
       # Persist the vector store across container restarts
       - vectorstore_data:/root/.denver_vectorstore
-      # Mount knowledge_docs from wherever they live on the HOST.
-      # Set KNOWLEDGE_DOCS_PATH env var before running, e.g.:
-      #   export KNOWLEDGE_DOCS_PATH=/Users/you/Documents/denver_docs
-      # Falls back to ../knowledge_docs (same as dev) if not set.
-      - ${KNOWLEDGE_DOCS_PATH:-../knowledge_docs}:/app/knowledge_docs:ro
+      # Persist downloaded knowledge docs (Admin tab populates these)
+      - knowledge_docs_data:/app/knowledge_docs
+      # Persist app config and ontology edits
+      - app_config_data:/app/config
+      # Persist data directory for ingestion metadata / heading cache
+      - app_data:/app/data
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
       interval: 30s
@@ -55,4 +46,10 @@ services:
 
 volumes:
   vectorstore_data:
+    driver: local
+  knowledge_docs_data:
+    driver: local
+  app_config_data:
+    driver: local
+  app_data:
     driver: local

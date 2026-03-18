@@ -20,11 +20,14 @@ docker/
 # Git
 .git/
 
-# Large output directories (mounted as volumes instead)
+# Large output directories
 scour_output/
 scour_output_sdwan/
-knowledge_docs/
 data/
+
+# knowledge_docs — only PDFs are excluded; the folder structure
+# is created by the Dockerfile.  The Admin tab downloads docs at runtime.
+knowledge_docs/
 
 # Directories not needed at runtime
 legacy/

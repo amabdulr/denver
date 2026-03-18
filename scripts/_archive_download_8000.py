@@ -1,3 +1,4 @@
+
 import os
 import re
 import requests
@@ -7,13 +8,13 @@ from concurrent.futures import ThreadPoolExecutor
 from packaging import version
 
 # --- CONFIGURATION ---
-TARGET_RELEASE = None  # Set to None to download all guides, or a string like "17.15" to filter
+TARGET_RELEASE = "25.1.x"  # <--- INPUT YOUR RELEASE NUMBER HERE (or None for latest)
 MAX_WORKERS = 5           # Number of simultaneous downloads (don't go too high or you might get blocked)
-DOWNLOAD_DIR = "knowledge_docs/test"
+DOWNLOAD_DIR = "Cisco_8000_Parallel_Docs"
 # ---------------------
 
 BASE_URL = "https://www.cisco.com"
-LANDING_PAGE = "https://www.cisco.com/c/en/us/support/routers/sd-wan/series.html"
+LANDING_PAGE = "https://www.cisco.com/c/en/us/support/routers/8000-series-routers/products-installation-and-configuration-guides-list.html"
 
 def get_latest_version(soup):
     version_pattern = re.compile(r'(\d+\.\d+\.[\dx]+)')
@@ -62,30 +63,15 @@ def run_fast_download(target_rel=None):
     print("Fetching landing page...")
     soup = BeautifulSoup(requests.get(LANDING_PAGE).text, 'html.parser')
     
-    if target_rel:
-        rel = target_rel
-        print(f"Targeting Release: {rel}")
-    else:
-        rel = None√cx
-        print("No release filter — downloading all guides.")
+    rel = target_rel if target_rel else get_latest_version(soup)
+    print(f"Targeting Release: {rel}")
 
-    # Only include this specific release note
-    KEEP_RELEASE_NOTE = "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/release/notes/20-15/rel-notes-controllers-20-15.html"
-
-    # Collect all matching guide links (skip release notes except the one above)
-    links_to_process = [KEEP_RELEASE_NOTE]
+    # Collect all matching guide links
+    links_to_process = []
     for link in soup.find_all('a', href=True):
         href = link['href']
-        if '/td/docs/' in href:
-            full_url = urljoin(BASE_URL, href)
-            # Skip release notes (already added the one we want)
-            if 'release/notes' in href:
-                continue
-            # Skip system message guides
-            if 'system-message-guide' in href or 'syslogs' in href:
-                continue
-            if rel is None or rel in (link.get_text() + href):
-                links_to_process.append(full_url)
+        if '/td/docs/' in href and rel in (link.get_text() + href):
+            links_to_process.append(urljoin(BASE_URL, href))
     
     links_to_process = list(set(links_to_process))
     print(f"Found {len(links_to_process)} guides. Starting parallel download...\n")

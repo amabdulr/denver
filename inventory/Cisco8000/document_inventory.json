@@ -1,0 +1,2230 @@
+{
+  "cisco-8800-series-router-replacing-a-fan-and-fabric-card.pdf": {
+    "title": "Cisco 8800 Series Router \u2013 Replacing a Fan and Fabric Card",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/video/cisco-8800-series-router-replacing-a-fan-and-fabric-card.html",
+    "chapters": []
+  },
+  "cisco-8800-series-router---replacing-a-line-card.pdf": {
+    "title": "Cisco 8800 Series Router \u2013 Replacing a Line card",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/video/cisco-8800-series-router---replacing-a-line-card.html",
+    "chapters": []
+  },
+  "b-application-hosting-cg-cisco8000.pdf": {
+    "title": "Application Hosting Configuration Guide for Cisco 8000 Series Routers, Cisco IOS XR Releases",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/application-hosting/b-application-hosting-cg-cisco8000.html",
+    "chapters": [
+      {
+        "chapter_slug": "m-preface-ah-cg",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/application-hosting/b-application-hosting-cg-cisco8000/m-preface-ah-cg.html"
+      },
+      {
+        "chapter_slug": "new-and-changed-application-hosting-features",
+        "chapter_title": "New and Changed Application Hosting Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/application-hosting/b-application-hosting-cg-cisco8000/new-and-changed-application-hosting-features.html"
+      },
+      {
+        "chapter_slug": "overview-of-application-hosting",
+        "chapter_title": "Application Hosting Overview",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/application-hosting/b-application-hosting-cg-cisco8000/overview-of-application-hosting.html"
+      },
+      {
+        "chapter_slug": "cisco-secure-ddos-edge-protection",
+        "chapter_title": "Cisco Secure DDoS Edge Protection",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/application-hosting/b-application-hosting-cg-cisco8000/cisco-secure-ddos-edge-protection.html"
+      },
+      {
+        "chapter_slug": "packet-io-functionalities-and-hosting-applications",
+        "chapter_title": "Packet I/O Functionality and Hosting Applications",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/application-hosting/b-application-hosting-cg-cisco8000/packet-io-functionalities-and-hosting-applications.html"
+      }
+    ]
+  },
+  "b-bgp-config-cisco8000.pdf": {
+    "title": "BGP Configuration Guide for Cisco 8000 Series Routers, Cisco IOS XR Releases",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/bgp/b-bgp-config-cisco8000.html",
+    "chapters": [
+      {
+        "chapter_slug": "m-preface-bgp-cisco8000",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/bgp/b-bgp-config-cisco8000/m-preface-bgp-cisco8000.html"
+      },
+      {
+        "chapter_slug": "m-yang-data-models-for-bgp-features",
+        "chapter_title": "YANG Data Models for BGP Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/bgp/b-bgp-config-cisco8000/m-yang-data-models-for-bgp-features.html"
+      },
+      {
+        "chapter_slug": "m-service-layer-api-for-bgp-features",
+        "chapter_title": "Service Layer API for BGP Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/bgp/b-bgp-config-cisco8000/m-service-layer-api-for-bgp-features.html"
+      },
+      {
+        "chapter_slug": "m-understanding-bgp-and-prerequisites",
+        "chapter_title": "Introduction to BGP and Deployment Prerequisites",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/bgp/b-bgp-config-cisco8000/m-understanding-bgp-and-prerequisites.html"
+      },
+      {
+        "chapter_slug": "m-enabling-and-setting-up-bgp",
+        "chapter_title": "Enabling and Setting up BGP",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/bgp/b-bgp-config-cisco8000/m-enabling-and-setting-up-bgp.html"
+      },
+      {
+        "chapter_slug": "m-core-bgp-configurations",
+        "chapter_title": "Core BGP Configurations",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/bgp/b-bgp-config-cisco8000/m-core-bgp-configurations.html"
+      },
+      {
+        "chapter_slug": "m-bgp-path-selection-and-route-preference",
+        "chapter_title": "BGP Path Selection and Route Preference",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/bgp/b-bgp-config-cisco8000/m-bgp-path-selection-and-route-preference.html"
+      },
+      {
+        "chapter_slug": "m-bgp-routing-optimization-convergence-techniques",
+        "chapter_title": "BGP Routing Optimisation and Convergence Techniques",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/bgp/b-bgp-config-cisco8000/m-bgp-routing-optimization-convergence-techniques.html"
+      },
+      {
+        "chapter_slug": "m-bgp-next-hop-processing",
+        "chapter_title": "BGP Next-Hop Processing",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/bgp/b-bgp-config-cisco8000/m-bgp-next-hop-processing.html"
+      },
+      {
+        "chapter_slug": "m-bgp-neighbor-and-session-configuration",
+        "chapter_title": "BGP Neighbor and Session Configuration",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/bgp/b-bgp-config-cisco8000/m-bgp-neighbor-and-session-configuration.html"
+      },
+      {
+        "chapter_slug": "m-bgp-prefix-management-and-session-parameters",
+        "chapter_title": "BGP Prefix Management and Session Parameters",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/bgp/b-bgp-config-cisco8000/m-bgp-prefix-management-and-session-parameters.html"
+      },
+      {
+        "chapter_slug": "m-bgp-link-state-mechanisms-and-update-groups",
+        "chapter_title": "BGP Link-State Mechanisms and Update Groups",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/bgp/b-bgp-config-cisco8000/m-bgp-link-state-mechanisms-and-update-groups.html"
+      },
+      {
+        "chapter_slug": "m-bgp-default-limits-and-multiprotocol-address-handling",
+        "chapter_title": "BGP Default Limits and Multiprotocol Address Handling",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/bgp/b-bgp-config-cisco8000/m-bgp-default-limits-and-multiprotocol-address-handling.html"
+      },
+      {
+        "chapter_slug": "m-bgp-dynamic-neighbors-and-resource-management",
+        "chapter_title": "BGP Dynamic Neighbors and Resource Management",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/bgp/b-bgp-config-cisco8000/m-bgp-dynamic-neighbors-and-resource-management.html"
+      },
+      {
+        "chapter_slug": "m-bgp-multipath-and-load-balancing-techniques",
+        "chapter_title": "BGP Multipath and Load Balancing Techniques",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/bgp/b-bgp-config-cisco8000/m-bgp-multipath-and-load-balancing-techniques.html"
+      },
+      {
+        "chapter_slug": "m-high-scale-bgp-multipath-and-load-balancing",
+        "chapter_title": "High-scale BGP Multipath and Load Balancing",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/bgp/b-bgp-config-cisco8000/m-high-scale-bgp-multipath-and-load-balancing.html"
+      },
+      {
+        "chapter_slug": "m-bgp-dmz-bandwidth-management",
+        "chapter_title": "BGP DMZ Bandwidth Management",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/bgp/b-bgp-config-cisco8000/m-bgp-dmz-bandwidth-management.html"
+      },
+      {
+        "chapter_slug": "m-route-filtering-and-policy-enforcement",
+        "chapter_title": "Route Filtering and Policy Enforcement",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/bgp/b-bgp-config-cisco8000/m-route-filtering-and-policy-enforcement.html"
+      },
+      {
+        "chapter_slug": "m-route-dampening-and-ecmp-stability-mechanisms",
+        "chapter_title": "Route Dampening and ECMP Stability Mechanisms",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/bgp/b-bgp-config-cisco8000/m-route-dampening-and-ecmp-stability-mechanisms.html"
+      },
+      {
+        "chapter_slug": "m-handling-bgp-slow-peers",
+        "chapter_title": "Handling BGP Slow Peers",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/bgp/b-bgp-config-cisco8000/m-handling-bgp-slow-peers.html"
+      },
+      {
+        "chapter_slug": "m-label-alloc-and-mpls-support",
+        "chapter_title": "Label Allocation and MPLS Support",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/bgp/b-bgp-config-cisco8000/m-label-alloc-and-mpls-support.html"
+      },
+      {
+        "chapter_slug": "m-bgp-flowspec",
+        "chapter_title": "BGP Flowspec",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/bgp/b-bgp-config-cisco8000/m-bgp-flowspec.html"
+      },
+      {
+        "chapter_slug": "m-bgp-session-security-mechanisms",
+        "chapter_title": "BGP Session Security Mechanisms",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/bgp/b-bgp-config-cisco8000/m-bgp-session-security-mechanisms.html"
+      },
+      {
+        "chapter_slug": "m-monitoring-and-debugging",
+        "chapter_title": "Monitoring and Debugging",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/bgp/b-bgp-config-cisco8000/m-monitoring-and-debugging.html"
+      },
+      {
+        "chapter_slug": "m-graceful-maintenance",
+        "chapter_title": "Graceful Maintenance",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/bgp/b-bgp-config-cisco8000/m-graceful-maintenance.html"
+      }
+    ]
+  },
+  "b-setup-and-upgrade-cisco8k.pdf": {
+    "title": "Cisco IOS XR Software Setup and Upgrade Guide for Cisco 8000 Series Routers",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/b-setup-and-upgrade-cisco8k.html",
+    "chapters": [
+      {
+        "chapter_slug": "key-concepts",
+        "chapter_title": "Key Concepts",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/b-setup-and-upgrade-cisco8k/key-concepts.html"
+      },
+      {
+        "chapter_slug": "workflow",
+        "chapter_title": "Workflow to Setup and Upgrade the Router",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/b-setup-and-upgrade-cisco8k/workflow.html"
+      },
+      {
+        "chapter_slug": "setup-software",
+        "chapter_title": "Setup the Router",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/b-setup-and-upgrade-cisco8k/setup-software.html"
+      },
+      {
+        "chapter_slug": "upgrade-software",
+        "chapter_title": "Upgrade the Router",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/b-setup-and-upgrade-cisco8k/upgrade-software.html"
+      },
+      {
+        "chapter_slug": "bootz",
+        "chapter_title": "Deploy Router Using Bootz",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/b-setup-and-upgrade-cisco8k/bootz.html"
+      },
+      {
+        "chapter_slug": "secure-ztp",
+        "chapter_title": "Deploy Router Using Secure ZTP",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/b-setup-and-upgrade-cisco8k/secure-ztp.html"
+      },
+      {
+        "chapter_slug": "classic-ztp",
+        "chapter_title": "Deploy Router Using Classic ZTP",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/b-setup-and-upgrade-cisco8k/classic-ztp.html"
+      },
+      {
+        "chapter_slug": "manage-software",
+        "chapter_title": "Additional Install Operations",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/b-setup-and-upgrade-cisco8k/manage-software.html"
+      },
+      {
+        "chapter_slug": "troubleshoot",
+        "chapter_title": "Troubleshoot Router Setup and Upgrade",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/b-setup-and-upgrade-cisco8k/troubleshoot.html"
+      },
+      {
+        "chapter_slug": "install-owner-and-partner-rpms",
+        "chapter_title": "Install Owner and Partner RPMs using IOS XR Install Infrastructure",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/b-setup-and-upgrade-cisco8k/install-owner-and-partner-rpms.html"
+      },
+      {
+        "chapter_slug": "m_upgrading_fpd_on_cisco_ios_xr_software-8k",
+        "chapter_title": "Upgrading Field-Programmable Device",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/b-setup-and-upgrade-cisco8k/m_upgrading_fpd_on_cisco_ios_xr_software-8k.html"
+      },
+      {
+        "chapter_slug": "caveats",
+        "chapter_title": "Release-specific Caveats and Workarounds",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/b-setup-and-upgrade-cisco8k/caveats.html"
+      },
+      {
+        "chapter_slug": "m-setup-and-upgrade-commands-8k",
+        "chapter_title": "Setup and Upgrade Commands",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/b-setup-and-upgrade-cisco8k/m-setup-and-upgrade-commands-8k.html"
+      }
+    ]
+  },
+  "b-evpn-config-cisco8000.pdf": {
+    "title": "EVPN Configuration Guide for Cisco 8000 Series Routers, Cisco IOS XR Releases",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/evpn/b-evpn-config-cisco8000.html",
+    "chapters": [
+      {
+        "chapter_slug": "preface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/evpn/b-evpn-config-cisco8000/preface.html"
+      },
+      {
+        "chapter_slug": "yang-data-models-for-evpn-features",
+        "chapter_title": "YANG Data Models for EVPN Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/evpn/b-evpn-config-cisco8000/yang-data-models-for-evpn-features.html"
+      },
+      {
+        "chapter_slug": "getting-started-with-evpn-mpls",
+        "chapter_title": "Getting Started with EVPN MPLS",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/evpn/b-evpn-config-cisco8000/getting-started-with-evpn-mpls.html"
+      },
+      {
+        "chapter_slug": "evpn-mpls-single-homing",
+        "chapter_title": "EVPN MPLS Single-Homing",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/evpn/b-evpn-config-cisco8000/evpn-mpls-single-homing.html"
+      },
+      {
+        "chapter_slug": "evpn-mpls-multihoming",
+        "chapter_title": "EVPN MPLS Multihoming",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/evpn/b-evpn-config-cisco8000/evpn-mpls-multihoming.html"
+      },
+      {
+        "chapter_slug": "migration-of-vpls-and-vpws-networks-to-evpn",
+        "chapter_title": "Migration of VPLS and VPWS Networks to EVPN",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/evpn/b-evpn-config-cisco8000/migration-of-vpls-and-vpws-networks-to-evpn.html"
+      },
+      {
+        "chapter_slug": "fundamentals-and-core-features-of-evpn",
+        "chapter_title": "Fundamentals and Core Features of EVPN",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/evpn/b-evpn-config-cisco8000/fundamentals-and-core-features-of-evpn.html"
+      },
+      {
+        "chapter_slug": "advanced-evpn-configurations-and-extensions",
+        "chapter_title": "Advanced EVPN Configurations and Extensions",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/evpn/b-evpn-config-cisco8000/advanced-evpn-configurations-and-extensions.html"
+      },
+      {
+        "chapter_slug": "enhanced-evpn-services-and-failover-techniques",
+        "chapter_title": "Enhanced EVPN Services and Failover Techniques",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/evpn/b-evpn-config-cisco8000/enhanced-evpn-services-and-failover-techniques.html"
+      },
+      {
+        "chapter_slug": "evpn-e-tree-for-evpn-e-lan",
+        "chapter_title": "EVPN E-Tree for EVPN E-LAN",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/evpn/b-evpn-config-cisco8000/evpn-e-tree-for-evpn-e-lan.html"
+      },
+      {
+        "chapter_slug": "cfm-on-evpn",
+        "chapter_title": "CFM on EVPN",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/evpn/b-evpn-config-cisco8000/cfm-on-evpn.html"
+      },
+      {
+        "chapter_slug": "evpn-mpls-transport",
+        "chapter_title": "EVPN MPLS Transport",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/evpn/b-evpn-config-cisco8000/evpn-mpls-transport.html"
+      }
+    ]
+  },
+  "b-interfaces-config-guide-cisco8k-r26xx.pdf": {
+    "title": "Interface and Hardware Component Configuration Guide for Cisco 8000 Series Routers, IOS XR Release 26.1.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/Interfaces/26xx/configuration/guide/b-interfaces-config-guide-cisco8k-r26xx.html",
+    "chapters": [
+      {
+        "chapter_slug": "preface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/Interfaces/26xx/configuration/guide/b-interfaces-config-guide-cisco8k-r26xx/preface.html"
+      },
+      {
+        "chapter_slug": "new-and-changed-feature-information",
+        "chapter_title": "New and Changed Feature Information",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/Interfaces/26xx/configuration/guide/b-interfaces-config-guide-cisco8k-r26xx/new-and-changed-feature-information.html"
+      },
+      {
+        "chapter_slug": "yang-data-models-for-interfaces-features",
+        "chapter_title": "YANG Data Models for Interfaces and Hardware Component Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/Interfaces/26xx/configuration/guide/b-interfaces-config-guide-cisco8k-r26xx/yang-data-models-for-interfaces-features.html"
+      },
+      {
+        "chapter_slug": "preconfiguring-physical-interfaces",
+        "chapter_title": "Preconfiguring Physical Interfaces",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/Interfaces/26xx/configuration/guide/b-interfaces-config-guide-cisco8k-r26xx/preconfiguring-physical-interfaces.html"
+      },
+      {
+        "chapter_slug": "advanced-configuration-and-modification-of-the-management-ethernet-interface",
+        "chapter_title": "Advanced Configuration and Modification of the Management Ethernet Interface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/Interfaces/26xx/configuration/guide/b-interfaces-config-guide-cisco8k-r26xx/advanced-configuration-and-modification-of-the-management-ethernet-interface.html"
+      },
+      {
+        "chapter_slug": "configuring-ethernet-interfaces",
+        "chapter_title": "Configuring Ethernet Interfaces",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/Interfaces/26xx/configuration/guide/b-interfaces-config-guide-cisco8k-r26xx/configuring-ethernet-interfaces.html"
+      },
+      {
+        "chapter_slug": "Configuring-Ethernet-OAM",
+        "chapter_title": "Configuring Ethernet OAM",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/Interfaces/26xx/configuration/guide/b-interfaces-config-guide-cisco8k-r26xx/Configuring-Ethernet-OAM.html"
+      },
+      {
+        "chapter_slug": "m-configure-integrated-routing-bridging",
+        "chapter_title": "Configure Integrated Routing and Bridging",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/Interfaces/26xx/configuration/guide/b-interfaces-config-guide-cisco8k-r26xx/m-configure-integrated-routing-bridging.html"
+      },
+      {
+        "chapter_slug": "configuring-ip-event-dampening",
+        "chapter_title": "IP Event Dampening",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/Interfaces/26xx/configuration/guide/b-interfaces-config-guide-cisco8k-r26xx/configuring-ip-event-dampening.html"
+      },
+      {
+        "chapter_slug": "configuring-link-bundling",
+        "chapter_title": "Configure Link Bundling",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/Interfaces/26xx/configuration/guide/b-interfaces-config-guide-cisco8k-r26xx/configuring-link-bundling.html"
+      },
+      {
+        "chapter_slug": "configuring-virtual-loopback-and-null-interfaces",
+        "chapter_title": "Configuring Virtual Loopback and Null Interfaces",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/Interfaces/26xx/configuration/guide/b-interfaces-config-guide-cisco8k-r26xx/configuring-virtual-loopback-and-null-interfaces.html"
+      },
+      {
+        "chapter_slug": "Configuring-GRE-Tunnels",
+        "chapter_title": "Configure GRE Tunnels",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/Interfaces/26xx/configuration/guide/b-interfaces-config-guide-cisco8k-r26xx/Configuring-GRE-Tunnels.html"
+      },
+      {
+        "chapter_slug": "configuring-802-1q-vlan-interfaces",
+        "chapter_title": "Configuring 802.1Q VLAN Interfaces",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/Interfaces/26xx/configuration/guide/b-interfaces-config-guide-cisco8k-r26xx/configuring-802-1q-vlan-interfaces.html"
+      },
+      {
+        "chapter_slug": "configure-tunnels",
+        "chapter_title": "Configure IP-in-IP tunnels",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/Interfaces/26xx/configuration/guide/b-interfaces-config-guide-cisco8k-r26xx/configure-tunnels.html"
+      },
+      {
+        "chapter_slug": "configuring-generic-UDP-encapsulation",
+        "chapter_title": "Configure Generic UDP Encapsulation",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/Interfaces/26xx/configuration/guide/b-interfaces-config-guide-cisco8k-r26xx/configuring-generic-UDP-encapsulation.html"
+      },
+      {
+        "chapter_slug": "configuring-400g-digital-coherent-optics",
+        "chapter_title": "Configuring 400G Digital Coherent Optics",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/Interfaces/26xx/configuration/guide/b-interfaces-config-guide-cisco8k-r26xx/configuring-400g-digital-coherent-optics.html"
+      },
+      {
+        "chapter_slug": "m-800g-optics",
+        "chapter_title": "Configuring 800G Optics",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/Interfaces/26xx/configuration/guide/b-interfaces-config-guide-cisco8k-r26xx/m-800g-optics.html"
+      },
+      {
+        "chapter_slug": "configuring-controllers",
+        "chapter_title": "Configuring Controllers",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/Interfaces/26xx/configuration/guide/b-interfaces-config-guide-cisco8k-r26xx/configuring-controllers.html"
+      },
+      {
+        "chapter_slug": "configuring-qdd-optical-line-system",
+        "chapter_title": "Configuring QDD Optical Line System",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/Interfaces/26xx/configuration/guide/b-interfaces-config-guide-cisco8k-r26xx/configuring-qdd-optical-line-system.html"
+      },
+      {
+        "chapter_slug": "managing-router-hardware",
+        "chapter_title": "Managing Router Hardware",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/Interfaces/26xx/configuration/guide/b-interfaces-config-guide-cisco8k-r26xx/managing-router-hardware.html"
+      }
+    ]
+  },
+  "b-ip-addresses-cg-8k-26xx.pdf": {
+    "title": "IP Addresses and Services Configuration Guide for Cisco 8000 Series Routers, IOS XR Release 26.1.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/ip-addresses/26xx/configuration/guide/b-ip-addresses-cg-8k-26xx.html",
+    "chapters": [
+      {
+        "chapter_slug": "preface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/ip-addresses/26xx/configuration/guide/b-ip-addresses-cg-8k-26xx/preface.html"
+      },
+      {
+        "chapter_slug": "new-and-changed-ip-addresses-and-services-features",
+        "chapter_title": "New and Changed IP Addresses and Services Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/ip-addresses/26xx/configuration/guide/b-ip-addresses-cg-8k-26xx/new-and-changed-ip-addresses-and-services-features.html"
+      },
+      {
+        "chapter_slug": "yang-data-models-for-ip-addressing-features",
+        "chapter_title": "YANG Data Models for IP Addressing Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/ip-addresses/26xx/configuration/guide/b-ip-addresses-cg-8k-26xx/yang-data-models-for-ip-addressing-features.html"
+      },
+      {
+        "chapter_slug": "implementing-network-stack-ipv4-and-ipv6",
+        "chapter_title": "Implementing Network Stack IPv4 and IPv6",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/ip-addresses/26xx/configuration/guide/b-ip-addresses-cg-8k-26xx/implementing-network-stack-ipv4-and-ipv6.html"
+      },
+      {
+        "chapter_slug": "configuring-arp",
+        "chapter_title": "Configuring\n\t ARP",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/ip-addresses/26xx/configuration/guide/b-ip-addresses-cg-8k-26xx/configuring-arp.html"
+      },
+      {
+        "chapter_slug": "implementing-dhcp",
+        "chapter_title": "Implementing DHCP",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/ip-addresses/26xx/configuration/guide/b-ip-addresses-cg-8k-26xx/implementing-dhcp.html"
+      },
+      {
+        "chapter_slug": "implementing-host-services-and-applications",
+        "chapter_title": "Implementing Host Services and Applications",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/ip-addresses/26xx/configuration/guide/b-ip-addresses-cg-8k-26xx/implementing-host-services-and-applications.html"
+      },
+      {
+        "chapter_slug": "implementing-access-lists",
+        "chapter_title": "Implementing Access Lists",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/ip-addresses/26xx/configuration/guide/b-ip-addresses-cg-8k-26xx/implementing-access-lists.html"
+      },
+      {
+        "chapter_slug": "implementing-cisco-express-forwarding",
+        "chapter_title": "Implementing Cisco Express Forwarding",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/ip-addresses/26xx/configuration/guide/b-ip-addresses-cg-8k-26xx/implementing-cisco-express-forwarding.html"
+      },
+      {
+        "chapter_slug": "implementing-lpts",
+        "chapter_title": "Implementing\n\t LPTS",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/ip-addresses/26xx/configuration/guide/b-ip-addresses-cg-8k-26xx/implementing-lpts.html"
+      },
+      {
+        "chapter_slug": "implement-vrrp",
+        "chapter_title": "Implement VRRP",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/ip-addresses/26xx/configuration/guide/b-ip-addresses-cg-8k-26xx/implement-vrrp.html"
+      },
+      {
+        "chapter_slug": "implement-hsrp",
+        "chapter_title": "Implement HSRP",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/ip-addresses/26xx/configuration/guide/b-ip-addresses-cg-8k-26xx/implement-hsrp.html"
+      },
+      {
+        "chapter_slug": "configuring-transports",
+        "chapter_title": "Configuring\n\t Transports",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/ip-addresses/26xx/configuration/guide/b-ip-addresses-cg-8k-26xx/configuring-transports.html"
+      }
+    ]
+  },
+  "b-l2vpn-cg-cisco8000-26xx.pdf": {
+    "title": "L2VPN Configuration Guide for Cisco 8000 Series Routers, IOS XR Release 26.1.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/l2vpn/26xx/configuration/guide/b-l2vpn-cg-cisco8000-26xx.html",
+    "chapters": [
+      {
+        "chapter_slug": "preface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/l2vpn/26xx/configuration/guide/b-l2vpn-cg-cisco8000-26xx/preface.html"
+      },
+      {
+        "chapter_slug": "m-new-and-changed-l2vpn-features-information",
+        "chapter_title": "New and Changed L2VPN Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/l2vpn/26xx/configuration/guide/b-l2vpn-cg-cisco8000-26xx/m-new-and-changed-l2vpn-features-information.html"
+      },
+      {
+        "chapter_slug": "m-yang-data-models-for-l2vpn-features",
+        "chapter_title": "YANG Data Models for VPN Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/l2vpn/26xx/configuration/guide/b-l2vpn-cg-cisco8000-26xx/m-yang-data-models-for-l2vpn-features.html"
+      },
+      {
+        "chapter_slug": "m-introduction-to-layer-2-vpns",
+        "chapter_title": "Introduction to Layer 2 Virtual Private Networks",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/l2vpn/26xx/configuration/guide/b-l2vpn-cg-cisco8000-26xx/m-introduction-to-layer-2-vpns.html"
+      },
+      {
+        "chapter_slug": "m-configure-virtual-lans-in-layer-2-vpns",
+        "chapter_title": "Virtual LANs in Layer 2 VPNs",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/l2vpn/26xx/configuration/guide/b-l2vpn-cg-cisco8000-26xx/m-configure-virtual-lans-in-layer-2-vpns.html"
+      },
+      {
+        "chapter_slug": "m-transparent-layer-2-protocol-tunneling",
+        "chapter_title": "Transparent Layer 2 Protocol Tunneling",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/l2vpn/26xx/configuration/guide/b-l2vpn-cg-cisco8000-26xx/m-transparent-layer-2-protocol-tunneling.html"
+      },
+      {
+        "chapter_slug": "m-link-bundles-for-layer-2-",
+        "chapter_title": "Link Bundles for Layer 2 VPNs",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/l2vpn/26xx/configuration/guide/b-l2vpn-cg-cisco8000-26xx/m-link-bundles-for-layer-2-.html"
+      },
+      {
+        "chapter_slug": "m-layer-2-bridging-services",
+        "chapter_title": "Layer 2 Bridging Services",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/l2vpn/26xx/configuration/guide/b-l2vpn-cg-cisco8000-26xx/m-layer-2-bridging-services.html"
+      },
+      {
+        "chapter_slug": "m-configure-point-to-point-layer2-services",
+        "chapter_title": "Configure\n\t Point-to-Point Layer 2 Services",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/l2vpn/26xx/configuration/guide/b-l2vpn-cg-cisco8000-26xx/m-configure-point-to-point-layer2-services.html"
+      },
+      {
+        "chapter_slug": "m-configure-irb",
+        "chapter_title": "Integrated  Routing and Bridging",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/l2vpn/26xx/configuration/guide/b-l2vpn-cg-cisco8000-26xx/m-configure-irb.html"
+      },
+      {
+        "chapter_slug": "m-multiple-spanning-tree-protocol",
+        "chapter_title": "Multiple Spanning Tree Protocol",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/l2vpn/26xx/configuration/guide/b-l2vpn-cg-cisco8000-26xx/m-multiple-spanning-tree-protocol.html"
+      },
+      {
+        "chapter_slug": "m-y1564-ethernet-service-activation-test",
+        "chapter_title": "Ethernet Service Activation Testing with Y.1564",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/l2vpn/26xx/configuration/guide/b-l2vpn-cg-cisco8000-26xx/m-y1564-ethernet-service-activation-test.html"
+      }
+    ]
+  },
+  "b-l3vpn-cg-cisco8000-26xx.pdf": {
+    "title": "L3VPN Configuration Guide for Cisco 8000 Series Routers, IOS XR Release 26.1.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/l3vpn/26xx/configuration/guide/b-l3vpn-cg-cisco8000-26xx.html",
+    "chapters": [
+      {
+        "chapter_slug": "preface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/l3vpn/26xx/configuration/guide/b-l3vpn-cg-cisco8000-26xx/preface.html"
+      },
+      {
+        "chapter_slug": "new-and-changed-feature-info",
+        "chapter_title": "New and Changed Feature Information",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/l3vpn/26xx/configuration/guide/b-l3vpn-cg-cisco8000-26xx/new-and-changed-feature-info.html"
+      },
+      {
+        "chapter_slug": "yang-data-models-for-l3vpn-features",
+        "chapter_title": "YANG Data Models for L3VPN Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/l3vpn/26xx/configuration/guide/b-l3vpn-cg-cisco8000-26xx/yang-data-models-for-l3vpn-features.html"
+      },
+      {
+        "chapter_slug": "implementing-mpls-layer-3-vpns",
+        "chapter_title": "Implementing MPLS Layer 3 VPNs",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/l3vpn/26xx/configuration/guide/b-l3vpn-cg-cisco8000-26xx/implementing-mpls-layer-3-vpns.html"
+      },
+      {
+        "chapter_slug": "vxlan-static-routing",
+        "chapter_title": "VXLAN Static Routing",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/l3vpn/26xx/configuration/guide/b-l3vpn-cg-cisco8000-26xx/vxlan-static-routing.html"
+      },
+      {
+        "chapter_slug": "implementing-ipv6-vpn-provider-edge-transport-over-mpls",
+        "chapter_title": "Implementing IPv6 VPN Provider Edge Transport over MPLS",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/l3vpn/26xx/configuration/guide/b-l3vpn-cg-cisco8000-26xx/implementing-ipv6-vpn-provider-edge-transport-over-mpls.html"
+      }
+    ]
+  },
+  "b-macsec-encryption-config-cisco8000.pdf": {
+    "title": "MACsec Configuration Guide for Cisco 8000 Series Routers, Cisco IOS XR Releases",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/macsec/b-macsec-encryption-config-cisco8000.html",
+    "chapters": [
+      {
+        "chapter_slug": "preface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/macsec/b-macsec-encryption-config-cisco8000/preface.html"
+      },
+      {
+        "chapter_slug": "yang-data-models-for-macsec-encryption-features",
+        "chapter_title": "YANG data models for MACsec encryption features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/macsec/b-macsec-encryption-config-cisco8000/yang-data-models-for-macsec-encryption-features.html"
+      },
+      {
+        "chapter_slug": "fundamentals-of-macsec-encryption",
+        "chapter_title": "Fundamentals of MACsec encryption",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/macsec/b-macsec-encryption-config-cisco8000/fundamentals-of-macsec-encryption.html"
+      },
+      {
+        "chapter_slug": "wan-macsec-encryption",
+        "chapter_title": "WAN MACsec encryption",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/macsec/b-macsec-encryption-config-cisco8000/wan-macsec-encryption.html"
+      },
+      {
+        "chapter_slug": "macsec-policy-exceptions",
+        "chapter_title": "MACsec policy exceptions",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/macsec/b-macsec-encryption-config-cisco8000/macsec-policy-exceptions.html"
+      },
+      {
+        "chapter_slug": "macsec-encryption-using-eap-tls-authentication",
+        "chapter_title": "MACsec encryption using EAP-TLS authentication",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/macsec/b-macsec-encryption-config-cisco8000/macsec-encryption-using-eap-tls-authentication.html"
+      },
+      {
+        "chapter_slug": "macsec-encryption-using-SKIP",
+        "chapter_title": "MACsec encryption using SKIP",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/macsec/b-macsec-encryption-config-cisco8000/macsec-encryption-using-SKIP.html"
+      },
+      {
+        "chapter_slug": "secure-macsec-encryption",
+        "chapter_title": "Secure MACsec encryption",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/macsec/b-macsec-encryption-config-cisco8000/secure-macsec-encryption.html"
+      },
+      {
+        "chapter_slug": "macsec-performance-and-statistics",
+        "chapter_title": "MACsec encryption performance and statistics",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/macsec/b-macsec-encryption-config-cisco8000/macsec-performance-and-statistics.html"
+      },
+      {
+        "chapter_slug": "b-macsec-encryption-config-cisco8000_index",
+        "chapter_title": "Index",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/macsec/b-macsec-encryption-config-cisco8000/b-macsec-encryption-config-cisco8000_index.html"
+      }
+    ]
+  },
+  "b-modular-qos-config-cisco8000.pdf": {
+    "title": "Modular QoS Configuration Guide for Cisco 8000 Series Routers, Cisco IOS XR Releases",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/qos/b-modular-qos-config-cisco8000.html",
+    "chapters": [
+      {
+        "chapter_slug": "preface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/qos/b-modular-qos-config-cisco8000/preface.html"
+      },
+      {
+        "chapter_slug": "m-yang-data-models-for-qos-features",
+        "chapter_title": "YANG Data Models for QoS Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/qos/b-modular-qos-config-cisco8000/m-yang-data-models-for-qos-features.html"
+      },
+      {
+        "chapter_slug": "m-mqc-overview",
+        "chapter_title": "Modular QoS Command-line Interface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/qos/b-modular-qos-config-cisco8000/m-mqc-overview.html"
+      },
+      {
+        "chapter_slug": "m-traffic-management-with-voq",
+        "chapter_title": "Traffic Management with VOQs",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/qos/b-modular-qos-config-cisco8000/m-traffic-management-with-voq.html"
+      },
+      {
+        "chapter_slug": "classify-packets-to-identify-specific-traffic",
+        "chapter_title": "Classify Packets to Identify Specific Traffic",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/qos/b-modular-qos-config-cisco8000/classify-packets-to-identify-specific-traffic.html"
+      },
+      {
+        "chapter_slug": "m-qos-marking",
+        "chapter_title": "Packet Marking for Priority Differentiation",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/qos/b-modular-qos-config-cisco8000/m-qos-marking.html"
+      },
+      {
+        "chapter_slug": "m-qos-link-bundles",
+        "chapter_title": "QoS Policies for Link Bundles",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/qos/b-modular-qos-config-cisco8000/m-qos-link-bundles.html"
+      },
+      {
+        "chapter_slug": "m-qos-congestion-management",
+        "chapter_title": "Congestion Management",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/qos/b-modular-qos-config-cisco8000/m-qos-congestion-management.html"
+      },
+      {
+        "chapter_slug": "congestion-avoidance",
+        "chapter_title": "Congestion Avoidance",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/qos/b-modular-qos-config-cisco8000/congestion-avoidance.html"
+      },
+      {
+        "chapter_slug": "congestion-monitoring-and-optimization",
+        "chapter_title": "Congestion Monitoring and Optimization",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/qos/b-modular-qos-config-cisco8000/congestion-monitoring-and-optimization.html"
+      },
+      {
+        "chapter_slug": "priority-flow-control",
+        "chapter_title": "Priority Flow Control",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/qos/b-modular-qos-config-cisco8000/priority-flow-control.html"
+      },
+      {
+        "chapter_slug": "priority-flow-control-watchdog-and-monitoring",
+        "chapter_title": "Priority Flow Control Watchdog and Monitoring Metrics",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/qos/b-modular-qos-config-cisco8000/priority-flow-control-watchdog-and-monitoring.html"
+      },
+      {
+        "chapter_slug": "qos-deployment-across-network-scenarios",
+        "chapter_title": "QoS Deployment across Network Scenarios",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/qos/b-modular-qos-config-cisco8000/qos-deployment-across-network-scenarios.html"
+      }
+    ]
+  },
+  "b-mpls-cg-cisco8000-26xx.pdf": {
+    "title": "MPLS Configuration Guide for Cisco 8000 Series Routers, IOS XR Release 26.x.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/mpls/26xx/configuration/guide/b-mpls-cg-cisco8000-26xx.html",
+    "chapters": [
+      {
+        "chapter_slug": "preface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/mpls/26xx/configuration/guide/b-mpls-cg-cisco8000-26xx/preface.html"
+      },
+      {
+        "chapter_slug": "new-and-changed-mpls-features",
+        "chapter_title": "New and Changed MPLS Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/mpls/26xx/configuration/guide/b-mpls-cg-cisco8000-26xx/new-and-changed-mpls-features.html"
+      },
+      {
+        "chapter_slug": "yang-data-models-for-mpls-features",
+        "chapter_title": "YANG Data Models for MPLS Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/mpls/26xx/configuration/guide/b-mpls-cg-cisco8000-26xx/yang-data-models-for-mpls-features.html"
+      },
+      {
+        "chapter_slug": "implementing-mpls-ldp",
+        "chapter_title": "Implementing MPLS Label Distribution Protocol",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/mpls/26xx/configuration/guide/b-mpls-cg-cisco8000-26xx/implementing-mpls-ldp.html"
+      },
+      {
+        "chapter_slug": "implementing-mpls-oam",
+        "chapter_title": "Implementing MPLS OAM",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/mpls/26xx/configuration/guide/b-mpls-cg-cisco8000-26xx/implementing-mpls-oam.html"
+      },
+      {
+        "chapter_slug": "implementing-mpls-static-labeling",
+        "chapter_title": "MPLS Static Labeling",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/mpls/26xx/configuration/guide/b-mpls-cg-cisco8000-26xx/implementing-mpls-static-labeling.html"
+      },
+      {
+        "chapter_slug": "implementing-mpls-traffic-engineering",
+        "chapter_title": "Implementing MPLS Traffic Engineering",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/mpls/26xx/configuration/guide/b-mpls-cg-cisco8000-26xx/implementing-mpls-traffic-engineering.html"
+      },
+      {
+        "chapter_slug": "implementing-flex-lsp",
+        "chapter_title": "RSVP-TE Transport Solution with Flex LSP",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/mpls/26xx/configuration/guide/b-mpls-cg-cisco8000-26xx/implementing-flex-lsp.html"
+      },
+      {
+        "chapter_slug": "implementing-RSVP-MPLS-TE",
+        "chapter_title": "Implementing RSVP for MPLS-TE",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/mpls/26xx/configuration/guide/b-mpls-cg-cisco8000-26xx/implementing-RSVP-MPLS-TE.html"
+      },
+      {
+        "chapter_slug": "configuring-mpls-mtu",
+        "chapter_title": "MPLS MTU",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/mpls/26xx/configuration/guide/b-mpls-cg-cisco8000-26xx/configuring-mpls-mtu.html"
+      },
+      {
+        "chapter_slug": "m-gmpls-uni-8k",
+        "chapter_title": "Implementing GMPLS UNI",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/mpls/26xx/configuration/guide/b-mpls-cg-cisco8000-26xx/m-gmpls-uni-8k.html"
+      }
+    ]
+  },
+  "b-multicast-cg-cisco8k-r26xx.pdf": {
+    "title": "Multicast Configuration Guide for Cisco 8000 Series Routers, IOS XR Release 26.1.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/multicast/26xx/configuration/guide/b-multicast-cg-cisco8k-r26xx.html",
+    "chapters": [
+      {
+        "chapter_slug": "preface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/multicast/26xx/configuration/guide/b-multicast-cg-cisco8k-r26xx/preface.html"
+      },
+      {
+        "chapter_slug": "new-and-changed-multicast-features",
+        "chapter_title": "New and Changed Multicast Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/multicast/26xx/configuration/guide/b-multicast-cg-cisco8k-r26xx/new-and-changed-multicast-features.html"
+      },
+      {
+        "chapter_slug": "m-implementing-layer-2-multicast",
+        "chapter_title": "Implementing Layer 2 Multicast",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/multicast/26xx/configuration/guide/b-multicast-cg-cisco8k-r26xx/m-implementing-layer-2-multicast.html"
+      },
+      {
+        "chapter_slug": "implementing-layer3-multicast-routing",
+        "chapter_title": "Implementing Layer-3 Multicast Routing",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/multicast/26xx/configuration/guide/b-multicast-cg-cisco8k-r26xx/implementing-layer3-multicast-routing.html"
+      }
+    ]
+  },
+  "b-netflow-configuration-ios-xr-8000.pdf": {
+    "title": "NetFlow and sFlow Configuration Guide on Cisco 8000 Series Routers, Cisco IOS XR Releases",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/netflow/configuration/b-netflow-configuration-ios-xr-8000.html",
+    "chapters": [
+      {
+        "chapter_slug": "about-netflow-and-sflow-documentation",
+        "chapter_title": "About NetFlow and sFlow Documentation",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/netflow/configuration/b-netflow-configuration-ios-xr-8000/about-netflow-and-sflow-documentation.html"
+      },
+      {
+        "chapter_slug": "m-new-and-changed-feature-information",
+        "chapter_title": "Features Introduced in Cisco IOS XR Products and Releases",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/netflow/configuration/b-netflow-configuration-ios-xr-8000/m-new-and-changed-feature-information.html"
+      },
+      {
+        "chapter_slug": "netflow-sflow-key-concepts",
+        "chapter_title": "What are NetFlow and sFlow Protocols?",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/netflow/configuration/b-netflow-configuration-ios-xr-8000/netflow-sflow-key-concepts.html"
+      },
+      {
+        "chapter_slug": "m-determine-monitoring-protocol-for-your-network",
+        "chapter_title": "Determine the Monitoring Protocol for Your Network",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/netflow/configuration/b-netflow-configuration-ios-xr-8000/m-determine-monitoring-protocol-for-your-network.html"
+      },
+      {
+        "chapter_slug": "monitor-traffic-using-netflow",
+        "chapter_title": "NetFlow Configuration for Traffic Monitoring and Analysis",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/netflow/configuration/b-netflow-configuration-ios-xr-8000/monitor-traffic-using-netflow.html"
+      },
+      {
+        "chapter_slug": "monitor-traffic-using-sflow",
+        "chapter_title": "sFlow Configuration for Traffic Monitoring and Analysis",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/netflow/configuration/b-netflow-configuration-ios-xr-8000/monitor-traffic-using-sflow.html"
+      },
+      {
+        "chapter_slug": "netflow-sflow-case-study",
+        "chapter_title": "Use Case: NetFlow and sFlow in Action",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/netflow/configuration/b-netflow-configuration-ios-xr-8000/netflow-sflow-case-study.html"
+      },
+      {
+        "chapter_slug": "m-netflow-sflow-data-models",
+        "chapter_title": "YANG Data Models for NetFlow and sFlow",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/netflow/configuration/b-netflow-configuration-ios-xr-8000/m-netflow-sflow-data-models.html"
+      },
+      {
+        "chapter_slug": "m_netflow-sflow-command-list-8k",
+        "chapter_title": "Command-line Interface (CLIs) for NetFlow and sFlow",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/netflow/configuration/b-netflow-configuration-ios-xr-8000/m_netflow-sflow-command-list-8k.html"
+      }
+    ]
+  },
+  "b-programmability-configuration-guide-cisco8000.pdf": {
+    "title": "Programmability Configuration Guide for Cisco 8000 Series Routers, Cisco IOS XR Releases",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/programmability/b-programmability-configuration-guide-cisco8000.html",
+    "chapters": [
+      {
+        "chapter_slug": "preface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/programmability/b-programmability-configuration-guide-cisco8000/preface.html"
+      },
+      {
+        "chapter_slug": "m-yang-data-models-for-programmability-features",
+        "chapter_title": "YANG data models for programmability features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/programmability/b-programmability-configuration-guide-cisco8000/m-yang-data-models-for-programmability-features.html"
+      },
+      {
+        "chapter_slug": "m-programmability-introduction",
+        "chapter_title": "YANG data models",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/programmability/b-programmability-configuration-guide-cisco8000/m-programmability-introduction.html"
+      },
+      {
+        "chapter_slug": "m-data-models-for-network-automation",
+        "chapter_title": "Data Models for Network Automation",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/programmability/b-programmability-configuration-guide-cisco8000/m-data-models-for-network-automation.html"
+      },
+      {
+        "chapter_slug": "m-grpc-fundamentals-and-authentication_2",
+        "chapter_title": "gRPC Fundamentals",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/programmability/b-programmability-configuration-guide-cisco8000/m-grpc-fundamentals-and-authentication_2.html"
+      },
+      {
+        "chapter_slug": "m-grpc-authentication",
+        "chapter_title": "gRPC Authentication",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/programmability/b-programmability-configuration-guide-cisco8000/m-grpc-authentication.html"
+      },
+      {
+        "chapter_slug": "m-grpc-fundamentals-and-authentication",
+        "chapter_title": "gRPC Applications and Configuration",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/programmability/b-programmability-configuration-guide-cisco8000/m-grpc-fundamentals-and-authentication.html"
+      },
+      {
+        "chapter_slug": "m-manage-automation-scripts-using-yang-rpcs",
+        "chapter_title": "Manage automation scripts using Yang RPCs",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/programmability/b-programmability-configuration-guide-cisco8000/m-manage-automation-scripts-using-yang-rpcs.html"
+      },
+      {
+        "chapter_slug": "m-precommit-scripts",
+        "chapter_title": "Precommit Scripts",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/programmability/b-programmability-configuration-guide-cisco8000/m-precommit-scripts.html"
+      },
+      {
+        "chapter_slug": "m-config-scripts",
+        "chapter_title": "Config scripts",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/programmability/b-programmability-configuration-guide-cisco8000/m-config-scripts.html"
+      },
+      {
+        "chapter_slug": "m-exec-script",
+        "chapter_title": "Exec Scripts",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/programmability/b-programmability-configuration-guide-cisco8000/m-exec-script.html"
+      },
+      {
+        "chapter_slug": "m-process-scripts",
+        "chapter_title": "Process Script",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/programmability/b-programmability-configuration-guide-cisco8000/m-process-scripts.html"
+      },
+      {
+        "chapter_slug": "m-eem-scripts",
+        "chapter_title": "EEM scripts",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/programmability/b-programmability-configuration-guide-cisco8000/m-eem-scripts.html"
+      },
+      {
+        "chapter_slug": "m-model-driven-command-line-interface",
+        "chapter_title": "Model Driven Command Line Interface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/programmability/b-programmability-configuration-guide-cisco8000/m-model-driven-command-line-interface.html"
+      },
+      {
+        "chapter_slug": "m-operational-simplicity-using-automation-scripts",
+        "chapter_title": "Automation Scripts",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/programmability/b-programmability-configuration-guide-cisco8000/m-operational-simplicity-using-automation-scripts.html"
+      }
+    ]
+  },
+  "b-routing-cg-cisco8000-26xx.pdf": {
+    "title": "Routing Configuration Guide for Cisco 8000 Series Routers, IOS XR Release 26.1.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/routing/26xx/configuration/guide/b-routing-cg-cisco8000-26xx.html",
+    "chapters": [
+      {
+        "chapter_slug": "preface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/routing/26xx/configuration/guide/b-routing-cg-cisco8000-26xx/preface.html"
+      },
+      {
+        "chapter_slug": "m-new-and-changed-routing-features-26xx",
+        "chapter_title": "New and Changed Routing Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/routing/26xx/configuration/guide/b-routing-cg-cisco8000-26xx/m-new-and-changed-routing-features-26xx.html"
+      },
+      {
+        "chapter_slug": "m-yang-data-models-for-routing-features",
+        "chapter_title": "YANG Data Models for Routing Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/routing/26xx/configuration/guide/b-routing-cg-cisco8000-26xx/m-yang-data-models-for-routing-features.html"
+      },
+      {
+        "chapter_slug": "implement-is-is",
+        "chapter_title": "Implementing IS-IS",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/routing/26xx/configuration/guide/b-routing-cg-cisco8000-26xx/implement-is-is.html"
+      },
+      {
+        "chapter_slug": "m-implementing-ospf-8k",
+        "chapter_title": "Implementing OSPF",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/routing/26xx/configuration/guide/b-routing-cg-cisco8000-26xx/m-implementing-ospf-8k.html"
+      },
+      {
+        "chapter_slug": "implement-and-monitor-rib",
+        "chapter_title": "Implementing and Monitoring RIB",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/routing/26xx/configuration/guide/b-routing-cg-cisco8000-26xx/implement-and-monitor-rib.html"
+      },
+      {
+        "chapter_slug": "implement-routing-policy",
+        "chapter_title": "Implementing Routing Policy",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/routing/26xx/configuration/guide/b-routing-cg-cisco8000-26xx/implement-routing-policy.html"
+      },
+      {
+        "chapter_slug": "m-policy-based-routing",
+        "chapter_title": "Implementing Policy-Based Routing",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/routing/26xx/configuration/guide/b-routing-cg-cisco8000-26xx/m-policy-based-routing.html"
+      },
+      {
+        "chapter_slug": "implement-static-routes",
+        "chapter_title": "Implementing Static Routes",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/routing/26xx/configuration/guide/b-routing-cg-cisco8000-26xx/implement-static-routes.html"
+      },
+      {
+        "chapter_slug": "implement-ucmp",
+        "chapter_title": "Implementing UCMP",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/routing/26xx/configuration/guide/b-routing-cg-cisco8000-26xx/implement-ucmp.html"
+      },
+      {
+        "chapter_slug": "implement-bfd",
+        "chapter_title": "Implementing BFD",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/routing/26xx/configuration/guide/b-routing-cg-cisco8000-26xx/implement-bfd.html"
+      },
+      {
+        "chapter_slug": "implement-fast-reroute-loop-free-alternate",
+        "chapter_title": "Implementing Fast Reroute Loop-Free Alternate",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/routing/26xx/configuration/guide/b-routing-cg-cisco8000-26xx/implement-fast-reroute-loop-free-alternate.html"
+      }
+    ]
+  },
+  "b-segment-routing-cg-cisco8000-26xx.pdf": {
+    "title": "Segment Routing Configuration Guide for Cisco 8000 Series Routers, IOS XR Release 26.1.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/segment-routing/26xx/configuration/guide/b-segment-routing-cg-cisco8000-26xx.html",
+    "chapters": [
+      {
+        "chapter_slug": "preface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/segment-routing/26xx/configuration/guide/b-segment-routing-cg-cisco8000-26xx/preface.html"
+      },
+      {
+        "chapter_slug": "new-and-changed-features",
+        "chapter_title": "New and Changed Information for Segment Routing Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/segment-routing/26xx/configuration/guide/b-segment-routing-cg-cisco8000-26xx/new-and-changed-features.html"
+      },
+      {
+        "chapter_slug": "yang-data-models-for-segment-routing-features",
+        "chapter_title": "YANG Data Models for Segment Routing Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/segment-routing/26xx/configuration/guide/b-segment-routing-cg-cisco8000-26xx/yang-data-models-for-segment-routing-features.html"
+      },
+      {
+        "chapter_slug": "configuring-sr-global-block-and-sr-local-block",
+        "chapter_title": "Configure Segment Routing Global Block and Segment Routing Local Block",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/segment-routing/26xx/configuration/guide/b-segment-routing-cg-cisco8000-26xx/configuring-sr-global-block-and-sr-local-block.html"
+      },
+      {
+        "chapter_slug": "configuring-segment-routing-for-is-is-protocol",
+        "chapter_title": "Configure Segment Routing for IS-IS Protocol",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/segment-routing/26xx/configuration/guide/b-segment-routing-cg-cisco8000-26xx/configuring-segment-routing-for-is-is-protocol.html"
+      },
+      {
+        "chapter_slug": "configuring-segment-routing-for-ospf-protocol",
+        "chapter_title": "Configure Segment Routing for OSPF Protocol",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/segment-routing/26xx/configuration/guide/b-segment-routing-cg-cisco8000-26xx/configuring-segment-routing-for-ospf-protocol.html"
+      },
+      {
+        "chapter_slug": "configuring-segment-routing-for-bgp",
+        "chapter_title": "Configure Segment Routing for BGP",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/segment-routing/26xx/configuration/guide/b-segment-routing-cg-cisco8000-26xx/configuring-segment-routing-for-bgp.html"
+      },
+      {
+        "chapter_slug": "configuring-sr-te-policy",
+        "chapter_title": "Configure SR-TE Policies",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/segment-routing/26xx/configuration/guide/b-segment-routing-cg-cisco8000-26xx/configuring-sr-te-policy.html"
+      },
+      {
+        "chapter_slug": "segment-routing-tree-segment-identifier",
+        "chapter_title": "Segment Routing Tree Segment Identifier",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/segment-routing/26xx/configuration/guide/b-segment-routing-cg-cisco8000-26xx/segment-routing-tree-segment-identifier.html"
+      },
+      {
+        "chapter_slug": "enabling-segment-routing-flexible-algorithm",
+        "chapter_title": "Enabling Segment Routing Flexible Algorithm",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/segment-routing/26xx/configuration/guide/b-segment-routing-cg-cisco8000-26xx/enabling-segment-routing-flexible-algorithm.html"
+      },
+      {
+        "chapter_slug": "configuring-segment-routing-path-computation-element",
+        "chapter_title": "Configure Segment Routing Path Computation Element",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/segment-routing/26xx/configuration/guide/b-segment-routing-cg-cisco8000-26xx/configuring-segment-routing-path-computation-element.html"
+      },
+      {
+        "chapter_slug": "configuring-performance-measurement",
+        "chapter_title": "Configure Performance Measurement",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/segment-routing/26xx/configuration/guide/b-segment-routing-cg-cisco8000-26xx/configuring-performance-measurement.html"
+      },
+      {
+        "chapter_slug": "configuring-topology-independent-loop-free-alternate",
+        "chapter_title": "Configure Topology-Independent Loop-Free Alternate (TI-LFA)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/segment-routing/26xx/configuration/guide/b-segment-routing-cg-cisco8000-26xx/configuring-topology-independent-loop-free-alternate.html"
+      },
+      {
+        "chapter_slug": "configuring-segment-routing-microloop-avoidance",
+        "chapter_title": "Configure Segment Routing Microloop Avoidance",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/segment-routing/26xx/configuration/guide/b-segment-routing-cg-cisco8000-26xx/configuring-segment-routing-microloop-avoidance.html"
+      },
+      {
+        "chapter_slug": "configuring-segment-routing-mapping-server",
+        "chapter_title": "Configure Segment Routing Mapping Server",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/segment-routing/26xx/configuration/guide/b-segment-routing-cg-cisco8000-26xx/configuring-segment-routing-mapping-server.html"
+      },
+      {
+        "chapter_slug": "using-segment-routing-oam",
+        "chapter_title": "Using Segment Routing OAM",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/segment-routing/26xx/configuration/guide/b-segment-routing-cg-cisco8000-26xx/using-segment-routing-oam.html"
+      },
+      {
+        "chapter_slug": "configuring-segment-routing-over-ipv6-srv6-full-length-sids",
+        "chapter_title": "Configure Segment Routing over IPv6 (SRv6) with Full-Length SIDs",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/segment-routing/26xx/configuration/guide/b-segment-routing-cg-cisco8000-26xx/configuring-segment-routing-over-ipv6-srv6-full-length-sids.html"
+      },
+      {
+        "chapter_slug": "b-segment-routing-cg-cisco8000-26xx_index",
+        "chapter_title": "Index",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/segment-routing/26xx/configuration/guide/b-segment-routing-cg-cisco8000-26xx/b-segment-routing-cg-cisco8000-26xx_index.html"
+      }
+    ]
+  },
+  "b-srv6-configuration-guide.pdf": {
+    "title": "Segment Routing v6 Configuration Guide for Cisco 8000 Series Routers, Cisco IOS XR Releases",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/srv6/b-srv6-configuration-guide.html",
+    "chapters": [
+      {
+        "chapter_slug": "preface-srv6",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/srv6/b-srv6-configuration-guide/preface-srv6.html"
+      },
+      {
+        "chapter_slug": "yang-data-models-for-srv6-features",
+        "chapter_title": "YANG Data Models for SRv6 Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/srv6/b-srv6-configuration-guide/yang-data-models-for-srv6-features.html"
+      },
+      {
+        "chapter_slug": "srv6-fundamentals-and-key-concepts",
+        "chapter_title": "SRv6 Fundamentals and Key Concepts",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/srv6/b-srv6-configuration-guide/srv6-fundamentals-and-key-concepts.html"
+      },
+      {
+        "chapter_slug": "srv6-micro-segment-usid-overview",
+        "chapter_title": "SRv6 Micro-segment (uSID) Overview",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/srv6/b-srv6-configuration-guide/srv6-micro-segment-usid-overview.html"
+      },
+      {
+        "chapter_slug": "enable-traffic-steering-with-srv6-locators",
+        "chapter_title": "Enable Traffic Steering with SRv6 Locators",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/srv6/b-srv6-configuration-guide/enable-traffic-steering-with-srv6-locators.html"
+      },
+      {
+        "chapter_slug": "introduction-to-srv6-is-is",
+        "chapter_title": "Introduction to SRv6 IS-IS",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/srv6/b-srv6-configuration-guide/introduction-to-srv6-is-is.html"
+      },
+      {
+        "chapter_slug": "implementing-srv6-flexible-algorithms-with-is-is",
+        "chapter_title": "Implementing SRv6 Flexible Algorithms",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/srv6/b-srv6-configuration-guide/implementing-srv6-flexible-algorithms-with-is-is.html"
+      },
+      {
+        "chapter_slug": "implementing-ti-lfa-for-srv6",
+        "chapter_title": "Implementing TI-LFA for SRv6",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/srv6/b-srv6-configuration-guide/implementing-ti-lfa-for-srv6.html"
+      },
+      {
+        "chapter_slug": "path-computation-element-protocol",
+        "chapter_title": "Path Computation Element Protocol",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/srv6/b-srv6-configuration-guide/path-computation-element-protocol.html"
+      },
+      {
+        "chapter_slug": "srv6-microloop-avoidance-for-network-resilience",
+        "chapter_title": "SRv6 Microloop Avoidance for Network Resilience",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/srv6/b-srv6-configuration-guide/srv6-microloop-avoidance-for-network-resilience.html"
+      },
+      {
+        "chapter_slug": "traffic-engineering-in-ipv6-networks-using-srv6-te",
+        "chapter_title": "Traffic Engineering in IPv6 Networks Using SRv6-TE",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/srv6/b-srv6-configuration-guide/traffic-engineering-in-ipv6-networks-using-srv6-te.html"
+      },
+      {
+        "chapter_slug": "srv6-layer-3-vpn-services-and-global-routing",
+        "chapter_title": "SRv6 Layer 3 VPN Services and Global Routing",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/srv6/b-srv6-configuration-guide/srv6-layer-3-vpn-services-and-global-routing.html"
+      },
+      {
+        "chapter_slug": "advanced-srv6-layer-3-features",
+        "chapter_title": "Advanced SRv6 Layer 3 features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/srv6/b-srv6-configuration-guide/advanced-srv6-layer-3-features.html"
+      },
+      {
+        "chapter_slug": "srv6-based-layer-2-and-integrated-vpn-services",
+        "chapter_title": "SRv6-Based Layer 2 and Integrated VPN Services",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/srv6/b-srv6-configuration-guide/srv6-based-layer-2-and-integrated-vpn-services.html"
+      },
+      {
+        "chapter_slug": "srv6-mpls-l3-service-interworking-gateways",
+        "chapter_title": "SRv6-MPLS L3 Service Interworking Gateways",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/srv6/b-srv6-configuration-guide/srv6-mpls-l3-service-interworking-gateways.html"
+      },
+      {
+        "chapter_slug": "srv6-network-performance-measurement",
+        "chapter_title": "SRv6 Network Performance Measurement",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/srv6/b-srv6-configuration-guide/srv6-network-performance-measurement.html"
+      },
+      {
+        "chapter_slug": "srv6-traffic-accounting",
+        "chapter_title": "SRv6 Traffic Accounting",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/srv6/b-srv6-configuration-guide/srv6-traffic-accounting.html"
+      },
+      {
+        "chapter_slug": "srv6-usid-migration",
+        "chapter_title": "SRv6 uSID Migration",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/srv6/b-srv6-configuration-guide/srv6-usid-migration.html"
+      }
+    ]
+  },
+  "b-system-management-cg-8k-26xx.pdf": {
+    "title": "System Management Configuration Guide for Cisco 8000 Series Routers, IOS XR Release 26.1.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/system-management/26xx/configuration/guide/b-system-management-cg-8k-26xx.html",
+    "chapters": [
+      {
+        "chapter_slug": "preface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/system-management/26xx/configuration/guide/b-system-management-cg-8k-26xx/preface.html"
+      },
+      {
+        "chapter_slug": "new-and-changed-system-management-features",
+        "chapter_title": "New and Changed System Management Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/system-management/26xx/configuration/guide/b-system-management-cg-8k-26xx/new-and-changed-system-management-features.html"
+      },
+      {
+        "chapter_slug": "m-yang-data-model-for-system-management-features",
+        "chapter_title": "YANG Data Models for System Management Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/system-management/26xx/configuration/guide/b-system-management-cg-8k-26xx/m-yang-data-model-for-system-management-features.html"
+      },
+      {
+        "chapter_slug": "configuring-physical-and-virtual-terminals",
+        "chapter_title": "Configuring Physical and Virtual Terminals",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/system-management/26xx/configuration/guide/b-system-management-cg-8k-26xx/configuring-physical-and-virtual-terminals.html"
+      },
+      {
+        "chapter_slug": "configuring-simple-network-management-protocol",
+        "chapter_title": "Configuring Simple Network Management Protocol",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/system-management/26xx/configuration/guide/b-system-management-cg-8k-26xx/configuring-simple-network-management-protocol.html"
+      },
+      {
+        "chapter_slug": "configuring-periodic-mib-data-collection-and-transfer",
+        "chapter_title": "Configuring Periodic MIB Data Collection and Transfer",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/system-management/26xx/configuration/guide/b-system-management-cg-8k-26xx/configuring-periodic-mib-data-collection-and-transfer.html"
+      },
+      {
+        "chapter_slug": "configuring-cisco-discovery-protocol",
+        "chapter_title": "Configuring Cisco Discovery Protocol",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/system-management/26xx/configuration/guide/b-system-management-cg-8k-26xx/configuring-cisco-discovery-protocol.html"
+      },
+      {
+        "chapter_slug": "configuring-call-home",
+        "chapter_title": "Configuring Call Home",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/system-management/26xx/configuration/guide/b-system-management-cg-8k-26xx/configuring-call-home.html"
+      },
+      {
+        "chapter_slug": "implementing-the-network-configuration-protocol",
+        "chapter_title": "The Network Configuration Protocol",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/system-management/26xx/configuration/guide/b-system-management-cg-8k-26xx/implementing-the-network-configuration-protocol.html"
+      },
+      {
+        "chapter_slug": "m-auto-save-configuration",
+        "chapter_title": "Configuration and File System Management",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/system-management/26xx/configuration/guide/b-system-management-cg-8k-26xx/m-auto-save-configuration.html"
+      },
+      {
+        "chapter_slug": "m-process-memory-management",
+        "chapter_title": "Process Memory Management",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/system-management/26xx/configuration/guide/b-system-management-cg-8k-26xx/m-process-memory-management.html"
+      }
+    ]
+  },
+  "b-system-monitoring-cg-cisco8k-26xx.pdf": {
+    "title": "System Monitoring Configuration Guide for Cisco 8000 Series Routers, IOS XR Release 26.1.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/system-monitoring/26xx/configuration/guide/b-system-monitoring-cg-cisco8k-26xx.html",
+    "chapters": [
+      {
+        "chapter_slug": "preface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/system-monitoring/26xx/configuration/guide/b-system-monitoring-cg-cisco8k-26xx/preface.html"
+      },
+      {
+        "chapter_slug": "new-and-changed-sys-mon-features",
+        "chapter_title": "New and Changed System Monitoring Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/system-monitoring/26xx/configuration/guide/b-system-monitoring-cg-cisco8k-26xx/new-and-changed-sys-mon-features.html"
+      },
+      {
+        "chapter_slug": "yang-data-models-for-system-monitoring-features",
+        "chapter_title": "YANG Data Models for System Monitoring Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/system-monitoring/26xx/configuration/guide/b-system-monitoring-cg-cisco8k-26xx/yang-data-models-for-system-monitoring-features.html"
+      },
+      {
+        "chapter_slug": "implementing-system-logging",
+        "chapter_title": "Implementing System Logging",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/system-monitoring/26xx/configuration/guide/b-system-monitoring-cg-cisco8k-26xx/implementing-system-logging.html"
+      },
+      {
+        "chapter_slug": "implementing-alarm-log-correlation",
+        "chapter_title": "Monitoring Alarms and Implementing Alarm Log Correlation",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/system-monitoring/26xx/configuration/guide/b-system-monitoring-cg-cisco8k-26xx/implementing-alarm-log-correlation.html"
+      },
+      {
+        "chapter_slug": "onboard-failure-logging",
+        "chapter_title": "Onboard Failure Logging",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/system-monitoring/26xx/configuration/guide/b-system-monitoring-cg-cisco8k-26xx/onboard-failure-logging.html"
+      },
+      {
+        "chapter_slug": "implementing-performance-management",
+        "chapter_title": "Implementing Performance Management",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/system-monitoring/26xx/configuration/guide/b-system-monitoring-cg-cisco8k-26xx/implementing-performance-management.html"
+      },
+      {
+        "chapter_slug": "system-health-check",
+        "chapter_title": "System Health Check",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/system-monitoring/26xx/configuration/guide/b-system-monitoring-cg-cisco8k-26xx/system-health-check.html"
+      },
+      {
+        "chapter_slug": "configuring-and-managing-embedded-event-manager-policies",
+        "chapter_title": "Configuring and Managing Embedded Event Manager Policies",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/system-monitoring/26xx/configuration/guide/b-system-monitoring-cg-cisco8k-26xx/configuring-and-managing-embedded-event-manager-policies.html"
+      },
+      {
+        "chapter_slug": "graceful-handling-of-out-of-resource-situations",
+        "chapter_title": "Graceful Handling of Out of Resource Situations",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/system-monitoring/26xx/configuration/guide/b-system-monitoring-cg-cisco8k-26xx/graceful-handling-of-out-of-resource-situations.html"
+      },
+      {
+        "chapter_slug": "implementing-ip-service-level-agreements",
+        "chapter_title": "Implementing IP Service Level Agreements",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/system-monitoring/26xx/configuration/guide/b-system-monitoring-cg-cisco8k-26xx/implementing-ip-service-level-agreements.html"
+      },
+      {
+        "chapter_slug": "config-show-tech-support-commands",
+        "chapter_title": "Collecting Tech-Support Information",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/system-monitoring/26xx/configuration/guide/b-system-monitoring-cg-cisco8k-26xx/config-show-tech-support-commands.html"
+      },
+      {
+        "chapter_slug": "online-diagnostics",
+        "chapter_title": "Online Diagnostics for NPU",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/system-monitoring/26xx/configuration/guide/b-system-monitoring-cg-cisco8k-26xx/online-diagnostics.html"
+      },
+      {
+        "chapter_slug": "traffic-monitoring",
+        "chapter_title": "Traffic Monitoring",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/system-monitoring/26xx/configuration/guide/b-system-monitoring-cg-cisco8k-26xx/traffic-monitoring.html"
+      },
+      {
+        "chapter_slug": "m-monitor-fabric-links",
+        "chapter_title": "Monitoring Fabric Links",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/system-monitoring/26xx/configuration/guide/b-system-monitoring-cg-cisco8k-26xx/m-monitor-fabric-links.html"
+      },
+      {
+        "chapter_slug": "m-configuring-built-in-traffic-generator",
+        "chapter_title": "Inbuilt Traffic Generator for Network Diagnostics",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/system-monitoring/26xx/configuration/guide/b-system-monitoring-cg-cisco8k-26xx/m-configuring-built-in-traffic-generator.html"
+      },
+      {
+        "chapter_slug": "audit-logging",
+        "chapter_title": "Implementing Audit Monitoring",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/system-monitoring/26xx/configuration/guide/b-system-monitoring-cg-cisco8k-26xx/audit-logging.html"
+      }
+    ]
+  },
+  "b-system-security-cg-cisco8000-26xx.pdf": {
+    "title": "System Security Configuration Guide for Cisco 8000 Series Routers, IOS XR Release 26.1.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/security/26xx/configuration/guide/b-system-security-cg-cisco8000-26xx.html",
+    "chapters": [
+      {
+        "chapter_slug": "preface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/security/26xx/configuration/guide/b-system-security-cg-cisco8000-26xx/preface.html"
+      },
+      {
+        "chapter_slug": "new-and-changed-feature-information",
+        "chapter_title": "New and Changed\n\t Feature Information",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/security/26xx/configuration/guide/b-system-security-cg-cisco8000-26xx/new-and-changed-feature-information.html"
+      },
+      {
+        "chapter_slug": "yang-data-models-for-system-security-features",
+        "chapter_title": "YANG Data Models for System Security Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/security/26xx/configuration/guide/b-system-security-cg-cisco8000-26xx/yang-data-models-for-system-security-features.html"
+      },
+      {
+        "chapter_slug": "implementing-trustworthy-systems",
+        "chapter_title": "Implementing Trustworthy Systems",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/security/26xx/configuration/guide/b-system-security-cg-cisco8000-26xx/implementing-trustworthy-systems.html"
+      },
+      {
+        "chapter_slug": "configuring-aaa-services",
+        "chapter_title": "Configuring AAA Services",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/security/26xx/configuration/guide/b-system-security-cg-cisco8000-26xx/configuring-aaa-services.html"
+      },
+      {
+        "chapter_slug": "implementing-certification-authority-interoperability",
+        "chapter_title": "Implementing Certification Authority Interoperability",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/security/26xx/configuration/guide/b-system-security-cg-cisco8000-26xx/implementing-certification-authority-interoperability.html"
+      },
+      {
+        "chapter_slug": "implementing-keychain-management",
+        "chapter_title": "Implementing Keychain Management",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/security/26xx/configuration/guide/b-system-security-cg-cisco8000-26xx/implementing-keychain-management.html"
+      },
+      {
+        "chapter_slug": "macsec-using-eap-tls-authentication",
+        "chapter_title": "MACSec Using EAP-TLS Authentication",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/security/26xx/configuration/guide/b-system-security-cg-cisco8000-26xx/macsec-using-eap-tls-authentication.html"
+      },
+      {
+        "chapter_slug": "implementing-urpf",
+        "chapter_title": "Implementing URPF",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/security/26xx/configuration/guide/b-system-security-cg-cisco8000-26xx/implementing-urpf.html"
+      },
+      {
+        "chapter_slug": "implementing-type-6-password-encryption",
+        "chapter_title": "Implementing Type 6 Password Encryption",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/security/26xx/configuration/guide/b-system-security-cg-cisco8000-26xx/implementing-type-6-password-encryption.html"
+      },
+      {
+        "chapter_slug": "implementing-management-plane-protection",
+        "chapter_title": "Implementing Management Plane Protection",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/security/26xx/configuration/guide/b-system-security-cg-cisco8000-26xx/implementing-management-plane-protection.html"
+      },
+      {
+        "chapter_slug": "implementing-secure-shell",
+        "chapter_title": "Implementing Secure Shell",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/security/26xx/configuration/guide/b-system-security-cg-cisco8000-26xx/implementing-secure-shell.html"
+      },
+      {
+        "chapter_slug": "configuring-fips-mode",
+        "chapter_title": "Configuring FIPS Mode",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/security/26xx/configuration/guide/b-system-security-cg-cisco8000-26xx/configuring-fips-mode.html"
+      },
+      {
+        "chapter_slug": "implementing-secure-logging",
+        "chapter_title": "Implementing Secure Logging",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/security/26xx/configuration/guide/b-system-security-cg-cisco8000-26xx/implementing-secure-logging.html"
+      },
+      {
+        "chapter_slug": "implementing-mac-authentication-bypass",
+        "chapter_title": "Implementing MAC Authentication Bypass",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/security/26xx/configuration/guide/b-system-security-cg-cisco8000-26xx/implementing-mac-authentication-bypass.html"
+      },
+      {
+        "chapter_slug": "implementing-masa-service",
+        "chapter_title": "Cisco MASA Service",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/security/26xx/configuration/guide/b-system-security-cg-cisco8000-26xx/implementing-masa-service.html"
+      },
+      {
+        "chapter_slug": "implementing-lawful-intercept",
+        "chapter_title": "Implementing Lawful Intercept",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/security/26xx/configuration/guide/b-system-security-cg-cisco8000-26xx/implementing-lawful-intercept.html"
+      },
+      {
+        "chapter_slug": "m-establish-device-ownership-ncs5xx",
+        "chapter_title": "Device Ownership",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/security/26xx/configuration/guide/b-system-security-cg-cisco8000-26xx/m-establish-device-ownership-ncs5xx.html"
+      },
+      {
+        "chapter_slug": "m-consent-tokens-5xx",
+        "chapter_title": "Consent Tokens for Privileged Operations",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/security/26xx/configuration/guide/b-system-security-cg-cisco8000-26xx/m-consent-tokens-5xx.html"
+      },
+      {
+        "chapter_slug": "m-provision-tp-key-packages-ncs5xx",
+        "chapter_title": "Provision Third-party Key Packages",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/security/26xx/configuration/guide/b-system-security-cg-cisco8000-26xx/m-provision-tp-key-packages-ncs5xx.html"
+      },
+      {
+        "chapter_slug": "m_sec-est-client-supp-pki",
+        "chapter_title": "EST protocol for Automated Certificate Provisioning",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/security/26xx/configuration/guide/b-system-security-cg-cisco8000-26xx/m_sec-est-client-supp-pki.html"
+      },
+      {
+        "chapter_slug": "m-802-1x-authentication-cisco8k",
+        "chapter_title": "802-1x Port Based Authentication",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/security/26xx/configuration/guide/b-system-security-cg-cisco8000-26xx/m-802-1x-authentication-cisco8k.html"
+      }
+    ]
+  },
+  "b-telemetry-cg-8000-26xx.pdf": {
+    "title": "Telemetry Configuration Guide for Cisco 8000 Series Routers, IOS XR Release 26.1.x",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/telemetry/26xx/configuration/guide/b-telemetry-cg-8000-26xx.html",
+    "chapters": [
+      {
+        "chapter_slug": "new-and-changed-feature-information",
+        "chapter_title": "New and Changed Feature Information",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/telemetry/26xx/configuration/guide/b-telemetry-cg-8000-26xx/new-and-changed-feature-information.html"
+      },
+      {
+        "chapter_slug": "yang-data-models-telemetry",
+        "chapter_title": "YANG Data Models for Telemetry Features",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/telemetry/26xx/configuration/guide/b-telemetry-cg-8000-26xx/yang-data-models-telemetry.html"
+      },
+      {
+        "chapter_slug": "scale-up-your-network-monitoring-strategy-using-telemetry",
+        "chapter_title": "Scale-Up Your Network Monitoring Strategy Using Telemetry",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/telemetry/26xx/configuration/guide/b-telemetry-cg-8000-26xx/scale-up-your-network-monitoring-strategy-using-telemetry.html"
+      },
+      {
+        "chapter_slug": "dial-out-telemetry-session-from-router-to-destination",
+        "chapter_title": "Establish a Model-Driven Telemetry Session from a Router to a Collector",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/telemetry/26xx/configuration/guide/b-telemetry-cg-8000-26xx/dial-out-telemetry-session-from-router-to-destination.html"
+      },
+      {
+        "chapter_slug": "dial-in-telemetry-session-from-destination-to-router",
+        "chapter_title": "Establish a Model-Driven Telemetry Session from a Collector to a Router",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/telemetry/26xx/configuration/guide/b-telemetry-cg-8000-26xx/dial-in-telemetry-session-from-destination-to-router.html"
+      },
+      {
+        "chapter_slug": "enhancements-to-streaming-telemetry",
+        "chapter_title": "Enhancements to Streaming Telemetry",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/telemetry/26xx/configuration/guide/b-telemetry-cg-8000-26xx/enhancements-to-streaming-telemetry.html"
+      }
+    ]
+  },
+  "b-timing-sync-config-guide-cisco8000.pdf": {
+    "title": "Timing and Synchronization Configuration Guide for Cisco 8000 Series Routers, Cisco IOS XR Releases",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/timing/b-timing-sync-config-guide-cisco8000.html",
+    "chapters": [
+      {
+        "chapter_slug": "preface",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/timing/b-timing-sync-config-guide-cisco8000/preface.html"
+      },
+      {
+        "chapter_slug": "m-using-yang-data-models",
+        "chapter_title": "Using YANG Data Models",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/timing/b-timing-sync-config-guide-cisco8000/m-using-yang-data-models.html"
+      },
+      {
+        "chapter_slug": "m-timing-and-synchronization-overview",
+        "chapter_title": "Timing and synchronization",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/timing/b-timing-sync-config-guide-cisco8000/m-timing-and-synchronization-overview.html"
+      },
+      {
+        "chapter_slug": "m-frequency-synchronization",
+        "chapter_title": "Frequency synchronization",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/timing/b-timing-sync-config-guide-cisco8000/m-frequency-synchronization.html"
+      },
+      {
+        "chapter_slug": "m-precision-time-protocl",
+        "chapter_title": "Precision Time Protocol",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/timing/b-timing-sync-config-guide-cisco8000/m-precision-time-protocl.html"
+      },
+      {
+        "chapter_slug": "m-network-time-protocol",
+        "chapter_title": "Network Time Protocol",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/timing/b-timing-sync-config-guide-cisco8000/m-network-time-protocol.html"
+      },
+      {
+        "chapter_slug": "m-global-navigation-satellite-system",
+        "chapter_title": "Global Navigation Satellite System (GNSS)",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/timing/b-timing-sync-config-guide-cisco8000/m-global-navigation-satellite-system.html"
+      },
+      {
+        "chapter_slug": "m-network-synchronization-design-best-practices",
+        "chapter_title": "Network Synchronization Designs",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/timing/b-timing-sync-config-guide-cisco8000/m-network-synchronization-design-best-practices.html"
+      }
+    ]
+  },
+  "b-traffic-mirroring-configuration-guide-cisco8k.pdf": {
+    "title": "About this document | Traffic Mirroring Configuration Guide for Cisco 8000 Series Routers, Cisco IOS XR Release",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k.html",
+    "chapters": [
+      {
+        "chapter_slug": "SV_be0fHnqDoKM7sto?Ref=https%3A%2F%2Fwww.cisco.com%2Fc%2Fen%2Fus%2Ftd%2Fdocs%2Fiosxr%2Fcisco8000%2Ftraffic-mirroring%2Fb-traffic-mirroring-configuration-guide-cisco8k%2Fabout_this_document&resize=false",
+        "chapter_title": "Feedback",
+        "chapter_url": "https://ciscocx.qualtrics.com/jfe/form/SV_be0fHnqDoKM7sto?Ref=https%3A%2F%2Fwww.cisco.com%2Fc%2Fen%2Fus%2Ftd%2Fdocs%2Fiosxr%2Fcisco8000%2Ftraffic-mirroring%2Fb-traffic-mirroring-configuration-guide-cisco8k%2Fabout_this_document.html&resize=false"
+      },
+      {
+        "chapter_slug": "preface-traffic-mirroring",
+        "chapter_title": "Preface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/preface-traffic-mirroring.html"
+      },
+      {
+        "chapter_slug": "yang-models",
+        "chapter_title": "Using YANG Data Models",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/yang-models.html"
+      },
+      {
+        "chapter_slug": "getting-started-with-traffic-mirroring",
+        "chapter_title": "Getting Started with Traffic Mirroring",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/getting-started-with-traffic-mirroring.html"
+      },
+      {
+        "chapter_slug": "traffic-mirroring-8k",
+        "chapter_title": "Traffic mirroring",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/getting-started-with-traffic-mirroring/traffic-mirroring-8k.html"
+      },
+      {
+        "chapter_slug": "configuration-guidelines-for-traffic-mirroring",
+        "chapter_title": "Configuration guidelines for traffic mirroring",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/getting-started-with-traffic-mirroring/configuration-guidelines-for-traffic-mirroring.html"
+      },
+      {
+        "chapter_slug": "restrictions-traffic-mirroring",
+        "chapter_title": "Restrictions for traffic mirroring",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/getting-started-with-traffic-mirroring/restrictions-traffic-mirroring.html"
+      },
+      {
+        "chapter_slug": "traffic-mirroring-terminology-8k",
+        "chapter_title": "Traffic mirroring terminology",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/getting-started-with-traffic-mirroring/traffic-mirroring-terminology-8k.html"
+      },
+      {
+        "chapter_slug": "traffic-mirroring-types-8k",
+        "chapter_title": "Traffic mirroring types",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/getting-started-with-traffic-mirroring/traffic-mirroring-types-8k.html"
+      },
+      {
+        "chapter_slug": "how-traffic-mirroring-works-on-a-hub-8k",
+        "chapter_title": "How traffic mirroring works",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/getting-started-with-traffic-mirroring/how-traffic-mirroring-works-on-a-hub-8k.html"
+      },
+      {
+        "chapter_slug": "acl-based-traffic-mirroring-overview",
+        "chapter_title": "ACL-based traffic mirroring",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/acl-based-traffic-mirroring-overview.html"
+      },
+      {
+        "chapter_slug": "acl-based-traffic-mirroring-8k",
+        "chapter_title": "ACL-based traffic mirroring",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/acl-based-traffic-mirroring-overview/acl-based-traffic-mirroring-8k.html"
+      },
+      {
+        "chapter_slug": "how-acl-based-traffic-mirroring-works-8k",
+        "chapter_title": "How ACL-based traffic mirroring works",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/acl-based-traffic-mirroring-overview/how-acl-based-traffic-mirroring-works-8k.html"
+      },
+      {
+        "chapter_slug": "configure-acls-for-traffic-mirroring-8k",
+        "chapter_title": "Configure ACLs for traffic mirroring",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/acl-based-traffic-mirroring-overview/configure-acls-for-traffic-mirroring-8k.html"
+      },
+      {
+        "chapter_slug": "configure-layer-3-acl-based-traffic-mirroring",
+        "chapter_title": "Configure layer 3 ACL-based traffic mirroring",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/acl-based-traffic-mirroring-overview/configure-layer-3-acl-based-traffic-mirroring.html"
+      },
+      {
+        "chapter_slug": "attach-a-source-interface",
+        "chapter_title": "Attach a source interface",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/acl-based-traffic-mirroring-overview/attach-a-source-interface.html"
+      },
+      {
+        "chapter_slug": "multiple-erspan-sessions-for-mpls-8k",
+        "chapter_title": "Multiple SPAN ACL sessions for MPLS",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/acl-based-traffic-mirroring-overview/multiple-erspan-sessions-for-mpls-8k.html"
+      },
+      {
+        "chapter_slug": "local-span-overview",
+        "chapter_title": "Local SPAN",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/local-span-overview.html"
+      },
+      {
+        "chapter_slug": "local-span-8k",
+        "chapter_title": "Local SPAN",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/local-span-overview/local-span-8k.html"
+      },
+      {
+        "chapter_slug": "configuration-guidelines-for-local-span-8k",
+        "chapter_title": "Configuration guidelines for local SPAN",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/local-span-overview/configuration-guidelines-for-local-span-8k.html"
+      },
+      {
+        "chapter_slug": "restrictions-for-local-span-8k",
+        "chapter_title": "Restrictions for local SPAN",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/local-span-overview/restrictions-for-local-span-8k.html"
+      },
+      {
+        "chapter_slug": "configure-local-span-8k",
+        "chapter_title": "Configure local SPAN",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/local-span-overview/configure-local-span-8k.html"
+      },
+      {
+        "chapter_slug": "local-span-with-acl-8k",
+        "chapter_title": "Local SPAN with ACLs",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/local-span-overview/local-span-with-acl-8k.html"
+      },
+      {
+        "chapter_slug": "local-span-rate-limit-8k",
+        "chapter_title": "Local SPAN rate limit",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/local-span-overview/local-span-rate-limit-8k.html"
+      },
+      {
+        "chapter_slug": "erspan-overview",
+        "chapter_title": "ERSPAN",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/erspan-overview.html"
+      },
+      {
+        "chapter_slug": "erspan-8k",
+        "chapter_title": "ERSPAN",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/erspan-overview/erspan-8k.html"
+      },
+      {
+        "chapter_slug": "configuration-guidelines-for-erspan",
+        "chapter_title": "Configuration guidelines for ERSPAN",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/erspan-overview/configuration-guidelines-for-erspan.html"
+      },
+      {
+        "chapter_slug": "restrictions-for-erspan",
+        "chapter_title": "Restrictions for ERSPAN",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/erspan-overview/restrictions-for-erspan.html"
+      },
+      {
+        "chapter_slug": "supported-erspan-sessions",
+        "chapter_title": "Supported ERSPAN sessions",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/erspan-overview/supported-erspan-sessions.html"
+      },
+      {
+        "chapter_slug": "erspan-over-gre-ipv6-8k",
+        "chapter_title": "ERSPAN over GRE",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/erspan-overview/erspan-over-gre-ipv6-8k.html"
+      },
+      {
+        "chapter_slug": "partial-packet-capture-for-erspan-8k",
+        "chapter_title": "Partial packet capture for ERSPAN",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/erspan-overview/partial-packet-capture-for-erspan-8k.html"
+      },
+      {
+        "chapter_slug": "erspan-with-flexible-cli-8k",
+        "chapter_title": "ERSPAN with flexible CLI",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/erspan-overview/erspan-with-flexible-cli-8k.html"
+      },
+      {
+        "chapter_slug": "erspan-rate-limit-8k",
+        "chapter_title": "ERSPAN rate limit",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/erspan-overview/erspan-rate-limit-8k.html"
+      },
+      {
+        "chapter_slug": "erspan-per-destination-rate-limit-8k",
+        "chapter_title": "ERSPAN rate-limit per destination",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/erspan-overview/erspan-per-destination-rate-limit-8k.html"
+      },
+      {
+        "chapter_slug": "traffic-mirroring-with-dscp-8k",
+        "chapter_title": "Traffic mirroring with DSCP",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/erspan-overview/traffic-mirroring-with-dscp-8k.html"
+      },
+      {
+        "chapter_slug": "monitor-erspan-sessions-with-span-and-security-acl",
+        "chapter_title": "Monitor ERSPAN sessions with SPAN and security ACLs",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/erspan-overview/monitor-erspan-sessions-with-span-and-security-acl.html"
+      },
+      {
+        "chapter_slug": "packet-capture-with-filtering-capabilities-8k",
+        "chapter_title": "Selective packet capture for protocol and drops",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/erspan-overview/packet-capture-with-filtering-capabilities-8k.html"
+      },
+      {
+        "chapter_slug": "span-to-file-overview",
+        "chapter_title": "SPAN to file",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/span-to-file-overview.html"
+      },
+      {
+        "chapter_slug": "span-to-file-8k",
+        "chapter_title": "SPAN to file",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/span-to-file-overview/span-to-file-8k.html"
+      },
+      {
+        "chapter_slug": "always-on-span-to-file-with-periodic-write-8k",
+        "chapter_title": "Always-On SPAN to file with periodic write",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/span-to-file-overview/always-on-span-to-file-with-periodic-write-8k.html"
+      },
+      {
+        "chapter_slug": "span-to-file-with-unique-capture-8k",
+        "chapter_title": "SPAN to file with unique capture",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/span-to-file-overview/span-to-file-with-unique-capture-8k.html"
+      },
+      {
+        "chapter_slug": "mirror-forward-drop-packets-overview",
+        "chapter_title": "Mirror forward-drop packets",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/mirror-forward-drop-packets-overview.html"
+      },
+      {
+        "chapter_slug": "mirror-forward-drop-packets",
+        "chapter_title": "Mirror forward-drop packets",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/mirror-forward-drop-packets-overview/mirror-forward-drop-packets.html"
+      },
+      {
+        "chapter_slug": "guidelines-for-mirroring-forward-drop-packets",
+        "chapter_title": "Guidelines for mirroring forward-drop packets",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/mirror-forward-drop-packets-overview/guidelines-for-mirroring-forward-drop-packets.html"
+      },
+      {
+        "chapter_slug": "restrictions-for-mirroring-forward-drop-packets",
+        "chapter_title": "Restrictions for mirroring forward-drop packets",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/mirror-forward-drop-packets-overview/restrictions-for-mirroring-forward-drop-packets.html"
+      },
+      {
+        "chapter_slug": "configure-forward-drop-packets",
+        "chapter_title": "Configure forward-drop packets",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/mirror-forward-drop-packets-overview/configure-forward-drop-packets.html"
+      },
+      {
+        "chapter_slug": "mirror-buffer-drop-packets-overview",
+        "chapter_title": "Mirror buffer drop packets",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/mirror-buffer-drop-packets-overview.html"
+      },
+      {
+        "chapter_slug": "mirror-buffer-drop-packets",
+        "chapter_title": "Mirror buffer drop packets",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/mirror-buffer-drop-packets-overview/mirror-buffer-drop-packets.html"
+      },
+      {
+        "chapter_slug": "guidelines-for-mirroring-buffer-drop-packets",
+        "chapter_title": "Guidelines for mirroring buffer drop packets",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/mirror-buffer-drop-packets-overview/guidelines-for-mirroring-buffer-drop-packets.html"
+      },
+      {
+        "chapter_slug": "configure-mirroring-buffer-drop-packets-for-span-to-file",
+        "chapter_title": "Configure buffer drop packets mirroring for SPAN to file",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/mirror-buffer-drop-packets-overview/configure-mirroring-buffer-drop-packets-for-span-to-file.html"
+      },
+      {
+        "chapter_slug": "configure-buffer-drop-packets-mirroring-for-erspan",
+        "chapter_title": "Configure buffer drop packets mirroring for ERSPAN",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/mirror-buffer-drop-packets-overview/configure-buffer-drop-packets-mirroring-for-erspan.html"
+      },
+      {
+        "chapter_slug": "file-mirroring-overview",
+        "chapter_title": "File Mirroring",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/file-mirroring-overview.html"
+      },
+      {
+        "chapter_slug": "file-mirroring",
+        "chapter_title": "File mirroring",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/file-mirroring-overview/file-mirroring.html"
+      },
+      {
+        "chapter_slug": "restrictions-for-file-mirroring",
+        "chapter_title": "Restrictions for file mirroring",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/file-mirroring-overview/restrictions-for-file-mirroring.html"
+      },
+      {
+        "chapter_slug": "configure-file-mirroring",
+        "chapter_title": "Configure file mirroring",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/file-mirroring-overview/configure-file-mirroring.html"
+      },
+      {
+        "chapter_slug": "troubleshoot-traffic-mirroring-overview",
+        "chapter_title": "How to troubleshoot traffic mirroring",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/troubleshoot-traffic-mirroring-overview.html"
+      },
+      {
+        "chapter_slug": "troubleshoot-traffic-mirroring",
+        "chapter_title": "Troubleshoot traffic mirroring issues",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/troubleshoot-traffic-mirroring-overview/troubleshoot-traffic-mirroring.html"
+      },
+      {
+        "chapter_slug": "additional-debug-commands",
+        "chapter_title": "Additional debug commands",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/traffic-mirroring/b-traffic-mirroring-configuration-guide-cisco8k/troubleshoot-traffic-mirroring-overview/additional-debug-commands.html"
+      }
+    ]
+  },
+  "b-8800-hardware-installation-guide-modular.pdf": {
+    "title": "Hardware Installation Guide for Cisco 8800 Series Routers",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-modular/b-8800-hardware-installation-guide-modular.html",
+    "chapters": [
+      {
+        "chapter_slug": "modular_series_routers_overview",
+        "chapter_title": "Cisco 8800 Series Routers Overview",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-modular/b-8800-hardware-installation-guide-modular/modular_series_routers_overview.html"
+      },
+      {
+        "chapter_slug": "prepare_for_installation",
+        "chapter_title": "Prepare for Installation",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-modular/b-8800-hardware-installation-guide-modular/prepare_for_installation.html"
+      },
+      {
+        "chapter_slug": "unpack_and_install_the_chassis",
+        "chapter_title": "Unpack and Install the Chassis",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-modular/b-8800-hardware-installation-guide-modular/unpack_and_install_the_chassis.html"
+      },
+      {
+        "chapter_slug": "powering_on_the_router",
+        "chapter_title": "Powering on the Router",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-modular/b-8800-hardware-installation-guide-modular/powering_on_the_router.html"
+      },
+      {
+        "chapter_slug": "connect_router_to_the_network",
+        "chapter_title": "Connect Router to the Network",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-modular/b-8800-hardware-installation-guide-modular/connect_router_to_the_network.html"
+      },
+      {
+        "chapter_slug": "replace_chassis_components",
+        "chapter_title": "Replace Chassis Components",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-modular/b-8800-hardware-installation-guide-modular/replace_chassis_components.html"
+      },
+      {
+        "chapter_slug": "leds",
+        "chapter_title": "LEDs",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-modular/b-8800-hardware-installation-guide-modular/leds.html"
+      }
+    ]
+  },
+  "b-8700-hardware-installation-guide.pdf": {
+    "title": "Hardware Installation Guide for Cisco 8700 Series Routers",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-fixed-8700/b-8700-hardware-installation-guide.html",
+    "chapters": [
+      {
+        "chapter_slug": "routers_overview",
+        "chapter_title": "Cisco 8700 Series Routers Overview",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-fixed-8700/b-8700-hardware-installation-guide/routers_overview.html"
+      },
+      {
+        "chapter_slug": "prepare_for_installation",
+        "chapter_title": "Prepare for Installation",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-fixed-8700/b-8700-hardware-installation-guide/prepare_for_installation.html"
+      },
+      {
+        "chapter_slug": "unpack_and_install_the_chassis",
+        "chapter_title": "Unpack and Install the Chassis",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-fixed-8700/b-8700-hardware-installation-guide/unpack_and_install_the_chassis.html"
+      },
+      {
+        "chapter_slug": "powering_on_the_router",
+        "chapter_title": "Powering on the Router",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-fixed-8700/b-8700-hardware-installation-guide/powering_on_the_router.html"
+      },
+      {
+        "chapter_slug": "connect_router_to_the_network",
+        "chapter_title": "Connect Router to the Network",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-fixed-8700/b-8700-hardware-installation-guide/connect_router_to_the_network.html"
+      },
+      {
+        "chapter_slug": "replace_chassis_components",
+        "chapter_title": "Replace Chassis Components",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-fixed-8700/b-8700-hardware-installation-guide/replace_chassis_components.html"
+      },
+      {
+        "chapter_slug": "leds",
+        "chapter_title": "LEDs",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-fixed-8700/b-8700-hardware-installation-guide/leds.html"
+      }
+    ]
+  },
+  "b-8600-hardware-installation-guide-centralized.pdf": {
+    "title": "Hardware Installation Guide for Cisco 8600 Series Routers",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-centralized-8600/b-8600-hardware-installation-guide-centralized.html",
+    "chapters": [
+      {
+        "chapter_slug": "modular_series_routers_overview",
+        "chapter_title": "Cisco 8600 Series Routers Overview",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-centralized-8600/b-8600-hardware-installation-guide-centralized/modular_series_routers_overview.html"
+      },
+      {
+        "chapter_slug": "prepare_for_installation",
+        "chapter_title": "Prepare for Installation",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-centralized-8600/b-8600-hardware-installation-guide-centralized/prepare_for_installation.html"
+      },
+      {
+        "chapter_slug": "unpack_and_install_the_chassis",
+        "chapter_title": "Unpack and Install the Chassis",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-centralized-8600/b-8600-hardware-installation-guide-centralized/unpack_and_install_the_chassis.html"
+      },
+      {
+        "chapter_slug": "powering_on_the_router",
+        "chapter_title": "Powering on the Router",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-centralized-8600/b-8600-hardware-installation-guide-centralized/powering_on_the_router.html"
+      },
+      {
+        "chapter_slug": "connect_router_to_the_network",
+        "chapter_title": "Connect Router to the Network",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-centralized-8600/b-8600-hardware-installation-guide-centralized/connect_router_to_the_network.html"
+      },
+      {
+        "chapter_slug": "replace_chassis_components",
+        "chapter_title": "Replace Chassis Components",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-centralized-8600/b-8600-hardware-installation-guide-centralized/replace_chassis_components.html"
+      },
+      {
+        "chapter_slug": "leds",
+        "chapter_title": "LEDs",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-centralized-8600/b-8600-hardware-installation-guide-centralized/leds.html"
+      }
+    ]
+  },
+  "b-8500-switch-hardware-installation-guide.pdf": {
+    "title": "Hardware Installation Guide for Cisco 8500 Switches",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-switch/b-8500-switch-hardware-installation-guide.html",
+    "chapters": [
+      {
+        "chapter_slug": "switch_overview",
+        "chapter_title": "Cisco 8500 Switch Overview",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-switch/b-8500-switch-hardware-installation-guide/switch_overview.html"
+      },
+      {
+        "chapter_slug": "prepare_for_installation",
+        "chapter_title": "Prepare for Installation",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-switch/b-8500-switch-hardware-installation-guide/prepare_for_installation.html"
+      },
+      {
+        "chapter_slug": "unpack_and_install_the_chassis",
+        "chapter_title": "Unpack and Install the Chassis",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-switch/b-8500-switch-hardware-installation-guide/unpack_and_install_the_chassis.html"
+      },
+      {
+        "chapter_slug": "powering_on_the_switch",
+        "chapter_title": "Powering on the Switch",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-switch/b-8500-switch-hardware-installation-guide/powering_on_the_switch.html"
+      },
+      {
+        "chapter_slug": "connect_switch_to_the_network",
+        "chapter_title": "Connect Switch to the Network",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-switch/b-8500-switch-hardware-installation-guide/connect_switch_to_the_network.html"
+      },
+      {
+        "chapter_slug": "replace_chassis_components",
+        "chapter_title": "Replace Chassis Components",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-switch/b-8500-switch-hardware-installation-guide/replace_chassis_components.html"
+      },
+      {
+        "chapter_slug": "leds",
+        "chapter_title": "LEDs",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-switch/b-8500-switch-hardware-installation-guide/leds.html"
+      }
+    ]
+  },
+  "b-8000-hardware-installation-guide-fixed-port.pdf": {
+    "title": "Hardware Installation Guide for Cisco 8200 Series Routers",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-fixed/b-8000-hardware-installation-guide-fixed-port.html",
+    "chapters": [
+      {
+        "chapter_slug": "overview",
+        "chapter_title": "Cisco 8200 Series Routers Overview",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-fixed/b-8000-hardware-installation-guide-fixed-port/overview.html"
+      },
+      {
+        "chapter_slug": "prepare_for_installation",
+        "chapter_title": "Prepare for Installation",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-fixed/b-8000-hardware-installation-guide-fixed-port/prepare_for_installation.html"
+      },
+      {
+        "chapter_slug": "installing_the_chassis",
+        "chapter_title": "Installing the Chassis",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-fixed/b-8000-hardware-installation-guide-fixed-port/installing_the_chassis.html"
+      },
+      {
+        "chapter_slug": "connecting_the_device",
+        "chapter_title": "Connect Router to the Network",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-fixed/b-8000-hardware-installation-guide-fixed-port/connecting_the_device.html"
+      },
+      {
+        "chapter_slug": "replace_chassis_components",
+        "chapter_title": "Replace Chassis Components",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-fixed/b-8000-hardware-installation-guide-fixed-port/replace_chassis_components.html"
+      },
+      {
+        "chapter_slug": "leds",
+        "chapter_title": "LEDs",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-fixed/b-8000-hardware-installation-guide-fixed-port/leds.html"
+      }
+    ]
+  },
+  "b-8100-hardware-installation-guide-fixed-port.pdf": {
+    "title": "Hardware Installation Guide for Cisco 8100 Series Routers",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-fixed-8100/b-8100-hardware-installation-guide-fixed-port.html",
+    "chapters": [
+      {
+        "chapter_slug": "m-8100-fixed-port-overview",
+        "chapter_title": "Cisco 8100 Series Routers Overview",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-fixed-8100/b-8100-hardware-installation-guide-fixed-port/m-8100-fixed-port-overview.html"
+      },
+      {
+        "chapter_slug": "m-8100-prepare-for-installation",
+        "chapter_title": "Prepare for Installation",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-fixed-8100/b-8100-hardware-installation-guide-fixed-port/m-8100-prepare-for-installation.html"
+      },
+      {
+        "chapter_slug": "m-installing-the-chassis-8100",
+        "chapter_title": "Installing the Chassis",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-fixed-8100/b-8100-hardware-installation-guide-fixed-port/m-installing-the-chassis-8100.html"
+      },
+      {
+        "chapter_slug": "m-connect-router-to-the-network-8100",
+        "chapter_title": "Connect Router to the Network",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-fixed-8100/b-8100-hardware-installation-guide-fixed-port/m-connect-router-to-the-network-8100.html"
+      },
+      {
+        "chapter_slug": "m-replace-chassis-components-8100",
+        "chapter_title": "Replace Chassis Components",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-fixed-8100/b-8100-hardware-installation-guide-fixed-port/m-replace-chassis-components-8100.html"
+      },
+      {
+        "chapter_slug": "m-leds-fixed-port-8100",
+        "chapter_title": "LEDs",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-fixed-8100/b-8100-hardware-installation-guide-fixed-port/m-leds-fixed-port-8100.html"
+      }
+    ]
+  },
+  "b-8010-series-routers-hig.pdf": {
+    "title": "Hardware Installation Guide for Cisco 8010 Series Large and Medium Density Fixed Routers",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-fixed-8010/b-8010-series-routers-hig.html",
+    "chapters": [
+      {
+        "chapter_slug": "m-safety-8011",
+        "chapter_title": "Safety Warnings",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-fixed-8010/b-8010-series-routers-hig/m-safety-8011.html"
+      },
+      {
+        "chapter_slug": "m-overview-8011-4g",
+        "chapter_title": "Cisco 8010 Large and Medium Density Routers Overview",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-fixed-8010/b-8010-series-routers-hig/m-overview-8011-4g.html"
+      },
+      {
+        "chapter_slug": "m-prepare-8011-hd",
+        "chapter_title": "Prepare for Installation",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-fixed-8010/b-8010-series-routers-hig/m-prepare-8011-hd.html"
+      },
+      {
+        "chapter_slug": "m-install-8011",
+        "chapter_title": "Install the Router",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-fixed-8010/b-8010-series-routers-hig/m-install-8011.html"
+      },
+      {
+        "chapter_slug": "m-configure-8011",
+        "chapter_title": "Configure the Router",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-fixed-8010/b-8010-series-routers-hig/m-configure-8011.html"
+      },
+      {
+        "chapter_slug": "m-replace-psu-8011",
+        "chapter_title": "Replace Chassis Components",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-fixed-8010/b-8010-series-routers-hig/m-replace-psu-8011.html"
+      },
+      {
+        "chapter_slug": "m-appendix-8011",
+        "chapter_title": "Appendix",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-fixed-8010/b-8010-series-routers-hig/m-appendix-8011.html"
+      }
+    ]
+  },
+  "b-8101-32FH-O-C01-switch-hardware-installation-guide.pdf": {
+    "title": "Hardware Installation Guide for Cisco 8101-32FH-O-C01 Switch",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-switch/b-8101-32FH-O-C01-switch-hardware-installation-guide.html",
+    "chapters": [
+      {
+        "chapter_slug": "switch_overview",
+        "chapter_title": "Cisco 8101-32FH-O-C01 Switch",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-switch/b-8101-32FH-O-C01-switch-hardware-installation-guide/switch_overview.html"
+      },
+      {
+        "chapter_slug": "prepare_for_installation",
+        "chapter_title": "Prepare for installation",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-switch/b-8101-32FH-O-C01-switch-hardware-installation-guide/prepare_for_installation.html"
+      },
+      {
+        "chapter_slug": "install_switch",
+        "chapter_title": "Install the switch",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-switch/b-8101-32FH-O-C01-switch-hardware-installation-guide/install_switch.html"
+      },
+      {
+        "chapter_slug": "power_on_switch",
+        "chapter_title": "Power on the switch",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-switch/b-8101-32FH-O-C01-switch-hardware-installation-guide/power_on_switch.html"
+      },
+      {
+        "chapter_slug": "connect_switch_to_network",
+        "chapter_title": "Connect switch to the network",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-switch/b-8101-32FH-O-C01-switch-hardware-installation-guide/connect_switch_to_network.html"
+      },
+      {
+        "chapter_slug": "replace_switch_components",
+        "chapter_title": "Replace chassis components",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-switch/b-8101-32FH-O-C01-switch-hardware-installation-guide/replace_switch_components.html"
+      },
+      {
+        "chapter_slug": "leds",
+        "chapter_title": "LEDs",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-switch/b-8101-32FH-O-C01-switch-hardware-installation-guide/leds.html"
+      }
+    ]
+  },
+  "b-8400-hardware-installation-guide.pdf": {
+    "title": "Hardware Installation Guide for Cisco 8400 Series Routers",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-modular-8400/b-8400-hardware-installation-guide.html",
+    "chapters": [
+      {
+        "chapter_slug": "m-8400-overview",
+        "chapter_title": "Cisco 8400 Router Overview",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-modular-8400/b-8400-hardware-installation-guide/m-8400-overview.html"
+      },
+      {
+        "chapter_slug": "m-prepare-for-installation-m-8400-modular",
+        "chapter_title": "Prepare for Installation",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-modular-8400/b-8400-hardware-installation-guide/m-prepare-for-installation-m-8400-modular.html"
+      },
+      {
+        "chapter_slug": "unpack-and-verify-chassis-components",
+        "chapter_title": "Unpack and verify shipped contents",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-modular-8400/b-8400-hardware-installation-guide/unpack-and-verify-chassis-components.html"
+      },
+      {
+        "chapter_slug": "m-install-chassis-components",
+        "chapter_title": "Install the Cisco 8404-SYS-D router",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-modular-8400/b-8400-hardware-installation-guide/m-install-chassis-components.html"
+      },
+      {
+        "chapter_slug": "m-8400-connect-router-to-network",
+        "chapter_title": "Connect Router to the Network",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-modular-8400/b-8400-hardware-installation-guide/m-8400-connect-router-to-network.html"
+      },
+      {
+        "chapter_slug": "m-8400-replace-chassis-components",
+        "chapter_title": "Replace chassis components",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-modular-8400/b-8400-hardware-installation-guide/m-8400-replace-chassis-components.html"
+      },
+      {
+        "chapter_slug": "m-8400-led",
+        "chapter_title": "LEDs",
+        "chapter_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/hardware/hig-modular-8400/b-8400-hardware-installation-guide/m-8400-led.html"
+      }
+    ]
+  },
+  "ios-xr-smart-licensing-using-policy.pdf": {
+    "title": "Smart Licensing Using Policy  for IOS XR",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/licensing/article/ios-xr-smart-licensing-using-policy.html",
+    "chapters": []
+  },
+  "8000-series-routers.pdf": {
+    "title": "Cisco 8000 Series Routers",
+    "source_url": "https://www.cisco.com/c/en/us/td/docs/iosxr/8000-series-routers.html",
+    "chapters": [
+      {
+        "chapter_slug": "index",
+        "chapter_title": "Product\n                    Literature",
+        "chapter_url": "https://www.cisco.com/c/en/us/products/routers/8000-series-routers/index.html"
+      },
+      {
+        "chapter_slug": "white-paper-listing",
+        "chapter_title": "White\n                    Papers",
+        "chapter_url": "https://www.cisco.com/c/en/us/products/routers/8000-series-routers/white-paper-listing.html"
+      },
+      {
+        "chapter_slug": "models-comparison",
+        "chapter_title": "Compare\n                    Models",
+        "chapter_url": "https://www.cisco.com/c/en/us/products/routers/8000-series-routers/models-comparison.html"
+      },
+      {
+        "chapter_slug": "series",
+        "chapter_title": "8000 Series Routers",
+        "chapter_url": "https://www.cisco.com/c/en/us/support/routers/8000-series-routers/series.html"
+      }
+    ]
+  }
+}

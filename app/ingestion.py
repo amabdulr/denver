@@ -4,7 +4,7 @@ from typing import List, Set, Dict, Optional
 from paths import KNOWLEDGE_DOCS_DIR
 
 from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_text_splitters import CharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_chroma import Chroma
 from langchain_community.document_loaders import TextLoader, PyPDFLoader
 from langchain_core.documents import Document
@@ -181,7 +181,7 @@ def load_documents(base_directory: str = None) -> List[Document]:
             product_dir = os.path.join(base_directory, dir)
             for product_root, product_dirs, product_files in os.walk(product_dir):
                 for file in product_files:
-                    if file.endswith(".md") or file.endswith(".pdf"):
+                    if file.endswith((".md", ".pdf", ".txt")):
                         total_files += 1
                         full_path = os.path.join(product_root, file)
                         
@@ -190,25 +190,48 @@ def load_documents(base_directory: str = None) -> List[Document]:
                         
                         # For PDFs, build section map first
                         pdf_section_map = None
-                        if file.endswith(".pdf"):
-                            pdf_section_map = build_pdf_section_map(full_path)
-                            loader = PyPDFLoader(full_path)
-                        else:
-                            loader = TextLoader(full_path)
+                        try:
+                            if file.endswith(".pdf"):
+                                pdf_section_map = build_pdf_section_map(full_path)
+                                loader = PyPDFLoader(full_path)
+                            else:
+                                loader = TextLoader(full_path)
                         
-                        docs = loader.load()
+                            docs = loader.load()
+                        except Exception as e:
+                            print(f"⚠️  Skipping {file}: {e}")
+                            continue
                         print("Chunking it...")
-                        # Larger chunks to capture more context including section headers
-                        # 2000 chars ≈ 500 words, enough to include headers and meaningful content
-                        text_splitter = CharacterTextSplitter(
-                            chunk_size=2000, chunk_overlap=200
+                        # 800 chars ≈ 200 words — small enough to give granular
+                        # search results from .txt chapter files while still
+                        # capturing meaningful context from larger PDFs.
+                        text_splitter = RecursiveCharacterTextSplitter(
+                            chunk_size=800, chunk_overlap=100
                         )
                         texts = text_splitter.split_documents(docs)
                         print(f"created {len(texts)} chunks")
+
+                        # Derive 'book' metadata from directory structure.
+                        # For a .txt/.md file in  knowledge_docs/<product>/<book-slug>/chapter.md
+                        # the book is the parent directory name (e.g. 'appqoe-book-xe')
+                        # and the chapter is the filename without extension (e.g. 'etherchann').
+                        # For a .pdf file directly under knowledge_docs/<product>/,
+                        # the book is the filename without extension.
+                        rel_from_product = os.path.relpath(full_path, product_dir)
+                        rel_parts = rel_from_product.replace(os.sep, '/').split('/')
+                        if len(rel_parts) >= 2:
+                            book_name = rel_parts[0]  # directory name
+                            chapter_name = os.path.splitext(rel_parts[-1])[0]  # filename without ext
+                        else:
+                            book_name = os.path.splitext(file)[0]  # filename without ext
+                            chapter_name = ""
+
                         # add metadata to each document (preserve existing metadata like page numbers)
                         for doc in texts:  # Changed from 'docs' to 'texts' to update the split chunks
                             doc.metadata["product"] = product
                             doc.metadata["source"] = full_path
+                            doc.metadata["book"] = book_name
+                            doc.metadata["chapter"] = chapter_name
                             # Page number is automatically added by PyPDFLoader for PDFs
                             
                             # Add section/part information
@@ -292,15 +315,34 @@ def load_documents_from_path(file_path: str) -> List[Document]:
             pdf_section_map = None
         
         # Split into chunks
-        text_splitter = CharacterTextSplitter(
-            chunk_size=2000, chunk_overlap=200
+        text_splitter = RecursiveCharacterTextSplitter(
+            chunk_size=800, chunk_overlap=100
         )
         texts = text_splitter.split_documents(docs)
         
+        # Derive 'book' metadata from directory structure
+        rel = os.path.relpath(file_path)
+        rel_parts = rel.replace(os.sep, '/').split('/')
+        # e.g. knowledge_docs/sdwan/appqoe-book-xe/chapter.txt → book = appqoe-book-xe
+        # e.g. knowledge_docs/sdwan/qos-book-xe.pdf → book = qos-book-xe
+        book_name = None
+        for i, part in enumerate(rel_parts):
+            if part in ['sdwan', '9800', 'ASR9000', 'Cisco8000', 'cisco_generic']:
+                if i + 1 < len(rel_parts):
+                    next_part = rel_parts[i + 1]
+                    if '.' in next_part and i + 1 == len(rel_parts) - 1:
+                        book_name = os.path.splitext(next_part)[0]
+                    else:
+                        book_name = next_part
+                break
+        if not book_name:
+            book_name = os.path.splitext(os.path.basename(file_path))[0]
+
         # Add metadata
         for doc in texts:
             doc.metadata["product"] = product
             doc.metadata["source"] = os.path.relpath(file_path)
+            doc.metadata["book"] = book_name
             
             # Add section information
             if pdf_section_map is not None and "page" in doc.metadata:

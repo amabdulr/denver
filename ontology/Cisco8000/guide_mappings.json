@@ -1,0 +1,14 @@
+{
+    "_comment": "Knowledge-graph mappings for Cisco8000.",
+    "concept_to_guide": {},
+    "product_noise": [
+        "cisco8000",
+        "cisco 8000",
+        "8000",
+        "cisco8k",
+        "8k"
+    ],
+    "reference_guides": {
+        "patterns": []
+    }
+}

@@ -80,14 +80,14 @@ def render_bulk_analysis_page():
     if available_guides:
         # Define default guides for Cisco SD-WAN (curated subset)
         sdwan_default_guides = [
-            "systems-interfaces-book-xe-sdwan.pdf",
-            "security-book-xe.pdf",
-            "sdwan-xe-gs-book.pdf",
-            "policies-book-xe.pdf",
-            "appqoe-book-xe.pdf",
-            "cloud-onramp-book-xe.pdf",
-            "monitor-maintain-book.pdf",
-            "compatibility-and-server-recommendations.pdf"
+            "systems-interfaces-book-xe-sdwan",
+            "security-book-xe",
+            "sdwan-xe-gs-book",
+            "policies-book-xe",
+            "appqoe-book-xe",
+            "cloud-onramp-book-xe",
+            "monitor-maintain-book",
+            "compatibility-and-server-recommendations"
         ]
         
         # Initialize session state for selected guides if not exists

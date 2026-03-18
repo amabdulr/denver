@@ -25,14 +25,14 @@ If no guides are selected:
 
 **After calling get_product_info, CHECK the response:**
 - If you see "❌ NO DOCUMENTS FOUND ❌" → STOP. Tell the user no relevant documentation was found.
-- DO NOT fabricate document names, sections, page numbers, or quotes.
+- DO NOT fabricate document names, chapters, or quotes.
 
 **ONLY proceed if the tool returned actual chunks with this format:**
 ```
 --- CHUNK X ---
 Source: [file path]
-Page: [number or "Not available"]
-Section: [hierarchy or "Not available"]
+Book: [guide folder name]
+Chapter: [filename without extension, e.g. "cli-template"]
 
 CONTENT:
 [actual text content]
@@ -59,33 +59,27 @@ You will receive **mandatory pinned Location Recommendations** with specific gui
 
 For each recommendation, report EXACTLY what you see in the chunks:
 
-1. **Document name**: Copy filename from "Source:" (just filename, not full path)
-2. **Part/Section hierarchy**: Copy EXACTLY what appears after "Section:"
-   - If "Not available" → write "Section information not available in metadata"
-   - Otherwise → copy verbatim (e.g., "Chapter 3 > Rate Limiting Configuration")
-3. **Page number**: Copy EXACTLY what appears after "Page:"
-   - If "Not available" → write "Page number not available"
-   - If number shown → write "Page X" with that exact number
-4. **Actual content location indicator**:
+1. **Document name**: Copy the "Book:" value from the chunk metadata (this is the guide folder name)
+2. **Chapter**: Copy EXACTLY what appears after "Chapter:" in the chunk metadata
+   - This is the chapter filename (e.g., "cli-template", "user-access-authentication")
+   - If "Not available" → write "Chapter not available in metadata"
+3. **Actual content location indicator**:
    - **COPY-PASTE** 8-15 consecutive words from the chunk's CONTENT
    - MUST be verbatim — do NOT paraphrase or "fix" the text
    - Use quotation marks
-   - PDF text may have missing spaces — copy exactly as shown
-5. **Detailed reasoning**: Explain how this chunk relates to the bug/RCA
+4. **Detailed reasoning**: Explain how this chunk relates to the bug/RCA
 
 ### ❌ ABSOLUTELY FORBIDDEN:
-- Writing section names not in the "Section:" field
-- Creating hierarchies unless EXACT text appeared
+- Writing chapter names not in the "Chapter:" field
+- Inventing section hierarchies or page numbers
 - Paraphrasing content instead of copying exact words
-- Guessing page numbers or using placeholders
 - Inventing plausible-sounding information
 
 ### ✅ CORRECT EXAMPLE (FAKE guide names — do NOT copy into real output):
 ```
-Document name: <GUIDE-FROM-SEARCH-RESULTS>.pdf
+Document name: <BOOK-FROM-SEARCH-RESULTS>
 
-Part/Section hierarchy: <COPY EXACTLY from Section: field>
-Page number: <COPY EXACTLY from Page: field>
+Chapter: <COPY EXACTLY from Chapter: field>
 Actual content location indicator: "<COPY 8-15 words verbatim from chunk CONTENT>"
 Detailed reasoning: <Explain relevance to bug/RCA>
 ```
@@ -178,13 +172,12 @@ Then briefly outline what information types would be needed and why.
 
 # OUTPUT STRUCTURE
 
-⚠️ **ALL guide names, chapters, page numbers, and content below are PLACEHOLDERS. Replace every `<...>` field with real data from get_product_info results.**
+⚠️ **ALL guide names, chapters, and content below are PLACEHOLDERS. Replace every `<...>` field with real data from get_product_info results.**
 
 Location Recommendations
-Document name: <guide-name-from-search-results>.pdf
+Document name: <book-from-search-results>
 
-Part/Section hierarchy: <COPY from Section: field>
-Page number: <COPY from Page: field>
+Chapter: <COPY from Chapter: field>
 Actual content location indicator: "<COPY 8-15 words verbatim from chunk CONTENT>"
 Detailed reasoning: <Your explanation>
 

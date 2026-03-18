@@ -66,26 +66,38 @@ docker/
 
 ### How the pieces fit together
 
+The Docker image is **self-contained** — it ships with all app code, ontology
+configs, Python dependencies, and empty `knowledge_docs/` product subfolders.
+The Admin tab downloads product PDFs at runtime.
+
 ```
 ┌─────────────────────────────────────────────────┐
-│  Your Mac                                       │
+│  Docker Image (self-contained)                  │
 │                                                 │
-│   .env  ──secrets──►  ┌──────────────────────┐  │
-│                        │  Docker Container    │  │
-│   knowledge_docs/ ───► │                      │  │
-│   data/ ─────────────► │   Denver App         │  │
-│   app_config.json ───► │   (Streamlit :8501)  │  │
-│                        │                      │  │
-│   browser :8501  ◄──── │   port 8501          │  │
-│                        └──────────────────────┘  │
+│  ┌───────────────────────────────────────────┐  │
+│  │  Baked into image:                           │  │
+│  │    app/*.py          (all app code)           │  │
+│  │    ontology/         (guide mappings)         │  │
+│  │    prompts/*.md      (prompt templates)        │  │
+│  │    Python 3.11 + all pip packages             │  │
+│  └───────────────────────────────────────────┘  │
 │                                                 │
-│   vectorstore_data (Docker volume) ◄──► ChromaDB │
+│  Docker Volumes (persist across restarts):       │
+│    knowledge_docs_data ◄── Admin tab downloads   │
+│    vectorstore_data    ◄── ChromaDB             │
+│    app_config_data     ◄── user preferences     │
+│    app_data            ◄── heading cache, etc.  │
+│                                                 │
+│  .env (injected at runtime) ── API keys          │
+│                                                 │
+│  browser :8503 ◄──── Streamlit :8501            │
 └─────────────────────────────────────────────────┘
 ```
 
-- Your **secrets** (`.env`) are injected at runtime — they're never baked into the image.
-- Your **knowledge_docs**, **data**, and **app_config.json** are mounted as volumes, so changes you make on your Mac are instantly visible inside the container (and vice versa).
-- The **ChromaDB vector store** lives in a Docker-managed volume so it persists across restarts.
+- Your **secrets** (`.env`) are the only host file — they're injected at runtime, never baked into the image.
+- **Ontology configs** (`ontology/`) are baked in — they're small and ship with the image.
+- **Product documentation** (`knowledge_docs/`) starts empty. Use the **Admin tab → Download PDFs** to populate it after first launch.
+- All runtime data persists in **Docker-managed volumes** that survive container restarts.
 
 ---
 
@@ -123,9 +135,13 @@ Breaking that down:
 
 You'll see logs scrolling by. Once you see Streamlit's startup message, open your browser:
 
-**👉 http://localhost:8501**
+**👉 http://localhost:8503**
 
-### 3. Stop the app
+### 3. First-time setup: Download product docs
+
+After the app starts, go to the **🛠️ Admin** tab in the sidebar and use **Download PDFs** to download documentation for your product (e.g., SD-WAN). This only needs to be done once — downloaded PDFs persist in a Docker volume.
+
+### 4. Stop the app
 
 Press `Ctrl+C` in the terminal where it's running.
 
@@ -172,9 +188,10 @@ denver-docker logs -f
 
 | What changed | Action needed |
 |---|---|
-| Edited a `.py` file | Just restart: `down` then `up` (the code is copied during build, so you need `--build`) |
+| Edited a `.py` file | Rebuild: `up --build` (code is copied at build time) |
 | Added/changed a package in `requirements.txt` | Rebuild: `up --build` (or `build --no-cache` if caching causes issues) |
-| Updated knowledge docs | **Nothing!** They're mounted as a volume — changes are live |
+| Updated ontology configs | Rebuild: `up --build` (`ontology/` is baked into the image) |
+| Need to download new product docs | **Nothing!** Use the Admin tab — downloads persist in a Docker volume |
 | Changed `.env` values | Restart: `down` then `up` (no rebuild needed) |
 | Changed the `Dockerfile` itself | Rebuild: `up --build` |
 
@@ -230,7 +247,7 @@ docker compose -f docker/docker-compose.yml up --build
 
 - **Build context** — the folder Docker looks at when building an image (our project root)
 - **Layer caching** — Docker reuses unchanged steps to speed up rebuilds
-- **Bind mount** — linking a folder on your Mac to a folder in the container (e.g., `knowledge_docs/`)
-- **Named volume** — Docker-managed storage that persists independently of any container (e.g., `vectorstore_data`)
+- **Bind mount** — linking a specific host file to the container (e.g., `.env` for secrets)
+- **Named volume** — Docker-managed storage that persists independently of any container (e.g., `vectorstore_data`, `knowledge_docs_data`)
 - **Health check** — a periodic test that Docker runs to make sure the app is responding
 - **Multi-stage build** — our Dockerfile uses two stages: one to compile dependencies (with gcc etc.), and a slim one to run the app — this keeps the final image small

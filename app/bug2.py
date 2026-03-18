@@ -4,6 +4,31 @@ from requests_oauthlib import OAuth1
 import xml.etree.ElementTree as ET
 from xml.sax.saxutils import escape as xml_escape
 
+try:
+    from lxml import etree as LET
+except Exception:
+    LET = None
+
+
+def _raise_if_login_redirect(response, endpoint_name):
+    """Raise a clear error when CDETS returns an HTML login page instead of API XML."""
+    content_type = (response.headers.get("Content-Type") or "").lower()
+    text_sample = (response.text or "")[:1200].lower()
+
+    looks_like_login_html = (
+        "text/html" in content_type
+        and (
+            "name=\"final_redirect\"" in text_sample
+            or "name=\"endpoint\" value=\"/login\"" in text_sample
+            or ("<html" in text_sample and "/login" in text_sample)
+        )
+    )
+
+    if looks_like_login_html:
+        raise RuntimeError(
+            "Unable to reach CDETS. Please make sure you are connected to the Cisco VPN and try again."
+        )
+
 
 def safe_parse_cdets_xml(xml_content):
     """
@@ -40,13 +65,39 @@ def safe_parse_cdets_xml(xml_content):
     try:
         return ET.fromstring(cleaned.encode('utf-8'))
     except ET.ParseError:
-        stripped = re.sub(
-            r'(name="[^"]+">)(.*?)(</(?:cdets:)?Field>)',
-            lambda m: m.group(1) + re.sub(r'<[^>]*>', '', m.group(2)) + m.group(3),
-            xml_str,
-            flags=re.DOTALL
-        )
+        pass
+
+    stripped = re.sub(
+        r'(name="[^"]+">)(.*?)(</(?:cdets:)?Field>)',
+        lambda m: m.group(1) + re.sub(r'<[^>]*>', '', m.group(2)) + m.group(3),
+        xml_str,
+        flags=re.DOTALL
+    )
+
+    # Escape stray ampersands that are not part of entity refs.
+    stripped = re.sub(r'&(?!#?[a-zA-Z0-9]+;)', '&amp;', stripped)
+
+    try:
         return ET.fromstring(stripped.encode('utf-8'))
+    except ET.ParseError:
+        pass
+
+    # Final fallback: use lxml recovery mode (if available) for malformed XML.
+    if LET is not None:
+        try:
+            recovered_root = LET.fromstring(
+                stripped.encode('utf-8', errors='replace'),
+                parser=LET.XMLParser(recover=True),
+            )
+            if recovered_root is not None:
+                recovered_bytes = LET.tostring(recovered_root, encoding='utf-8')
+                return ET.fromstring(recovered_bytes)
+        except Exception:
+            pass
+
+    # Keep the exception actionable in UI while avoiding huge payload dumps.
+    snippet = stripped[:400].replace('\n', ' ')
+    raise ET.ParseError(f"Unable to parse CDETS XML after recovery attempts. Snippet: {snippet}")
 
 # Configuration
 BUG_NUMBER = "CSCwr82677"
@@ -96,6 +147,7 @@ def get_bug_summary(bug_number, auth):
     headers = {"Accept": "application/xml"}
     response = requests.get(url, auth=auth, headers=headers)
     response.raise_for_status()
+    _raise_if_login_redirect(response, f"bug/{bug_number}")
     return response
 
 def get_note_info(bug_number, note_title, auth):
@@ -114,6 +166,7 @@ def get_note_info(bug_number, note_title, auth):
     headers = {"Accept": "application/xml"}
     response = requests.get(url, auth=auth, headers=headers)
     response.raise_for_status()
+    _raise_if_login_redirect(response, f"bug/{bug_number}/note/{note_title}/info")
     return response
 
 def get_note_content(bug_number, note_title, auth):
@@ -148,6 +201,7 @@ def get_all_notes(bug_number, auth):
     headers = {"Accept": "application/xml"}
     response = requests.get(url, auth=auth, headers=headers)
     response.raise_for_status()
+    _raise_if_login_redirect(response, f"bug/{bug_number}/notes")
     
     # Parse XML to extract note titles
     root = safe_parse_cdets_xml(response.content)
@@ -214,6 +268,7 @@ def get_bug_field_values(bug_number, fields, auth):
     headers = {"Accept": "application/xml"}
     response = requests.get(url, auth=auth, headers=headers)
     response.raise_for_status()
+    _raise_if_login_redirect(response, f"bug/{bug_number}")
     
     # Parse XML response
     root = safe_parse_cdets_xml(response.content)

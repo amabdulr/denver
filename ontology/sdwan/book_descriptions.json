@@ -1,0 +1,137 @@
+{
+  "appqoe-book-xe.pdf": {
+    "title": "Cisco Catalyst SD-WAN AppQoE Configuration Guide, Cisco IOS XE Catalyst SD-WAN Release 17.x",
+    "chapters": {
+      "read-me-first": {
+        "title": "Read Me First",
+        "url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/appqoe/ios-xe-17/appqoe-book-xe/read-me-first.html",
+        "short_description": "[dry-run — not generated]"
+      },
+      "m-whats-new-17x-20x": {
+        "title": "What's New in Cisco IOS XE (Catalyst SD-WAN)",
+        "url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/appqoe/ios-xe-17/appqoe-book-xe/m-whats-new-17x-20x.html",
+        "short_description": "[dry-run — not generated]"
+      },
+      "m-appnav-xe-for-sd-wan": {
+        "title": "AppNav-XE for Cisco Catalyst SD-WAN",
+        "url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/appqoe/ios-xe-17/appqoe-book-xe/m-appnav-xe-for-sd-wan.html",
+        "short_description": "[dry-run — not generated]"
+      },
+      "m-tcp-optimization": {
+        "title": "TCP Optimization",
+        "url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/appqoe/ios-xe-17/appqoe-book-xe/m-tcp-optimization.html",
+        "short_description": "[dry-run — not generated]"
+      },
+      "m-support-for-multiple-appqoe-service-nodes": {
+        "title": "External Service Nodes for AppQoE Services",
+        "url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/appqoe/ios-xe-17/appqoe-book-xe/m-support-for-multiple-appqoe-service-nodes.html",
+        "short_description": "[dry-run — not generated]"
+      },
+      "m-integration-of-dre-with-cisco-sd-wan-tcp-optimization": {
+        "title": "Traffic Optimization with DRE",
+        "url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/appqoe/ios-xe-17/appqoe-book-xe/m-integration-of-dre-with-cisco-sd-wan-tcp-optimization.html",
+        "short_description": "[dry-run — not generated]"
+      },
+      "m-ssl-proxy-enhacements": {
+        "title": "HTTP CONNECT",
+        "url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/appqoe/ios-xe-17/appqoe-book-xe/m-ssl-proxy-enhacements.html",
+        "short_description": "[dry-run — not generated]"
+      },
+      "m-appqoe-verification-and-troubleshooting": {
+        "title": "AppQoE Verification and Troubleshooting",
+        "url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/appqoe/ios-xe-17/appqoe-book-xe/m-appqoe-verification-and-troubleshooting.html",
+        "short_description": "[dry-run — not generated]"
+      },
+      "troubleshooting-support-articles": {
+        "title": "Troubleshoot Cisco Catalyst SD-WAN AppQoE",
+        "url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/appqoe/ios-xe-17/appqoe-book-xe/troubleshooting-support-articles.html",
+        "short_description": "[dry-run — not generated]"
+      }
+    }
+  },
+  "routing-book-xe.pdf": {
+    "title": "Routing Configuration Guide, Cisco Catalyst SD-WAN Releases 17.x",
+    "chapters": {
+      "about_this_document": {
+        "title": "About This Document",
+        "url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/routing/ios-xe-17/routing-protocols-configuration-guide/about_this_document.html",
+        "short_description": "[dry-run — pending]"
+      },
+      "OMP-routing-protocol": {
+        "title": "Overlay Management Protocol",
+        "url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/routing/ios-xe-17/routing-protocols-configuration-guide/OMP-routing-protocol.html",
+        "short_description": "[dry-run — pending]"
+      },
+      "bgp-protocol": {
+        "title": "Border Gateway Protocol",
+        "url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/routing/ios-xe-17/routing-protocols-configuration-guide/bgp-protocol.html",
+        "short_description": "[dry-run — pending]"
+      },
+      "ospf-ospfv3-protocol": {
+        "title": "Open Shortest Path First Routing Protocol",
+        "url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/routing/ios-xe-17/routing-protocols-configuration-guide/ospf-ospfv3-protocol.html",
+        "short_description": "[dry-run — pending]"
+      },
+      "eigrp": {
+        "title": "Enhanced Interior Gateway Routing Protocol",
+        "url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/routing/ios-xe-17/routing-protocols-configuration-guide/eigrp.html",
+        "short_description": "[dry-run — pending]"
+      },
+      "routing-information-protocol": {
+        "title": "Routing Information Protocol",
+        "url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/routing/ios-xe-17/routing-protocols-configuration-guide/routing-information-protocol.html",
+        "short_description": "[dry-run — pending]"
+      },
+      "multicast-overlay-routing": {
+        "title": "Multicast Overlay Routing",
+        "url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/routing/ios-xe-17/routing-protocols-configuration-guide/multicast-overlay-routing.html",
+        "short_description": "[dry-run — pending]"
+      },
+      "radio-aware-routing": {
+        "title": "Radio Aware Routing",
+        "url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/routing/ios-xe-17/routing-protocols-configuration-guide/radio-aware-routing.html",
+        "short_description": "[dry-run — pending]"
+      },
+      "route-leaking-between-vpns": {
+        "title": "Route Leaking between VPNs",
+        "url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/routing/ios-xe-17/routing-protocols-configuration-guide/route-leaking-between-vpns.html",
+        "short_description": "[dry-run — pending]"
+      },
+      "bfd": {
+        "title": "Bi-directional Forwarding Detection Protocol",
+        "url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/routing/ios-xe-17/routing-protocols-configuration-guide/bfd.html",
+        "short_description": "[dry-run — pending]"
+      },
+      "cisco-sd-wan-controller-route-filtering-by-tloc-color": {
+        "title": "Cisco SD-WAN Controller Route Filtering by TLOC Color",
+        "url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/routing/ios-xe-17/routing-protocols-configuration-guide/cisco-sd-wan-controller-route-filtering-by-tloc-color.html",
+        "short_description": "[dry-run — pending]"
+      },
+      "rendezvous-point-selection-process-by-pim-bsr": {
+        "title": "Rendezvous Point Selection Process by a PIM BSR",
+        "url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/routing/ios-xe-17/routing-protocols-configuration-guide/rendezvous-point-selection-process-by-pim-bsr.html",
+        "short_description": "[dry-run — pending]"
+      },
+      "multicast-source-discovery-protocol": {
+        "title": "Multicast Source Discovery Protocol",
+        "url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/routing/ios-xe-17/routing-protocols-configuration-guide/multicast-source-discovery-protocol.html",
+        "short_description": "[dry-run — pending]"
+      },
+      "transport-gateway": {
+        "title": "Transport Gateway",
+        "url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/routing/ios-xe-17/routing-protocols-configuration-guide/transport-gateway.html",
+        "short_description": "[dry-run — pending]"
+      },
+      "symmetric-routing-in-cisco-sd-wan": {
+        "title": "Symmetric Routing",
+        "url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/routing/ios-xe-17/routing-protocols-configuration-guide/symmetric-routing-in-cisco-sd-wan.html",
+        "short_description": "[dry-run — pending]"
+      },
+      "hub-and-spoke": {
+        "title": "Hub-and-Spoke",
+        "url": "https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/routing/ios-xe-17/routing-protocols-configuration-guide/hub-and-spoke.html",
+        "short_description": "[dry-run — pending]"
+      }
+    }
+  }
+}

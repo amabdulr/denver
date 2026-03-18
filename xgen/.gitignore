@@ -1,0 +1,69 @@
+# Secrets & credentials
+.env
+auth_token_cache.json
+
+# Virtual environments
+.venv/
+myenv/
+venv/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# ChromaDB vectorstore (regenerate with: python ingestion.py)
+data/
+
+# Knowledge docs (large PDFs - add your own docs to knowledge_docs/ locally)
+knowledge_docs/
+
+# Generated output
+output/
+
+# macOS
+.DS_Store
+
+# Test / personal files
+myown/
+
+# Data files
+*.xlsx
+
+# Other project files (not part of xml_generator)
+app_functions.py
+bug_viewer.py
+bug2.py
+bug2_backup.py
+bug_notes.py
+cisco_product_agent.py
+Convert.py
+first_draft_tab.py
+hal_check_tab.py
+ingestion.py
+ollama_llama31_tool_call.py
+Pearl.py
+prompt_template.py
+RCA.py
+semantic_query.py
+streamlit_app.py
+streamlit_bug_viewer.py
+structured_output.py
+utils.py
+
+# Scratch notes
+bug.md
+bug_files.md
+bug_notes.md
+sr.md
+summarize.md
+CleanContent.md
+ConvertToXML.md
+converttotemplate.md
+example_prompt.md
+
+# Sample XML files in root
+configure-static-ap-names-cli.xml
+configure-static-ap-names-gui.xml
+static-ap-naming-functionality.xml
+verify.xml

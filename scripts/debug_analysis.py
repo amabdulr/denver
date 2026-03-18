@@ -20,7 +20,12 @@ import os
 import textwrap
 
 # ── Ensure we're in the right directory ──
-os.chdir(os.path.dirname(os.path.abspath(__file__)))
+_script_dir = os.path.dirname(os.path.abspath(__file__))
+_project_dir = os.path.dirname(_script_dir)          # Denver2/
+_app_dir = os.path.join(_project_dir, "app")
+os.chdir(_project_dir)
+if _app_dir not in sys.path:
+    sys.path.insert(0, _app_dir)
 
 # ── Reload app_functions fresh ──
 import app_functions
@@ -555,6 +560,61 @@ The underlying behavior is documented in Cisco bug CSCwf67010, which describes t
 """,
     },
 
+    "cflowd": {
+        "product": "Cisco SD-WAN",
+        "description": "Cflowd policy cannot apply to port-channel on C8300",
+        "content": """\
+Executive Summary:
+The customer, BANCOLOMBIA, reported an issue where the C-flow (cflowd) policy could not be configured or applied successfully on certain Cisco Catalyst C8300-1N1S-6T branch routers in their Cisco SDWAN deployment. The policy, pushed from vSmart, was visible on the controller but not on the cEdge devices. As a result, NetFlow data could not be collected from specific branch routers, impacting network monitoring and analysis. The root cause was determined to be a limitation in applying the cflowd policy to physical interfaces (specifically port-channel interfaces). The issue was resolved by changing the policy application from the port-channel interface to a Loopback interface.
+
+Steps to Reproduce:
+1. Configure a cflowd (C-flow) policy in vManage and push it to vSmart.
+2. Attempt to apply the cflowd policy to a physical interface (e.g., port-channel) on a Cisco Catalyst C8300-1N1S-6T cEdge device.
+3. Observe that the policy is visible and present on vSmart, but does not appear on the cEdge device.
+4. Check device logs on the cEdge and observe the following error:
+   ERR> 7-Oct-2025::02:00:19.939 RP_0 confd[<0.7571.58>]: devel-c create error {application, \"\"} for callpoint cflowd_template path /viptela-policy:policy-from-vsmart/cflowd-template{CFLOWD_FILIAL_BANISTMO_V01}
+5. Attempt to apply the same cflowd policy to a Loopback interface (e.g., lo511 or lo10) within VPN 511 or VPN 401.
+6. Observe that the policy is now pushed and visible on the cEdge device, and NetFlow data collection is restored.
+
+Condition:
+- Cisco SDWAN deployment with Cisco Catalyst C8300-1N1S-6T routers as cEdge devices.
+- Attempting to apply a cflowd (NetFlow) policy to a physical interface (port-channel) via centralized policy from vSmart.
+- The cflowd policy is new and has not previously worked on these interfaces.
+- The same policy works when applied to Loopback interfaces within VPN 511/401.
+- No configuration typos; configuration is valid and visible on vSmart, but not propagated to cEdge.
+- SDWAN controllers (vManage/vSmart/vBond) are operational and policy deployment is otherwise functional.
+
+Workarounds:
+- Apply the cflowd policy to a Loopback interface (e.g., lo511 or lo10) instead of the physical port-channel interface.
+- Optionally, configure NAT on the physical interface to forward traffic from the Loopback interface, enabling NetFlow data collection from the desired traffic flows.
+
+Procedure (Solution):
+1. Identify the interface where the cflowd policy is failing to apply (typically a port-channel or physical interface).
+2. Modify the cflowd policy to target a Loopback interface (e.g., lo511 or lo10) within the appropriate VPN.
+3. Push the updated policy from vManage to vSmart, and then to the cEdge device.
+4. Verify on the cEdge device that the cflowd policy is now present and active:
+   show running-config | section cflowd
+5. If required, configure NAT on the physical interface to ensure traffic is forwarded to/from the Loopback interface for NetFlow monitoring.
+6. Confirm that NetFlow data is now being collected from the branch router.
+7. Monitor for any further errors or issues in the device logs.
+
+Root Cause:
+The root cause of the issue was a limitation in the Cisco SDWAN software on Catalyst C8300-1N1S-6T routers, where cflowd (NetFlow) policies cannot be applied directly to physical interfaces (such as port-channels). This is evidenced by the error in the cEdge device logs:
+   ERR> 7-Oct-2025::02:00:19.939 RP_0 confd[<0.7571.58>]: devel-c create error {application, \"\"} for callpoint cflowd_template path /viptela-policy:policy-from-vsmart/cflowd-template{CFLOWD_FILIAL_BANISTMO_V01}
+The policy was visible and valid on vSmart, but not propagated to the cEdge device when targeting a physical interface. When the policy was changed to target a Loopback interface, it was successfully applied, confirming the limitation. No configuration errors or typos were present. This is a known behavior in certain SDWAN software versions where cflowd is not supported on all interface types.
+
+Affected Devices/Versions:
+- Cisco Catalyst C8300-1N1S-6T Routers (cEdge)
+- SDWAN deployments using centralized policy (Data Policy and App-Aware Policy)
+
+Bugs:
+- No specific Cisco bug ID (CSC) was referenced in the case notes or identified during troubleshooting.
+
+Fixed Versions, Patches:
+- No specific fixed version or patch was referenced in the case notes.
+- The issue was resolved operationally by changing the policy application to a supported interface type (Loopback).
+""",
+    },
     "qos_shaping": {
         "product": "Cisco SD-WAN",
         "description": "QoS Shaping Rate configuration guidance on C8200",
@@ -659,7 +719,7 @@ term_frequencies = clues_data.get('term_frequencies', {})
 print(f"Detected {len(all_detected_terms)} terms, {len(url_clues)} URL(s)")
 print(f"\nURL Clues:")
 for c in url_clues:
-    print(f"  book_pdf:       {c['book_pdf']}")
+    print(f"  book_slug:       {c['book_slug']}")
     print(f"  book_id:        {c['book_id']}")
     print(f"  chapter_clues:  {c['chapter_clues']}")
     print(f"  url:            {c['url'][:100]}...")
@@ -716,7 +776,8 @@ for g in sorted(selected_guides, key=lambda g: guide_scores.get(g, 0), reverse=T
 section("STEP 3: run_agent() Replacement Logic")
 
 # Load BugAnalyze.md (what the text area holds)
-with open("BugAnalyze.md", "r") as f:
+_prompts_dir = os.path.join(_project_dir, "prompts")
+with open(os.path.join(_prompts_dir, "BugAnalyze.md"), "r") as f:
     question = f.read()
 
 # --- Replicate run_agent logic exactly ---
@@ -730,7 +791,7 @@ section_label = None
 
 # HIGHEST PRIORITY: URL clue
 if url_clues_agent:
-    url_book = url_clues_agent[0]['book_pdf']
+    url_book = url_clues_agent[0]['book_slug']
     chapter_tokens = url_clues_agent[0].get('chapter_clues', [])
     url_score = guide_scores.get(url_book, 'n/a')
     recommended_label = f"{url_book} (from URL reference, score: {url_score})"
@@ -753,7 +814,7 @@ if not recommended_label:
         top_guide = None
         recommended_label = "(no guide scores available — use your best judgment from search results)"
 else:
-    top_guide = url_clues_agent[0]['book_pdf'] if url_clues_agent else None
+    top_guide = url_clues_agent[0]['book_slug'] if url_clues_agent else None
 
 # Section fallback
 if not section_label:
@@ -904,7 +965,7 @@ pinned_rec_section = ""
 rec1_guide = None
 
 if url_clues_agent and section_label and section_label != "(see location recommendations above)":
-    rec1_guide = url_clues_agent[0]['book_pdf']
+    rec1_guide = url_clues_agent[0]['book_slug']
     chapter_query = ' '.join(url_clues_agent[0].get('chapter_clues', []))
     rec1_url = _get_guide_url(rec1_guide)
     rec1_url_line = f"\nOnline guide URL: {rec1_url}" if rec1_url else ""
@@ -972,7 +1033,7 @@ question: {full_question[:500]}...
    for EACH of the 3 guides listed. Do NOT skip any. Do NOT combine searches. 3 guides = 3 separate searches.
 2. Your final Location Recommendations #1, #2, #3 MUST match the 3 mandatory guides above — same order, same guides.
 3. If SUGGESTED SEARCH QUERIES (🔍) are listed, use THOSE EXACT queries
-4. Use the "Book PDF" name as your primary search source filter
+4. Use the "Book" name as your primary search source filter
 5. Only AFTER exhausting the suggested queries, try your own search terms
 
 answer:
@@ -1005,7 +1066,7 @@ if not SKIP_LLM:
         '_guide_scores': guide_scores,
         '_matched_term_guides': matched_term_guides,
         'selected_guides_for_search': selected_guides,
-        'selected_model': 'gpt-4o',  # Model selection — change to test Claude/Gemini
+        'selected_model': 'gpt-4.1',  # Model selection — change to test Claude/Gemini
     }
 
     # Patch streamlit session_state
@@ -1014,8 +1075,12 @@ if not SKIP_LLM:
         st.session_state[k] = v
 
     try:
+        import time as _time
         from app_functions import run_agent
-        result = run_agent(PRODUCT_NAME, open("BugAnalyze.md").read(), RCA_CONTENT, selected_guides, selected_raw_terms)
+        _t0 = _time.time()
+        result = run_agent(PRODUCT_NAME, open(os.path.join(_prompts_dir, "BugAnalyze.md")).read(), RCA_CONTENT, selected_guides, selected_raw_terms)
+        _elapsed = _time.time() - _t0
+        print(f"\n⏱️  run_agent() completed in {_elapsed:.1f}s")
 
         section("STEP 8: LLM OUTPUT")
         output = result.get('output', str(result))

@@ -31,8 +31,8 @@ No manual configuration needed! Works on both local systems and enterprise serve
 ### 1. Clone the Repository
 
 ```bash
-git clone <your-repo-url>
-cd Denver
+git clone https://cto-github.cisco.com/cn-tech-comms/bugnosis.git
+cd bugnosis
 ```
 
 ### 2. Create Virtual Environment
@@ -87,7 +87,7 @@ The app will open in your browser at `http://localhost:8501`
 ## Project Structure
 
 ```
-Denver/
+bugnosis/
 ├── streamlit_app.py           # Main application entry point
 ├── app_functions.py           # Core agent and utility functions
 ├── first_draft_tab.py         # First draft generation tab

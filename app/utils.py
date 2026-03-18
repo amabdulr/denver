@@ -89,7 +89,7 @@ def get_azure_auth_token() -> Optional[str]:
 
 
 def get_llm(
-    model_name: str = "gpt-4o", temperature=0
+    model_name: str = "claude-sonnet-4", temperature=0
 ) -> Union[ChatOpenAI, AzureChatOpenAI]:
     """Initialize the LLM based on the configured API type."""
     load_dotenv()

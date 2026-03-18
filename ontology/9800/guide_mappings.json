@@ -1,0 +1,11 @@
+{
+    "_comment": "Knowledge-graph mappings for 9800.",
+    "concept_to_guide": {},
+    "product_noise": [
+        "9800",
+        "catalyst 9800"
+    ],
+    "reference_guides": {
+        "patterns": []
+    }
+}
